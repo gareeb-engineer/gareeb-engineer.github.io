@@ -1,0 +1,329 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>☕ Java&#8217;s Invisible Engine: Garbage Collection (GC) 🗑️ · Ayush Nigam</title>
+  
+  <link rel="stylesheet" href="../../../_/css/site.css?v=19">
+</head>
+<body class="docs-page">
+  <a class="skip-link" href="#article-main">Skip to content</a>
+  <header class="docs-header">
+    <div class="docs-header-inner">
+      <a class="docs-logo" href="../index.html"><span class="docs-logo-mark">AN</span><span>Ayush Nigam</span></a>
+          <nav class="header-adoc-nav docs-toplinks" aria-label="Header links" data-header-source-url="../headers/header-links.html">
+            <div class="header-adoc-content"><div class="ulist header-menu-links">
+<ul>
+<li>
+<p><a href="contact.html" class="xref page">Contact</a></p>
+</li>
+<li>
+<p><a href="https://www.linkedin.com/in/the-ayush-nigam/">LinkedIn</a></p>
+</li>
+<li>
+<p><a href="https://github.com/gareeb-engineer">GitHub</a></p>
+</li>
+</ul>
+</div></div>
+          </nav>
+      <a class="header-avatar" href="../index.html" aria-hidden="true" tabindex="-1"><img src="../../../_/img/profile-photo.png" alt="Ayush Nigam profile photo" width="36" height="36"></a>
+<button type="button" class="mobile-nav-toggle" aria-label="Toggle documentation navigation" aria-expanded="false" aria-controls="docs-sidebar">☰ Menu</button>
+    </div>
+  </header>
+  <div class="docs-shell">
+    <aside class="docs-sidebar" id="docs-sidebar" aria-label="Documentation sidebar">
+      <div class="sidebar-inner">
+      <div class="sidebar-top"><span class="sidebar-eyebrow">ENGINEERING LIBRARY</span></div>
+      <input id="nav-filter" class="nav-filter" type="search" placeholder="Filter pages…" aria-label="Filter navigation" autocomplete="off">
+      <nav aria-label="Documentation pages"><ul class="nav-tree">
+  <li class="nav-item nav-parent">
+        <div class="nav-group">
+          <button type="button" class="nav-row nav-toggle" aria-expanded="true">
+            <span class="nav-label"></span>
+            <span class="nav-chevron" aria-hidden="true">▾</span>
+          </button>
+          <div class="nav-children">
+            <ul class="nav-tree">
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="index.html">Garbage Collection</a>
+      </div>
+  </li>
+</ul>
+          </div>
+        </div>
+  </li>
+  <li class="nav-item nav-parent">
+        <div class="nav-group">
+          <button type="button" class="nav-row nav-toggle" aria-expanded="true">
+            <span class="nav-label"></span>
+            <span class="nav-chevron" aria-hidden="true">▾</span>
+          </button>
+          <div class="nav-children">
+            <ul class="nav-tree">
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../Arcitecture-diagram/index.html">Architecture Diagram&#8217;s</a>
+      </div>
+  </li>
+</ul>
+          </div>
+        </div>
+  </li>
+  <li class="nav-item nav-parent">
+        <div class="nav-group">
+          <button type="button" class="nav-row nav-toggle" aria-expanded="true">
+            <span class="nav-label"></span>
+            <span class="nav-chevron" aria-hidden="true">▾</span>
+          </button>
+          <div class="nav-children">
+            <ul class="nav-tree">
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../DevOps-Refs/index.html">References</a>
+      </div>
+  </li>
+</ul>
+          </div>
+        </div>
+  </li>
+  <li class="nav-item nav-parent">
+        <div class="nav-group">
+          <button type="button" class="nav-row nav-toggle" aria-expanded="true">
+            <span class="nav-label"></span>
+            <span class="nav-chevron" aria-hidden="true">▾</span>
+          </button>
+          <div class="nav-children">
+            <ul class="nav-tree">
+  <li class="nav-item nav-parent">
+        <div class="nav-group nav-linked-group">
+          <div class="nav-row nav-linked-row">
+            <a href="../Data-Structure/index.html">Data Structure</a>
+            <button type="button" class="nav-toggle nav-linked-toggle" aria-expanded="true" aria-label="Toggle subtopics">
+              <span class="nav-chevron" aria-hidden="true">▾</span>
+            </button>
+          </div>
+          <div class="nav-children"><ul class="nav-tree">
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../Data-Structure/arrays/index.html">Arrays</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../Data-Structure/linked-list/index.html">Linked Lists</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../Data-Structure/stacks-n-queue/index.html">Stacks</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../Data-Structure/trees/index.html">Trees</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../Data-Structure/hash-map/index.html">Hash Map</a>
+      </div>
+  </li>
+  <li class="nav-item nav-parent">
+        <div class="nav-group nav-linked-group">
+          <div class="nav-row nav-linked-row">
+            <a href="../Data-Structure/dynamic-programming/index.html">Dynamic Programming</a>
+            <button type="button" class="nav-toggle nav-linked-toggle" aria-expanded="true" aria-label="Toggle subtopics">
+              <span class="nav-chevron" aria-hidden="true">▾</span>
+            </button>
+          </div>
+          <div class="nav-children"><ul class="nav-tree">
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../Data-Structure/dynamic-programming/fibonacci-series.html">Fibonacci Series</a>
+      </div>
+  </li>
+</ul>
+</div>
+        </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../Data-Structure/graphs/index.html">Graphs</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../Data-Structure/backtracking/index.html">Backtracking</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../Data-Structure/pattern-printing/index.html">Pattern Printing</a>
+      </div>
+  </li>
+  <li class="nav-item nav-parent">
+        <div class="nav-group nav-linked-group">
+          <div class="nav-row nav-linked-row">
+            <a href="../Data-Structure/recursion/index.html">Recursion</a>
+            <button type="button" class="nav-toggle nav-linked-toggle" aria-expanded="true" aria-label="Toggle subtopics">
+              <span class="nav-chevron" aria-hidden="true">▾</span>
+            </button>
+          </div>
+          <div class="nav-children"><ul class="nav-tree">
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../Data-Structure/recursion/sum-of-all-element.html">Sum of all elements</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../Data-Structure/recursion/all-indices-of-array.html">All indices of array</a>
+      </div>
+  </li>
+</ul>
+</div>
+        </div>
+  </li>
+</ul>
+</div>
+        </div>
+  </li>
+</ul>
+          </div>
+        </div>
+  </li>
+</ul>
+</nav>
+      </div>
+    </aside>
+    <main id="article-main" class="docs-article">
+      <nav class="breadcrumbs" aria-label="Breadcrumb"><a href="../index.html">Home</a><span aria-hidden="true">/</span><a href="index.html">Garbage Collection</a></nav>
+      <article class="article-body">
+        <header class="article-header">
+          <h1>☕ Java&#8217;s Invisible Engine: Garbage Collection (GC) 🗑️</h1>
+          
+          
+        </header>
+        <div id="preamble">
+<div class="sectionbody">
+<div class="imageblock">
+<div class="content">
+<img src="_images/Garbage-Collection.png" alt="GC Picture">
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_evolution_of_modern_memory_management"><a class="anchor" href="#_evolution_of_modern_memory_management"></a>🌱 Evolution of Modern Memory Management</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>✨ One of the biggest performance wins without rewriting code — just by <strong>UPGRADE!</strong> 🚀</p>
+</div>
+<div class="paragraph">
+<p>🧹 Memory management is not only cleanup but also <strong>reclaim &amp; allocation</strong> of new memory.
+⚖️ The real magic of modern GC lies in balancing these two opposing jobs.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_generational_hypothesis"><a class="anchor" href="#_generational_hypothesis"></a>🧬 Generational Hypothesis</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>📌 Most objects don’t live long.
+🧒 Objects are divided into <strong>Young Generation</strong> and 👴 <strong>Old Generation</strong>.
+👉 Most cleanup efforts focus on the <strong>Young area</strong>.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_choices_of_gc"><a class="anchor" href="#_choices_of_gc"></a>🔥 Choices of GC</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p>1️⃣ <strong>Serial</strong> – 🖥️ Low memory footprint, works well with single-CPU containers.</p>
+</li>
+<li>
+<p>2️⃣ <strong>Parallel</strong> – ⚡ Best for max throughput (batch operations).</p>
+</li>
+<li>
+<p>3️⃣ <strong>G1</strong> – ⚖️ Balanced approach, default since JDK9.</p>
+</li>
+<li>
+<p>4️⃣ <strong>ZGC</strong> – 🏎️ Ultra low latency for huge heaps &amp; sensitive services.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_which_gc_is_best"><a class="anchor" href="#_which_gc_is_best"></a>🤔 Which GC is Best?</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>It depends on requirements vs trade-offs ⚖️</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>⏱️ <strong>Throughput</strong> → Total work done over time (e.g., batch job)</p>
+</li>
+<li>
+<p>⚡ <strong>Latency</strong> → Responsiveness of operations</p>
+</li>
+<li>
+<p>📦 <strong>Footprint</strong> → Memory overhead of GC (e.g., containers)</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_outcome"><a class="anchor" href="#_outcome"></a>📊 Outcome</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>📈 Upgrading <strong>JDK8 ➝ JDK24</strong>:
+- 🚀 Parallel &amp; G1: <strong>25% throughput improvement</strong>
+- ⏳ Latency score improved by <strong>50% (Parallel)</strong>, and <strong>100%</strong> overall
+- 💾 G1 in JDK24 uses <strong>1/3rd the memory</strong> compared to JDK8</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_case_studies"><a class="anchor" href="#_case_studies"></a>🏢 Case Studies</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>🎬 <strong>Netflix</strong> – Cut pause times in half with JDK17 (G1), then tested JDK31 with Generation Collector.
+💼 <strong>LinkedIn</strong> – JDK24 upgrade → <strong>50% lower P99.9 latency</strong> with ZGC.
+☁️ <strong>Oracle Cloud</strong> – 20% throughput boost after moving to JDK17.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_takeaway"><a class="anchor" href="#_takeaway"></a>⚡ Takeaway</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Modern GC isn’t just cleanup — it’s the invisible performance engine powering today’s services 🚀🔥</p>
+</div>
+</div>
+</div>
+      </article>
+      <div class="article-pagination">
+        <a class="prev" href="../index.html"><span>← Previous</span><strong>Gareeb Engineer</strong></a>
+        <a class="next" href="../Arcitecture-diagram/index.html"><span>Next →</span><strong>Architecture Diagram&#8217;s</strong></a>
+      </div>
+    </main>
+    <aside class="docs-toc" aria-label="On this page">
+      <div class="toc-inner">
+      <div class="toc-heading">ON THIS PAGE</div>
+      
+      <nav id="js-local-toc"></nav>
+      </div>
+    </aside>
+  </div>
+  <footer class="docs-footer">© 2026 Ayush Nigam · <a href="../index.html">Home</a></footer>
+  <script src="../../../_/js/site.js?v=14" defer></script>
+</body>
+</html>
