@@ -3,7 +3,7 @@ name: Build Antora Documentation
 on:
   push:
     branches:
-      - anotra  # or the branch where Antora docs are maintained
+      - antora  # or the branch where Antora docs are maintained
 
 jobs:
   build-antora:
@@ -12,7 +12,7 @@ jobs:
       - name: Checkout 'antora' branch
         uses: actions/checkout@v4
         with:
-          ref: anotra
+          ref: antora
           fetch-depth: 1  # (optional) default, fetches only latest commit
 
       # Step 2: Setup Node.js (required for Antora)
