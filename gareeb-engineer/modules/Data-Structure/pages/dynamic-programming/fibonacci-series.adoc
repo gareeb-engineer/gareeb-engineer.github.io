@@ -10,22 +10,6 @@
 --
 Given an integer `N`, print the first N numbers of the Fibonacci series.
 The Fibonacci series is defined as:
-
-* `F(0) = 0`
-* `F(1) = 1`
-* `F(n) = F(n-1) + F(n-2)` for `n > 1`
---
-
-== Approach to Solve
-
-[.cp-box.cp-approach]
---
-We can solve this problem using multiple approaches:
-
-* *Naive Recursion* -- simple but has exponential time complexity (`+O(2^N)+`).
-* *Memoization (Top-Down DP)* -- stores previously computed values to avoid redundant work (`O(N)`).
-* *Tabulation (Bottom-Up DP)* -- builds the solution iteratively (`O(N)`).
-* *Space Optimized* -- keeps only the last two values (`O(1)` space).
 --
 
 == Java Implementation
@@ -76,15 +60,6 @@ public class FibonacciSeries {
 }
 ----
 ====
-
-== Complexity Analysis
-
-[.cp-box.cp-complexity]
---
-* *Time Complexity*: `O(N)`
-* *Space Complexity*: `O(1)` (for the optimised approach)
-* *Recursive approach*: `+O(2^N)+` time, `O(N)` space (recursion stack)
---
 
 == Output Example
 
