@@ -1,7 +1,7 @@
 site:
   title: Ayush Nigam
   start_page: gareeb-engineer::index.adoc
-  url: https://gareeb-engineer.github.io/ayush
+  url: https://gareeb-engineer.github.io
   keys:
     header_links_page: 'gareeb-engineer:headers:header-links.adoc'
 
