@@ -1,0 +1,446 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>Low Level Design · Ayush Nigam</title>
+  
+  <link rel="preload" href="../../../_/fonts/inter-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="../../../_/css/site.css?v=21">
+</head>
+<body class="docs-page">
+  <a class="skip-link" href="#article-main">Skip to content</a>
+  <header class="docs-header">
+    <div class="docs-header-inner">
+      <a class="docs-logo" href="../index.html"><span class="docs-logo-mark">AN</span><span>Ayush Nigam</span></a>
+          <nav class="header-adoc-nav docs-toplinks" aria-label="Header links" data-header-source-url="../headers/header-links.html">
+            <div class="header-adoc-content"><div class="ulist header-menu-links">
+<ul>
+<li>
+<p><a href="contact.html" class="xref page">Contact</a></p>
+</li>
+<li>
+<p><a href="https://www.linkedin.com/in/the-ayush-nigam/">LinkedIn</a></p>
+</li>
+<li>
+<p><a href="https://github.com/gareeb-engineer">GitHub</a></p>
+</li>
+</ul>
+</div></div>
+          </nav>
+      <a class="header-avatar" href="../index.html" aria-hidden="true" tabindex="-1"><img src="../../../_/img/profile-photo.png" alt="Ayush Nigam profile photo" width="36" height="36"></a>
+<button type="button" class="mobile-nav-toggle" aria-label="Toggle documentation navigation" aria-expanded="false" aria-controls="docs-sidebar">☰ Menu</button>
+      <span class="read-progress-label" aria-hidden="true" hidden>Reading <span class="read-progress-value">0%</span></span>
+    </div>
+    <div class="read-progress" role="progressbar" aria-label="Article reading progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" hidden><span class="read-progress-fill"></span></div>
+  </header>
+  <div class="docs-shell">
+    <aside class="docs-sidebar" id="docs-sidebar" aria-label="Documentation sidebar">
+      <div class="sidebar-inner">
+      <div class="sidebar-top"><span class="sidebar-eyebrow">ENGINEERING LIBRARY</span></div>
+      <input id="nav-filter" class="nav-filter" type="search" placeholder="Filter pages…" aria-label="Filter navigation" autocomplete="off">
+      <nav aria-label="Documentation pages"><ul class="nav-tree">
+  <li class="nav-item nav-parent">
+        <div class="nav-group is-collapsed">
+          <button type="button" class="nav-row nav-toggle" aria-expanded="false">
+            <span class="nav-label">Garbage Collection</span>
+            <span class="nav-chevron" aria-hidden="true">▸</span>
+          </button>
+          <div class="nav-children">
+            <ul class="nav-tree">
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../Java/index.html" title="Open Garbage Collection overview">Overview</a>
+      </div>
+  </li>
+</ul>
+          </div>
+        </div>
+  </li>
+  <li class="nav-item nav-parent">
+        <div class="nav-group is-collapsed">
+          <button type="button" class="nav-row nav-toggle" aria-expanded="false">
+            <span class="nav-label">Architecture Diagram&#8217;s</span>
+            <span class="nav-chevron" aria-hidden="true">▸</span>
+          </button>
+          <div class="nav-children">
+            <ul class="nav-tree">
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../Arcitecture-diagram/index.html" title="Open Architecture Diagram’s overview">Overview</a>
+      </div>
+  </li>
+</ul>
+          </div>
+        </div>
+  </li>
+  <li class="nav-item nav-parent">
+        <div class="nav-group is-collapsed">
+          <button type="button" class="nav-row nav-toggle" aria-expanded="false">
+            <span class="nav-label">References</span>
+            <span class="nav-chevron" aria-hidden="true">▸</span>
+          </button>
+          <div class="nav-children">
+            <ul class="nav-tree">
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../DevOps-Refs/index.html" title="Open References overview">Overview</a>
+      </div>
+  </li>
+</ul>
+          </div>
+        </div>
+  </li>
+  <li class="nav-item nav-parent">
+        <div class="nav-group is-collapsed">
+          <button type="button" class="nav-row nav-toggle" aria-expanded="false">
+            <span class="nav-label">Data Structure</span>
+            <span class="nav-chevron" aria-hidden="true">▸</span>
+          </button>
+          <div class="nav-children">
+            <ul class="nav-tree">
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../Data-Structure/index.html" title="Open Data Structure overview">Overview</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../Data-Structure/arrays/index.html">Arrays</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../Data-Structure/linked-list/index.html">Linked Lists</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../Data-Structure/stacks-n-queue/index.html">Stacks</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../Data-Structure/trees/index.html">Trees</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../Data-Structure/hash-map/index.html">Hash Map</a>
+      </div>
+  </li>
+  <li class="nav-item nav-parent">
+        <div class="nav-group nav-linked-group is-collapsed">
+          <div class="nav-row nav-linked-row">
+            <a href="../Data-Structure/dynamic-programming/index.html">Dynamic Programming</a>
+            <button type="button" class="nav-toggle nav-linked-toggle" aria-expanded="false" aria-label="Toggle subtopics">
+              <span class="nav-chevron" aria-hidden="true">▸</span>
+            </button>
+          </div>
+          <div class="nav-children"><ul class="nav-tree">
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../Data-Structure/dynamic-programming/fibonacci-series.html">Fibonacci Series</a>
+      </div>
+  </li>
+</ul>
+</div>
+        </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../Data-Structure/graphs/index.html">Graphs</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../Data-Structure/backtracking/index.html">Backtracking</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../Data-Structure/pattern-printing/index.html">Pattern Printing</a>
+      </div>
+  </li>
+  <li class="nav-item nav-parent">
+        <div class="nav-group nav-linked-group is-collapsed">
+          <div class="nav-row nav-linked-row">
+            <a href="../Data-Structure/recursion/index.html">Recursion</a>
+            <button type="button" class="nav-toggle nav-linked-toggle" aria-expanded="false" aria-label="Toggle subtopics">
+              <span class="nav-chevron" aria-hidden="true">▸</span>
+            </button>
+          </div>
+          <div class="nav-children"><ul class="nav-tree">
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../Data-Structure/recursion/sum-of-all-element.html">Sum of all elements</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../Data-Structure/recursion/all-indices-of-array.html">All indices of array</a>
+      </div>
+  </li>
+</ul>
+</div>
+        </div>
+  </li>
+</ul>
+          </div>
+        </div>
+  </li>
+  <li class="nav-item nav-parent">
+        <div class="nav-group">
+          <button type="button" class="nav-row nav-toggle" aria-expanded="true">
+            <span class="nav-label">Low Level Design</span>
+            <span class="nav-chevron" aria-hidden="true">▾</span>
+          </button>
+          <div class="nav-children">
+            <ul class="nav-tree">
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="index.html" class="is-current" aria-current="page" title="Open Low Level Design overview">Overview</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="design-principles.html">Design Principles</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="solid-principles.html">SOLID Principles</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="design-patterns.html">Gang of Four Design Patterns</a>
+      </div>
+  </li>
+</ul>
+          </div>
+        </div>
+  </li>
+</ul>
+</nav>
+      </div>
+    </aside>
+    <main id="article-main" class="docs-article">
+      <nav class="breadcrumbs" aria-label="Breadcrumb"><a href="../index.html">Home</a><span aria-hidden="true">/</span><a href="index.html">Low Level Design</a></nav>
+      <article class="article-body" data-reading-progress>
+        <header class="article-header">
+          <h1>Low Level Design</h1>
+          
+          <p class="article-subtitle">How to shape classes, interfaces and their relationships so code stays easy to change.</p>
+          <ul class="article-chips">
+            <li class="chip chip-tag">Low Level Design</li><li class="chip chip-tag">Java</li><li class="chip chip-tag">Object-Oriented Design</li>
+          </ul>
+          <div class="article-meta">
+            <span class="article-meta-item" title="Estimated at 220 words per minute">
+              <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+              ~2 min read
+            </span>
+            <span class="article-meta-item">
+              <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="4" y="5" width="16" height="16" rx="2"/><path d="M16 3v4M8 3v4M4 10h16"/></svg>
+              Updated <time datetime="2026-10-27">Oct 27, 2026</time>
+            </span>
+            <button type="button" class="ra-open" aria-controls="reading-assistant" aria-expanded="false" hidden>
+              <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/></svg>
+              Listen
+            </button>
+          </div>
+        </header>
+        <div class="sect1">
+<h2 id="_what_low_level_design_means"><a class="anchor" href="#_what_low_level_design_means"></a>What low level design means</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>High level design decides which services exist and how they talk to each other.
+Low level design zooms in on a single service and decides how its code is organised: which classes exist, what each one is responsible for, and how they depend on one another.</p>
+</div>
+<div class="paragraph">
+<p>A good low level design is not the one with the most patterns.
+It is the one where a new requirement touches as few classes as possible, and where each change is easy to test in isolation.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_how_to_read_this_series"><a class="anchor" href="#_how_to_read_this_series"></a>How to read this series</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Start with the general design principles.
+They are short rules of thumb that apply to any code, object-oriented or not.
+Then move on to SOLID, five principles that are specific to object-oriented design and build directly on those ideas.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="design-principles.html" class="xref page">Design Principles</a>&#8201;&#8212;&#8201;DRY, KISS, YAGNI, the Law of Demeter, and the three Gang of Four principles: composition over inheritance, programming to an interface, and encapsulating what varies.</p>
+</li>
+<li>
+<p><a href="solid-principles.html" class="xref page">SOLID Principles</a>&#8201;&#8212;&#8201;single responsibility, open/closed, Liskov substitution, interface segregation and dependency inversion.</p>
+</li>
+<li>
+<p><a href="design-patterns.html" class="xref page">Gang of Four Design Patterns</a>&#8201;&#8212;&#8201;the twelve most useful patterns, how to tell similar ones apart, and which patterns fit common design problems.</p>
+</li>
+</ul>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+Every article has a Listen button and a reading progress bar. Code examples are shown on screen but skipped when the article is read aloud.
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_from_requirements_to_design"><a class="anchor" href="#_from_requirements_to_design"></a>From requirements to design</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Knowing principles and patterns is necessary but not sufficient.
+A sound design comes from applying them in a deliberate order, whether the problem is a parking lot, a vending machine, a file search tool or a feature in a production service:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><strong>Clarify requirements.</strong> Establish what the system must do, what is out of scope, and whether several users or threads use it at once. Write the agreed list down.</p>
+</li>
+<li>
+<p><strong>Find the core entities.</strong> The nouns in the requirements are candidate classes. Each one gets a single responsibility.</p>
+</li>
+<li>
+<p><strong>Define relationships.</strong> Decide what <strong>is a</strong> kind of what, and what <strong>has a</strong> what. A quick class diagram keeps everyone working on the design aligned.</p>
+</li>
+<li>
+<p><strong>Write the public API first.</strong> Method signatures for the main use cases come before any implementation.</p>
+</li>
+<li>
+<p><strong>Apply patterns only where the problem calls for them.</strong> Each pattern must name the part of the design that varies and what it costs.</p>
+</li>
+<li>
+<p><strong>Build the core flow.</strong> A working main path with sensible validation and errors is worth more than a large, unfinished class diagram.</p>
+</li>
+<li>
+<p><strong>Handle concurrency.</strong> Identify the shared state, such as a parking spot two cars try to take at once, and decide how it is protected.</p>
+</li>
+<li>
+<p><strong>Test the design with an extension.</strong> Ask "how would a new requirement be added?". A good design answers with a new class rather than edits to existing ones.</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>A design is not measured by how many patterns it uses.
+It is measured by whether it is correct, easy to extend and safe under concurrency, and whether every trade-off in it has a clear reason.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_why_principles_and_not_rules"><a class="anchor" href="#_why_principles_and_not_rules"></a>Why principles and not rules</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>None of these principles is a law.
+Each one trades something away: an extra interface costs indirection, removing duplication costs coupling.
+The skill in low level design is knowing which trade-off fits the problem at hand, and the articles call out where each principle stops helping.</p>
+</div>
+</div>
+</div>
+      </article>
+      <div class="article-pagination">
+        <a class="prev" href="../Data-Structure/recursion/all-indices-of-array.html"><span>← Previous</span><strong>All indices of array</strong></a>
+        <a class="next" href="design-principles.html"><span>Next →</span><strong>Design Principles</strong></a>
+      </div>
+    </main>
+    <aside class="docs-toc reading-assistant" id="reading-assistant" aria-label="Reading assistant">
+  <div class="toc-inner ra-inner">
+    <div class="ra-head">
+      <h2 class="ra-title">Reading Assistant</h2>
+      <button type="button" class="ra-close" aria-label="Close reading assistant">
+        <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+    </div>
+
+    <section class="ra-card ra-listen" aria-labelledby="reading-assistant-listen" hidden>
+      <div class="ra-card-head">
+        <svg class="ra-card-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/></svg>
+        <div>
+          <h3 class="ra-card-title" id="reading-assistant-listen">Listen to Article</h3>
+          <p class="ra-card-desc">Listen to the explanation of this article. Code blocks are skipped.</p>
+        </div>
+      </div>
+
+      <div class="ra-ready">
+        <div class="ra-player">
+          <button type="button" class="ra-play" aria-label="Play article">
+            <svg class="ra-icon-play" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M8 5.5v13l11-6.5z"/></svg>
+            <svg class="ra-icon-pause" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M7 5h3.5v14H7zM13.5 5H17v14h-3.5z"/></svg>
+          </button>
+          <div class="ra-track">
+            <div class="ra-meter" role="progressbar" aria-label="Listening progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><span class="ra-meter-fill"></span></div>
+            <span class="ra-time" title="Estimated. Browser speech does not report an exact duration."></span>
+          </div>
+          <button type="button" class="ra-stop" aria-label="Stop listening" disabled>
+            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="6.5" y="6.5" width="11" height="11" rx="1.5"/></svg>
+          </button>
+        </div>
+
+        <div class="ra-controls">
+          <label class="ra-field ra-field-rate">
+            <span class="ra-field-label">Speed</span>
+            <select class="ra-rate">
+              <option value="0.75">0.75×</option>
+              <option value="1" selected>1×</option>
+              <option value="1.25">1.25×</option>
+              <option value="1.5">1.5×</option>
+              <option value="2">2×</option>
+            </select>
+          </label>
+        </div>
+
+        <label class="ra-check"><input type="checkbox" class="ra-follow" checked> Highlight and follow along</label>
+        <p class="ra-status" role="status" aria-live="polite">Ready</p>
+
+        <p class="ra-tip">
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M9 18h6M10 21h4"/><path d="M12 3a6 6 0 0 0-3.5 10.9V16h7v-2.1A6 6 0 0 0 12 3z"/></svg>
+          <span><strong>Tip:</strong> Headings and explanations are read aloud; code is skipped. Read in Google UK English Male on Chrome; other browsers use their closest British English voice.</span>
+        </p>
+      </div>
+
+      <p class="ra-unsupported" hidden>Listening isn&#8217;t available in this browser. The article itself works as usual.</p>
+    </section>
+
+    <section class="ra-card ra-jump" aria-labelledby="reading-assistant-sections" hidden>
+      <h3 class="ra-card-title" id="reading-assistant-sections">Jump to Section</h3>
+      <ol class="ra-sections"></ol>
+    </section>
+
+    <section class="ra-card ra-info" aria-labelledby="reading-assistant-info">
+      <h3 class="ra-card-title" id="reading-assistant-info">Page Info</h3>
+      <ul class="ra-info-list">
+        <li>
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+          <span title="Estimated at 220 words per minute">~2 min read</span>
+        </li>
+        <li>
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h6"/></svg>
+          <span title="Prose only; code is not counted">~536 words</span>
+        </li>
+        <li>
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="4" y="5" width="16" height="16" rx="2"/><path d="M16 3v4M8 3v4M4 10h16"/></svg>
+          <span>Last updated <time datetime="2026-10-27">Oct 27, 2026</time></span>
+        </li>
+      </ul>
+    </section>
+  </div>
+</aside>
+  </div>
+  <footer class="docs-footer">© 2026 Ayush Nigam · <a href="../index.html">Home</a></footer>
+  <script src="../../../_/js/reading-assistant.js?v=2" defer></script>
+  <script src="../../../_/js/site.js?v=15" defer></script>
+</body>
+</html>

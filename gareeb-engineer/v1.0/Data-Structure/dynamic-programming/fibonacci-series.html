@@ -1,0 +1,352 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>Fibonacci Series · Ayush Nigam</title>
+  
+  <link rel="preload" href="../../../../_/fonts/inter-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="../../../../_/css/site.css?v=21">
+</head>
+<body class="docs-page">
+  <a class="skip-link" href="#article-main">Skip to content</a>
+  <header class="docs-header">
+    <div class="docs-header-inner">
+      <a class="docs-logo" href="../../index.html"><span class="docs-logo-mark">AN</span><span>Ayush Nigam</span></a>
+          <nav class="header-adoc-nav docs-toplinks" aria-label="Header links" data-header-source-url="../../headers/header-links.html">
+            <div class="header-adoc-content"><div class="ulist header-menu-links">
+<ul>
+<li>
+<p><a href="contact.html" class="xref page">Contact</a></p>
+</li>
+<li>
+<p><a href="https://www.linkedin.com/in/the-ayush-nigam/">LinkedIn</a></p>
+</li>
+<li>
+<p><a href="https://github.com/gareeb-engineer">GitHub</a></p>
+</li>
+</ul>
+</div>
+</div>
+          </nav>
+      <a class="header-avatar" href="../../index.html" aria-hidden="true" tabindex="-1"><img src="../../../../_/img/profile-photo.png" alt="Ayush Nigam profile photo" width="36" height="36"></a>
+<button type="button" class="mobile-nav-toggle" aria-label="Toggle documentation navigation" aria-expanded="false" aria-controls="docs-sidebar">☰ Menu</button>
+      <span class="read-progress-label" aria-hidden="true" hidden>Reading <span class="read-progress-value">0%</span></span>
+    </div>
+    <div class="read-progress" role="progressbar" aria-label="Article reading progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" hidden><span class="read-progress-fill"></span></div>
+  </header>
+  <div class="docs-shell">
+    <aside class="docs-sidebar" id="docs-sidebar" aria-label="Documentation sidebar">
+      <div class="sidebar-inner">
+      <div class="sidebar-top"><span class="sidebar-eyebrow">ENGINEERING LIBRARY</span></div>
+      <input id="nav-filter" class="nav-filter" type="search" placeholder="Filter pages…" aria-label="Filter navigation" autocomplete="off">
+      <nav aria-label="Documentation pages"><ul class="nav-tree">
+  <li class="nav-item nav-parent">
+        <div class="nav-group is-collapsed">
+          <button type="button" class="nav-row nav-toggle" aria-expanded="false">
+            <span class="nav-label">Garbage Collection</span>
+            <span class="nav-chevron" aria-hidden="true">▸</span>
+          </button>
+          <div class="nav-children">
+            <ul class="nav-tree">
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Java/index.html" title="Open Garbage Collection overview">Overview</a>
+      </div>
+  </li>
+</ul>
+          </div>
+        </div>
+  </li>
+  <li class="nav-item nav-parent">
+        <div class="nav-group is-collapsed">
+          <button type="button" class="nav-row nav-toggle" aria-expanded="false">
+            <span class="nav-label">Architecture Diagram&#8217;s</span>
+            <span class="nav-chevron" aria-hidden="true">▸</span>
+          </button>
+          <div class="nav-children">
+            <ul class="nav-tree">
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Arcitecture-diagram/index.html" title="Open Architecture Diagram’s overview">Overview</a>
+      </div>
+  </li>
+</ul>
+          </div>
+        </div>
+  </li>
+  <li class="nav-item nav-parent">
+        <div class="nav-group is-collapsed">
+          <button type="button" class="nav-row nav-toggle" aria-expanded="false">
+            <span class="nav-label">References</span>
+            <span class="nav-chevron" aria-hidden="true">▸</span>
+          </button>
+          <div class="nav-children">
+            <ul class="nav-tree">
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../DevOps-Refs/index.html" title="Open References overview">Overview</a>
+      </div>
+  </li>
+</ul>
+          </div>
+        </div>
+  </li>
+  <li class="nav-item nav-parent">
+        <div class="nav-group">
+          <button type="button" class="nav-row nav-toggle" aria-expanded="true">
+            <span class="nav-label">Data Structure</span>
+            <span class="nav-chevron" aria-hidden="true">▾</span>
+          </button>
+          <div class="nav-children">
+            <ul class="nav-tree">
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../index.html" title="Open Data Structure overview">Overview</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../arrays/index.html">Arrays</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../linked-list/index.html">Linked Lists</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../stacks-n-queue/index.html">Stacks</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../trees/index.html">Trees</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../hash-map/index.html">Hash Map</a>
+      </div>
+  </li>
+  <li class="nav-item nav-parent">
+        <div class="nav-group nav-linked-group">
+          <div class="nav-row nav-linked-row">
+            <a href="index.html">Dynamic Programming</a>
+            <button type="button" class="nav-toggle nav-linked-toggle" aria-expanded="true" aria-label="Toggle subtopics">
+              <span class="nav-chevron" aria-hidden="true">▾</span>
+            </button>
+          </div>
+          <div class="nav-children"><ul class="nav-tree">
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="fibonacci-series.html" class="is-current" aria-current="page">Fibonacci Series</a>
+      </div>
+  </li>
+</ul>
+</div>
+        </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../graphs/index.html">Graphs</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../backtracking/index.html">Backtracking</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../pattern-printing/index.html">Pattern Printing</a>
+      </div>
+  </li>
+  <li class="nav-item nav-parent">
+        <div class="nav-group nav-linked-group is-collapsed">
+          <div class="nav-row nav-linked-row">
+            <a href="../recursion/index.html">Recursion</a>
+            <button type="button" class="nav-toggle nav-linked-toggle" aria-expanded="false" aria-label="Toggle subtopics">
+              <span class="nav-chevron" aria-hidden="true">▸</span>
+            </button>
+          </div>
+          <div class="nav-children"><ul class="nav-tree">
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../recursion/sum-of-all-element.html">Sum of all elements</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../recursion/all-indices-of-array.html">All indices of array</a>
+      </div>
+  </li>
+</ul>
+</div>
+        </div>
+  </li>
+</ul>
+          </div>
+        </div>
+  </li>
+  <li class="nav-item nav-parent">
+        <div class="nav-group is-collapsed">
+          <button type="button" class="nav-row nav-toggle" aria-expanded="false">
+            <span class="nav-label">Low Level Design</span>
+            <span class="nav-chevron" aria-hidden="true">▸</span>
+          </button>
+          <div class="nav-children">
+            <ul class="nav-tree">
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Low-Level-Design/index.html" title="Open Low Level Design overview">Overview</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Low-Level-Design/design-principles.html">Design Principles</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Low-Level-Design/solid-principles.html">SOLID Principles</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Low-Level-Design/design-patterns.html">Gang of Four Design Patterns</a>
+      </div>
+  </li>
+</ul>
+          </div>
+        </div>
+  </li>
+</ul>
+</nav>
+      </div>
+    </aside>
+    <main id="article-main" class="docs-article">
+      <nav class="breadcrumbs" aria-label="Breadcrumb"><a href="../../index.html">Home</a><span aria-hidden="true">/</span><a href="../index.html">Data Structure</a><span aria-hidden="true">/</span><a href="index.html">Dynamic Programming</a><span aria-hidden="true">/</span><a href="fibonacci-series.html">Fibonacci Series</a></nav>
+      <article class="article-body coding-page" data-reading-progress>
+        <header class="article-header">
+          <h1>Fibonacci Series</h1>
+          
+          <p class="article-subtitle">Print the first N numbers in the Fibonacci series using different approaches.</p>
+          <ul class="article-chips">
+            <li class="chip chip-difficulty chip-medium">Medium</li><li class="chip chip-tag">Data Structure</li><li class="chip chip-tag">Dynamic Programming</li><li class="chip chip-tag">Java</li>
+          </ul>
+          <div class="article-meta">
+            <span class="article-meta-item" title="Estimated at 220 words per minute">
+              <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+              ~1 min read
+            </span>
+          </div>
+        </header>
+        <div class="sect1">
+<h2 id="_question"><a class="anchor" href="#_question"></a>Question</h2>
+<div class="sectionbody">
+<div class="openblock cp-box cp-question">
+<div class="content">
+<div class="paragraph">
+<p>Given an integer <code>N</code>, print the first N numbers of the Fibonacci series.
+The Fibonacci series is defined as:</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_java_implementation"><a class="anchor" href="#_java_implementation"></a>Java Implementation</h2>
+<div class="sectionbody">
+<details>
+<summary class="title">Show Code (Java Solution)</summary>
+<div class="content">
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">import java.util.Scanner;
+
+public class FibonacciSeries {
+
+    // Space optimised bottom-up DP: only the previous two values are kept.
+    static long[] series(int n) {
+        long[] out = new long[Math.max(n, 0)];
+        long prev = 0, curr = 1;
+        for (int i = 0; i &lt; n; i++) {
+            out[i] = prev;
+            long next = prev + curr;
+            prev = curr;
+            curr = next;
+        }
+        return out;
+    }
+
+    // Top-down DP for a single term, memoised so each subproblem is solved once.
+    static long term(int n, long[] memo) {
+        if (n &lt; 2) return n;
+        if (memo[n] != -1) return memo[n];
+        return memo[n] = term(n - 1, memo) + term(n - 2, memo);
+    }
+
+    public static void main(String[] args) {
+        Scanner in = new Scanner(System.in);
+        int n = in.nextInt();
+
+        StringBuilder sb = new StringBuilder();
+        for (long value : series(n)) {
+            sb.append(value).append(' ');
+        }
+        System.out.println(sb.toString().trim());
+
+        long[] memo = new long[Math.max(n, 2)];
+        java.util.Arrays.fill(memo, -1);
+        System.out.println("F(" + n + ") = " + term(n, memo));
+    }
+}</code></pre>
+</div>
+</div>
+</div>
+</details>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_output_example"><a class="anchor" href="#_output_example"></a>Output Example</h2>
+<div class="sectionbody">
+<div class="openblock cp-box cp-output">
+<div class="content">
+<div class="dlist cp-io">
+<dl>
+<dt class="hdlist1">Input</dt>
+<dd>
+<p><code>N = 7</code></p>
+</dd>
+<dt class="hdlist1">Output</dt>
+<dd>
+<p><code>0 1 1 2 3 5 8</code></p>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+</div>
+</div>
+      </article>
+      <div class="article-pagination">
+        <a class="prev" href="index.html"><span>← Previous</span><strong>Dynamic Programming</strong></a>
+        <a class="next" href="../graphs/index.html"><span>Next →</span><strong>Graphs</strong></a>
+      </div>
+    </main>
+    <aside class="docs-toc" aria-label="On this page">
+      <div class="toc-inner">
+      <div class="toc-heading">ON THIS PAGE</div>
+      
+      <nav id="js-local-toc"></nav>
+      </div>
+    </aside>
+  </div>
+  <footer class="docs-footer">© 2026 Ayush Nigam · <a href="../../index.html">Home</a></footer>
+  <script src="../../../../_/js/reading-assistant.js?v=2" defer></script>
+  <script src="../../../../_/js/site.js?v=15" defer></script>
+</body>
+</html>

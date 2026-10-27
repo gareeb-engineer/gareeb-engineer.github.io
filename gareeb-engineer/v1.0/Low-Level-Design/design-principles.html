@@ -1,0 +1,754 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>Design Principles · Ayush Nigam</title>
+  
+  <link rel="preload" href="../../../_/fonts/inter-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="../../../_/css/site.css?v=21">
+</head>
+<body class="docs-page">
+  <a class="skip-link" href="#article-main">Skip to content</a>
+  <header class="docs-header">
+    <div class="docs-header-inner">
+      <a class="docs-logo" href="../index.html"><span class="docs-logo-mark">AN</span><span>Ayush Nigam</span></a>
+          <nav class="header-adoc-nav docs-toplinks" aria-label="Header links" data-header-source-url="../headers/header-links.html">
+            <div class="header-adoc-content"><div class="ulist header-menu-links">
+<ul>
+<li>
+<p><a href="contact.html" class="xref page">Contact</a></p>
+</li>
+<li>
+<p><a href="https://www.linkedin.com/in/the-ayush-nigam/">LinkedIn</a></p>
+</li>
+<li>
+<p><a href="https://github.com/gareeb-engineer">GitHub</a></p>
+</li>
+</ul>
+</div></div>
+          </nav>
+      <a class="header-avatar" href="../index.html" aria-hidden="true" tabindex="-1"><img src="../../../_/img/profile-photo.png" alt="Ayush Nigam profile photo" width="36" height="36"></a>
+<button type="button" class="mobile-nav-toggle" aria-label="Toggle documentation navigation" aria-expanded="false" aria-controls="docs-sidebar">☰ Menu</button>
+      <span class="read-progress-label" aria-hidden="true" hidden>Reading <span class="read-progress-value">0%</span></span>
+    </div>
+    <div class="read-progress" role="progressbar" aria-label="Article reading progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" hidden><span class="read-progress-fill"></span></div>
+  </header>
+  <div class="docs-shell">
+    <aside class="docs-sidebar" id="docs-sidebar" aria-label="Documentation sidebar">
+      <div class="sidebar-inner">
+      <div class="sidebar-top"><span class="sidebar-eyebrow">ENGINEERING LIBRARY</span></div>
+      <input id="nav-filter" class="nav-filter" type="search" placeholder="Filter pages…" aria-label="Filter navigation" autocomplete="off">
+      <nav aria-label="Documentation pages"><ul class="nav-tree">
+  <li class="nav-item nav-parent">
+        <div class="nav-group is-collapsed">
+          <button type="button" class="nav-row nav-toggle" aria-expanded="false">
+            <span class="nav-label">Garbage Collection</span>
+            <span class="nav-chevron" aria-hidden="true">▸</span>
+          </button>
+          <div class="nav-children">
+            <ul class="nav-tree">
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../Java/index.html" title="Open Garbage Collection overview">Overview</a>
+      </div>
+  </li>
+</ul>
+          </div>
+        </div>
+  </li>
+  <li class="nav-item nav-parent">
+        <div class="nav-group is-collapsed">
+          <button type="button" class="nav-row nav-toggle" aria-expanded="false">
+            <span class="nav-label">Architecture Diagram&#8217;s</span>
+            <span class="nav-chevron" aria-hidden="true">▸</span>
+          </button>
+          <div class="nav-children">
+            <ul class="nav-tree">
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../Arcitecture-diagram/index.html" title="Open Architecture Diagram’s overview">Overview</a>
+      </div>
+  </li>
+</ul>
+          </div>
+        </div>
+  </li>
+  <li class="nav-item nav-parent">
+        <div class="nav-group is-collapsed">
+          <button type="button" class="nav-row nav-toggle" aria-expanded="false">
+            <span class="nav-label">References</span>
+            <span class="nav-chevron" aria-hidden="true">▸</span>
+          </button>
+          <div class="nav-children">
+            <ul class="nav-tree">
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../DevOps-Refs/index.html" title="Open References overview">Overview</a>
+      </div>
+  </li>
+</ul>
+          </div>
+        </div>
+  </li>
+  <li class="nav-item nav-parent">
+        <div class="nav-group is-collapsed">
+          <button type="button" class="nav-row nav-toggle" aria-expanded="false">
+            <span class="nav-label">Data Structure</span>
+            <span class="nav-chevron" aria-hidden="true">▸</span>
+          </button>
+          <div class="nav-children">
+            <ul class="nav-tree">
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../Data-Structure/index.html" title="Open Data Structure overview">Overview</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../Data-Structure/arrays/index.html">Arrays</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../Data-Structure/linked-list/index.html">Linked Lists</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../Data-Structure/stacks-n-queue/index.html">Stacks</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../Data-Structure/trees/index.html">Trees</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../Data-Structure/hash-map/index.html">Hash Map</a>
+      </div>
+  </li>
+  <li class="nav-item nav-parent">
+        <div class="nav-group nav-linked-group is-collapsed">
+          <div class="nav-row nav-linked-row">
+            <a href="../Data-Structure/dynamic-programming/index.html">Dynamic Programming</a>
+            <button type="button" class="nav-toggle nav-linked-toggle" aria-expanded="false" aria-label="Toggle subtopics">
+              <span class="nav-chevron" aria-hidden="true">▸</span>
+            </button>
+          </div>
+          <div class="nav-children"><ul class="nav-tree">
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../Data-Structure/dynamic-programming/fibonacci-series.html">Fibonacci Series</a>
+      </div>
+  </li>
+</ul>
+</div>
+        </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../Data-Structure/graphs/index.html">Graphs</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../Data-Structure/backtracking/index.html">Backtracking</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../Data-Structure/pattern-printing/index.html">Pattern Printing</a>
+      </div>
+  </li>
+  <li class="nav-item nav-parent">
+        <div class="nav-group nav-linked-group is-collapsed">
+          <div class="nav-row nav-linked-row">
+            <a href="../Data-Structure/recursion/index.html">Recursion</a>
+            <button type="button" class="nav-toggle nav-linked-toggle" aria-expanded="false" aria-label="Toggle subtopics">
+              <span class="nav-chevron" aria-hidden="true">▸</span>
+            </button>
+          </div>
+          <div class="nav-children"><ul class="nav-tree">
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../Data-Structure/recursion/sum-of-all-element.html">Sum of all elements</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../Data-Structure/recursion/all-indices-of-array.html">All indices of array</a>
+      </div>
+  </li>
+</ul>
+</div>
+        </div>
+  </li>
+</ul>
+          </div>
+        </div>
+  </li>
+  <li class="nav-item nav-parent">
+        <div class="nav-group">
+          <button type="button" class="nav-row nav-toggle" aria-expanded="true">
+            <span class="nav-label">Low Level Design</span>
+            <span class="nav-chevron" aria-hidden="true">▾</span>
+          </button>
+          <div class="nav-children">
+            <ul class="nav-tree">
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="index.html" title="Open Low Level Design overview">Overview</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="design-principles.html" class="is-current" aria-current="page">Design Principles</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="solid-principles.html">SOLID Principles</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="design-patterns.html">Gang of Four Design Patterns</a>
+      </div>
+  </li>
+</ul>
+          </div>
+        </div>
+  </li>
+</ul>
+</nav>
+      </div>
+    </aside>
+    <main id="article-main" class="docs-article">
+      <nav class="breadcrumbs" aria-label="Breadcrumb"><a href="../index.html">Home</a><span aria-hidden="true">/</span><a href="index.html">Low Level Design</a><span aria-hidden="true">/</span><a href="design-principles.html">Design Principles</a></nav>
+      <article class="article-body" data-reading-progress>
+        <header class="article-header">
+          <h1>Design Principles</h1>
+          
+          <p class="article-subtitle">Seven rules of thumb that make everyday code easier to read, test and change, including the core principles of the Gang of Four.</p>
+          <ul class="article-chips">
+            <li class="chip chip-difficulty chip-easy">Easy</li><li class="chip chip-tag">Low Level Design</li><li class="chip chip-tag">Design Principles</li><li class="chip chip-tag">Java</li>
+          </ul>
+          <div class="article-meta">
+            <span class="article-meta-item" title="Estimated at 220 words per minute">
+              <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+              ~5 min read
+            </span>
+            <span class="article-meta-item">
+              <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="4" y="5" width="16" height="16" rx="2"/><path d="M16 3v4M8 3v4M4 10h16"/></svg>
+              Updated <time datetime="2026-10-27">Oct 27, 2026</time>
+            </span>
+            <button type="button" class="ra-open" aria-controls="reading-assistant" aria-expanded="false" hidden>
+              <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/></svg>
+              Listen
+            </button>
+          </div>
+        </header>
+        <div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>There are dozens of named design principles.
+Most of them are restatements of a handful of core ideas, so this article covers only the seven that come up in almost every design discussion and code review.</p>
+</div>
+<div class="paragraph">
+<p>All of them serve two goals that sit at the centre of every design review.
+<strong>High cohesion</strong> means everything inside a class belongs to one job.
+<strong>Low coupling</strong> means classes know as little as possible about each other, so a change in one does not ripple into the rest.
+When two designs compete, the better one raises cohesion or lowers coupling, and that is the reasoning to make explicit when choosing between them.</p>
+</div>
+<div class="paragraph">
+<p>Three of them come from the Gang of Four: Erich Gamma, Richard Helm, Ralph Johnson and John Vlissides, the authors of <em>Design Patterns: Elements of Reusable Object-Oriented Software</em> (1994).
+The book states two principles outright, composition over inheritance and programming to an interface, and a third idea, encapsulating what varies, runs through almost every pattern in it.
+The patterns themselves are covered in <a href="design-patterns.html" class="xref page">Gang of Four Design Patterns</a>.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_dry_dont_repeat_yourself"><a class="anchor" href="#_dry_dont_repeat_yourself"></a>DRY: Don&#8217;t Repeat Yourself</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Every piece of knowledge should have a single, authoritative place in the code.
+When a business rule lives in two places, the two copies eventually drift apart, and one of them becomes a bug.</p>
+</div>
+<div class="paragraph">
+<p>In the example below, the rule for a valid email address is written twice.
+When the rule changes, someone has to remember to update both methods.</p>
+</div>
+<div class="listingblock">
+<div class="title">Before: the same rule in two places</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">class SignupService {
+    void register(String email) {
+        if (email == null || !email.contains("@") || email.length() &gt; 254) {
+            throw new IllegalArgumentException("Invalid email");
+        }
+        // ...
+    }
+}
+
+class ProfileService {
+    void changeEmail(String email) {
+        if (email == null || !email.contains("@") || email.length() &gt; 254) {
+            throw new IllegalArgumentException("Invalid email");
+        }
+        // ...
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">After: one owner for the rule</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">final class EmailAddress {
+    private final String value;
+
+    EmailAddress(String value) {
+        if (value == null || !value.contains("@") || value.length() &gt; 254) {
+            throw new IllegalArgumentException("Invalid email");
+        }
+        this.value = value;
+    }
+
+    String value() { return value; }
+}</code></pre>
+</div>
+</div>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+DRY is about duplicated knowledge, not code that happens to look similar. Two blocks that are identical today but change for different reasons should stay separate. Merging them creates coupling, not reuse.
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_kiss_keep_it_simple"><a class="anchor" href="#_kiss_keep_it_simple"></a>KISS: Keep It Simple</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Prefer the simplest design that solves today&#8217;s problem.
+Simple code is faster to read, easier to debug and cheaper to change.
+Cleverness is usually paid for later by whoever has to maintain it.</p>
+</div>
+<div class="paragraph">
+<p>A common example is deeply nested conditions.
+Early returns turn a puzzle into a list of plain checks.</p>
+</div>
+<div class="listingblock">
+<div class="title">Before: nested conditions</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">String shippingLabel(Order order) {
+    if (order != null) {
+        if (order.isPaid()) {
+            if (!order.items().isEmpty()) {
+                return "Ship to " + order.address();
+            } else {
+                return "Empty order";
+            }
+        } else {
+            return "Awaiting payment";
+        }
+    }
+    return "No order";
+}</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">After: early returns</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">String shippingLabel(Order order) {
+    if (order == null) return "No order";
+    if (!order.isPaid()) return "Awaiting payment";
+    if (order.items().isEmpty()) return "Empty order";
+    return "Ship to " + order.address();
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_yagni_you_arent_gonna_need_it"><a class="anchor" href="#_yagni_you_arent_gonna_need_it"></a>YAGNI: You Aren&#8217;t Gonna Need It</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Do not build features, extension points or configuration options until a real requirement asks for them.
+Speculative code still has to be read, tested and maintained, and the future it was built for often never arrives, or arrives in a different shape.</p>
+</div>
+<div class="paragraph">
+<p>Suppose a report only needs to be exported as CSV.
+Building a plugin system with a registry, a factory and a configuration file for "future formats" adds three classes and no value.
+Write the CSV exporter.
+If a PDF export is requested next quarter, the principles later in this article make it easy to add an interface then, with a real second use case to guide its shape.</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+YAGNI applies to features, not to quality. Tests, clear names and sensible error handling are not speculative.
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_composition_over_inheritance"><a class="anchor" href="#_composition_over_inheritance"></a>Composition over Inheritance</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>This is the second principle of the Gang of Four: favour object composition over class inheritance.</p>
+</div>
+<div class="paragraph">
+<p>Inheritance says a class <strong>is a</strong> kind of its parent.
+Composition says a class <strong>has a</strong> collaborator that it delegates to.
+Composition is the better choice when the goal is only to reuse behaviour, because inheritance exposes every public method of the parent, whether it makes sense or not.</p>
+</div>
+<div class="paragraph">
+<p>The Java standard library has a well-known example.
+<code>java.util.Stack</code> extends <code>Vector</code>, so a stack also exposes methods that let callers insert or remove items at any position, which breaks the idea of a stack.</p>
+</div>
+<div class="listingblock">
+<div class="title">Before: inherits behaviour it should not expose</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">class BrowserHistory extends java.util.ArrayList&lt;String&gt; {
+    void visit(String url) { add(url); }
+    String back() { return remove(size() - 1); }
+}
+
+// Nothing stops a caller from doing this:
+history.add(0, "https://example.com");
+history.clear();</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">After: owns a collection, exposes only what makes sense</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">class BrowserHistory {
+    private final java.util.Deque&lt;String&gt; pages = new java.util.ArrayDeque&lt;&gt;();
+
+    void visit(String url) { pages.push(url); }
+    String back() { return pages.pop(); }
+    boolean canGoBack() { return !pages.isEmpty(); }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Inheritance is still the right tool for a genuine <strong>is a</strong> relationship where every behaviour of the parent applies to the child.
+The Liskov substitution principle in the SOLID article gives a precise test for that.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_program_to_an_interface_not_an_implementation"><a class="anchor" href="#_program_to_an_interface_not_an_implementation"></a>Program to an Interface, not an Implementation</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>This is the first principle of the Gang of Four.</p>
+</div>
+<div class="paragraph">
+<p>Depend on what a collaborator can do, not on which concrete class does it.
+Code written against an interface can be given a different implementation, a fake for tests, or a decorator that adds logging, without changing a single line.</p>
+</div>
+<div class="paragraph">
+<p>In Java this starts with small habits.
+Declare variables and parameters with the interface type, and create the concrete type in one place.</p>
+</div>
+<div class="listingblock">
+<div class="title">Programming to an interface</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">// Declared as List: any List implementation can be passed in or swapped later.
+List&lt;String&gt; names = new ArrayList&lt;&gt;();
+
+interface Notifier {
+    void send(String userId, String message);
+}
+
+class OrderConfirmation {
+    private final Notifier notifier;
+
+    OrderConfirmation(Notifier notifier) { this.notifier = notifier; }
+
+    void confirm(Order order) {
+        notifier.send(order.customerId(), "Order " + order.id() + " confirmed");
+    }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><code>OrderConfirmation</code> works the same with an email, SMS or in-memory notifier.
+This idea is the foundation of the dependency inversion principle.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_encapsulate_what_varies"><a class="anchor" href="#_encapsulate_what_varies"></a>Encapsulate What Varies</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Find the parts of the code that are likely to change, and separate them from the parts that stay the same.
+Put each varying part behind its own small class or interface, so a change lands in one place instead of being scattered through stable code.</p>
+</div>
+<div class="paragraph">
+<p>The Gang of Four describe this as encapsulating the concept that varies, and it is the reason most of their patterns exist.
+Strategy encapsulates an algorithm, Factory Method encapsulates which class gets created, and Observer encapsulates who needs to be told about a change.</p>
+</div>
+<div class="paragraph">
+<p>In the example below, tax rules differ by country and change every year, but the checkout flow does not.
+Mixing them means every tax change edits, and risks breaking, the checkout code.</p>
+</div>
+<div class="listingblock">
+<div class="title">Before: the varying rule is buried in stable code</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">class Checkout {
+    BigDecimal total(Cart cart, String country) {
+        BigDecimal subtotal = cart.subtotal();
+        BigDecimal tax;
+        if (country.equals("IN")) {
+            tax = subtotal.multiply(new BigDecimal("0.18"));
+        } else if (country.equals("UK")) {
+            tax = subtotal.multiply(new BigDecimal("0.20"));
+        } else {
+            tax = BigDecimal.ZERO;
+        }
+        return subtotal.add(tax);
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">After: the varying part has its own home</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">interface TaxRule {
+    BigDecimal taxOn(BigDecimal subtotal);
+}
+
+class Checkout {
+    private final TaxRule taxRule;
+
+    Checkout(TaxRule taxRule) { this.taxRule = taxRule; }
+
+    BigDecimal total(Cart cart) {
+        BigDecimal subtotal = cart.subtotal();
+        return subtotal.add(taxRule.taxOn(subtotal));
+    }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>A new country or a rate change is now a new or edited <code>TaxRule</code>, and <code>Checkout</code> is never touched.</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+Encapsulate only variation that has actually occurred or is a stated requirement. Guessing at future change points is YAGNI in disguise.
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_law_of_demeter_talk_to_your_friends"><a class="anchor" href="#_law_of_demeter_talk_to_your_friends"></a>Law of Demeter: Talk to Your Friends</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>A method should only call methods on its own object, its parameters, objects it creates, and its direct fields.
+It should not reach through one object to get at another object&#8217;s internals.
+Long chains of getters couple the caller to the whole object graph, so a change deep inside it breaks code far away.</p>
+</div>
+<div class="listingblock">
+<div class="title">Before: reaching through three objects</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">String city = order.getCustomer().getAddress().getCity();</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">After: ask the object already at hand</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">String city = order.shippingCity();
+
+// Inside Order:
+String shippingCity() { return customer.shippingCity(); }</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+The Law of Demeter is not a rule about counting dots. Fluent builders and stream pipelines return new objects at each step, so they do not break it.
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_summary"><a class="anchor" href="#_summary"></a>Summary</h2>
+<div class="sectionbody">
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 40%;">
+<col style="width: 40%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Principle</th>
+<th class="tableblock halign-left valign-top">Core idea</th>
+<th class="tableblock halign-left valign-top">Watch out for</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">DRY</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">One owner for each rule or piece of knowledge</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Merging code that only looks alike</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">KISS</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The simplest design that works today</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Simple is not the same as short</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">YAGNI</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Build for real requirements only</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Skipping tests or error handling in its name</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Composition over inheritance (GoF)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Reuse by delegating, not by extending</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Forcing composition onto real "is a" relationships</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Program to an interface (GoF)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Depend on capabilities, not concrete classes</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">An interface for every class, with only one implementation forever</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Encapsulate what varies (GoF)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Isolate the parts that change from the parts that don&#8217;t</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Encapsulating changes that are only guesses</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Law of Demeter</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Talk only to direct collaborators</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Wrapper methods that just forward every getter</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>Next, the <a href="solid-principles.html" class="xref page">SOLID principles</a> apply these ideas specifically to classes and their dependencies, and <a href="design-patterns.html" class="xref page">Gang of Four Design Patterns</a> shows them at work in reusable solutions.</p>
+</div>
+</div>
+</div>
+      </article>
+      <div class="article-pagination">
+        <a class="prev" href="index.html"><span>← Previous</span><strong>Low Level Design</strong></a>
+        <a class="next" href="solid-principles.html"><span>Next →</span><strong>SOLID Principles</strong></a>
+      </div>
+    </main>
+    <aside class="docs-toc reading-assistant" id="reading-assistant" aria-label="Reading assistant">
+  <div class="toc-inner ra-inner">
+    <div class="ra-head">
+      <h2 class="ra-title">Reading Assistant</h2>
+      <button type="button" class="ra-close" aria-label="Close reading assistant">
+        <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+    </div>
+
+    <section class="ra-card ra-listen" aria-labelledby="reading-assistant-listen" hidden>
+      <div class="ra-card-head">
+        <svg class="ra-card-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/></svg>
+        <div>
+          <h3 class="ra-card-title" id="reading-assistant-listen">Listen to Article</h3>
+          <p class="ra-card-desc">Listen to the explanation of this article. Code blocks are skipped.</p>
+        </div>
+      </div>
+
+      <div class="ra-ready">
+        <div class="ra-player">
+          <button type="button" class="ra-play" aria-label="Play article">
+            <svg class="ra-icon-play" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M8 5.5v13l11-6.5z"/></svg>
+            <svg class="ra-icon-pause" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M7 5h3.5v14H7zM13.5 5H17v14h-3.5z"/></svg>
+          </button>
+          <div class="ra-track">
+            <div class="ra-meter" role="progressbar" aria-label="Listening progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><span class="ra-meter-fill"></span></div>
+            <span class="ra-time" title="Estimated. Browser speech does not report an exact duration."></span>
+          </div>
+          <button type="button" class="ra-stop" aria-label="Stop listening" disabled>
+            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="6.5" y="6.5" width="11" height="11" rx="1.5"/></svg>
+          </button>
+        </div>
+
+        <div class="ra-controls">
+          <label class="ra-field ra-field-rate">
+            <span class="ra-field-label">Speed</span>
+            <select class="ra-rate">
+              <option value="0.75">0.75×</option>
+              <option value="1" selected>1×</option>
+              <option value="1.25">1.25×</option>
+              <option value="1.5">1.5×</option>
+              <option value="2">2×</option>
+            </select>
+          </label>
+        </div>
+
+        <label class="ra-check"><input type="checkbox" class="ra-follow" checked> Highlight and follow along</label>
+        <p class="ra-status" role="status" aria-live="polite">Ready</p>
+
+        <p class="ra-tip">
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M9 18h6M10 21h4"/><path d="M12 3a6 6 0 0 0-3.5 10.9V16h7v-2.1A6 6 0 0 0 12 3z"/></svg>
+          <span><strong>Tip:</strong> Headings and explanations are read aloud; code is skipped. Read in Google UK English Male on Chrome; other browsers use their closest British English voice.</span>
+        </p>
+      </div>
+
+      <p class="ra-unsupported" hidden>Listening isn&#8217;t available in this browser. The article itself works as usual.</p>
+    </section>
+
+    <section class="ra-card ra-jump" aria-labelledby="reading-assistant-sections" hidden>
+      <h3 class="ra-card-title" id="reading-assistant-sections">Jump to Section</h3>
+      <ol class="ra-sections"></ol>
+    </section>
+
+    <section class="ra-card ra-info" aria-labelledby="reading-assistant-info">
+      <h3 class="ra-card-title" id="reading-assistant-info">Page Info</h3>
+      <ul class="ra-info-list">
+        <li>
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+          <span title="Estimated at 220 words per minute">~5 min read</span>
+        </li>
+        <li>
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h6"/></svg>
+          <span title="Prose only; code is not counted">~1,172 words</span>
+        </li>
+        <li>
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="4" y="5" width="16" height="16" rx="2"/><path d="M16 3v4M8 3v4M4 10h16"/></svg>
+          <span>Last updated <time datetime="2026-10-27">Oct 27, 2026</time></span>
+        </li>
+      </ul>
+    </section>
+  </div>
+</aside>
+  </div>
+  <footer class="docs-footer">© 2026 Ayush Nigam · <a href="../index.html">Home</a></footer>
+  <script src="../../../_/js/reading-assistant.js?v=2" defer></script>
+  <script src="../../../_/js/site.js?v=15" defer></script>
+</body>
+</html>

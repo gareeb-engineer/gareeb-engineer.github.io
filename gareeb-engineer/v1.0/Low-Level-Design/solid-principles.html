@@ -1,0 +1,773 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>SOLID Principles · Ayush Nigam</title>
+  
+  <link rel="preload" href="../../../_/fonts/inter-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="../../../_/css/site.css?v=21">
+</head>
+<body class="docs-page">
+  <a class="skip-link" href="#article-main">Skip to content</a>
+  <header class="docs-header">
+    <div class="docs-header-inner">
+      <a class="docs-logo" href="../index.html"><span class="docs-logo-mark">AN</span><span>Ayush Nigam</span></a>
+          <nav class="header-adoc-nav docs-toplinks" aria-label="Header links" data-header-source-url="../headers/header-links.html">
+            <div class="header-adoc-content"><div class="ulist header-menu-links">
+<ul>
+<li>
+<p><a href="contact.html" class="xref page">Contact</a></p>
+</li>
+<li>
+<p><a href="https://www.linkedin.com/in/the-ayush-nigam/">LinkedIn</a></p>
+</li>
+<li>
+<p><a href="https://github.com/gareeb-engineer">GitHub</a></p>
+</li>
+</ul>
+</div></div>
+          </nav>
+      <a class="header-avatar" href="../index.html" aria-hidden="true" tabindex="-1"><img src="../../../_/img/profile-photo.png" alt="Ayush Nigam profile photo" width="36" height="36"></a>
+<button type="button" class="mobile-nav-toggle" aria-label="Toggle documentation navigation" aria-expanded="false" aria-controls="docs-sidebar">☰ Menu</button>
+      <span class="read-progress-label" aria-hidden="true" hidden>Reading <span class="read-progress-value">0%</span></span>
+    </div>
+    <div class="read-progress" role="progressbar" aria-label="Article reading progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" hidden><span class="read-progress-fill"></span></div>
+  </header>
+  <div class="docs-shell">
+    <aside class="docs-sidebar" id="docs-sidebar" aria-label="Documentation sidebar">
+      <div class="sidebar-inner">
+      <div class="sidebar-top"><span class="sidebar-eyebrow">ENGINEERING LIBRARY</span></div>
+      <input id="nav-filter" class="nav-filter" type="search" placeholder="Filter pages…" aria-label="Filter navigation" autocomplete="off">
+      <nav aria-label="Documentation pages"><ul class="nav-tree">
+  <li class="nav-item nav-parent">
+        <div class="nav-group is-collapsed">
+          <button type="button" class="nav-row nav-toggle" aria-expanded="false">
+            <span class="nav-label">Garbage Collection</span>
+            <span class="nav-chevron" aria-hidden="true">▸</span>
+          </button>
+          <div class="nav-children">
+            <ul class="nav-tree">
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../Java/index.html" title="Open Garbage Collection overview">Overview</a>
+      </div>
+  </li>
+</ul>
+          </div>
+        </div>
+  </li>
+  <li class="nav-item nav-parent">
+        <div class="nav-group is-collapsed">
+          <button type="button" class="nav-row nav-toggle" aria-expanded="false">
+            <span class="nav-label">Architecture Diagram&#8217;s</span>
+            <span class="nav-chevron" aria-hidden="true">▸</span>
+          </button>
+          <div class="nav-children">
+            <ul class="nav-tree">
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../Arcitecture-diagram/index.html" title="Open Architecture Diagram’s overview">Overview</a>
+      </div>
+  </li>
+</ul>
+          </div>
+        </div>
+  </li>
+  <li class="nav-item nav-parent">
+        <div class="nav-group is-collapsed">
+          <button type="button" class="nav-row nav-toggle" aria-expanded="false">
+            <span class="nav-label">References</span>
+            <span class="nav-chevron" aria-hidden="true">▸</span>
+          </button>
+          <div class="nav-children">
+            <ul class="nav-tree">
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../DevOps-Refs/index.html" title="Open References overview">Overview</a>
+      </div>
+  </li>
+</ul>
+          </div>
+        </div>
+  </li>
+  <li class="nav-item nav-parent">
+        <div class="nav-group is-collapsed">
+          <button type="button" class="nav-row nav-toggle" aria-expanded="false">
+            <span class="nav-label">Data Structure</span>
+            <span class="nav-chevron" aria-hidden="true">▸</span>
+          </button>
+          <div class="nav-children">
+            <ul class="nav-tree">
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../Data-Structure/index.html" title="Open Data Structure overview">Overview</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../Data-Structure/arrays/index.html">Arrays</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../Data-Structure/linked-list/index.html">Linked Lists</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../Data-Structure/stacks-n-queue/index.html">Stacks</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../Data-Structure/trees/index.html">Trees</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../Data-Structure/hash-map/index.html">Hash Map</a>
+      </div>
+  </li>
+  <li class="nav-item nav-parent">
+        <div class="nav-group nav-linked-group is-collapsed">
+          <div class="nav-row nav-linked-row">
+            <a href="../Data-Structure/dynamic-programming/index.html">Dynamic Programming</a>
+            <button type="button" class="nav-toggle nav-linked-toggle" aria-expanded="false" aria-label="Toggle subtopics">
+              <span class="nav-chevron" aria-hidden="true">▸</span>
+            </button>
+          </div>
+          <div class="nav-children"><ul class="nav-tree">
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../Data-Structure/dynamic-programming/fibonacci-series.html">Fibonacci Series</a>
+      </div>
+  </li>
+</ul>
+</div>
+        </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../Data-Structure/graphs/index.html">Graphs</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../Data-Structure/backtracking/index.html">Backtracking</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../Data-Structure/pattern-printing/index.html">Pattern Printing</a>
+      </div>
+  </li>
+  <li class="nav-item nav-parent">
+        <div class="nav-group nav-linked-group is-collapsed">
+          <div class="nav-row nav-linked-row">
+            <a href="../Data-Structure/recursion/index.html">Recursion</a>
+            <button type="button" class="nav-toggle nav-linked-toggle" aria-expanded="false" aria-label="Toggle subtopics">
+              <span class="nav-chevron" aria-hidden="true">▸</span>
+            </button>
+          </div>
+          <div class="nav-children"><ul class="nav-tree">
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../Data-Structure/recursion/sum-of-all-element.html">Sum of all elements</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../Data-Structure/recursion/all-indices-of-array.html">All indices of array</a>
+      </div>
+  </li>
+</ul>
+</div>
+        </div>
+  </li>
+</ul>
+          </div>
+        </div>
+  </li>
+  <li class="nav-item nav-parent">
+        <div class="nav-group">
+          <button type="button" class="nav-row nav-toggle" aria-expanded="true">
+            <span class="nav-label">Low Level Design</span>
+            <span class="nav-chevron" aria-hidden="true">▾</span>
+          </button>
+          <div class="nav-children">
+            <ul class="nav-tree">
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="index.html" title="Open Low Level Design overview">Overview</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="design-principles.html">Design Principles</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="solid-principles.html" class="is-current" aria-current="page">SOLID Principles</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="design-patterns.html">Gang of Four Design Patterns</a>
+      </div>
+  </li>
+</ul>
+          </div>
+        </div>
+  </li>
+</ul>
+</nav>
+      </div>
+    </aside>
+    <main id="article-main" class="docs-article">
+      <nav class="breadcrumbs" aria-label="Breadcrumb"><a href="../index.html">Home</a><span aria-hidden="true">/</span><a href="index.html">Low Level Design</a><span aria-hidden="true">/</span><a href="solid-principles.html">SOLID Principles</a></nav>
+      <article class="article-body" data-reading-progress>
+        <header class="article-header">
+          <h1>SOLID Principles</h1>
+          
+          <p class="article-subtitle">Five object-oriented design principles, each with the warning signs and a before and after Java example.</p>
+          <ul class="article-chips">
+            <li class="chip chip-difficulty chip-medium">Medium</li><li class="chip chip-tag">Low Level Design</li><li class="chip chip-tag">SOLID</li><li class="chip chip-tag">Java</li>
+          </ul>
+          <div class="article-meta">
+            <span class="article-meta-item" title="Estimated at 220 words per minute">
+              <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+              ~4 min read
+            </span>
+            <span class="article-meta-item">
+              <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="4" y="5" width="16" height="16" rx="2"/><path d="M16 3v4M8 3v4M4 10h16"/></svg>
+              Updated <time datetime="2026-10-27">Oct 27, 2026</time>
+            </span>
+            <button type="button" class="ra-open" aria-controls="reading-assistant" aria-expanded="false" hidden>
+              <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/></svg>
+              Listen
+            </button>
+          </div>
+        </header>
+        <div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>SOLID is an acronym for five principles collected by Robert C. Martin; the acronym itself was coined by Michael Feathers.
+Together they aim at one outcome: when requirements change, a small piece of code is added or swapped instead of many existing classes being edited.</p>
+</div>
+<div class="paragraph">
+<p>Each section below explains the principle, lists the warning signs that it is being broken, and shows a small Java example before and after.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_s_single_responsibility_principle"><a class="anchor" href="#_s_single_responsibility_principle"></a>S: Single Responsibility Principle</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>A class should have only one reason to change.
+"Responsibility" here means a source of change, usually one person or team who asks for it.
+If the finance team and the operations team can both request edits to the same class for unrelated reasons, it has two responsibilities.</p>
+</div>
+<div class="paragraph">
+<p>Warning signs:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>The class name contains "And", "Manager" or "Util", and its methods have little in common.</p>
+</li>
+<li>
+<p>Unrelated tests break when one feature changes.</p>
+</li>
+<li>
+<p>The class imports database, formatting and network libraries at the same time.</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="title">Before: calculation, formatting and storage in one class</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">class Invoice {
+    private final List&lt;LineItem&gt; items;
+
+    Invoice(List&lt;LineItem&gt; items) { this.items = items; }
+
+    BigDecimal total() {
+        return items.stream().map(LineItem::amount).reduce(BigDecimal.ZERO, BigDecimal::add);
+    }
+
+    String toPdfText() { /* layout and fonts */ return "..."; }
+
+    void saveToDatabase(Connection connection) { /* SQL insert */ }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">After: one reason to change per class</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">class Invoice {
+    private final List&lt;LineItem&gt; items;
+
+    Invoice(List&lt;LineItem&gt; items) { this.items = List.copyOf(items); }
+
+    BigDecimal total() {
+        return items.stream().map(LineItem::amount).reduce(BigDecimal.ZERO, BigDecimal::add);
+    }
+}
+
+class InvoicePdfRenderer {
+    byte[] render(Invoice invoice) { /* layout and fonts */ return new byte[0]; }
+}
+
+interface InvoiceRepository {
+    void save(Invoice invoice);
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>A change to the PDF layout now touches only the renderer, and the total can be tested without a database.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_o_openclosed_principle"><a class="anchor" href="#_o_openclosed_principle"></a>O: Open/Closed Principle</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Software should be open for extension but closed for modification.
+When a new variant arrives, it is added as a new class rather than by editing a working one.
+Editing tested code for every new case is how regressions creep in.</p>
+</div>
+<div class="paragraph">
+<p>Warning signs:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>A <code>switch</code> or <code>if-else</code> chain on a type code appears in several places.</p>
+</li>
+<li>
+<p>Adding a new kind of thing means searching the codebase for every place to update.</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="title">Before: every new customer type edits this method</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">class DiscountCalculator {
+    BigDecimal discount(Customer customer, BigDecimal amount) {
+        switch (customer.type()) {
+            case REGULAR:  return BigDecimal.ZERO;
+            case PREMIUM:  return amount.multiply(new BigDecimal("0.10"));
+            case EMPLOYEE: return amount.multiply(new BigDecimal("0.30"));
+            default: throw new IllegalStateException("Unknown type");
+        }
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">After: new policies are new classes</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">interface DiscountPolicy {
+    BigDecimal discount(BigDecimal amount);
+}
+
+class NoDiscount implements DiscountPolicy {
+    public BigDecimal discount(BigDecimal amount) { return BigDecimal.ZERO; }
+}
+
+class PercentageDiscount implements DiscountPolicy {
+    private final BigDecimal rate;
+
+    PercentageDiscount(String rate) { this.rate = new BigDecimal(rate); }
+
+    public BigDecimal discount(BigDecimal amount) { return amount.multiply(rate); }
+}
+
+// Wiring decides which policy a customer gets; the calculation code never changes.
+DiscountPolicy premium = new PercentageDiscount("0.10");</code></pre>
+</div>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+Apply the open/closed principle where variation has actually happened. One <code>switch</code> with two stable cases is fine. YAGNI still applies.
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_l_liskov_substitution_principle"><a class="anchor" href="#_l_liskov_substitution_principle"></a>L: Liskov Substitution Principle</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Objects of a subtype must be usable anywhere the parent type is expected, without the caller noticing.
+A subclass may add behaviour, but it must not weaken what the parent promises or demand more than the parent required.</p>
+</div>
+<div class="paragraph">
+<p>More precisely, a subtype must follow four rules.
+Together they are the full meaning of the principle:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>No stronger preconditions.</strong> It must accept every input the parent accepts. A subclass that rejects negative numbers the parent allowed breaks callers.</p>
+</li>
+<li>
+<p><strong>No weaker postconditions.</strong> It must deliver everything the parent promises. The <code>Square</code> below breaks this: <code>setWidth</code> promises the height stays the same.</p>
+</li>
+<li>
+<p><strong>Keep the invariants.</strong> Whatever is always true of the parent, such as "the balance is never negative", must stay true.</p>
+</li>
+<li>
+<p><strong>No surprising exceptions.</strong> It must not throw kinds of exceptions that callers of the parent are not prepared for.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Warning signs:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>A subclass overrides a method to throw <code>UnsupportedOperationException</code>.</p>
+</li>
+<li>
+<p>Callers check <code>instanceof</code> before calling a method, to avoid a subclass that behaves differently.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>The classic example is a square that extends a rectangle.
+Mathematically a square is a rectangle, but a mutable <code>Square</code> cannot keep the promise that setting the width leaves the height unchanged.</p>
+</div>
+<div class="listingblock">
+<div class="title">Before: Square breaks the Rectangle contract</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">class Rectangle {
+    protected int width, height;
+    void setWidth(int width)   { this.width = width; }
+    void setHeight(int height) { this.height = height; }
+    int area() { return width * height; }
+}
+
+class Square extends Rectangle {
+    @Override void setWidth(int width)   { this.width = width; this.height = width; }
+    @Override void setHeight(int height) { this.width = height; this.height = height; }
+}
+
+void resize(Rectangle r) {
+    r.setWidth(5);
+    r.setHeight(4);
+    assert r.area() == 20; // fails for a Square: area is 16
+}</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">After: model the shared behaviour, not the inheritance</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">interface Shape {
+    int area();
+}
+
+record Rectangle(int width, int height) implements Shape {
+    public int area() { return width * height; }
+}
+
+record Square(int side) implements Shape {
+    public int area() { return side * side; }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The fix is not "never use inheritance".
+It is to make sure the parent&#8217;s contract is something every subtype can honour.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_i_interface_segregation_principle"><a class="anchor" href="#_i_interface_segregation_principle"></a>I: Interface Segregation Principle</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>No client should be forced to depend on methods it does not use.
+Large interfaces push implementers into empty or throwing methods, and every change to the interface ripples into classes that never cared about it.</p>
+</div>
+<div class="paragraph">
+<p>Warning signs:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Implementations full of empty methods or <code>UnsupportedOperationException</code>.</p>
+</li>
+<li>
+<p>An interface change forces unrelated modules to be recompiled or redeployed.</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="title">Before: one interface for every device</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">interface OfficeMachine {
+    void print(Document document);
+    void scan(Document document);
+    void fax(Document document);
+}
+
+class BasicPrinter implements OfficeMachine {
+    public void print(Document document) { /* prints */ }
+    public void scan(Document document) { throw new UnsupportedOperationException(); }
+    public void fax(Document document)  { throw new UnsupportedOperationException(); }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">After: small interfaces, combined where needed</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">interface Printer { void print(Document document); }
+interface Scanner { void scan(Document document); }
+interface Fax     { void fax(Document document); }
+
+class BasicPrinter implements Printer {
+    public void print(Document document) { /* prints */ }
+}
+
+class MultiFunctionDevice implements Printer, Scanner, Fax {
+    public void print(Document document) { /* ... */ }
+    public void scan(Document document)  { /* ... */ }
+    public void fax(Document document)   { /* ... */ }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Code that only prints now depends on <code>Printer</code> alone, and a method that throws <code>UnsupportedOperationException</code> is often a Liskov substitution problem as well.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_d_dependency_inversion_principle"><a class="anchor" href="#_d_dependency_inversion_principle"></a>D: Dependency Inversion Principle</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>High-level business logic should not depend on low-level details such as databases, frameworks or HTTP clients.
+Both should depend on an abstraction, and that abstraction should be owned by the business side.
+The dependency "inverts" because the detail now implements an interface that the high-level code defines.</p>
+</div>
+<div class="paragraph">
+<p>Warning signs:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Business classes create their own collaborators with <code>new</code> for databases, clients or clocks.</p>
+</li>
+<li>
+<p>Unit tests need a real database or network because nothing can be swapped out.</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="title">Before: the service is welded to MySQL</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">class OrderService {
+    private final MySqlOrderRepository repository = new MySqlOrderRepository();
+
+    void place(Order order) {
+        order.validate();
+        repository.insert(order);
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">After: the service owns the abstraction; the detail is injected</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">interface OrderRepository {
+    void save(Order order);
+}
+
+class OrderService {
+    private final OrderRepository repository;
+
+    OrderService(OrderRepository repository) { this.repository = repository; }
+
+    void place(Order order) {
+        order.validate();
+        repository.save(order);
+    }
+}
+
+class MySqlOrderRepository implements OrderRepository {
+    public void save(Order order) { /* SQL insert */ }
+}
+
+// In a test: new OrderService(new InMemoryOrderRepository())</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Three terms are often mixed up. Dependency inversion is the principle: depend on abstractions that the business code owns. Inversion of control is the broader idea that something outside a class, a framework or the caller, creates and wires its collaborators. Dependency injection is one technique for both: hand collaborators in, usually through the constructor. Passing the repository through the constructor is enough; a framework such as Spring is optional.
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_how_the_five_fit_together"><a class="anchor" href="#_how_the_five_fit_together"></a>How the five fit together</h2>
+<div class="sectionbody">
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 40%;">
+<col style="width: 40%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Principle</th>
+<th class="tableblock halign-left valign-top">Question to ask</th>
+<th class="tableblock halign-left valign-top">Typical fix</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Single responsibility</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Who would ask me to change this class?</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Split by reason to change</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Open/closed</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Can I add a variant without editing working code?</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Introduce an interface at the point of variation</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Liskov substitution</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Can every subtype keep the parent&#8217;s promises?</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Narrow the contract or stop inheriting</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Interface segregation</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Does each client use every method it depends on?</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Split into role interfaces</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Dependency inversion</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Does business logic know about databases or frameworks?</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Depend on an interface the business code owns</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>The principles reinforce each other.
+Small, single-purpose classes are easy to put behind small interfaces.
+Small interfaces are easy to substitute and to inject.
+Injected dependencies are what allow behaviour to be extended without modifying it.
+For the general rules underneath all of this, see the <a href="design-principles.html" class="xref page">design principles</a> article.</p>
+</div>
+</div>
+</div>
+      </article>
+      <div class="article-pagination">
+        <a class="prev" href="design-principles.html"><span>← Previous</span><strong>Design Principles</strong></a>
+        <a class="next" href="design-patterns.html"><span>Next →</span><strong>Gang of Four Design Patterns</strong></a>
+      </div>
+    </main>
+    <aside class="docs-toc reading-assistant" id="reading-assistant" aria-label="Reading assistant">
+  <div class="toc-inner ra-inner">
+    <div class="ra-head">
+      <h2 class="ra-title">Reading Assistant</h2>
+      <button type="button" class="ra-close" aria-label="Close reading assistant">
+        <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+    </div>
+
+    <section class="ra-card ra-listen" aria-labelledby="reading-assistant-listen" hidden>
+      <div class="ra-card-head">
+        <svg class="ra-card-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/></svg>
+        <div>
+          <h3 class="ra-card-title" id="reading-assistant-listen">Listen to Article</h3>
+          <p class="ra-card-desc">Listen to the explanation of this article. Code blocks are skipped.</p>
+        </div>
+      </div>
+
+      <div class="ra-ready">
+        <div class="ra-player">
+          <button type="button" class="ra-play" aria-label="Play article">
+            <svg class="ra-icon-play" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M8 5.5v13l11-6.5z"/></svg>
+            <svg class="ra-icon-pause" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M7 5h3.5v14H7zM13.5 5H17v14h-3.5z"/></svg>
+          </button>
+          <div class="ra-track">
+            <div class="ra-meter" role="progressbar" aria-label="Listening progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><span class="ra-meter-fill"></span></div>
+            <span class="ra-time" title="Estimated. Browser speech does not report an exact duration."></span>
+          </div>
+          <button type="button" class="ra-stop" aria-label="Stop listening" disabled>
+            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="6.5" y="6.5" width="11" height="11" rx="1.5"/></svg>
+          </button>
+        </div>
+
+        <div class="ra-controls">
+          <label class="ra-field ra-field-rate">
+            <span class="ra-field-label">Speed</span>
+            <select class="ra-rate">
+              <option value="0.75">0.75×</option>
+              <option value="1" selected>1×</option>
+              <option value="1.25">1.25×</option>
+              <option value="1.5">1.5×</option>
+              <option value="2">2×</option>
+            </select>
+          </label>
+        </div>
+
+        <label class="ra-check"><input type="checkbox" class="ra-follow" checked> Highlight and follow along</label>
+        <p class="ra-status" role="status" aria-live="polite">Ready</p>
+
+        <p class="ra-tip">
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M9 18h6M10 21h4"/><path d="M12 3a6 6 0 0 0-3.5 10.9V16h7v-2.1A6 6 0 0 0 12 3z"/></svg>
+          <span><strong>Tip:</strong> Headings and explanations are read aloud; code is skipped. Read in Google UK English Male on Chrome; other browsers use their closest British English voice.</span>
+        </p>
+      </div>
+
+      <p class="ra-unsupported" hidden>Listening isn&#8217;t available in this browser. The article itself works as usual.</p>
+    </section>
+
+    <section class="ra-card ra-jump" aria-labelledby="reading-assistant-sections" hidden>
+      <h3 class="ra-card-title" id="reading-assistant-sections">Jump to Section</h3>
+      <ol class="ra-sections"></ol>
+    </section>
+
+    <section class="ra-card ra-info" aria-labelledby="reading-assistant-info">
+      <h3 class="ra-card-title" id="reading-assistant-info">Page Info</h3>
+      <ul class="ra-info-list">
+        <li>
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+          <span title="Estimated at 220 words per minute">~4 min read</span>
+        </li>
+        <li>
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h6"/></svg>
+          <span title="Prose only; code is not counted">~936 words</span>
+        </li>
+        <li>
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="4" y="5" width="16" height="16" rx="2"/><path d="M16 3v4M8 3v4M4 10h16"/></svg>
+          <span>Last updated <time datetime="2026-10-27">Oct 27, 2026</time></span>
+        </li>
+      </ul>
+    </section>
+  </div>
+</aside>
+  </div>
+  <footer class="docs-footer">© 2026 Ayush Nigam · <a href="../index.html">Home</a></footer>
+  <script src="../../../_/js/reading-assistant.js?v=2" defer></script>
+  <script src="../../../_/js/site.js?v=15" defer></script>
+</body>
+</html>
