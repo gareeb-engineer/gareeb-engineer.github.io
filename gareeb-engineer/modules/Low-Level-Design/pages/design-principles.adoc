@@ -1,4 +1,5 @@
 = Design Principles
+:page-reading-assistant:
 :page-subtitle: Six rules of thumb that make everyday code easier to read, test and change.
 :page-difficulty: Easy
 :page-tags: Low Level Design, Design Principles, Java

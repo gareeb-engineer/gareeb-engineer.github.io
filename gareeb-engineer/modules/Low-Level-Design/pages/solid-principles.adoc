@@ -1,4 +1,5 @@
 = SOLID Principles
+:page-reading-assistant:
 :page-subtitle: Five object-oriented design principles, each with the warning signs and a before and after Java example.
 :page-difficulty: Medium
 :page-tags: Low Level Design, SOLID, Java

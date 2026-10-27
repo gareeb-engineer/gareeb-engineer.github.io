@@ -1,12 +1,18 @@
 # Reading Assistant and reading progress
 
-Every documentation article now gets:
+Every documentation article gets these automatically:
 
 - a slim **reading progress bar** under the sticky header, with a `Reading N%` label on wide screens
 - a **`~N min read`** label and an optional **Updated** date under the title
-- a right-hand **Reading Assistant** panel with **Listen to Article**, **Jump to Section**, and **Page Info**
 
-Authors don't need to do anything. It works on ordinary `.adoc` pages with no HTML.
+The right-hand **Reading Assistant** panel (**Listen to Article**, **Jump to Section**, **Page Info**) is **opt-in per page**. Add one line to the page header:
+
+```asciidoc
+= My Article
+:page-reading-assistant:
+```
+
+Pages without it keep the classic "On this page" panel. No HTML is needed either way.
 
 ![Desktop](../previews/reading-assistant-desktop.png)
 
@@ -14,24 +20,35 @@ Authors don't need to do anything. It works on ordinary `.adoc` pages with no HT
 
 | Page | Progress bar | Reading time | Assistant |
 |---|---|---|---|
-| Normal article (`default.hbs`) | yes | yes | yes |
+| Article with `:page-reading-assistant:` | yes | yes | yes |
+| Any other article (`default.hbs`) | yes | yes | no (classic "On this page") |
 | Site start page (`page.home`) | no | no | no (classic "On this page") |
 | Portfolio layout, 404, header fragment | no | no | no |
 
 ## Author controls
 
-These are valueless attributes in the page header. They're all opt-outs, because the defaults are on.
+These are valueless attributes in the page header. The assistant is opt-in; the progress bar and reading time are on by default and can be turned off.
 
 ```asciidoc
 = My Article
-:page-no-reading-assistant:   // classic "On this page" panel instead
-:page-no-listen:              // assistant without the Listen card (button reads "Sections")
+:page-reading-assistant:      // OPT-IN: show the Reading Assistant panel
+:page-no-listen:              // with the assistant: hide only the Listen card (button reads "Sections")
 :page-no-reading-progress:    // no progress bar
 :page-no-reading-time:        // no "~N min read"
 :page-revdate: 2026-10-26     // "Updated Oct 26, 2026" + Page Info; omit if you have no real date
 ```
 
-Antora drops the `page-` prefix before the template sees these. `helpers/readingInfo.js` reads them as `no-listen`, `revdate` and so on. I tested each switch with a real build.
+Antora drops the `page-` prefix before the template sees these. `helpers/readingInfo.js` reads them as `reading-assistant`, `no-listen`, `revdate` and so on.
+
+To turn the assistant on for **every** page in the component, set it in `gareeb-engineer/antora.yml` instead of each page. The trailing `@` lets a page switch it back off with `:page-reading-assistant!:`.
+
+```yaml
+asciidoc:
+  attributes:
+    page-reading-assistant: '@'
+```
+
+Antora has no per-module attribute setting, so for a single module (for example, only `Low-Level-Design`), add the line to each of its pages.
 
 A date that isn't ISO (`YYYY-MM-DD`) is shown verbatim and gets no machine-readable `<time>`. Nothing is ever invented. Git-based dates aren't used, because CI checks out with `fetch-depth: 1`, so every file would show the same date.
 

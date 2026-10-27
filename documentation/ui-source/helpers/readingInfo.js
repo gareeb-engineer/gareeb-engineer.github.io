@@ -12,8 +12,10 @@
 // attributes['no-listen'] with the value '' (an empty string, which Handlebars
 // would treat as false, which is why the flags are resolved here and not in the template):
 //
-//   :page-no-reading-assistant:   classic "On this page" panel instead of the assistant
-//   :page-no-listen:              assistant without the Listen card
+//   :page-reading-assistant:      OPT-IN: show the Reading Assistant panel (Listen,
+//                                 Jump to Section, Page Info). Without it the page
+//                                 keeps the classic "On this page" panel.
+//   :page-no-listen:              with the assistant on: hide only the Listen card
 //   :page-no-reading-progress:    no reading progress bar under the header
 //   :page-no-reading-time:        no "~N min read" label
 //   :page-revdate: 2026-10-26     "Last updated" date (shown only when set)
@@ -79,7 +81,8 @@ function compute (page) {
   const words = countWords(html)
   const minutes = words ? Math.max(1, Math.round(words / WORDS_PER_MINUTE)) : 0
   const date = isSet(attrs, 'revdate') ? formatDate(attrs.revdate) : null
-  const assistant = !home && !isSet(attrs, 'no-reading-assistant')
+  // Opt-in: only pages that set :page-reading-assistant: get the panel.
+  const assistant = !home && isSet(attrs, 'reading-assistant')
   const showTime = !home && words > 0 && !isSet(attrs, 'no-reading-time')
 
   // Antora's bare Handlebars has no `or` helper, so combined conditions are precomputed.
