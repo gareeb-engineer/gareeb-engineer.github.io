@@ -1,0 +1,102 @@
+{{!--
+  Right-hand Reading Assistant. Rendered by layouts/default.hbs in place of the
+  classic "On this page" panel. Context: the object returned by helpers/readingInfo.js.
+
+  It keeps the `docs-toc` class on purpose: in-place page navigation (site.js) swaps
+  the element with that class, so the assistant refreshes on every article change.
+
+  Everything interactive is wired up by js/reading-assistant.js. Without JavaScript
+  the Listen card stays hidden and Page Info is still shown.
+--}}
+<aside class="docs-toc reading-assistant" id="reading-assistant" aria-label="Reading assistant">
+  <div class="toc-inner ra-inner">
+    <div class="ra-head">
+      <h2 class="ra-title">Reading Assistant</h2>
+      <button type="button" class="ra-close" aria-label="Close reading assistant">
+        <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+    </div>
+
+    {{#if listen}}
+    <section class="ra-card ra-listen" aria-labelledby="reading-assistant-listen" hidden>
+      <div class="ra-card-head">
+        <svg class="ra-card-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/></svg>
+        <div>
+          <h3 class="ra-card-title" id="reading-assistant-listen">Listen to Article</h3>
+          <p class="ra-card-desc">Listen to the explanation of this article. Code blocks are skipped.</p>
+        </div>
+      </div>
+
+      <div class="ra-ready">
+        <div class="ra-player">
+          <button type="button" class="ra-play" aria-label="Play article">
+            <svg class="ra-icon-play" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M8 5.5v13l11-6.5z"/></svg>
+            <svg class="ra-icon-pause" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M7 5h3.5v14H7zM13.5 5H17v14h-3.5z"/></svg>
+          </button>
+          <div class="ra-track">
+            <div class="ra-meter" role="progressbar" aria-label="Listening progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><span class="ra-meter-fill"></span></div>
+            <span class="ra-time" title="Estimated. Browser speech does not report an exact duration."></span>
+          </div>
+          <button type="button" class="ra-stop" aria-label="Stop listening" disabled>
+            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="6.5" y="6.5" width="11" height="11" rx="1.5"/></svg>
+          </button>
+        </div>
+
+        <div class="ra-controls">
+          <label class="ra-field ra-field-rate">
+            <span class="ra-field-label">Speed</span>
+            <select class="ra-rate">
+              <option value="0.75">0.75×</option>
+              <option value="1" selected>1×</option>
+              <option value="1.25">1.25×</option>
+              <option value="1.5">1.5×</option>
+              <option value="2">2×</option>
+            </select>
+          </label>
+        </div>
+
+        <label class="ra-check"><input type="checkbox" class="ra-follow" checked> Highlight and follow along</label>
+        <p class="ra-status" role="status" aria-live="polite">Ready</p>
+
+        <p class="ra-tip">
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M9 18h6M10 21h4"/><path d="M12 3a6 6 0 0 0-3.5 10.9V16h7v-2.1A6 6 0 0 0 12 3z"/></svg>
+          <span><strong>Tip:</strong> Headings and explanations are read aloud; code is skipped. Read in Google UK English Male on Chrome; other browsers use their closest British English voice.</span>
+        </p>
+      </div>
+
+      <p class="ra-unsupported" hidden>Listening isn&#8217;t available in this browser. The article itself works as usual.</p>
+    </section>
+    {{/if}}
+
+    <section class="ra-card ra-jump" aria-labelledby="reading-assistant-sections" hidden>
+      <h3 class="ra-card-title" id="reading-assistant-sections">Jump to Section</h3>
+      <ol class="ra-sections"></ol>
+    </section>
+
+    {{#if hasInfo}}
+    <section class="ra-card ra-info" aria-labelledby="reading-assistant-info">
+      <h3 class="ra-card-title" id="reading-assistant-info">Page Info</h3>
+      <ul class="ra-info-list">
+        {{#if showTime}}
+        <li>
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+          <span title="Estimated at {{wpm}} words per minute">~{{minutes}} min read</span>
+        </li>
+        {{/if}}
+        {{#if words}}
+        <li>
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h6"/></svg>
+          <span title="Prose only; code is not counted">~{{wordsLabel}} words</span>
+        </li>
+        {{/if}}
+        {{#if revdate}}
+        <li>
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="4" y="5" width="16" height="16" rx="2"/><path d="M16 3v4M8 3v4M4 10h16"/></svg>
+          <span>Last updated {{#if revdateIso}}<time datetime="{{revdateIso}}">{{revdate}}</time>{{else}}{{revdate}}{{/if}}</span>
+        </li>
+        {{/if}}
+      </ul>
+    </section>
+    {{/if}}
+  </div>
+</aside>

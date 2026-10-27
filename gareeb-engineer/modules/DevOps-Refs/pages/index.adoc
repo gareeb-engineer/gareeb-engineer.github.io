@@ -1,3 +1,7 @@
 = References
 
 link:https://www.linkedin.com/posts/sauravstwt_devops-netflixscale-sre-activity-7358410200191500288-Ecnj?utm_source=share&utm_medium=member_desktop&rcm=ACoAACjHwXwBCNDFN-fktTKkQ51X0Zka2aZZnRc[Netflix Interview Questions]
+
+https://www.citusdata.com/ Postgres handler for distrubuted or sharded setup
+
+0.30000000000000004.com Floating Point math https://0.30000000000000004.com/

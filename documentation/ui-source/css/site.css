@@ -469,7 +469,9 @@
 /* --- heading metadata: subtitle + difficulty/tag chips ------------------- */
 /* Generic, not scoped to coding pages: any article can set these. */
 .article-subtitle { color: var(--muted); font-size: 15px; line-height: 1.6; margin: 11px 0 0; max-width: 780px; }
-.article-chips { list-style: none; display: flex; flex-wrap: wrap; gap: 8px; margin: 15px 0 0; padding: 0; }
+/* Scoped under .article-body so it outranks the generic `.article-body ul/li` spacing. */
+.article-body .article-chips { list-style: none; display: flex; flex-wrap: wrap; gap: 8px; margin: 15px 0 0; padding: 0; }
+.article-body .article-chips .chip { margin: 0; }
 .article-chips .chip { font-size: 12px; font-weight: 650; line-height: 1.5; padding: 5px 11px; border-radius: 6px; background: #eef2f7; color: #44576d; }
 .article-chips .chip-tag { background: #eef3f8; color: #42566c; }
 .article-chips .chip-difficulty { background: #dbeafe; color: #1c4a8a; }
@@ -613,4 +615,233 @@
 }
 @media (prefers-reduced-motion: reduce) {
   .article-body.coding-page details > summary.title::before { transition: none; }
+}
+
+/* ============================================================================
+   v20: reading progress bar + Reading Assistant (right-hand Listen panel).
+   Markup: layouts/default.hbs, partials/reading-assistant.hbs.
+   Behaviour: js/reading-assistant.js. Author switches: helpers/readingInfo.js.
+
+   Desktop (>1180px): third grid column, sticky like the old "On this page".
+   Narrower, or touch phones held sideways: a slide-in drawer from the right,
+   opened from the "Listen" button under the article title. Keep the query in
+   sync with drawerMQ in js/reading-assistant.js.
+   ========================================================================= */
+
+/* --- anchors land below the sticky header ------------------------------- */
+.docs-page .article-body [id] { scroll-margin-top: 86px; }
+
+/* --- reading progress ---------------------------------------------------- */
+.docs-page .docs-header-inner { position: relative; }
+.read-progress {
+  position: absolute; left: 0; right: 0; bottom: -1px; height: 3px;
+  background: transparent; pointer-events: none; overflow: hidden;
+}
+.read-progress-fill {
+  display: block; width: 100%; height: 100%;
+  background: linear-gradient(90deg, #2563c9, #4f8fe0);
+  transform: scaleX(0); transform-origin: 0 50%;
+  transition: transform .12s linear;
+}
+.read-progress[hidden], .read-progress-label[hidden] { display: none; }
+.read-progress-label {
+  position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);
+  font-size: 11px; font-weight: 650; letter-spacing: .02em; color: #6b7f95; white-space: nowrap;
+  pointer-events: none;
+}
+.read-progress-value { color: #2563c9; font-variant-numeric: tabular-nums; }
+/* The label only fits between the logo and the header links on wide screens. */
+@media (max-width: 1279px) { .read-progress-label { display: none; } }
+@media (prefers-reduced-motion: reduce) { .read-progress-fill { transition: none; } }
+
+/* --- article meta row: ~N min read · Updated · Listen -------------------- */
+.article-meta { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 18px; margin: 15px 0 0; font-size: 13px; color: #61748a; }
+.article-meta-item { display: inline-flex; align-items: center; gap: 6px; }
+.article-meta svg, .ra-open svg {
+  flex: none; width: 15px; height: 15px;
+  fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round;
+}
+.article-header--centered .article-meta { justify-content: center; }
+.ra-open {
+  display: inline-flex; align-items: center; gap: 7px;
+  min-height: 32px; padding: 0 13px; border-radius: 16px;
+  border: 1px solid #c9d8ea; background: #f2f7fd; color: #1f4f8f;
+  font: 650 12px/1 Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif; cursor: pointer;
+}
+.ra-open:hover { background: #e6effa; border-color: #b4c9e2; }
+.ra-open[hidden] { display: none; }
+.ra-open.is-speaking { background: #2563c9; border-color: #2563c9; color: #fff; }
+/* With the panel already open beside the article, the button is redundant. */
+@media (min-width: 1181px) {
+  html.has-reading-assistant:not(.ra-closed) .ra-open { display: none; }
+}
+
+/* --- desktop column ----------------------------------------------------- */
+@media (min-width: 1181px) {
+  .docs-page .docs-shell:has(> .reading-assistant) { grid-template-columns: 250px minmax(0, 1fr) 300px; }
+  html.ra-closed .docs-page .docs-shell:has(> .reading-assistant) { grid-template-columns: 265px minmax(0, 1fr); }
+  html.ra-closed .docs-page .reading-assistant { display: none; }
+}
+@media (min-width: 1440px) {
+  .docs-page .docs-shell:has(> .reading-assistant) { grid-template-columns: 265px minmax(0, 1fr) 320px; }
+}
+/* Fallback for browsers without :has(): the JS-set class carries the same rule. */
+@media (min-width: 1181px) {
+  html.has-reading-assistant:not(.ra-closed) .docs-page .docs-shell { grid-template-columns: 250px minmax(0, 1fr) 300px; }
+}
+@media (min-width: 1440px) {
+  html.has-reading-assistant:not(.ra-closed) .docs-page .docs-shell { grid-template-columns: 265px minmax(0, 1fr) 320px; }
+}
+
+.docs-page .docs-toc.reading-assistant { padding: 0 16px; background: #fff; }
+.docs-page .reading-assistant .ra-inner { padding: 22px 0 24px; display: flex; flex-direction: column; gap: 14px; scrollbar-width: thin; }
+.reading-assistant svg { fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+
+.ra-head { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+.ra-title { margin: 0; font-size: 16px; font-weight: 760; letter-spacing: -.02em; color: var(--ink); }
+.ra-title:focus { outline: none; }
+.ra-close {
+  display: grid; place-items: center; width: 32px; height: 32px; margin-right: -6px;
+  border: 0; border-radius: 8px; background: transparent; color: #4b6079; cursor: pointer;
+}
+.ra-close:hover { background: #eef3f8; color: var(--ink); }
+.ra-close svg { width: 18px; height: 18px; }
+
+.ra-card { border: 1px solid var(--line); border-radius: 12px; background: #fff; padding: 15px 15px 14px; }
+.ra-card[hidden], .reading-assistant [hidden] { display: none; }
+.ra-card-title { margin: 0; font-size: 14px; font-weight: 750; letter-spacing: -.01em; color: var(--ink); }
+.ra-jump .ra-card-title, .ra-info .ra-card-title { margin-bottom: 9px; }
+
+/* --- Listen card -------------------------------------------------------- */
+.ra-listen { background: #f8fbff; border-color: #d9e5f3; }
+.ra-card-head { display: flex; gap: 11px; align-items: flex-start; margin-bottom: 14px; }
+.ra-card-icon { flex: none; width: 22px; height: 22px; color: #2563c9; margin-top: 1px; }
+.ra-card-desc { margin: 4px 0 0; font-size: 12px; line-height: 1.55; color: #5d7088; }
+
+.ra-player { display: flex; align-items: center; gap: 11px; }
+.ra-play {
+  flex: none; display: grid; place-items: center; width: 50px; height: 50px; padding: 0;
+  border: 0; border-radius: 50%; background: #2563c9; color: #fff; cursor: pointer;
+  box-shadow: 0 0 0 5px rgba(37, 99, 201, .14), 0 6px 14px rgba(37, 99, 201, .28);
+  transition: transform .12s ease, background-color .12s ease;
+}
+.ra-play:hover { background: #1d55b3; }
+.ra-play:active { transform: scale(.96); }
+.ra-play:disabled { background: #9fb3cb; box-shadow: none; cursor: not-allowed; }
+.ra-play svg { width: 22px; height: 22px; fill: currentColor; stroke: none; }
+.ra-play .ra-icon-play { margin-left: 3px; }
+.ra-play .ra-icon-pause, .ra-play.is-playing .ra-icon-play { display: none; }
+.ra-play.is-playing .ra-icon-pause { display: block; }
+
+.ra-track { flex: 1 1 auto; min-width: 0; display: flex; flex-direction: column; gap: 6px; }
+.ra-meter { height: 6px; border-radius: 3px; background: #dde6f1; overflow: hidden; }
+.ra-meter-fill { display: block; width: 100%; height: 100%; background: #2563c9; transform: scaleX(0); transform-origin: 0 50%; transition: transform .2s linear; }
+.ra-time { font-size: 11.5px; font-weight: 600; color: #5d7088; font-variant-numeric: tabular-nums; white-space: nowrap; cursor: help; }
+
+.ra-stop {
+  flex: none; display: grid; place-items: center; width: 34px; height: 34px; padding: 0;
+  border: 1px solid #d3deeb; border-radius: 8px; background: #fff; color: #3d5470; cursor: pointer;
+}
+.ra-stop:hover:not(:disabled) { background: #eef3f8; }
+.ra-stop:disabled { opacity: .45; cursor: not-allowed; }
+.ra-stop svg { width: 15px; height: 15px; fill: currentColor; stroke: none; }
+
+.ra-controls { display: grid; grid-template-columns: 96px; gap: 9px; margin-top: 14px; }
+.ra-field { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+.ra-field-label { font-size: 10.5px; font-weight: 750; letter-spacing: .06em; text-transform: uppercase; color: #6b7f95; }
+.ra-field select {
+  width: 100%; min-width: 0; height: 34px; padding: 0 9px;
+  border: 1px solid #d3deeb; border-radius: 8px; background: #fff; color: var(--ink);
+  font: 500 12.5px/1 Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+  text-overflow: ellipsis;
+}
+.ra-check { display: flex; align-items: center; gap: 7px; margin-top: 11px; font-size: 12px; color: #4b6079; cursor: pointer; }
+.ra-check input { width: 15px; height: 15px; margin: 0; accent-color: #2563c9; }
+.ra-status { margin: 9px 0 0; font-size: 12px; font-weight: 650; color: #2c5b94; min-height: 1.5em; }
+.ra-tip {
+  display: flex; gap: 9px; align-items: flex-start; margin: 11px 0 0; padding: 10px 11px;
+  border-radius: 9px; background: #fff7e6; border: 1px solid #f6e3b8;
+  font-size: 11.5px; line-height: 1.55; color: #6b5420;
+}
+.ra-tip svg { flex: none; width: 16px; height: 16px; color: #c58a12; margin-top: 1px; }
+.ra-tip strong { color: #5a4313; }
+.ra-unsupported { margin: 0; font-size: 12.5px; line-height: 1.55; color: #5d7088; }
+
+/* --- Jump to Section ---------------------------------------------------- */
+.ra-sections { list-style: none; margin: 0; padding: 0; }
+.ra-section {
+  display: grid; grid-template-columns: minmax(0, 1fr) 30px 42px; align-items: center; gap: 6px;
+  padding: 5px 4px 5px 6px; border-top: 1px solid #edf1f6; border-radius: 6px;
+}
+.ra-section:first-child { border-top-color: transparent; }
+.ra-section.is-active { background: #eef4fd; border-top-color: transparent; }
+.ra-section.is-active + .ra-section { border-top-color: transparent; }
+.ra-section-link { display: flex; gap: 6px; min-width: 0; font-size: 12.5px; line-height: 1.45; color: #2f4560 !important; text-decoration: none !important; }
+a.ra-section-link:hover .ra-section-label { color: #1f5b95; text-decoration: underline; text-underline-offset: 2px; }
+.ra-section-num { flex: none; color: #6b7f95; font-variant-numeric: tabular-nums; }
+.ra-section-label { min-width: 0; overflow-wrap: anywhere; }
+.ra-section.is-active .ra-section-label { color: #1f4f8f; font-weight: 700; }
+.ra-section-play {
+  display: grid; place-items: center; width: 28px; height: 28px; padding: 0;
+  border: 0; border-radius: 50%; background: #e7effa; color: #2563c9; cursor: pointer;
+}
+.ra-section-play:hover:not(:disabled) { background: #d5e3f6; }
+.ra-section-play:disabled { background: #f1f4f8; color: #b3c0cf; cursor: not-allowed; }
+.ra-section-play svg { width: 13px; height: 13px; margin-left: 2px; fill: currentColor; stroke: none; }
+.ra-section-time { font-size: 11px; color: #6b7f95; text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+
+/* --- Page Info ---------------------------------------------------------- */
+.ra-info-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 7px; }
+.ra-info-list li { display: flex; align-items: center; gap: 9px; margin: 0; font-size: 12.5px; color: #4b6079; }
+.ra-info-list svg { flex: none; width: 15px; height: 15px; color: #6b7f95; }
+
+/* --- the paragraph being read ------------------------------------------- */
+.article-body .ra-speaking {
+  background: #fff6d6; box-shadow: 0 0 0 4px #fff6d6; border-radius: 3px;
+  transition: background-color .2s ease, box-shadow .2s ease;
+}
+@media (prefers-reduced-motion: reduce) { .article-body .ra-speaking, .ra-meter-fill, .ra-play { transition: none; } }
+
+.reading-assistant button:focus-visible, .reading-assistant select:focus-visible,
+.reading-assistant input:focus-visible, .reading-assistant a:focus-visible, .ra-open:focus-visible {
+  outline: 3px solid #6e9bc8; outline-offset: 2px;
+}
+
+/* --- drawer: tablets, phones, narrow laptop windows ---------------------- */
+.ra-backdrop { display: none; }
+@media (max-width: 1180px), (hover: none) and (pointer: coarse) and (max-height: 500px) {
+  .docs-page .docs-toc.reading-assistant {
+    display: block; position: fixed; z-index: 62; top: var(--ra-top, 70px); right: 0; bottom: 0;
+    width: min(340px, 92vw); padding: 0 16px; border-left: 1px solid var(--line);
+    overflow-y: auto; overscroll-behavior: contain; -webkit-overflow-scrolling: touch;
+    transform: translateX(105%); visibility: hidden;
+    transition: transform .22s ease, visibility 0s linear .22s;
+  }
+  html.ra-drawer-open .docs-page .docs-toc.reading-assistant {
+    transform: none; visibility: visible; transition: transform .22s ease;
+    box-shadow: -12px 0 32px rgba(15, 27, 42, .18);
+  }
+  .docs-page .reading-assistant .ra-inner { position: static; max-height: none; overflow: visible; padding: 18px 0 28px; }
+  .ra-backdrop {
+    display: block; position: fixed; z-index: 61; left: 0; right: 0; bottom: 0; top: var(--ra-top, 70px);
+    background: rgba(15, 27, 42, .38); opacity: 0; visibility: hidden;
+    transition: opacity .2s ease, visibility 0s linear .2s;
+  }
+  html.ra-drawer-open .ra-backdrop { opacity: 1; visibility: visible; transition: opacity .2s ease; }
+  html.ra-drawer-open { overflow: hidden; }
+}
+@media (max-width: 750px), (hover: none) and (pointer: coarse) and (max-height: 500px) {
+  .docs-page .article-body [id] { scroll-margin-top: 74px; }
+  .article-meta { font-size: 12.5px; gap: 8px 14px; }
+}
+@media (hover: none) and (pointer: coarse) {
+  .ra-open { min-height: 44px; padding: 0 16px; }
+  .ra-close, .ra-stop { width: 44px; height: 44px; }
+  .ra-section { grid-template-columns: minmax(0, 1fr) 44px 42px; }
+  .ra-section-play { width: 40px; height: 40px; }
+  .ra-section-link { min-height: 40px; align-items: center; }
+  .ra-field select { height: 44px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .docs-page .docs-toc.reading-assistant, .ra-backdrop { transition: none !important; }
 }

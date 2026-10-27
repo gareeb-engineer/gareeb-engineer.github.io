@@ -6,7 +6,7 @@
   <meta name="color-scheme" content="light">
   <title>{{#if page.title}}{{{page.title}}} · {{/if}}{{site.title}}</title>
   {{#if page.description}}<meta name="description" content="{{page.description}}">{{/if}}
-  <link rel="stylesheet" href="{{uiRootPath}}/css/site.css?v=19">
+  <link rel="stylesheet" href="{{uiRootPath}}/css/site.css?v=21">
 </head>
 <body class="docs-page">
   <a class="skip-link" href="#article-main">Skip to content</a>
@@ -31,7 +31,13 @@
       {{!-- Decorative duplicate of the logo link: hidden from screen readers and skipped by Tab. --}}
       <a class="header-avatar" href="{{{relativize site.homeUrl}}}" aria-hidden="true" tabindex="-1"><img src="{{uiRootPath}}/img/profile-photo.png" alt="Ayush Nigam profile photo" width="36" height="36"></a>
 <button type="button" class="mobile-nav-toggle" aria-label="Toggle documentation navigation" aria-expanded="false" aria-controls="docs-sidebar">☰ Menu</button>
+      {{!-- Visual duplicate of the progress bar value, so hidden from screen readers. --}}
+      <span class="read-progress-label" aria-hidden="true" hidden>Reading <span class="read-progress-value">0%</span></span>
     </div>
+    {{!-- Article reading progress. The header persists across in-place navigation, so this
+          is always present and js/reading-assistant.js shows it only when the current
+          article has data-reading-progress (off with :page-no-reading-progress:). --}}
+    <div class="read-progress" role="progressbar" aria-label="Article reading progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" hidden><span class="read-progress-fill"></span></div>
   </header>
   <div class="docs-shell">
     <aside class="docs-sidebar" id="docs-sidebar" aria-label="Documentation sidebar">
@@ -50,7 +56,7 @@
       {{/unless}}
       {{!-- :page-role: adds classes to the article, e.g. `coding-page` for the
             numbered problem-solving layout. Keeps presentation out of the AsciiDoc. --}}
-      <article class="article-body{{#if page.attributes.role}} {{page.attributes.role}}{{/if}}">
+      <article class="article-body{{#if page.attributes.role}} {{page.attributes.role}}{{/if}}"{{#if (lookup (readingInfo page) 'progress')}} data-reading-progress{{/if}}>
         {{#if page.title}}
         <header class="article-header{{#if page.attributes.centered}} article-header--centered{{/if}}">
           <h1>{{{page.title}}}</h1>
@@ -63,6 +69,37 @@
             {{#each this}}<li class="chip {{cls}}">{{label}}</li>{{/each}}
           </ul>
           {{/with}}
+          {{!-- Reading time, last-updated date and the assistant toggle (helpers/readingInfo.js). --}}
+          {{#with (readingInfo page)}}
+          {{#if meta}}
+          <div class="article-meta">
+            {{#if showTime}}
+            <span class="article-meta-item" title="Estimated at {{wpm}} words per minute">
+              <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+              ~{{minutes}} min read
+            </span>
+            {{/if}}
+            {{#if revdate}}
+            <span class="article-meta-item">
+              <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="4" y="5" width="16" height="16" rx="2"/><path d="M16 3v4M8 3v4M4 10h16"/></svg>
+              Updated {{#if revdateIso}}<time datetime="{{revdateIso}}">{{revdate}}</time>{{else}}{{revdate}}{{/if}}
+            </span>
+            {{/if}}
+            {{#if assistant}}
+            {{!-- Shown by JS. Opens the assistant drawer on narrow screens, or re-opens a closed panel. --}}
+            <button type="button" class="ra-open" aria-controls="reading-assistant" aria-expanded="false" hidden>
+              {{#if listen}}
+              <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/></svg>
+              Listen
+              {{else}}
+              <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></svg>
+              Sections
+              {{/if}}
+            </button>
+            {{/if}}
+          </div>
+          {{/if}}
+          {{/with}}
         </header>
         {{/if}}
         {{{page.contents}}}
@@ -72,6 +109,11 @@
         {{#if page.next}}<a class="next" href="{{{relativize page.next.url}}}"><span>Next →</span><strong>{{{page.next.content}}}</strong></a>{{/if}}
       </div>
     </main>
+    {{!-- Reading Assistant by default; classic "On this page" panel on the start page
+          or with :page-no-reading-assistant:. --}}
+    {{#if (lookup (readingInfo page) 'assistant')}}
+    {{> reading-assistant (readingInfo page)}}
+    {{else}}
     <aside class="docs-toc" aria-label="On this page">
       <div class="toc-inner">
       <div class="toc-heading">ON THIS PAGE</div>
@@ -79,8 +121,11 @@
       <nav id="js-local-toc"></nav>
       </div>
     </aside>
+    {{/if}}
   </div>
   <footer class="docs-footer">© 2026 Ayush Nigam · <a href="{{{relativize site.homeUrl}}}">Home</a></footer>
-  <script src="{{uiRootPath}}/js/site.js?v=14" defer></script>
+  {{!-- Order matters: both are deferred, and site.js calls ReadingAssistant.refresh(). --}}
+  <script src="{{uiRootPath}}/js/reading-assistant.js?v=2" defer></script>
+  <script src="{{uiRootPath}}/js/site.js?v=15" defer></script>
 </body>
 </html>

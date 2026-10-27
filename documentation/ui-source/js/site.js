@@ -507,6 +507,9 @@
     enhanceCode(root);
     // After enhanceCode so the line count can use its rendered .code-line elements.
     enhanceCollapsibleCode(root);
+    // v20: reading progress + Listen panel (js/reading-assistant.js, docs layout only).
+    // Last, so it reads the finished article; it also stops speech from the previous page.
+    if(window.ReadingAssistant)window.ReadingAssistant.refresh();
   }
   enhanceContent(document);
 
@@ -729,6 +732,11 @@
       main.className=newMain.className;
       importInto(main,newMain);
       tocPanel.className=newToc.className;
+      // v20: the right panel is either "On this page" or the Reading Assistant, which differ in id and label.
+      ['id','aria-label'].forEach(function(name){
+        if(newToc.hasAttribute(name))tocPanel.setAttribute(name,newToc.getAttribute(name));
+        else tocPanel.removeAttribute(name);
+      });
       importInto(tocPanel,newToc);
       currentKey=pageKey(location.href);
       markCurrent();

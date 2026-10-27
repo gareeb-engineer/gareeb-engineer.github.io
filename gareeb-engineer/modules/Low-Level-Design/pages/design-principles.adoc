@@ -1,0 +1,233 @@
+= Design Principles
+:page-subtitle: Six rules of thumb that make everyday code easier to read, test and change.
+:page-difficulty: Easy
+:page-tags: Low Level Design, Design Principles, Java
+:page-revdate: 2026-10-27
+
+There are dozens of named design principles.
+Most of them are restatements of a handful of core ideas, so this article covers only the six that come up in almost every design discussion and code review.
+
+== DRY: Don't Repeat Yourself
+
+Every piece of knowledge should have a single, authoritative place in the code.
+When a business rule lives in two places, the two copies eventually drift apart, and one of them becomes a bug.
+
+In the example below, the rule for a valid email address is written twice.
+When the rule changes, someone has to remember to update both methods.
+
+.Before: the same rule in two places
+[source,java]
+----
+class SignupService {
+    void register(String email) {
+        if (email == null || !email.contains("@") || email.length() > 254) {
+            throw new IllegalArgumentException("Invalid email");
+        }
+        // ...
+    }
+}
+
+class ProfileService {
+    void changeEmail(String email) {
+        if (email == null || !email.contains("@") || email.length() > 254) {
+            throw new IllegalArgumentException("Invalid email");
+        }
+        // ...
+    }
+}
+----
+
+.After: one owner for the rule
+[source,java]
+----
+final class EmailAddress {
+    private final String value;
+
+    EmailAddress(String value) {
+        if (value == null || !value.contains("@") || value.length() > 254) {
+            throw new IllegalArgumentException("Invalid email");
+        }
+        this.value = value;
+    }
+
+    String value() { return value; }
+}
+----
+
+WARNING: DRY is about duplicated knowledge, not code that happens to look similar. Two blocks that are identical today but change for different reasons should stay separate. Merging them creates coupling, not reuse.
+
+== KISS: Keep It Simple
+
+Prefer the simplest design that solves today's problem.
+Simple code is faster to read, easier to debug and cheaper to change.
+Cleverness is usually paid for later by whoever has to maintain it.
+
+A common example is deeply nested conditions.
+Early returns turn a puzzle into a list of plain checks.
+
+.Before: nested conditions
+[source,java]
+----
+String shippingLabel(Order order) {
+    if (order != null) {
+        if (order.isPaid()) {
+            if (!order.items().isEmpty()) {
+                return "Ship to " + order.address();
+            } else {
+                return "Empty order";
+            }
+        } else {
+            return "Awaiting payment";
+        }
+    }
+    return "No order";
+}
+----
+
+.After: early returns
+[source,java]
+----
+String shippingLabel(Order order) {
+    if (order == null) return "No order";
+    if (!order.isPaid()) return "Awaiting payment";
+    if (order.items().isEmpty()) return "Empty order";
+    return "Ship to " + order.address();
+}
+----
+
+== YAGNI: You Aren't Gonna Need It
+
+Do not build features, extension points or configuration options until a real requirement asks for them.
+Speculative code still has to be read, tested and maintained, and the future it was built for often never arrives, or arrives in a different shape.
+
+Suppose a report only needs to be exported as CSV.
+Building a plugin system with a registry, a factory and a configuration file for "future formats" adds three classes and no value.
+Write the CSV exporter.
+If a PDF export is requested next quarter, the principles later in this article make it easy to add an interface then, with a real second use case to guide its shape.
+
+TIP: YAGNI applies to features, not to quality. Tests, clear names and sensible error handling are not speculative.
+
+== Composition over Inheritance
+
+Inheritance says a class *is a* kind of its parent.
+Composition says a class *has a* collaborator that it delegates to.
+Prefer composition when you only want to reuse behaviour, because inheritance exposes every public method of the parent, whether it makes sense or not.
+
+The Java standard library has a well-known example.
+`java.util.Stack` extends `Vector`, so a stack also exposes methods that let callers insert or remove items at any position, which breaks the idea of a stack.
+
+.Before: inherits behaviour it should not expose
+[source,java]
+----
+class BrowserHistory extends java.util.ArrayList<String> {
+    void visit(String url) { add(url); }
+    String back() { return remove(size() - 1); }
+}
+
+// Nothing stops a caller from doing this:
+history.add(0, "https://example.com");
+history.clear();
+----
+
+.After: owns a collection, exposes only what makes sense
+[source,java]
+----
+class BrowserHistory {
+    private final java.util.Deque<String> pages = new java.util.ArrayDeque<>();
+
+    void visit(String url) { pages.push(url); }
+    String back() { return pages.pop(); }
+    boolean canGoBack() { return !pages.isEmpty(); }
+}
+----
+
+Inheritance is still the right tool for a genuine *is a* relationship where every behaviour of the parent applies to the child.
+The Liskov substitution principle in the SOLID article gives a precise test for that.
+
+== Program to an Interface, not an Implementation
+
+Depend on what a collaborator can do, not on which concrete class does it.
+Code written against an interface can be given a different implementation, a fake for tests, or a decorator that adds logging, without changing a single line.
+
+In Java this starts with small habits.
+Declare variables and parameters with the interface type, and create the concrete type in one place.
+
+.Programming to an interface
+[source,java]
+----
+// Declared as List: any List implementation can be passed in or swapped later.
+List<String> names = new ArrayList<>();
+
+interface Notifier {
+    void send(String userId, String message);
+}
+
+class OrderConfirmation {
+    private final Notifier notifier;
+
+    OrderConfirmation(Notifier notifier) { this.notifier = notifier; }
+
+    void confirm(Order order) {
+        notifier.send(order.customerId(), "Order " + order.id() + " confirmed");
+    }
+}
+----
+
+`OrderConfirmation` works the same with an email, SMS or in-memory notifier.
+This idea is the foundation of the dependency inversion principle.
+
+== Law of Demeter: Talk to Your Friends
+
+A method should only call methods on its own object, its parameters, objects it creates, and its direct fields.
+It should not reach through one object to get at another object's internals.
+Long chains of getters couple the caller to the whole object graph, so a change deep inside it breaks code far away.
+
+.Before: reaching through three objects
+[source,java]
+----
+String city = order.getCustomer().getAddress().getCity();
+----
+
+.After: ask the object you already have
+[source,java]
+----
+String city = order.shippingCity();
+
+// Inside Order:
+String shippingCity() { return customer.shippingCity(); }
+----
+
+NOTE: The Law of Demeter is not a rule about counting dots. Fluent builders and stream pipelines return new objects at each step, so they do not break it.
+
+== Summary
+
+[cols="1,2,2"]
+|===
+| Principle | Core idea | Watch out for
+
+| DRY
+| One owner for each rule or piece of knowledge
+| Merging code that only looks alike
+
+| KISS
+| The simplest design that works today
+| Simple is not the same as short
+
+| YAGNI
+| Build for real requirements only
+| Skipping tests or error handling in its name
+
+| Composition over inheritance
+| Reuse by delegating, not by extending
+| Forcing composition onto real "is a" relationships
+
+| Program to an interface
+| Depend on capabilities, not concrete classes
+| An interface for every class, with only one implementation forever
+
+| Law of Demeter
+| Talk only to direct collaborators
+| Wrapper methods that just forward every getter
+|===
+
+Next, the xref:solid-principles.adoc[SOLID principles] apply these ideas specifically to classes and their dependencies.

@@ -1,0 +1,29 @@
+= Low Level Design
+:page-subtitle: How to shape classes, interfaces and their relationships so code stays easy to change.
+:page-tags: Low Level Design, Java, Object-Oriented Design
+:page-revdate: 2026-10-27
+
+== What low level design means
+
+High level design decides which services exist and how they talk to each other.
+Low level design zooms in on a single service and decides how its code is organised: which classes exist, what each one is responsible for, and how they depend on one another.
+
+A good low level design is not the one with the most patterns.
+It is the one where a new requirement touches as few classes as possible, and where each change is easy to test in isolation.
+
+== How to read this series
+
+Start with the general design principles.
+They are short rules of thumb that apply to any code, object-oriented or not.
+Then move on to SOLID, five principles that are specific to object-oriented design and build directly on those ideas.
+
+* xref:design-principles.adoc[Design Principles] -- DRY, KISS, YAGNI, composition over inheritance, programming to an interface, and the Law of Demeter.
+* xref:solid-principles.adoc[SOLID Principles] -- single responsibility, open/closed, Liskov substitution, interface segregation and dependency inversion.
+
+TIP: Every article has a Listen button and a reading progress bar. Code examples are shown on screen but skipped when the article is read aloud.
+
+== Why principles and not rules
+
+None of these principles is a law.
+Each one trades something away: an extra interface costs indirection, removing duplication costs coupling.
+The skill in low level design is knowing which trade-off fits the problem in front of you, and the articles call out where each principle stops helping.
