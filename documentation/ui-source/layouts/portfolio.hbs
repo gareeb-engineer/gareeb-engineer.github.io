@@ -73,7 +73,7 @@
         <p class="library-intro">Every article is written as an Antora AsciiDoc page and linked automatically through the navigation generator.</p>
         {{#if page.navigation}}
         <nav class="portfolio-library" aria-label="All published articles">
-          {{> nav-tree items=page.navigation}}
+          {{> nav-tree items=(navTree page.navigation page.url)}}
         </nav>
         {{else}}
         <p class="library-intro">No articles in the navigation yet. Run tools/generate_nav.py and register the generated file in antora.yml.</p>

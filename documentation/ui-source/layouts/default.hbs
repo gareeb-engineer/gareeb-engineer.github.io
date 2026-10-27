@@ -6,6 +6,9 @@
   <meta name="color-scheme" content="light">
   <title>{{#if page.title}}{{{page.title}}} · {{/if}}{{site.title}}</title>
   {{#if page.description}}<meta name="description" content="{{page.description}}">{{/if}}
+  {{!-- Start the font download with the stylesheet instead of after it, so text
+        does not re-flow when Inter replaces the fallback font. --}}
+  <link rel="preload" href="{{uiRootPath}}/fonts/inter-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="{{uiRootPath}}/css/site.css?v=21">
 </head>
 <body class="docs-page">
@@ -44,7 +47,7 @@
       <div class="sidebar-inner">
       <div class="sidebar-top"><span class="sidebar-eyebrow">ENGINEERING LIBRARY</span></div>
       <input id="nav-filter" class="nav-filter" type="search" placeholder="Filter pages…" aria-label="Filter navigation" autocomplete="off">
-      {{#if page.navigation}}<nav aria-label="Documentation pages">{{> nav-tree items=page.navigation}}</nav>{{else}}<p class="empty-nav">No navigation registered. List each module's nav.adoc under nav: in antora.yml.</p>{{/if}}
+      {{#if page.navigation}}<nav aria-label="Documentation pages">{{> nav-tree items=(navTree page.navigation page.url)}}</nav>{{else}}<p class="empty-nav">No navigation registered. List each module's nav.adoc under nav: in antora.yml.</p>{{/if}}
       </div>
     </aside>
     <main id="article-main" class="docs-article">

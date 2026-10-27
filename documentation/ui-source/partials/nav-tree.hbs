@@ -1,24 +1,26 @@
-{{!-- Antora navigation: buttons for expandable category nodes, real links for pages. --}}
+{{!-- Antora navigation: buttons for expandable category nodes, real links for pages.
+      `items` comes from helpers/navTree.js, which resolves labels, the open group and
+      the current page at build time so the first paint is already final. --}}
 <ul class="nav-tree">
 {{#each items}}
-  <li class="nav-item{{#if items}} nav-parent{{/if}}">
-    {{#if items}}
+  <li class="nav-item{{#if items.length}} nav-parent{{/if}}">
+    {{#if items.length}}
       {{#if url}}
         {{!-- An article with children is a link AND an independently collapsible group. --}}
-        <div class="nav-group nav-linked-group">
+        <div class="nav-group nav-linked-group{{#unless open}} is-collapsed{{/unless}}">
           <div class="nav-row nav-linked-row">
-            <a href="{{{relativize url}}}">{{{content}}}</a>
-            <button type="button" class="nav-toggle nav-linked-toggle" aria-expanded="true" aria-label="Toggle subtopics">
-              <span class="nav-chevron" aria-hidden="true">▾</span>
+            <a href="{{{relativize url}}}"{{#if current}} class="is-current" aria-current="page"{{/if}}>{{{label}}}</a>
+            <button type="button" class="nav-toggle nav-linked-toggle" aria-expanded="{{#if open}}true{{else}}false{{/if}}" aria-label="Toggle subtopics">
+              <span class="nav-chevron" aria-hidden="true">{{#if open}}▾{{else}}▸{{/if}}</span>
             </button>
           </div>
           <div class="nav-children">{{> nav-tree items=items}}</div>
         </div>
       {{else}}
-        <div class="nav-group">
-          <button type="button" class="nav-row nav-toggle" aria-expanded="true">
-            <span class="nav-label">{{{content}}}</span>
-            <span class="nav-chevron" aria-hidden="true">▾</span>
+        <div class="nav-group{{#unless open}} is-collapsed{{/unless}}">
+          <button type="button" class="nav-row nav-toggle" aria-expanded="{{#if open}}true{{else}}false{{/if}}">
+            <span class="nav-label">{{{label}}}</span>
+            <span class="nav-chevron" aria-hidden="true">{{#if open}}▾{{else}}▸{{/if}}</span>
           </button>
           <div class="nav-children">
             {{> nav-tree items=items}}
@@ -27,7 +29,7 @@
       {{/if}}
     {{else}}
       <div class="nav-row">
-        {{#if url}}<a href="{{{relativize url}}}">{{{content}}}</a>{{else}}<span>{{{content}}}</span>{{/if}}
+        {{#if url}}<a href="{{{relativize url}}}"{{#if current}} class="is-current" aria-current="page"{{/if}}{{#if title}} title="{{title}}"{{/if}}>{{{label}}}</a>{{else}}<span>{{{label}}}</span>{{/if}}
       </div>
     {{/if}}
   </li>

@@ -4,7 +4,7 @@
 [.lead]
 **Software Engineer | Java & Spring Boot | Microservices, Kafka & Distributed Systems | AWS & Kubernetes**
 
-image::banner.png[Ayush Nigam's Banner]
+image::banner.webp[Ayush Nigam's Banner,1760,439]
 
 == Good starting point
 
