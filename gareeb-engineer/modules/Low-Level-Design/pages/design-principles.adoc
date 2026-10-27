@@ -1,12 +1,16 @@
 = Design Principles
 :page-reading-assistant:
-:page-subtitle: Six rules of thumb that make everyday code easier to read, test and change.
+:page-subtitle: Seven rules of thumb that make everyday code easier to read, test and change, including the core principles of the Gang of Four.
 :page-difficulty: Easy
 :page-tags: Low Level Design, Design Principles, Java
 :page-revdate: 2026-10-27
 
 There are dozens of named design principles.
-Most of them are restatements of a handful of core ideas, so this article covers only the six that come up in almost every design discussion and code review.
+Most of them are restatements of a handful of core ideas, so this article covers only the seven that come up in almost every design discussion and code review.
+
+Three of them come from the Gang of Four: Erich Gamma, Richard Helm, Ralph Johnson and John Vlissides, the authors of _Design Patterns: Elements of Reusable Object-Oriented Software_ (1994).
+The book states two principles outright, composition over inheritance and programming to an interface, and a third idea, encapsulating what varies, runs through almost every pattern in it.
+The patterns themselves are covered in xref:design-patterns.adoc[Gang of Four Design Patterns].
 
 == DRY: Don't Repeat Yourself
 
@@ -110,6 +114,8 @@ TIP: YAGNI applies to features, not to quality. Tests, clear names and sensible 
 
 == Composition over Inheritance
 
+This is the second principle of the Gang of Four: favour object composition over class inheritance.
+
 Inheritance says a class *is a* kind of its parent.
 Composition says a class *has a* collaborator that it delegates to.
 Prefer composition when you only want to reuse behaviour, because inheritance exposes every public method of the parent, whether it makes sense or not.
@@ -147,6 +153,8 @@ The Liskov substitution principle in the SOLID article gives a precise test for 
 
 == Program to an Interface, not an Implementation
 
+This is the first principle of the Gang of Four.
+
 Depend on what a collaborator can do, not on which concrete class does it.
 Code written against an interface can be given a different implementation, a fake for tests, or a decorator that adds logging, without changing a single line.
 
@@ -176,6 +184,59 @@ class OrderConfirmation {
 
 `OrderConfirmation` works the same with an email, SMS or in-memory notifier.
 This idea is the foundation of the dependency inversion principle.
+
+== Encapsulate What Varies
+
+Find the parts of the code that are likely to change, and separate them from the parts that stay the same.
+Put each varying part behind its own small class or interface, so a change lands in one place instead of being scattered through stable code.
+
+The Gang of Four describe this as encapsulating the concept that varies, and it is the reason most of their patterns exist.
+Strategy encapsulates an algorithm, Factory Method encapsulates which class gets created, and Observer encapsulates who needs to be told about a change.
+
+In the example below, tax rules differ by country and change every year, but the checkout flow does not.
+Mixing them means every tax change edits, and risks breaking, the checkout code.
+
+.Before: the varying rule is buried in stable code
+[source,java]
+----
+class Checkout {
+    BigDecimal total(Cart cart, String country) {
+        BigDecimal subtotal = cart.subtotal();
+        BigDecimal tax;
+        if (country.equals("IN")) {
+            tax = subtotal.multiply(new BigDecimal("0.18"));
+        } else if (country.equals("UK")) {
+            tax = subtotal.multiply(new BigDecimal("0.20"));
+        } else {
+            tax = BigDecimal.ZERO;
+        }
+        return subtotal.add(tax);
+    }
+}
+----
+
+.After: the varying part has its own home
+[source,java]
+----
+interface TaxRule {
+    BigDecimal taxOn(BigDecimal subtotal);
+}
+
+class Checkout {
+    private final TaxRule taxRule;
+
+    Checkout(TaxRule taxRule) { this.taxRule = taxRule; }
+
+    BigDecimal total(Cart cart) {
+        BigDecimal subtotal = cart.subtotal();
+        return subtotal.add(taxRule.taxOn(subtotal));
+    }
+}
+----
+
+A new country or a rate change is now a new or edited `TaxRule`, and `Checkout` is never touched.
+
+TIP: Only encapsulate variation you have actually seen or been told about. Guessing at future change points is YAGNI in disguise.
 
 == Law of Demeter: Talk to Your Friends
 
@@ -218,17 +279,21 @@ NOTE: The Law of Demeter is not a rule about counting dots. Fluent builders and 
 | Build for real requirements only
 | Skipping tests or error handling in its name
 
-| Composition over inheritance
+| Composition over inheritance (GoF)
 | Reuse by delegating, not by extending
 | Forcing composition onto real "is a" relationships
 
-| Program to an interface
+| Program to an interface (GoF)
 | Depend on capabilities, not concrete classes
 | An interface for every class, with only one implementation forever
+
+| Encapsulate what varies (GoF)
+| Isolate the parts that change from the parts that don't
+| Encapsulating changes you are only guessing at
 
 | Law of Demeter
 | Talk only to direct collaborators
 | Wrapper methods that just forward every getter
 |===
 
-Next, the xref:solid-principles.adoc[SOLID principles] apply these ideas specifically to classes and their dependencies.
+Next, the xref:solid-principles.adoc[SOLID principles] apply these ideas specifically to classes and their dependencies, and xref:design-patterns.adoc[Gang of Four Design Patterns] shows them at work in reusable solutions.

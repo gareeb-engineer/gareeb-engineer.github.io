@@ -18,8 +18,9 @@ Start with the general design principles.
 They are short rules of thumb that apply to any code, object-oriented or not.
 Then move on to SOLID, five principles that are specific to object-oriented design and build directly on those ideas.
 
-* xref:design-principles.adoc[Design Principles] -- DRY, KISS, YAGNI, composition over inheritance, programming to an interface, and the Law of Demeter.
+* xref:design-principles.adoc[Design Principles] -- DRY, KISS, YAGNI, the Law of Demeter, and the three Gang of Four principles: composition over inheritance, programming to an interface, and encapsulating what varies.
 * xref:solid-principles.adoc[SOLID Principles] -- single responsibility, open/closed, Liskov substitution, interface segregation and dependency inversion.
+* xref:design-patterns.adoc[Gang of Four Design Patterns] -- the nine most-used patterns: Factory Method, Builder, Singleton, Adapter, Decorator, Facade, Strategy, Observer and Command.
 
 TIP: Every article has a Listen button and a reading progress bar. Code examples are shown on screen but skipped when the article is read aloud.
 

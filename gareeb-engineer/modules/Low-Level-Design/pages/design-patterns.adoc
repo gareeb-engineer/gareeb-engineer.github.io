@@ -1,0 +1,389 @@
+= Gang of Four Design Patterns
+:page-reading-assistant:
+:page-subtitle: The nine Gang of Four patterns that come up most in real Java code, each with when to use it, a short example, and where it goes wrong.
+:page-difficulty: Medium
+:page-tags: Low Level Design, Design Patterns, Gang of Four, Java
+:page-revdate: 2026-10-27
+
+The Gang of Four book catalogues 23 patterns.
+You do not need all of them day to day.
+This article covers the nine that appear most often in Java codebases, libraries and design interviews, three from each of the book's categories:
+
+* *Creational* patterns control how objects are created: Factory Method, Builder and Singleton.
+* *Structural* patterns control how objects are put together: Adapter, Decorator and Facade.
+* *Behavioral* patterns control how objects share work and communicate: Strategy, Observer and Command.
+
+A pattern is a named, proven shape for a recurring problem, not code to copy.
+Each one below applies the principles from xref:design-principles.adoc[Design Principles] and xref:solid-principles.adoc[SOLID], and each comes with a cost, usually an extra class or a level of indirection.
+
+== Factory Method
+
+*Creational.* Let a subclass decide which concrete class to create, while the parent class owns the workflow that uses it.
+
+Use it when a class knows _when_ it needs an object but should not know _which_ class to build, for example a framework that lets each application plug in its own type.
+
+[source,java]
+----
+interface Button { void render(); }
+
+abstract class Dialog {
+    // The factory method: subclasses decide the concrete Button.
+    protected abstract Button createButton();
+
+    void show() {
+        Button ok = createButton();
+        ok.render();
+    }
+}
+
+class WindowsDialog extends Dialog {
+    protected Button createButton() { return new WindowsButton(); }
+}
+
+class WebDialog extends Dialog {
+    protected Button createButton() { return new HtmlButton(); }
+}
+----
+
+NOTE: A static method such as `List.of()` or `Integer.valueOf()` is often called a factory, but it is a simple static factory, not the Gang of Four Factory Method. Both hide the `new`; only Factory Method lets subclasses vary the product.
+
+== Builder
+
+*Creational.* Separate the step-by-step construction of a complex object from the object itself.
+
+Use it when an object has many optional parameters, when a constructor with eight arguments would be unreadable, or when the finished object should be immutable.
+
+[source,java]
+----
+final class HttpRequest {
+    private final String url;
+    private final String method;
+    private final Duration timeout;
+    private final Map<String, String> headers;
+
+    private HttpRequest(Builder b) {
+        this.url = b.url;
+        this.method = b.method;
+        this.timeout = b.timeout;
+        this.headers = Map.copyOf(b.headers);
+    }
+
+    static Builder to(String url) { return new Builder(url); }
+
+    static final class Builder {
+        private final String url;
+        private String method = "GET";
+        private Duration timeout = Duration.ofSeconds(10);
+        private final Map<String, String> headers = new HashMap<>();
+
+        private Builder(String url) { this.url = Objects.requireNonNull(url); }
+
+        Builder method(String method)          { this.method = method; return this; }
+        Builder timeout(Duration timeout)      { this.timeout = timeout; return this; }
+        Builder header(String name, String v)  { headers.put(name, v); return this; }
+        HttpRequest build()                     { return new HttpRequest(this); }
+    }
+}
+
+HttpRequest request = HttpRequest.to("https://api.example.com/orders")
+        .method("POST")
+        .header("Content-Type", "application/json")
+        .build();
+----
+
+The fluent style shown here is the common Java variant popularised by _Effective Java_.
+The original Gang of Four version also uses a separate director object that runs the building steps in order.
+
+== Singleton
+
+*Creational.* Guarantee that a class has exactly one instance and give a single access point to it.
+
+Use it sparingly, for something that genuinely must be unique in the process, such as a registry of hardware devices.
+In Java, an `enum` with one value is the simplest thread-safe implementation, and it also survives serialisation.
+
+[source,java]
+----
+enum MetricsRegistry {
+    INSTANCE;
+
+    private final Map<String, LongAdder> counters = new ConcurrentHashMap<>();
+
+    void increment(String name) {
+        counters.computeIfAbsent(name, k -> new LongAdder()).increment();
+    }
+}
+
+MetricsRegistry.INSTANCE.increment("orders.placed");
+----
+
+WARNING: Singleton is the most overused pattern. A global instance is hidden shared state: it couples every caller to one class and makes tests interfere with each other. Usually it is better to create one instance at startup and pass it in through constructors, which gives the same "only one" result while keeping dependency inversion.
+
+== Adapter
+
+*Structural.* Convert the interface of an existing class into the interface your code expects.
+
+Use it when you need to use a third-party library or legacy class whose methods do not match the interface the rest of your code depends on, and you cannot or should not change it.
+
+[source,java]
+----
+// The interface our code is written against.
+interface PaymentGateway {
+    PaymentResult charge(String customerId, BigDecimal amount);
+}
+
+// A vendor SDK we cannot change: amounts in paise, different names.
+class VendorPayClient {
+    VendorResponse makePayment(String accountRef, long amountInPaise) { /* ... */ return null; }
+}
+
+class VendorPayAdapter implements PaymentGateway {
+    private final VendorPayClient client;
+
+    VendorPayAdapter(VendorPayClient client) { this.client = client; }
+
+    public PaymentResult charge(String customerId, BigDecimal amount) {
+        long paise = amount.movePointRight(2).longValueExact();
+        VendorResponse response = client.makePayment(customerId, paise);
+        return response.isOk() ? PaymentResult.success() : PaymentResult.failed(response.message());
+    }
+}
+----
+
+Only the adapter knows about the vendor, so switching vendors means writing one new adapter.
+In the JDK, `Arrays.asList` adapts an array to the `List` interface.
+
+== Decorator
+
+*Structural.* Add behaviour to an object by wrapping it in another object with the same interface, instead of subclassing.
+
+Use it when you want to combine optional behaviours, such as caching, logging or retries, in any order, without creating a subclass for every combination.
+
+[source,java]
+----
+interface OrderRepository {
+    Order findById(String id);
+}
+
+class CachingOrderRepository implements OrderRepository {
+    private final OrderRepository inner;
+    private final Map<String, Order> cache = new ConcurrentHashMap<>();
+
+    CachingOrderRepository(OrderRepository inner) { this.inner = inner; }
+
+    public Order findById(String id) {
+        return cache.computeIfAbsent(id, inner::findById);
+    }
+}
+
+class LoggingOrderRepository implements OrderRepository {
+    private final OrderRepository inner;
+
+    LoggingOrderRepository(OrderRepository inner) { this.inner = inner; }
+
+    public Order findById(String id) {
+        System.out.println("findById " + id);
+        return inner.findById(id);
+    }
+}
+
+OrderRepository repository =
+        new LoggingOrderRepository(new CachingOrderRepository(new SqlOrderRepository()));
+----
+
+Java's own I/O classes are built this way: a `BufferedReader` wraps an `InputStreamReader`, which wraps an `InputStream`.
+Decorator is composition over inheritance in its purest form.
+
+== Facade
+
+*Structural.* Provide one simple entry point to a group of classes that are complicated to use together.
+
+Use it when callers keep repeating the same multi-step sequence across several subsystems, and that sequence has nothing to do with their own job.
+
+[source,java]
+----
+class CheckoutFacade {
+    private final InventoryService inventory;
+    private final PaymentService payments;
+    private final ShippingService shipping;
+    private final EmailService email;
+
+    CheckoutFacade(InventoryService inventory, PaymentService payments,
+                   ShippingService shipping, EmailService email) {
+        this.inventory = inventory;
+        this.payments = payments;
+        this.shipping = shipping;
+        this.email = email;
+    }
+
+    OrderConfirmation placeOrder(Cart cart, Customer customer) {
+        inventory.reserve(cart.items());
+        PaymentReceipt receipt = payments.charge(customer, cart.total());
+        Shipment shipment = shipping.schedule(cart.items(), customer.address());
+        email.sendConfirmation(customer, receipt, shipment);
+        return new OrderConfirmation(receipt.id(), shipment.trackingNumber());
+    }
+}
+----
+
+The subsystems stay available for callers that need fine control; the facade just makes the common path easy.
+
+TIP: A facade that keeps growing until it does everything has become a "god class". Keep it to coordinating, and leave the business rules inside the subsystems.
+
+== Strategy
+
+*Behavioral.* Define a family of interchangeable algorithms, put each one in its own class, and choose between them at runtime.
+
+Use it when you have several ways to do the same job, such as pricing, sorting, routing or validation, and the choice depends on configuration or input.
+It replaces a growing `switch` statement, and it is the pattern behind the open/closed principle example in the SOLID article.
+
+[source,java]
+----
+interface ShippingCostStrategy {
+    BigDecimal cost(Parcel parcel);
+}
+
+class StandardShipping implements ShippingCostStrategy {
+    public BigDecimal cost(Parcel parcel) { return new BigDecimal("50"); }
+}
+
+class ExpressShipping implements ShippingCostStrategy {
+    public BigDecimal cost(Parcel parcel) {
+        return new BigDecimal("120").add(parcel.weightKg().multiply(new BigDecimal("10")));
+    }
+}
+
+class ShippingCalculator {
+    private final Map<ShippingType, ShippingCostStrategy> strategies;
+
+    ShippingCalculator(Map<ShippingType, ShippingCostStrategy> strategies) { this.strategies = strategies; }
+
+    BigDecimal quote(Parcel parcel, ShippingType type) {
+        return strategies.get(type).cost(parcel);
+    }
+}
+----
+
+In modern Java a strategy with one method can simply be a lambda, and `Comparator` is the strategy most Java developers use every day without naming it.
+
+== Observer
+
+*Behavioral.* Let an object notify a list of interested objects when something happens, without knowing who they are.
+
+Use it when one event should trigger several independent reactions, and you want to add or remove reactions without editing the code that raises the event.
+
+[source,java]
+----
+interface OrderPlacedListener {
+    void onOrderPlaced(Order order);
+}
+
+class OrderService {
+    private final List<OrderPlacedListener> listeners = new CopyOnWriteArrayList<>();
+
+    void subscribe(OrderPlacedListener listener) { listeners.add(listener); }
+
+    void place(Order order) {
+        // ... save the order ...
+        listeners.forEach(listener -> listener.onOrderPlaced(order));
+    }
+}
+
+orderService.subscribe(order -> emailService.sendReceipt(order));
+orderService.subscribe(order -> analytics.track("order_placed", order.id()));
+orderService.subscribe(order -> loyalty.addPoints(order.customerId(), order.total()));
+----
+
+`OrderService` no longer changes when marketing wants a new reaction.
+Event listeners in UI toolkits, Spring application events and message brokers such as Kafka all follow the same idea at different scales.
+
+NOTE: Java's built-in `java.util.Observer` has been deprecated since Java 9. Define your own small listener interface, as above, or use a framework's event system.
+
+== Command
+
+*Behavioral.* Turn a request into an object, so it can be queued, logged, retried or undone.
+
+Use it for undo and redo, job queues, scheduled tasks, or anywhere a request has to be stored and run later rather than called directly.
+
+[source,java]
+----
+interface Command {
+    void execute();
+    void undo();
+}
+
+class InsertText implements Command {
+    private final Document doc;
+    private final int position;
+    private final String text;
+
+    InsertText(Document doc, int position, String text) {
+        this.doc = doc; this.position = position; this.text = text;
+    }
+
+    public void execute() { doc.insert(position, text); }
+    public void undo()    { doc.delete(position, text.length()); }
+}
+
+class Editor {
+    private final Deque<Command> history = new ArrayDeque<>();
+
+    void run(Command command) {
+        command.execute();
+        history.push(command);
+    }
+
+    void undo() {
+        if (!history.isEmpty()) history.pop().undo();
+    }
+}
+----
+
+Every `Runnable` you hand to an `ExecutorService` is a command without undo.
+
+== Choosing a pattern
+
+Start from the problem, never from the pattern.
+If none of these problems is in front of you, you do not need the pattern yet.
+
+[cols="2,1,2"]
+|===
+| If you need to... | Use | Principle it applies
+
+| Let subclasses choose which object to create
+| Factory Method
+| Program to an interface
+
+| Build an object with many optional parts
+| Builder
+| Keep it simple; immutability
+
+| Guarantee exactly one instance
+| Singleton
+| (Prefer passing one instance in)
+
+| Use a class whose interface doesn't fit
+| Adapter
+| Dependency inversion
+
+| Add optional behaviour in layers
+| Decorator
+| Composition over inheritance
+
+| Hide a complicated multi-step workflow
+| Facade
+| Law of Demeter
+
+| Swap an algorithm at runtime
+| Strategy
+| Open/closed; encapsulate what varies
+
+| Notify many parties of an event
+| Observer
+| Open/closed; low coupling
+
+| Queue, log or undo requests
+| Command
+| Single responsibility
+|===
+
+The other fourteen patterns in the book, such as Abstract Factory, Composite, Proxy, State, Template Method and Visitor, are worth learning next, once these nine feel natural.
