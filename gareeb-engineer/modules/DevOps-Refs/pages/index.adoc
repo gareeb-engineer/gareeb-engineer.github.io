@@ -1,6 +1,6 @@
 = References
 
-link:https://www.linkedin.com/posts/sauravstwt_devops-netflixscale-sre-activity-7358410200191500288-Ecnj?utm_source=share&utm_medium=member_desktop&rcm=ACoAACjHwXwBCNDFN-fktTKkQ51X0Zka2aZZnRc[Netflix Interview Questions]
+link:https://www.linkedin.com/posts/sauravstwt_devops-netflixscale-sre-activity-7358410200191500288-Ecnj?utm_source=share&utm_medium=member_desktop&rcm=ACoAACjHwXwBCNDFN-fktTKkQ51X0Zka2aZZnRc[DevOps and SRE at Netflix scale]
 
 https://www.citusdata.com/ Postgres handler for distrubuted or sharded setup
 

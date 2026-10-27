@@ -135,7 +135,7 @@ The `partial$` family prefix is required. `nav$` is not a valid family, so `incl
 
 **HLD template:** functional requirements → nonfunctional requirements → scale assumptions → API contracts → data model → component diagram → partitioning/caching/messaging → failures → monitoring → cost/complexity trade-offs.
 
-Interview-quality claims should have supporting implementation or testing where possible. Keep credentials, private architecture, and employer-sensitive details **out of public articles**.
+Technical claims should have supporting implementation or testing where possible. Keep credentials, private architecture, and employer-sensitive details **out of public articles**.
 
 ## Publishing lifecycle
 

@@ -20,12 +20,29 @@ Then move on to SOLID, five principles that are specific to object-oriented desi
 
 * xref:design-principles.adoc[Design Principles] -- DRY, KISS, YAGNI, the Law of Demeter, and the three Gang of Four principles: composition over inheritance, programming to an interface, and encapsulating what varies.
 * xref:solid-principles.adoc[SOLID Principles] -- single responsibility, open/closed, Liskov substitution, interface segregation and dependency inversion.
-* xref:design-patterns.adoc[Gang of Four Design Patterns] -- the nine most-used patterns: Factory Method, Builder, Singleton, Adapter, Decorator, Facade, Strategy, Observer and Command.
+* xref:design-patterns.adoc[Gang of Four Design Patterns] -- the twelve most useful patterns, how to tell similar ones apart, and which patterns fit common design problems.
 
 TIP: Every article has a Listen button and a reading progress bar. Code examples are shown on screen but skipped when the article is read aloud.
+
+== From requirements to design
+
+Knowing principles and patterns is necessary but not sufficient.
+A sound design comes from applying them in a deliberate order, whether the problem is a parking lot, a vending machine, a file search tool or a feature in a production service:
+
+. *Clarify requirements.* Establish what the system must do, what is out of scope, and whether several users or threads use it at once. Write the agreed list down.
+. *Find the core entities.* The nouns in the requirements are candidate classes. Each one gets a single responsibility.
+. *Define relationships.* Decide what *is a* kind of what, and what *has a* what. A quick class diagram keeps everyone working on the design aligned.
+. *Write the public API first.* Method signatures for the main use cases come before any implementation.
+. *Apply patterns only where the problem calls for them.* Each pattern must name the part of the design that varies and what it costs.
+. *Build the core flow.* A working main path with sensible validation and errors is worth more than a large, unfinished class diagram.
+. *Handle concurrency.* Identify the shared state, such as a parking spot two cars try to take at once, and decide how it is protected.
+. *Test the design with an extension.* Ask "how would a new requirement be added?". A good design answers with a new class rather than edits to existing ones.
+
+A design is not measured by how many patterns it uses.
+It is measured by whether it is correct, easy to extend and safe under concurrency, and whether every trade-off in it has a clear reason.
 
 == Why principles and not rules
 
 None of these principles is a law.
 Each one trades something away: an extra interface costs indirection, removing duplication costs coupling.
-The skill in low level design is knowing which trade-off fits the problem in front of you, and the articles call out where each principle stops helping.
+The skill in low level design is knowing which trade-off fits the problem at hand, and the articles call out where each principle stops helping.

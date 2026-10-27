@@ -27,7 +27,7 @@ Architecture diagrams and design references.
 
 [.card]
 [.card-icon]##📚##xref:DevOps-Refs:index.adoc[References] +
-Curated DevOps and interview preparation links.
+Curated DevOps, SRE and database engineering references.
 --
 
 == Need help?

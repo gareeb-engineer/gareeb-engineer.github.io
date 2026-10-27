@@ -6,20 +6,20 @@
 :page-revdate: 2026-10-27
 
 SOLID is an acronym for five principles collected by Robert C. Martin; the acronym itself was coined by Michael Feathers.
-Together they aim at one outcome: when requirements change, you add or swap a small piece of code instead of editing many existing classes.
+Together they aim at one outcome: when requirements change, a small piece of code is added or swapped instead of many existing classes being edited.
 
-Each section below explains the principle, lists the warning signs that you are breaking it, and shows a small Java example before and after.
+Each section below explains the principle, lists the warning signs that it is being broken, and shows a small Java example before and after.
 
 == S: Single Responsibility Principle
 
 A class should have only one reason to change.
 "Responsibility" here means a source of change, usually one person or team who asks for it.
-If the finance team and the operations team can both ask you to edit the same class for unrelated reasons, it has two responsibilities.
+If the finance team and the operations team can both request edits to the same class for unrelated reasons, it has two responsibilities.
 
 Warning signs:
 
 * The class name contains "And", "Manager" or "Util", and its methods have little in common.
-* Unrelated tests break when you change one feature.
+* Unrelated tests break when one feature changes.
 * The class imports database, formatting and network libraries at the same time.
 
 .Before: calculation, formatting and storage in one class
@@ -67,7 +67,7 @@ A change to the PDF layout now touches only the renderer, and the total can be t
 == O: Open/Closed Principle
 
 Software should be open for extension but closed for modification.
-When a new variant arrives, you should be able to add a new class rather than edit a working one.
+When a new variant arrives, it is added as a new class rather than by editing a working one.
 Editing tested code for every new case is how regressions creep in.
 
 Warning signs:
@@ -119,6 +119,14 @@ TIP: Apply the open/closed principle where variation has actually happened. One 
 
 Objects of a subtype must be usable anywhere the parent type is expected, without the caller noticing.
 A subclass may add behaviour, but it must not weaken what the parent promises or demand more than the parent required.
+
+More precisely, a subtype must follow four rules.
+Together they are the full meaning of the principle:
+
+* *No stronger preconditions.* It must accept every input the parent accepts. A subclass that rejects negative numbers the parent allowed breaks callers.
+* *No weaker postconditions.* It must deliver everything the parent promises. The `Square` below breaks this: `setWidth` promises the height stays the same.
+* *Keep the invariants.* Whatever is always true of the parent, such as "the balance is never negative", must stay true.
+* *No surprising exceptions.* It must not throw kinds of exceptions that callers of the parent are not prepared for.
 
 Warning signs:
 
@@ -177,7 +185,7 @@ Large interfaces push implementers into empty or throwing methods, and every cha
 Warning signs:
 
 * Implementations full of empty methods or `UnsupportedOperationException`.
-* An interface change forces you to recompile or redeploy unrelated modules.
+* An interface change forces unrelated modules to be recompiled or redeployed.
 
 .Before: one interface for every device
 [source,java]
@@ -264,7 +272,7 @@ class MySqlOrderRepository implements OrderRepository {
 // In a test: new OrderService(new InMemoryOrderRepository())
 ----
 
-NOTE: Dependency inversion is the principle; dependency injection is one technique for achieving it. Passing the repository through the constructor is enough. A framework such as Spring is optional.
+NOTE: Three terms are often mixed up. Dependency inversion is the principle: depend on abstractions that the business code owns. Inversion of control is the broader idea that something outside a class, a framework or the caller, creates and wires its collaborators. Dependency injection is one technique for both: hand collaborators in, usually through the constructor. Passing the repository through the constructor is enough; a framework such as Spring is optional.
 
 == How the five fit together
 
@@ -296,5 +304,5 @@ NOTE: Dependency inversion is the principle; dependency injection is one techniq
 The principles reinforce each other.
 Small, single-purpose classes are easy to put behind small interfaces.
 Small interfaces are easy to substitute and to inject.
-Injected dependencies are what let you extend behaviour without modifying it.
+Injected dependencies are what allow behaviour to be extended without modifying it.
 For the general rules underneath all of this, see the xref:design-principles.adoc[design principles] article.

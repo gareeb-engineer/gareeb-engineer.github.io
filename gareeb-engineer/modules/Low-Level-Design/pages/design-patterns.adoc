@@ -1,26 +1,28 @@
 = Gang of Four Design Patterns
 :page-reading-assistant:
-:page-subtitle: The nine Gang of Four patterns that come up most in real Java code, each with when to use it, a short example, and where it goes wrong.
+:page-subtitle: The twelve Gang of Four patterns that matter most in real Java code, with when to use each, a short example, where it goes wrong, and how to tell similar patterns apart.
 :page-difficulty: Medium
 :page-tags: Low Level Design, Design Patterns, Gang of Four, Java
 :page-revdate: 2026-10-27
 
 The Gang of Four book catalogues 23 patterns.
-You do not need all of them day to day.
-This article covers the nine that appear most often in Java codebases, libraries and design interviews, three from each of the book's categories:
+Day-to-day code needs only a few of them.
+This article covers the twelve that appear most often in Java codebases and in classic design problems such as a vending machine, an elevator, a parking lot or a file system:
 
 * *Creational* patterns control how objects are created: Factory Method, Builder and Singleton.
-* *Structural* patterns control how objects are put together: Adapter, Decorator and Facade.
-* *Behavioral* patterns control how objects share work and communicate: Strategy, Observer and Command.
+* *Structural* patterns control how objects are put together: Adapter, Decorator, Facade and Composite.
+* *Behavioral* patterns control how objects share work and communicate: Strategy, Observer, Command, State and Chain of Responsibility.
 
 A pattern is a named, proven shape for a recurring problem, not code to copy.
 Each one below applies the principles from xref:design-principles.adoc[Design Principles] and xref:solid-principles.adoc[SOLID], and each comes with a cost, usually an extra class or a level of indirection.
+Naming a pattern adds nothing on its own.
+Its value lies in the problem it solves in a particular design and the cost it brings with it.
 
 == Factory Method
 
 *Creational.* Let a subclass decide which concrete class to create, while the parent class owns the workflow that uses it.
 
-Use it when a class knows _when_ it needs an object but should not know _which_ class to build, for example a framework that lets each application plug in its own type.
+It fits when a class knows _when_ it needs an object but should not know _which_ class to build, for example a framework that lets each application plug in its own type.
 
 [source,java]
 ----
@@ -45,13 +47,33 @@ class WebDialog extends Dialog {
 }
 ----
 
-NOTE: A static method such as `List.of()` or `Integer.valueOf()` is often called a factory, but it is a simple static factory, not the Gang of Four Factory Method. Both hide the `new`; only Factory Method lets subclasses vary the product.
+In everyday code, "use a factory" usually means something simpler: a *simple factory*, one class whose method maps a type to a concrete class.
+It is not one of the 23 patterns, but it is what most parking lot and vehicle designs need, and it is perfectly good design.
+
+.Simple factory: the one place that knows every concrete type
+[source,java]
+----
+final class VehicleFactory {
+    static Vehicle create(VehicleType type, String plate) {
+        return switch (type) {
+            case CAR   -> new Car(plate);
+            case BIKE  -> new Bike(plate);
+            case TRUCK -> new Truck(plate);
+        };
+    }
+}
+----
+
+The `switch` here is fine.
+It is the single place that knows every vehicle type, so adding a type edits one factory instead of every caller.
+That is the open/closed principle applied pragmatically.
+The two are distinct: a simple factory picks the class with a method; Factory Method picks it by subclassing.
 
 == Builder
 
 *Creational.* Separate the step-by-step construction of a complex object from the object itself.
 
-Use it when an object has many optional parameters, when a constructor with eight arguments would be unreadable, or when the finished object should be immutable.
+It fits when an object has many optional parameters, when a constructor with eight arguments would be unreadable, or when the finished object should be immutable.
 
 [source,java]
 ----
@@ -81,7 +103,14 @@ final class HttpRequest {
         Builder method(String method)          { this.method = method; return this; }
         Builder timeout(Duration timeout)      { this.timeout = timeout; return this; }
         Builder header(String name, String v)  { headers.put(name, v); return this; }
-        HttpRequest build()                     { return new HttpRequest(this); }
+
+        // The one place to check rules that involve the whole object.
+        HttpRequest build() {
+            if (timeout.isNegative() || timeout.isZero()) {
+                throw new IllegalStateException("timeout must be positive");
+            }
+            return new HttpRequest(this);
+        }
     }
 }
 
@@ -91,6 +120,7 @@ HttpRequest request = HttpRequest.to("https://api.example.com/orders")
         .build();
 ----
 
+Required values go in the builder's constructor, optional ones get defaults, and `build()` validates before the object exists, so an invalid `HttpRequest` can never be created.
 The fluent style shown here is the common Java variant popularised by _Effective Java_.
 The original Gang of Four version also uses a separate director object that runs the building steps in order.
 
@@ -98,8 +128,9 @@ The original Gang of Four version also uses a separate director object that runs
 
 *Creational.* Guarantee that a class has exactly one instance and give a single access point to it.
 
-Use it sparingly, for something that genuinely must be unique in the process, such as a registry of hardware devices.
-In Java, an `enum` with one value is the simplest thread-safe implementation, and it also survives serialisation.
+It belongs only where something genuinely must be unique in the process, such as a registry of hardware devices.
+In Java, an `enum` with one value is the simplest thread-safe implementation.
+It is also safe against the two ways of sneaking in a second instance: deserialisation and reflection.
 
 [source,java]
 ----
@@ -116,13 +147,61 @@ enum MetricsRegistry {
 MetricsRegistry.INSTANCE.increment("orders.placed");
 ----
 
-WARNING: Singleton is the most overused pattern. A global instance is hidden shared state: it couples every caller to one class and makes tests interfere with each other. Usually it is better to create one instance at startup and pass it in through constructors, which gives the same "only one" result while keeping dependency inversion.
+When a singleton must be *lazy*, created only on first use, it also has to be thread-safe.
+There are two standard ways to do that, and each works for a precise reason.
+
+.Lazy and thread-safe: the holder idiom
+[source,java]
+----
+final class AppConfig {
+    private AppConfig() { /* load settings */ }
+
+    // The JVM loads Holder, and runs its initialiser exactly once, on first access.
+    private static final class Holder {
+        static final AppConfig INSTANCE = new AppConfig();
+    }
+
+    static AppConfig getInstance() { return Holder.INSTANCE; }
+}
+----
+
+.Lazy and thread-safe: double-checked locking
+[source,java]
+----
+final class AppConfig {
+    private static volatile AppConfig instance;
+
+    private AppConfig() { /* load settings */ }
+
+    static AppConfig getInstance() {
+        AppConfig local = instance;
+        if (local == null) {                     // fast path: no lock once created
+            synchronized (AppConfig.class) {
+                local = instance;
+                if (local == null) {             // re-check: another thread may have won
+                    instance = local = new AppConfig();
+                }
+            }
+        }
+        return local;
+    }
+}
+----
+
+The holder idiom is simpler and usually the better answer: class initialisation in the JVM is already lazy and thread-safe, so there is no locking code at all.
+
+Double-checked locking is the version most often written incorrectly.
+The `volatile` keyword is essential.
+Without it, the processor and compiler may reorder the steps of creating the object, so another thread can see a non-null `instance` that points to an object whose constructor has not finished running.
+The second null check inside the lock is also essential: two threads can both pass the first check before either takes the lock.
+
+WARNING: Singleton is the most overused pattern. A global instance is hidden shared state: it couples every caller to one class and makes tests interfere with each other. Usually it is better to create one instance at startup and pass it in through constructors, which gives the same "only one" result while keeping dependency inversion. Prefer that approach unless a global instance is genuinely required.
 
 == Adapter
 
-*Structural.* Convert the interface of an existing class into the interface your code expects.
+*Structural.* Convert the interface of an existing class into the interface the calling code expects.
 
-Use it when you need to use a third-party library or legacy class whose methods do not match the interface the rest of your code depends on, and you cannot or should not change it.
+It fits when a third-party library or legacy class has methods that do not match the interface the rest of the code depends on, and that class cannot or should not change.
 
 [source,java]
 ----
@@ -150,13 +229,13 @@ class VendorPayAdapter implements PaymentGateway {
 ----
 
 Only the adapter knows about the vendor, so switching vendors means writing one new adapter.
-In the JDK, `Arrays.asList` adapts an array to the `List` interface.
+In the JDK, `Arrays.asList` adapts an array to the `List` interface, and `InputStreamReader` adapts a byte stream into a character `Reader`.
 
 == Decorator
 
 *Structural.* Add behaviour to an object by wrapping it in another object with the same interface, instead of subclassing.
 
-Use it when you want to combine optional behaviours, such as caching, logging or retries, in any order, without creating a subclass for every combination.
+It fits when optional behaviours, such as caching, logging or retries, need to be combined in any order, without creating a subclass for every combination.
 
 [source,java]
 ----
@@ -190,14 +269,20 @@ OrderRepository repository =
         new LoggingOrderRepository(new CachingOrderRepository(new SqlOrderRepository()));
 ----
 
-Java's own I/O classes are built this way: a `BufferedReader` wraps an `InputStreamReader`, which wraps an `InputStream`.
+The order of wrapping matters.
+As written, every call is logged, including cache hits.
+Swap the two wrappers and only the calls that reach the database are logged.
+
+Java's I/O library is built this way: `BufferedInputStream` wraps any `InputStream` to add buffering without changing its interface.
 Decorator is composition over inheritance in its purest form.
+
+NOTE: The caching decorator is deliberately minimal. A production cache needs a size limit and expiry, or it slowly fills memory and serves stale orders, so use a library such as Caffeine. Also, `ConcurrentHashMap.computeIfAbsent` may block other updates to the map while it runs, so it should not wrap a slow database call under heavy load. Every real cache has to answer these questions.
 
 == Facade
 
 *Structural.* Provide one simple entry point to a group of classes that are complicated to use together.
 
-Use it when callers keep repeating the same multi-step sequence across several subsystems, and that sequence has nothing to do with their own job.
+It fits when callers keep repeating the same multi-step sequence across several subsystems, and that sequence has nothing to do with their own job.
 
 [source,java]
 ----
@@ -216,8 +301,14 @@ class CheckoutFacade {
     }
 
     OrderConfirmation placeOrder(Cart cart, Customer customer) {
-        inventory.reserve(cart.items());
-        PaymentReceipt receipt = payments.charge(customer, cart.total());
+        Reservation reservation = inventory.reserve(cart.items());
+        PaymentReceipt receipt;
+        try {
+            receipt = payments.charge(customer, cart.total());
+        } catch (PaymentFailedException e) {
+            inventory.release(reservation);   // undo the step that already succeeded
+            throw e;
+        }
         Shipment shipment = shipping.schedule(cart.items(), customer.address());
         email.sendConfirmation(customer, receipt, shipment);
         return new OrderConfirmation(receipt.id(), shipment.trackingNumber());
@@ -226,14 +317,78 @@ class CheckoutFacade {
 ----
 
 The subsystems stay available for callers that need fine control; the facade just makes the common path easy.
+Because the facade owns the order of the steps, it is also the natural place to decide what to undo when a later step fails, such as releasing reserved stock when payment is declined.
+When those steps are separate services, this undo logic grows into the saga pattern.
 
 TIP: A facade that keeps growing until it does everything has become a "god class". Keep it to coordinating, and leave the business rules inside the subsystems.
+
+== Composite
+
+*Structural.* Compose objects into a tree, and let callers treat a single item and a group of items through the same interface.
+
+It fits whenever the domain is naturally a tree: files and folders, menus and sub-menus, an organisation chart, or an order made of products and bundles.
+The caller asks the root a question, and every node answers it in its own way.
+
+[source,java]
+----
+interface FileSystemNode {
+    String name();
+    long sizeBytes();
+    void collect(FileFilter filter, List<File> results);
+}
+
+record File(String name, long sizeBytes) implements FileSystemNode {
+    public void collect(FileFilter filter, List<File> results) {
+        if (filter.matches(this)) results.add(this);
+    }
+}
+
+final class Directory implements FileSystemNode {
+    private final String name;
+    private final List<FileSystemNode> children = new ArrayList<>();
+
+    Directory(String name) { this.name = name; }
+
+    Directory add(FileSystemNode child) { children.add(child); return this; }
+
+    public String name() { return name; }
+
+    // A directory's size is the sum of its children, however deep the tree goes.
+    public long sizeBytes() {
+        return children.stream().mapToLong(FileSystemNode::sizeBytes).sum();
+    }
+
+    public void collect(FileFilter filter, List<File> results) {
+        for (FileSystemNode child : children) child.collect(filter, results);
+    }
+}
+
+@FunctionalInterface
+interface FileFilter {
+    boolean matches(File file);
+
+    default FileFilter and(FileFilter other) { return f -> matches(f) && other.matches(f); }
+
+    static FileFilter extension(String ext)  { return f -> f.name().endsWith("." + ext); }
+    static FileFilter largerThan(long bytes) { return f -> f.sizeBytes() > bytes; }
+}
+
+// Find every .log file larger than 5 MB anywhere under root.
+List<File> results = new ArrayList<>();
+root.collect(FileFilter.extension("log").and(FileFilter.largerThan(5_000_000)), results);
+----
+
+Neither `sizeBytes` nor `collect` ever checks whether a node is a file or a directory.
+That missing `instanceof` is the whole point of the pattern.
+
+The filters are small strategies that combine with `and`, so a new search rule is one new filter and the tree code never changes.
+A Composite tree plus composable filters is the natural design for a tool like the Unix `find` command: adding a new search criterion requires no change to existing classes.
 
 == Strategy
 
 *Behavioral.* Define a family of interchangeable algorithms, put each one in its own class, and choose between them at runtime.
 
-Use it when you have several ways to do the same job, such as pricing, sorting, routing or validation, and the choice depends on configuration or input.
+It fits when there are several ways to do the same job, such as pricing, sorting, routing or validation, and the choice depends on configuration or input.
 It replaces a growing `switch` statement, and it is the pattern behind the open/closed principle example in the SOLID article.
 
 [source,java]
@@ -255,21 +410,26 @@ class ExpressShipping implements ShippingCostStrategy {
 class ShippingCalculator {
     private final Map<ShippingType, ShippingCostStrategy> strategies;
 
-    ShippingCalculator(Map<ShippingType, ShippingCostStrategy> strategies) { this.strategies = strategies; }
+    ShippingCalculator(Map<ShippingType, ShippingCostStrategy> strategies) {
+        this.strategies = Map.copyOf(strategies);
+    }
 
     BigDecimal quote(Parcel parcel, ShippingType type) {
-        return strategies.get(type).cost(parcel);
+        ShippingCostStrategy strategy = strategies.get(type);
+        if (strategy == null) throw new IllegalArgumentException("No shipping option " + type);
+        return strategy.cost(parcel);
     }
 }
 ----
 
 In modern Java a strategy with one method can simply be a lambda, and `Comparator` is the strategy most Java developers use every day without naming it.
+Strategy is the most widely used pattern in low level design: parking spot allocation, pricing, elevator scheduling and rate limiting algorithms are all strategies.
 
 == Observer
 
 *Behavioral.* Let an object notify a list of interested objects when something happens, without knowing who they are.
 
-Use it when one event should trigger several independent reactions, and you want to add or remove reactions without editing the code that raises the event.
+It fits when one event should trigger several independent reactions, and reactions must be added or removed without editing the code that raises the event.
 
 [source,java]
 ----
@@ -280,11 +440,19 @@ interface OrderPlacedListener {
 class OrderService {
     private final List<OrderPlacedListener> listeners = new CopyOnWriteArrayList<>();
 
-    void subscribe(OrderPlacedListener listener) { listeners.add(listener); }
+    void subscribe(OrderPlacedListener listener)   { listeners.add(listener); }
+    void unsubscribe(OrderPlacedListener listener) { listeners.remove(listener); }
 
     void place(Order order) {
         // ... save the order ...
-        listeners.forEach(listener -> listener.onOrderPlaced(order));
+        for (OrderPlacedListener listener : listeners) {
+            try {
+                listener.onOrderPlaced(order);
+            } catch (RuntimeException e) {
+                // One broken listener must not stop the others or fail the order.
+                System.err.println("Listener failed: " + e);
+            }
+        }
     }
 }
 
@@ -294,15 +462,25 @@ orderService.subscribe(order -> loyalty.addPoints(order.customerId(), order.tota
 ----
 
 `OrderService` no longer changes when marketing wants a new reaction.
-Event listeners in UI toolkits, Spring application events and message brokers such as Kafka all follow the same idea at different scales.
+`CopyOnWriteArrayList` lets listeners subscribe or unsubscribe while a notification is in progress without errors.
 
-NOTE: Java's built-in `java.util.Observer` has been deprecated since Java 9. Define your own small listener interface, as above, or use a framework's event system.
+Every real Observer implementation has to handle three problems:
+
+* *A failing listener.* Without the `try` block, one exception stops every listener after it and fails the order itself.
+* *A slow listener.* Listeners run on the caller's thread, so a slow email call makes placing an order slow. Hand the work to an executor or a queue when reactions are slow or can fail independently.
+* *Forgotten listeners.* The subject holds a reference to every listener, so a listener that never unsubscribes is never garbage-collected. This is a classic memory leak.
+
+Event listeners in UI toolkits and Spring application events are Observer.
+Message brokers such as Kafka apply the same idea across services, but with a broker in between, which makes it publish-subscribe rather than Observer.
+The difference is explained in <<_commonly_confused_patterns>>.
+
+NOTE: Java's built-in `java.util.Observer` has been deprecated since Java 9. A small dedicated listener interface, as above, or a framework's event system replaces it.
 
 == Command
 
 *Behavioral.* Turn a request into an object, so it can be queued, logged, retried or undone.
 
-Use it for undo and redo, job queues, scheduled tasks, or anywhere a request has to be stored and run later rather than called directly.
+It fits undo and redo, job queues, scheduled tasks, or anywhere a request has to be stored and run later rather than called directly.
 
 [source,java]
 ----
@@ -326,28 +504,249 @@ class InsertText implements Command {
 
 class Editor {
     private final Deque<Command> history = new ArrayDeque<>();
+    private final Deque<Command> undone = new ArrayDeque<>();
 
     void run(Command command) {
         command.execute();
         history.push(command);
+        undone.clear();   // a new edit makes the old "redo" path meaningless
     }
 
     void undo() {
-        if (!history.isEmpty()) history.pop().undo();
+        if (history.isEmpty()) return;
+        Command command = history.pop();
+        command.undo();
+        undone.push(command);
+    }
+
+    void redo() {
+        if (undone.isEmpty()) return;
+        Command command = undone.pop();
+        command.execute();
+        history.push(command);
     }
 }
 ----
 
-Every `Runnable` you hand to an `ExecutorService` is a command without undo.
+Undo and redo are two stacks.
+Undo moves the latest command from the history stack to the redo stack, and redo moves it back.
+Running a brand new command clears the redo stack, which is exactly how text editors behave.
+
+Every `Runnable` handed to an `ExecutorService` is a command without undo.
+
+== State
+
+*Behavioral.* Let an object change its behaviour when its internal state changes, by giving each state its own class.
+
+It fits when the same action must do different things depending on the current state, and there are clear rules for moving from one state to the next.
+This is the core pattern behind the vending machine, ATM, elevator, traffic light and order lifecycle problems that are classic exercises in low level design.
+
+Without it, every method starts with the same `if (state == ...)` chain, and adding one state means editing every method.
+
+[source,java]
+----
+interface MachineState {
+    // Every action is rejected by default; each state allows only what makes sense for it.
+    default void insertCoin(VendingMachine m, int cents) { throw new IllegalStateException("Cannot insert coins now"); }
+    default void select(VendingMachine m, String slot)   { throw new IllegalStateException("Insert money first"); }
+    default void cancel(VendingMachine m)                { throw new IllegalStateException("Nothing to cancel"); }
+}
+
+class Idle implements MachineState {
+    public void insertCoin(VendingMachine m, int cents) {
+        m.addBalance(cents);
+        m.setState(new HasMoney());
+    }
+}
+
+class HasMoney implements MachineState {
+    public void insertCoin(VendingMachine m, int cents) { m.addBalance(cents); }
+
+    public void select(VendingMachine m, String slot) {
+        Inventory inventory = m.inventory();
+        if (!inventory.inStock(slot)) throw new IllegalStateException("Sold out");
+        int price = inventory.priceOf(slot);
+        if (m.balance() < price) throw new IllegalStateException("Insert " + (price - m.balance()) + " more");
+        inventory.release(slot);
+        m.returnChangeAndReset(m.balance() - price);
+        m.setState(new Idle());
+    }
+
+    public void cancel(VendingMachine m) {
+        m.returnChangeAndReset(m.balance());
+        m.setState(new Idle());
+    }
+}
+
+class VendingMachine {
+    private final Inventory inventory;
+    private MachineState state = new Idle();
+    private int balanceCents;
+
+    VendingMachine(Inventory inventory) { this.inventory = inventory; }
+
+    // Public API: each call is delegated to whatever state the machine is in.
+    synchronized void insertCoin(int cents) { state.insertCoin(this, cents); }
+    synchronized void select(String slot)   { state.select(this, slot); }
+    synchronized void cancel()              { state.cancel(this); }
+
+    // Used by the states.
+    void setState(MachineState next)     { state = next; }
+    void addBalance(int cents)           { balanceCents += cents; }
+    int balance()                        { return balanceCents; }
+    Inventory inventory()                { return inventory; }
+    void returnChangeAndReset(int cents) { /* return coins */ balanceCents = 0; }
+}
+----
+
+Each state class answers one question: "what does this action mean right now?"
+Adding a `Maintenance` state is one new class; no existing `if` chain has to grow.
+
+Two details in this design are deliberate:
+
+* The public methods are `synchronized` because a state change reads and writes several fields. Without it, two concurrent requests could both see `HasMoney` and release two products for one payment.
+* Rejecting an action with `IllegalStateException` is part of this interface's contract: every state may refuse an action that is not valid at that moment. That is different from the `UnsupportedOperationException` warning sign in the SOLID article, where a subtype refuses something its parent promised to do.
+
+== Chain of Responsibility
+
+*Behavioral.* Pass a request along a chain of handlers, where each handler either deals with it, deals with part of it, or passes it on.
+
+It fits when several independent steps or checks apply to one request, and each must be added, removed or reordered without touching the others.
+Common examples are request pipelines (authentication, then rate limiting, then validation), support ticket escalation, logging levels, and an ATM cash dispenser.
+
+[source,java]
+----
+final class NoteDispenser {
+    private final int noteValue;
+    private NoteDispenser next;
+
+    NoteDispenser(int noteValue) { this.noteValue = noteValue; }
+
+    // Links the next handler and returns it, so the chain reads left to right.
+    NoteDispenser then(NoteDispenser next) {
+        this.next = next;
+        return next;
+    }
+
+    // Handles as much of the amount as it can, then passes the rest along.
+    void plan(int amount, Map<Integer, Integer> notes) {
+        int count = amount / noteValue;
+        if (count > 0) notes.put(noteValue, count);
+        int remainder = amount % noteValue;
+        if (remainder == 0) return;
+        if (next == null) throw new IllegalArgumentException("Cannot make " + remainder + " with these notes");
+        next.plan(remainder, notes);
+    }
+}
+
+NoteDispenser atm = new NoteDispenser(2000);
+atm.then(new NoteDispenser(500)).then(new NoteDispenser(100));
+
+Map<Integer, Integer> notes = new LinkedHashMap<>();
+atm.plan(2800, notes);   // {2000=1, 500=1, 100=3}
+----
+
+Each dispenser knows only its own note and the next link.
+Adding a 200 note is one new link in the chain, with no change to the others.
+
+The pattern has two common shapes.
+In the one above, every handler does part of the work.
+In the other, the request travels until one handler fully deals with it or stops it, which is how servlet filters and the Spring Security filter chain work: an authentication filter can reject a request before it ever reaches the controller.
+
+TIP: The greedy chain gives the right answer for denominations like 2000, 500, 100, but greedy note selection is not correct for every set of denominations. A real ATM also checks how many notes of each kind it has left. A complete design accounts for both.
+
+== Commonly confused patterns
+
+Several patterns look almost identical in code.
+The difference between them lies in intent, and telling them apart is a sure sign that the patterns are understood rather than memorised.
+
+[cols="1,3,2"]
+|===
+| Pair | The difference | Quick test
+
+| Strategy vs State
+| Strategy: the caller picks an algorithm, and it stays the same until the caller changes it. State: the object changes its own behaviour as its state changes, and the states usually choose the next state.
+| Does the behaviour switch by itself after an action? Then it is State.
+
+| Decorator vs Proxy
+| Both wrap an object behind the same interface. Decorator adds behaviour, and callers often stack several. Proxy controls access to the real object, for lazy loading, permissions, remote calls or caching, and usually decides itself whether to call it.
+| Is the wrapper adding a feature, or guarding and standing in for the real thing?
+
+| Adapter vs Decorator vs Facade
+| Adapter changes one class's interface to the one the caller needs. Decorator keeps the interface and adds behaviour. Facade offers a new, simpler interface over several classes.
+| Same interface: Decorator. Different interface over one class: Adapter. One entry point over many classes: Facade.
+
+| Simple factory vs Factory Method vs Abstract Factory
+| A simple factory is one method that maps a type to a class. Factory Method lets a subclass override the creation step. Abstract Factory is an object that creates a whole family of related objects that must match, such as a Windows button and a Windows checkbox.
+| One product or a matching family? Chosen by a method, by subclassing, or by passing in a factory object?
+
+| Observer vs publish-subscribe
+| In Observer, the subject keeps direct references to its listeners and calls them itself, usually synchronously in the same process. In publish-subscribe, a broker sits in between, the publisher does not know the subscribers, and delivery is usually asynchronous and can cross services, as with Kafka or SNS.
+| Is there a broker in the middle?
+
+| Command vs Strategy
+| Both put behaviour in an object. A command is one request to run, which can be stored, queued, logged or undone. A strategy is a way of doing a job that is reused for many calls.
+| Is it "do this" or "here is how to do it"?
+|===
+
+== Patterns in common design problems
+
+These classic design problems recur across many systems, and each has patterns that usually fit.
+The table is a starting point for reasoning, not a fixed answer: every choice still has to be justified by the requirements at hand.
+
+[cols="2,2,3"]
+|===
+| Problem | Patterns that usually fit | Why
+
+| Vending machine, ATM
+| State; Chain of Responsibility for the ATM's notes
+| The same button means different things in different states.
+
+| Elevator system
+| State for each car; Strategy for choosing which car serves a request
+| Car behaviour depends on its state; the scheduling algorithm is the part most likely to change.
+
+| Parking lot
+| Strategy for spot allocation and pricing; simple factory for vehicles and spots
+| Allocation and pricing rules are what change; the parking flow does not.
+
+| File system, Unix `find`
+| Composite; small composable filter strategies
+| Files and folders form a tree, and new search rules must not change it.
+
+| Notification service
+| Observer or publish-subscribe for events; Strategy for the channel; Decorator for retries
+| New channels and new reactions should be new classes.
+
+| Logger
+| Chain of Responsibility for levels or handlers; one shared instance passed in rather than a global singleton
+| Each handler decides whether a message is its concern.
+
+| Rate limiter
+| Strategy for the algorithm: token bucket, fixed window, sliding window
+| The algorithm is the part that varies; thread safety is the part that is tested.
+
+| Text editor
+| Command for undo and redo
+| Every edit must be reversible.
+
+| Payment integration
+| Adapter for each provider; Strategy for choosing one
+| Third-party APIs never match the application's own interface.
+
+| LRU cache
+| No pattern needed: a hash map plus a doubly linked list
+| Not every problem needs a pattern. Recognising that is part of good design.
+|===
 
 == Choosing a pattern
 
 Start from the problem, never from the pattern.
-If none of these problems is in front of you, you do not need the pattern yet.
+If none of these problems is present, the pattern is not needed yet.
 
 [cols="2,1,2"]
 |===
-| If you need to... | Use | Principle it applies
+| Need | Pattern | Principle it applies
 
 | Let subclasses choose which object to create
 | Factory Method
@@ -373,6 +772,10 @@ If none of these problems is in front of you, you do not need the pattern yet.
 | Facade
 | Law of Demeter
 
+| Treat single items and groups of items the same way
+| Composite
+| Program to an interface
+
 | Swap an algorithm at runtime
 | Strategy
 | Open/closed; encapsulate what varies
@@ -384,6 +787,15 @@ If none of these problems is in front of you, you do not need the pattern yet.
 | Queue, log or undo requests
 | Command
 | Single responsibility
+
+| Change behaviour as an object's state changes
+| State
+| Open/closed; encapsulate what varies
+
+| Run a request through a series of independent handlers
+| Chain of Responsibility
+| Single responsibility; open/closed
 |===
 
-The other fourteen patterns in the book, such as Abstract Factory, Composite, Proxy, State, Template Method and Visitor, are worth learning next, once these nine feel natural.
+The other eleven patterns in the book are worth learning next, once these twelve feel natural.
+The most useful of them are Proxy, Template Method, Abstract Factory and Iterator, which every Java for-each loop already uses.

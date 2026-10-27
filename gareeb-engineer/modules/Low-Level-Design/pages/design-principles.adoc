@@ -8,6 +8,11 @@
 There are dozens of named design principles.
 Most of them are restatements of a handful of core ideas, so this article covers only the seven that come up in almost every design discussion and code review.
 
+All of them serve two goals that sit at the centre of every design review.
+*High cohesion* means everything inside a class belongs to one job.
+*Low coupling* means classes know as little as possible about each other, so a change in one does not ripple into the rest.
+When two designs compete, the better one raises cohesion or lowers coupling, and that is the reasoning to make explicit when choosing between them.
+
 Three of them come from the Gang of Four: Erich Gamma, Richard Helm, Ralph Johnson and John Vlissides, the authors of _Design Patterns: Elements of Reusable Object-Oriented Software_ (1994).
 The book states two principles outright, composition over inheritance and programming to an interface, and a third idea, encapsulating what varies, runs through almost every pattern in it.
 The patterns themselves are covered in xref:design-patterns.adoc[Gang of Four Design Patterns].
@@ -118,7 +123,7 @@ This is the second principle of the Gang of Four: favour object composition over
 
 Inheritance says a class *is a* kind of its parent.
 Composition says a class *has a* collaborator that it delegates to.
-Prefer composition when you only want to reuse behaviour, because inheritance exposes every public method of the parent, whether it makes sense or not.
+Composition is the better choice when the goal is only to reuse behaviour, because inheritance exposes every public method of the parent, whether it makes sense or not.
 
 The Java standard library has a well-known example.
 `java.util.Stack` extends `Vector`, so a stack also exposes methods that let callers insert or remove items at any position, which breaks the idea of a stack.
@@ -236,7 +241,7 @@ class Checkout {
 
 A new country or a rate change is now a new or edited `TaxRule`, and `Checkout` is never touched.
 
-TIP: Only encapsulate variation you have actually seen or been told about. Guessing at future change points is YAGNI in disguise.
+TIP: Encapsulate only variation that has actually occurred or is a stated requirement. Guessing at future change points is YAGNI in disguise.
 
 == Law of Demeter: Talk to Your Friends
 
@@ -250,7 +255,7 @@ Long chains of getters couple the caller to the whole object graph, so a change 
 String city = order.getCustomer().getAddress().getCity();
 ----
 
-.After: ask the object you already have
+.After: ask the object already at hand
 [source,java]
 ----
 String city = order.shippingCity();
@@ -289,7 +294,7 @@ NOTE: The Law of Demeter is not a rule about counting dots. Fluent builders and 
 
 | Encapsulate what varies (GoF)
 | Isolate the parts that change from the parts that don't
-| Encapsulating changes you are only guessing at
+| Encapsulating changes that are only guesses
 
 | Law of Demeter
 | Talk only to direct collaborators
