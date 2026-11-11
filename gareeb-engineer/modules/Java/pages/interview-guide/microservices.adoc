@@ -1,0 +1,457 @@
+= Microservices and Distributed Systems
+:page-reading-assistant:
+:page-subtitle: Service boundaries, synchronous versus asynchronous communication, resilience patterns, Kafka essentials, delivery guarantees and idempotent consumers, saga, outbox and CQRS, caching, rate limiting, and the Spring Cloud building blocks.
+:page-difficulty: Hard
+:page-tags: Microservices, Interview Preparation, Distributed Systems, Kafka, Spring Cloud
+:page-revdate: 2026-11-11
+
+Most Java backend roles now run microservices, so interviewers ask how services talk to each other and what happens when something fails.
+Strong answers name the failure mode first, then the pattern that handles it, then the cost of that pattern.
+
+== At a glance
+
+[cols="1,3"]
+|===
+|Weightage |*8 / 10*
+|Who gets asked |Mid and senior; the main topic of senior design rounds.
+|Preparation time |6 hours
+|Handbook questions |Q83, Q86-Q105
+|Builds on |xref:interview-guide/rest-spring-mvc.adoc[REST], xref:interview-guide/jpa-hibernate-transactions.adoc[Transactions]
+|===
+
+== Monolith versus microservices
+
+[cols="1,2,2",options="header"]
+|===
+| |Monolith |Microservices
+
+|Deployment |One unit |Each service independently
+|Scaling |Whole application |Per service
+|Data |One database, local ACID transactions |Database per service, eventual consistency between services
+|Failure |In-process calls, few partial failures |Network calls fail, time out and duplicate
+|Team model |Works well for one or a few teams |Teams own services end to end
+|Operational cost |Low |High: discovery, tracing, CI/CD per service, versioning
+|===
+
+A well-structured *modular monolith* is often the right start.
+Split when teams, deployment frequency or scaling needs differ, not because microservices are fashionable.
+
+=== Good service boundaries
+
+* Draw boundaries around *business capabilities* (orders, payments, catalogue), following domain-driven design *bounded contexts*, not technical layers ("database service").
+* Each service *owns its data*; others access it through its API or events, never its tables.
+* Signs of a bad split (a *distributed monolith*): services must be deployed together, one request fans out into long chains of synchronous calls, or services share a database.
+
+== Communication
+
+[cols="1,2,2",options="header"]
+|===
+| |Synchronous (REST, gRPC) |Asynchronous (Kafka, RabbitMQ, SQS)
+
+|Coupling |Caller needs the callee to be up now |Producer and consumer are decoupled in time
+|Latency |Adds up along the call chain |Producer returns quickly; work happens later
+|Consistency |Immediate answer |Eventual consistency
+|Failure handling |Timeouts, retries, circuit breakers |Retries, dead-letter topics, duplicates, ordering
+|Fits |Queries and commands that need an answer now |Events, long workflows, fan-out, load levelling
+|===
+
+gRPC uses HTTP/2 and Protocol Buffers: compact, fast and strongly typed, good for internal service-to-service calls; REST with JSON is simpler for public APIs and browsers.
+
+== Resilience patterns
+
+Every remote call can be slow, fail or succeed twice.
+Combine these patterns:
+
+Timeout::
+Bound how long you wait. Without timeouts, slow dependencies consume all threads and the failure spreads (cascading failure).
+
+Retry::
+Repeat transient failures (connection reset, 503) a bounded number of times with *exponential backoff and jitter*.
+Retry only *idempotent* operations, and never retry client errors such as 400.
+
+Circuit breaker::
+Track failures; after a threshold the circuit *opens* and calls fail fast without hitting the dependency.
+After a wait, it goes *half-open* and lets a few test calls through; success closes it again.
+This gives the failing service room to recover.
+
+Bulkhead::
+Isolate resources (a separate thread pool or semaphore per dependency) so one slow dependency cannot use up everything.
+
+Rate limiter::
+Cap the rate of calls you make or accept.
+
+Fallback::
+Return a cached value, a default or a degraded response when the call fails, if the business allows it.
+
+[source,java]
+----
+// Resilience4j with Spring Boot
+@Service
+class PricingClient {
+
+    @CircuitBreaker(name = "pricing", fallbackMethod = "cachedPrice")
+    @Retry(name = "pricing")
+    @TimeLimiter(name = "pricing")
+    public CompletableFuture<Price> price(String sku) {
+        return CompletableFuture.supplyAsync(() -> restClient.get().uri("/prices/{sku}", sku)
+                .retrieve().body(Price.class));
+    }
+
+    private CompletableFuture<Price> cachedPrice(String sku, Throwable cause) {
+        return CompletableFuture.completedFuture(priceCache.get(sku));
+    }
+}
+----
+
+[source,yaml]
+----
+resilience4j:
+  circuitbreaker:
+    instances:
+      pricing:
+        sliding-window-size: 20
+        failure-rate-threshold: 50          # open when 50% of the last 20 calls failed
+        wait-duration-in-open-state: 10s
+        permitted-number-of-calls-in-half-open-state: 3
+  retry:
+    instances:
+      pricing:
+        max-attempts: 3
+        wait-duration: 200ms
+        enable-exponential-backoff: true
+----
+
+Netflix Hystrix is no longer maintained; Resilience4j is the standard choice, and Spring Framework 7 adds simple `@Retryable` and `@ConcurrencyLimit` in core.
+
+=== Why retries can make an outage worse
+
+When a dependency struggles, every client retrying multiplies its traffic (a *retry storm*), so it never recovers.
+Defences: exponential backoff with jitter, a retry budget (retry at most a small percentage of requests), retrying at one layer only instead of every layer, circuit breakers, and honouring `Retry-After`.
+
+== Messaging and Kafka essentials
+
+[cols="1,3",options="header"]
+|===
+|Concept |Meaning
+
+|Topic |A named stream of records.
+|Partition |A topic is split into ordered, append-only logs. Partitions are the unit of parallelism and of ordering.
+|Offset |The position of a record in a partition. Consumers commit offsets to record progress.
+|Key |Records with the same key go to the same partition, so they stay in order.
+|Consumer group |Consumers sharing a group ID split the partitions between them. Each partition is read by one consumer in the group, so more consumers than partitions sit idle.
+|Replication |Each partition has a leader and followers; `acks=all` with `min.insync.replicas=2` means a write survives a broker failure.
+|Rebalance |Partitions are reassigned when consumers join or leave. Processing pauses briefly.
+|Retention |Records stay for a configured time or size, whether consumed or not; consumers can replay.
+|Compacted topic |Keeps the latest value per key; useful for state snapshots.
+|===
+
+Kafka versus a traditional queue (RabbitMQ, SQS): Kafka is a durable, replayable log with ordering per partition and very high throughput; a queue deletes messages once acknowledged and offers flexible routing and per-message acknowledgement.
+
+[source,java]
+----
+@Component
+class OrderEventsConsumer {
+
+    @KafkaListener(topics = "orders", groupId = "billing")
+    void on(OrderPlaced event, Acknowledgment ack) {
+        billing.handle(event);      // must be idempotent
+        ack.acknowledge();          // commit the offset only after the work is durable
+    }
+}
+----
+
+== Delivery guarantees
+
+* *At-most-once*: commit the offset before processing; a crash loses the message.
+* *At-least-once*: process, then commit; a crash after processing but before the commit means the message is processed again. This is the usual practical choice.
+* *Exactly-once*: Kafka offers exactly-once *within Kafka* (idempotent producer plus transactions for read-process-write between topics). Across a database, an email and an external API, end-to-end exactly-once is not available, so design for at-least-once with *idempotent consumers*.
+
+=== Idempotent consumers
+
+[source,java]
+----
+@Transactional
+public void handle(PaymentCaptured event) {
+    if (processedEvents.existsById(event.eventId())) {
+        return;                                        // duplicate: already handled
+    }
+    ledger.credit(event.accountId(), event.amount());
+    processedEvents.save(new ProcessedEvent(event.eventId()));   // same transaction, unique key
+}
+----
+
+Alternatives: a unique business key (one invoice per order ID), or naturally idempotent updates ("set status to PAID" rather than "add 100").
+
+*Poison messages* (a message that always fails) block a partition.
+Retry a few times, then send it to a *dead-letter topic* with the error, alert, and keep going.
+Spring Kafka's `DefaultErrorHandler` with a `DeadLetterPublishingRecoverer` does this.
+
+=== Ordering
+
+Ordering is guaranteed only within one partition.
+Use the entity ID (order ID, account ID) as the key so all events for one entity are ordered.
+Global ordering across a topic would need a single partition, which removes parallelism.
+Include a version or sequence number in events so consumers can ignore stale or out-of-order updates.
+
+== Data consistency across services
+
+=== The dual-write problem and the outbox pattern
+
+Updating the database and then publishing to Kafka is two separate writes: if the service crashes between them, the systems disagree.
+
+[source,text]
+----
+BEGIN
+  INSERT INTO orders ...
+  INSERT INTO outbox (id, aggregate_id, type, payload) VALUES (...)
+COMMIT
+         │
+         ▼
+Relay (polling publisher, or CDC with Debezium reading the database log)
+  publishes outbox rows to Kafka, then marks them sent
+----
+
+The business change and the event commit atomically in one local transaction.
+The relay may publish a row twice, so consumers stay idempotent.
+
+=== Saga
+
+A saga runs a business process across services as a sequence of local transactions.
+If a step fails, earlier steps are undone by *compensating actions* (refund the payment, release the stock), because there is no distributed rollback.
+
+* *Choreography*: each service listens for events and emits the next. No central coordinator; simple for short flows but hard to follow as it grows.
+* *Orchestration*: a coordinator (a service, or a workflow engine such as Temporal or Camunda) tells each participant what to do and tracks state. Easier to understand, monitor and change.
+
+[source,text]
+----
+Order saga (orchestrated)
+  1. Order service:     create order (PENDING)
+  2. Inventory service: reserve stock        ── fails? ─► cancel order
+  3. Payment service:   charge card          ── fails? ─► release stock, cancel order
+  4. Order service:     mark order CONFIRMED
+----
+
+Why not two-phase commit (2PC/XA)? It blocks resources while waiting for a coordinator, couples availability of all participants, and most brokers and cloud databases do not support it across services.
+
+=== CQRS and event sourcing
+
+* *CQRS* (Command Query Responsibility Segregation) uses separate models for writes and reads, for example a normalised write database and a denormalised read store (Elasticsearch, a materialised view) updated from events. It helps when read and write needs differ greatly; it adds synchronisation lag and complexity. Not for simple CRUD.
+* *Event sourcing* stores the sequence of events as the source of truth and rebuilds state by replaying them. It gives a full audit history but makes schema evolution and queries harder.
+
+=== CAP and eventual consistency
+
+During a network *partition*, a distributed system must choose between *consistency* (every read sees the latest write, or fails) and *availability* (every request gets a response, possibly stale).
+Without a partition, the trade-off is between latency and consistency (PACELC).
+Eventual consistency means replicas or services converge if no new updates happen.
+Show it honestly in the product: "payment pending", status pages, and reconciliation jobs that fix drift.
+
+== Caching
+
+[cols="1,3",options="header"]
+|===
+|Strategy |How it works
+
+|Cache-aside (lazy loading) |Read from the cache; on a miss, load from the database and put it in the cache. On write, update the database and *evict* the cache entry. Most common.
+|Read-through |The cache itself loads missing entries from the database.
+|Write-through |Writes go to the cache and the database together. Cache always fresh; writes slower.
+|Write-behind |Writes go to the cache and are flushed to the database later. Fast, risks data loss.
+|===
+
+[source,java]
+----
+@Cacheable(cacheNames = "products", key = "#id")
+public Product find(long id) { return repository.findById(id).orElseThrow(); }
+
+@CacheEvict(cacheNames = "products", key = "#product.id")
+public Product update(Product product) { return repository.save(product); }
+----
+
+Local caches (Caffeine) are fastest but each instance has its own copy; distributed caches (Redis) are shared but add a network hop.
+Every cache needs a TTL or eviction policy and a decision about how stale data may be.
+
+*Cache stampede*: a popular key expires and thousands of requests hit the database at once.
+Prevent with request coalescing (one loader per key, as Caffeine does), a lock per key, early refresh before expiry, random jitter on TTLs, and serving stale data while revalidating.
+
+== Rate limiting
+
+[cols="1,3",options="header"]
+|===
+|Algorithm |Behaviour
+
+|Token bucket |Tokens refill at a fixed rate up to a capacity; each request takes one. Allows short bursts. Most common.
+|Leaky bucket |Requests drain at a constant rate; excess queues or is dropped. Smooths traffic.
+|Fixed window |Count per time window (per minute). Simple; allows double bursts at window edges.
+|Sliding window log/counter |Counts over a rolling window. More accurate, more memory.
+|===
+
+Limit per user, API key, tenant or IP.
+In a cluster, keep counters in a shared store such as Redis (Bucket4j supports it), or apply limits at the API gateway.
+Return `429 Too Many Requests` with `Retry-After`.
+
+== Spring Cloud and platform building blocks
+
+[cols="1,3",options="header"]
+|===
+|Need |Options
+
+|Service discovery |Kubernetes DNS and Services; Eureka or Consul outside Kubernetes.
+|Client-side load balancing |Spring Cloud LoadBalancer (Ribbon is retired).
+|API gateway |Spring Cloud Gateway, or a platform gateway (Kong, NGINX, AWS API Gateway): routing, authentication, rate limiting, TLS.
+|Central configuration |Spring Cloud Config, Kubernetes ConfigMaps and Secrets, Vault.
+|Resilience |Resilience4j (Spring Cloud CircuitBreaker).
+|Tracing |Micrometer Tracing with OpenTelemetry; Zipkin, Jaeger or Tempo as back ends.
+|Messaging |Spring for Apache Kafka, Spring AMQP, Spring Cloud Stream.
+|===
+
+== Observability and reliability
+
+* *Distributed tracing*: a trace ID is created at the edge and propagated in headers (W3C `traceparent`) through every HTTP call and message; each hop records a span. It shows where the time went in a request. Do not put secrets or large payloads in span attributes.
+* *Correlation IDs* in every log line (Spring Boot adds trace and span IDs to the MDC automatically with Micrometer Tracing).
+* *SLI, SLO, error budget*: an SLI is a measurement (share of requests under 300 ms); an SLO is the target (99.9% over 30 days); the error budget is the allowed failure (0.1%). When the budget is used up, the team prioritises reliability over features.
+* *Graceful shutdown*: mark readiness down, stop taking new requests, finish in-flight work, stop consumers cleanly, then exit.
+
+== Practice questions
+
+[%collapsible]
+.Q1. What makes a good microservice boundary?
+====
+A cohesive business capability with its own data, deployment and team ownership, aligned to a bounded context.
+Avoid splitting by technical layers, and watch for services that always change or deploy together, or long chains of synchronous calls: that is a distributed monolith.
+====
+
+[%collapsible]
+.Q2. Synchronous versus asynchronous communication?
+====
+Synchronous calls are simple and give an immediate answer but couple availability and add latency along the chain.
+Asynchronous messaging decouples services in time and absorbs load spikes, but brings eventual consistency, duplicates, ordering concerns and harder debugging.
+Use synchronous for queries that need an answer now, events for things that already happened.
+====
+
+[%collapsible]
+.Q3. Explain timeout, retry, circuit breaker and bulkhead.
+====
+Timeout limits waiting; retry repeats transient failures with backoff and jitter; a circuit breaker stops calling an unhealthy dependency and probes it later; a bulkhead isolates resources per dependency.
+Together they stop one failing service from taking down its callers.
+Pair them with metrics and sensible fallbacks.
+====
+
+[%collapsible]
+.Q4. Describe the circuit breaker states.
+====
+Closed: calls flow and failures are counted.
+Open: after the failure threshold, calls fail fast for a wait period.
+Half-open: a limited number of trial calls go through; success closes the circuit, failure opens it again.
+====
+
+[%collapsible]
+.Q5. At-least-once versus exactly-once?
+====
+At-least-once can deliver duplicates and is the practical default.
+Exactly-once exists in limited scopes (Kafka transactions within Kafka) and is expensive; across external systems you get at-least-once and make consumers idempotent with event IDs, unique constraints or deduplication tables.
+====
+
+[%collapsible]
+.Q6. How do you handle duplicate messages?
+====
+Give every event a stable ID; in the same transaction as the side effect, record the processed ID with a unique constraint, or rely on a unique business key, or make the update naturally idempotent.
+Acknowledge only after the durable work is done.
+Route poison messages to a dead-letter topic after limited retries.
+====
+
+[%collapsible]
+.Q7. How do you preserve ordering in Kafka?
+====
+Ordering exists only within a partition, so key messages by the entity that needs order (order ID).
+Keep `max.in.flight.requests.per.connection` at 5 or less with the idempotent producer enabled to avoid reordering on retries (the default since Kafka 3.0).
+Add sequence numbers so consumers can detect gaps or stale events.
+====
+
+[%collapsible]
+.Q8. What is a saga? Orchestration or choreography?
+====
+A sequence of local transactions across services with compensating actions for failure.
+Choreography: services react to each other's events; fine for two or three steps.
+Orchestration: a coordinator drives the steps and holds the state; clearer for longer or changing flows.
+Sagas give business consistency, not isolation: other requests can see intermediate states.
+====
+
+[%collapsible]
+.Q9. What is the outbox pattern?
+====
+Write the business change and an outbox event row in one local transaction; a relay publishes outbox rows to the broker afterwards.
+It solves the dual-write problem between a database and a broker.
+Consumers must still be idempotent.
+====
+
+[%collapsible]
+.Q10. Cache-aside versus write-through? How do you prevent a stampede?
+====
+Cache-aside loads on miss and evicts on write; it is flexible but needs invalidation.
+Write-through updates the cache on every write, keeping it fresh at the cost of write latency.
+Prevent stampedes with per-key loading locks or request coalescing, early refresh, TTL jitter and stale-while-revalidate.
+====
+
+[%collapsible]
+.Q11. Explain rate limiting algorithms.
+====
+Token bucket allows bursts up to the bucket size while enforcing an average rate; leaky bucket smooths output; fixed window is simple but bursty at edges; sliding window is accurate but costs more memory.
+Distributed limits need a shared store or a gateway.
+Return 429 with `Retry-After`.
+====
+
+[%collapsible]
+.Q12. Why can retries make an outage worse?
+====
+They multiply load on a dependency that is already failing, especially when every layer retries.
+Use exponential backoff with jitter, retry budgets, retries at one layer, circuit breakers, and only retry idempotent, transient failures.
+====
+
+[%collapsible]
+.Q13. How do you design an order service?
+====
+Define states (PENDING, CONFIRMED, CANCELLED, SHIPPED) and allowed transitions.
+Validate commands and make them idempotent with a client key.
+Reserve inventory and authorise payment through a saga, persist state and publish events through an outbox, compensate on failure, and expose status with correlation IDs for tracing.
+====
+
+[%collapsible]
+.Q14. How do you design a notification service?
+====
+Accept a durable notification command, resolve user preferences and channels, enqueue per channel, apply provider rate limits, retry transient failures with backoff, dead-letter permanent ones, record delivery status, and deduplicate by notification ID so retries do not send twice.
+====
+
+[%collapsible]
+.Q15. What is eventual consistency, and how do you make it acceptable to users?
+====
+Services or replicas see an update at different times but converge.
+Make intermediate states explicit (pending), show them in the UI, use events plus periodic reconciliation, and agree with the business on acceptable delay.
+====
+
+== Common traps
+
+* Retrying non-idempotent calls.
+* No timeouts.
+* Sharing a database between services.
+* Claiming Kafka gives "exactly-once" end to end.
+* Global ordering requirements that kill parallelism.
+* Distributed transactions with 2PC as the default answer.
+* Caches without TTL or invalidation.
+
+== Follow-ups to expect
+
+* "Payment succeeded but the order service crashed before saving. What now?" (Idempotency, outbox, reconciliation, saga state.)
+* "Your consumer lag is growing. What do you check?" (Processing time, partitions versus consumers, rebalances, poison messages, downstream latency.)
+* "How would you split this monolith?" (Strangler fig: route one capability at a time to a new service.)
+
+== Quick revision
+
+* [ ] Boundaries and the distributed monolith smell
+* [ ] Sync versus async table
+* [ ] Timeout, retry with jitter, circuit breaker states, bulkhead, fallback
+* [ ] Kafka: partition, key, offset, consumer group, ordering, retention
+* [ ] Delivery guarantees and idempotent consumers; dead-letter topics
+* [ ] Outbox, saga (choreography versus orchestration), CQRS
+* [ ] Caching strategies and stampede prevention; rate limiting algorithms
+* [ ] Tracing, SLOs, graceful shutdown
+
+Next: xref:interview-guide/coding-round.adoc[Coding Round in Java].

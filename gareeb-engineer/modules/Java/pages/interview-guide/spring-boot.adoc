@@ -1,0 +1,411 @@
+= Spring Boot
+:page-reading-assistant:
+:page-subtitle: What Spring Boot adds on top of Spring, how auto-configuration decides what to create, starters, externalised configuration and profiles, Actuator and observability, and what changed in Spring Boot 4.
+:page-difficulty: Medium
+:page-tags: Spring Boot, Interview Preparation, Spring, Java
+:page-revdate: 2026-11-11
+
+Spring Boot questions look simple ("what is a starter?") but interviewers for experienced roles push on *how* it works: why a bean was or was not created, which property wins, and how the service behaves in production.
+This page explains the mechanisms, then the production features.
+
+== At a glance
+
+[cols="1,3"]
+|===
+|Weightage |*9 / 10*
+|Who gets asked |Anyone with Spring Boot on the CV.
+|Preparation time |4 hours
+|Handbook questions |Q63-Q70
+|Builds on |xref:interview-guide/spring-core.adoc[Spring Core]
+|===
+
+== What Spring Boot adds
+
+Spring Framework provides the container, MVC, transactions and so on, but leaves the setup to you.
+Spring Boot is an opinionated layer on top that removes the setup:
+
+* *Auto-configuration* creates sensible beans based on what is on the classpath and in your properties.
+* *Starters* are curated dependency sets with compatible versions.
+* *Embedded server* (Tomcat by default, or Jetty): the application is a runnable JAR, `java -jar app.jar`.
+* *Externalised configuration* with a well-defined property precedence, profiles and type-safe binding.
+* *Production features* through Actuator: health, metrics, info, probes.
+* *Dependency management*: the parent POM or BOM pins versions of hundreds of libraries that are tested together.
+
+== @SpringBootApplication
+
+[source,java]
+----
+@SpringBootApplication
+public class ShopApplication {
+    public static void main(String[] args) {
+        SpringApplication.run(ShopApplication.class, args);
+    }
+}
+----
+
+It combines three annotations:
+
+* `@SpringBootConfiguration`: a specialised `@Configuration`.
+* `@EnableAutoConfiguration`: turns on auto-configuration.
+* `@ComponentScan`: scans the package of this class *and its sub-packages*.
+
+Put the main class in the root package (for example `com.shop`).
+Classes in a sibling package like `com.other` are not scanned, a common cause of "my bean is not found".
+
+`SpringApplication.run` creates the `ApplicationContext`, loads properties, runs auto-configuration, refreshes the context (creating singletons), starts the embedded server, then calls `ApplicationRunner` and `CommandLineRunner` beans.
+
+== How auto-configuration works
+
+. `@EnableAutoConfiguration` loads the list of auto-configuration classes from `META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports` in every JAR on the classpath. (Before Spring Boot 2.7 this list lived in `spring.factories`.)
+. Each class is a normal `@AutoConfiguration` class guarded by *conditions*.
+. Spring evaluates the conditions and registers only the beans whose conditions match.
+. Auto-configurations run *after* your own configuration, so they can back off when you define your own bean.
+
+[source,java]
+----
+@AutoConfiguration
+@ConditionalOnClass(DataSource.class)                  // only if the JDBC API is on the classpath
+@EnableConfigurationProperties(DataSourceProperties.class)
+public class DataSourceAutoConfiguration {
+
+    @Bean
+    @ConditionalOnMissingBean                           // back off if the user defined one
+    @ConditionalOnProperty(prefix = "spring.datasource", name = "url")
+    DataSource dataSource(DataSourceProperties props) {
+        return props.initializeDataSourceBuilder().build();
+    }
+}
+----
+
+(Simplified; the real class is more involved.)
+
+[cols="2,3",options="header"]
+|===
+|Condition |Matches when
+
+|`@ConditionalOnClass` / `@ConditionalOnMissingClass` |A class is (or is not) on the classpath.
+|`@ConditionalOnBean` / `@ConditionalOnMissingBean` |A bean of a type exists (or does not).
+|`@ConditionalOnProperty` |A property has a given value.
+|`@ConditionalOnWebApplication` |It is a servlet or reactive web application.
+|`@ConditionalOnResource` |A resource file exists.
+|`@ConditionalOnExpression` |A SpEL expression is true.
+|===
+
+*Debugging*: start with `--debug` (or `debug=true`) to print the *condition evaluation report*, which lists every auto-configuration as a positive or negative match and why.
+With Actuator, `/actuator/conditions` shows the same.
+
+*Excluding*: `@SpringBootApplication(exclude = DataSourceAutoConfiguration.class)` or `+spring.autoconfigure.exclude=...+`.
+Exclude only when you replace it with something deliberate.
+
+=== Writing a custom starter
+
+A starter is two modules: an *autoconfigure* module with the `@AutoConfiguration` class and its `AutoConfiguration.imports` file, and a *starter* module that only declares dependencies.
+Use `@ConditionalOnMissingBean` so applications can override your beans, and `@ConfigurationProperties` for settings.
+This is how companies share logging, security or client setup across many services.
+
+== Starters
+
+A starter is a dependency descriptor that pulls in everything for one capability.
+
+[cols="2,3",options="header"]
+|===
+|Starter |Brings
+
+|`spring-boot-starter-web` (Boot 3) / `spring-boot-starter-webmvc` (Boot 4) |Spring MVC, embedded Tomcat, Jackson
+|`spring-boot-starter-webflux` |Reactive web stack on Netty
+|`spring-boot-starter-data-jpa` |Spring Data JPA, Hibernate, HikariCP
+|`spring-boot-starter-security` |Spring Security
+|`spring-boot-starter-validation` |Jakarta Bean Validation (Hibernate Validator)
+|`spring-boot-starter-actuator` |Health, metrics, Micrometer
+|`spring-boot-starter-test` |JUnit, Mockito, AssertJ, Spring Test
+|===
+
+To switch Tomcat to Jetty, exclude `spring-boot-starter-tomcat` and add `spring-boot-starter-jetty`.
+
+== Externalised configuration
+
+=== Property precedence
+
+Later sources in this list override earlier ones (simplified, highest priority last):
+
+. Default properties (`SpringApplication.setDefaultProperties`)
+. `@PropertySource` on configuration classes
+. `application.properties` / `application.yml` inside the JAR
+. `+application-{profile}.properties+` inside the JAR
+. `application.properties` outside the JAR (current directory or `config/` folder)
+. `+application-{profile}.properties+` outside the JAR
+. OS environment variables (`SERVER_PORT=9090` maps to `server.port` through *relaxed binding*)
+. Java system properties (`-Dserver.port=9090`)
+. Command-line arguments (`--server.port=9090`)
+. Test properties (`+@SpringBootTest(properties = ...)+`, `@TestPropertySource`, `@DynamicPropertySource`)
+
+The practical rule: packaged files hold defaults, the environment overrides them per deployment, and command-line arguments override everything.
+
+=== @Value versus @ConfigurationProperties
+
+[source,java]
+----
+// @Value: one value at a time, supports SpEL and defaults
+@Value("${payment.timeout:5s}")
+private Duration timeout;
+
+// @ConfigurationProperties: a typed, validated group (preferred for real settings)
+@ConfigurationProperties(prefix = "payment")
+@Validated
+public record PaymentProperties(
+        @NotNull URI baseUrl,
+        @DefaultValue("5s") Duration timeout,
+        @Min(1) @DefaultValue("3") int maxRetries) { }
+
+@SpringBootApplication
+@ConfigurationPropertiesScan
+public class ShopApplication { }
+----
+
+[source,yaml]
+----
+payment:
+  base-url: https://pay.example.com
+  timeout: 3s
+  max-retries: 5
+----
+
+`@ConfigurationProperties` gives type conversion (`Duration`, `DataSize`, lists, maps), relaxed binding (`max-retries`, `maxRetries`, `PAYMENT_MAXRETRIES`), validation at startup and IDE auto-completion.
+`@Value` is fine for a single value or an expression.
+
+=== Profiles
+
+[source,yaml]
+----
+# application.yml: shared defaults
+spring:
+  application:
+    name: shop
+---
+spring:
+  config:
+    activate:
+      on-profile: prod
+  datasource:
+    url: jdbc:postgresql://db.prod:5432/shop
+----
+
+* Activate with `spring.profiles.active=prod` (property, environment variable `SPRING_PROFILES_ACTIVE`, or `--spring.profiles.active=prod`).
+* `@Profile("dev")` on a bean or configuration class registers it only for that profile; `@Profile("!prod")` negates.
+* Profile groups combine several: `spring.profiles.group.prod=prod-db,prod-mq`.
+
+*Secrets* never belong in properties files in Git.
+Inject them from the environment, Kubernetes secrets, Vault or a cloud secret manager, and use `spring.config.import` (for example `configtree:` or a Vault or AWS integration) to load them.
+
+== Actuator and observability
+
+[source,yaml]
+----
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health, info, metrics, prometheus
+  endpoint:
+    health:
+      probes:
+        enabled: true          # /actuator/health/liveness and /readiness
+      show-details: when-authorized
+----
+
+[cols="1,3",options="header"]
+|===
+|Endpoint |Shows
+
+|`/actuator/health` |Aggregated status of the app and its dependencies (database, disk, broker).
+|`/actuator/health/liveness` |Is the process alive? A failure makes Kubernetes *restart* the pod.
+|`/actuator/health/readiness` |Can it take traffic? A failure removes the pod from the load balancer *without* restarting it.
+|`/actuator/metrics`, `/actuator/prometheus` |Micrometer metrics: HTTP latency, JVM memory, GC, pools.
+|`/actuator/info` |Build and Git information.
+|`/actuator/env`, `/configprops`, `/beans`, `/mappings`, `/conditions` |Debugging views. Sensitive: never expose publicly.
+|`/actuator/loggers` |Read and change log levels at runtime.
+|`/actuator/threaddump`, `/heapdump` |Diagnostics. Sensitive.
+|===
+
+Only `health` is exposed over HTTP by default.
+Expose the minimum, secure the rest with Spring Security, or move the management port (`management.server.port`) to an internal network.
+
+Do not include downstream services in the *liveness* check: if the database is down, restarting every pod makes things worse.
+Database checks belong in *readiness*, if anywhere.
+
+*Observability* in Spring Boot 3 and 4 is built on Micrometer:
+
+* *Metrics*: `MeterRegistry` with counters, timers and gauges; exported to Prometheus, Datadog and others.
+* *Tracing*: Micrometer Tracing with OpenTelemetry or Brave (Spring Cloud Sleuth was replaced in Boot 3). Trace and span IDs are added to log lines automatically.
+* *Logs*: structured JSON logging is built in since Boot 3.4 (`logging.structured.format.console=ecs`).
+* The `@Observed` annotation or the `Observation` API creates a metric and a span at once.
+
+Measure the four golden signals for each service: request rate, error rate, latency (p50, p95, p99) and saturation (pool usage, CPU, memory).
+
+== Graceful shutdown
+
+[source,yaml]
+----
+server:
+  shutdown: graceful                       # default since Spring Boot 3.4
+spring:
+  lifecycle:
+    timeout-per-shutdown-phase: 30s
+----
+
+On `SIGTERM`, the server stops accepting new requests, readiness turns to "refusing traffic", in-flight requests get up to the timeout to finish, and then beans are destroyed.
+Message consumers should stop polling and finish or hand back the current message.
+
+== Exception handling (overview)
+
+Use `@RestControllerAdvice` with `@ExceptionHandler` methods and return `ProblemDetail` (RFC 9457) responses.
+Details and code are in xref:interview-guide/rest-spring-mvc.adoc#error-handling[REST and Spring MVC].
+
+== Virtual threads, async and scheduling
+
+* `spring.threads.virtual.enabled=true` (Boot 3.2+, Java 21+) runs Tomcat request handling, `@Async` and `@Scheduled` on virtual threads.
+* `@EnableAsync` + `@Async` runs a method on a task executor. The return type should be `void` or `CompletableFuture`. It is proxy-based, so self-invocation does not work.
+* `@EnableScheduling` + `@Scheduled(fixedRate = 5000)` or `cron = "0 0 * * * *"` for periodic jobs. In a cluster, every instance runs the job unless you add a lock (ShedLock) or use a scheduler service.
+
+== Spring Boot 4
+
+Spring Boot 4.0 was released in November 2025 and 4.1 in June 2026.
+Free open-source support for Spring Boot 3.5 ended on 30 June 2026, so upgrade questions are now common.
+
+* Built on *Spring Framework 7*, *Jakarta EE 11* (Servlet 6.1), *Jackson 3* (new `tools.jackson` packages), *JUnit 6* and *Hibernate 7*.
+* Java 17 is still the minimum; Java 25 is supported.
+* *Modular starters and auto-configuration*: the large auto-configure JAR was split into focused modules, and starters were renamed (for example `spring-boot-starter-webmvc`).
+* *API versioning* is built into Spring MVC and WebFlux: `@GetMapping(path = "/orders", version = "2")`.
+* *HTTP service clients* (`@HttpExchange` interfaces) can be registered in groups with `@ImportHttpServices` and configured from properties.
+* *Resilience* annotations in core Spring: `@Retryable` and `@ConcurrencyLimit` (enabled with `@EnableResilientMethods`), so simple retries no longer need Spring Retry.
+* *Null safety* with JSpecify annotations (`@Nullable`, `@NullMarked`) across the Spring portfolio.
+* Undertow support was removed; Tomcat 11 and Jetty 12.1 remain.
+* Spring Security 7 and a new OpenTelemetry starter.
+
+Upgrade path: get to the latest 3.5.x first, fix deprecation warnings, then move to 4.x, using the official migration guide and OpenRewrite recipes.
+
+== Practice questions
+
+[%collapsible]
+.Q1. What is the difference between Spring and Spring Boot?
+====
+Spring Framework provides the container and modules (MVC, data, transactions) but needs explicit configuration.
+Spring Boot adds auto-configuration, starters, an embedded server, externalised configuration and Actuator, so a production-ready service runs with very little setup.
+Boot does not replace Spring; it configures it.
+====
+
+[%collapsible]
+.Q2. How does auto-configuration work?
+====
+`@EnableAutoConfiguration` loads candidate classes listed in `AutoConfiguration.imports` files on the classpath.
+Each is guarded by conditions such as `@ConditionalOnClass` and `@ConditionalOnMissingBean`.
+Matching ones register beans, after user configuration, and back off if you define your own bean.
+`--debug` prints the condition evaluation report.
+====
+
+[%collapsible]
+.Q3. What does `@SpringBootApplication` do, and why does its package matter?
+====
+It is `@SpringBootConfiguration` + `@EnableAutoConfiguration` + `@ComponentScan`.
+Component scanning starts at the annotated class's package, so beans outside that package tree are not found unless you add `scanBasePackages`.
+====
+
+[%collapsible]
+.Q4. How do you override an auto-configured bean?
+====
+Define your own bean of the same type; `@ConditionalOnMissingBean` makes the auto-configuration back off.
+Many auto-configurations also expose properties or customiser beans (for example `RestClientCustomizer`, or the Jackson builder customiser) so you can adjust the auto-configured bean rather than replace it.
+====
+
+[%collapsible]
+.Q5. In which order are properties resolved?
+====
+Command-line arguments beat system properties, which beat environment variables, which beat external files, which beat packaged files; profile-specific files beat their non-profile versions.
+Test property annotations override everything in tests.
+====
+
+[%collapsible]
+.Q6. `@Value` versus `@ConfigurationProperties`?
+====
+`@Value` injects one value and supports SpEL.
+`@ConfigurationProperties` binds a group of settings into a typed object (often a record) with relaxed binding, conversion, validation at startup and metadata for IDEs.
+Prefer it for anything more than one or two values.
+====
+
+[%collapsible]
+.Q7. How do profiles work?
+====
+A profile is a named set of beans and properties.
+`application-prod.yml` and `@Profile("prod")` beans are active only when `prod` is in `spring.profiles.active`.
+Use them for environment differences, not for feature flags, and never for secrets.
+====
+
+[%collapsible]
+.Q8. What is Actuator used for, and how do you secure it?
+====
+Operational endpoints: health, liveness and readiness probes, metrics, info, loggers, thread dumps.
+Expose only what is needed (`management.endpoints.web.exposure.include`), protect sensitive endpoints with Spring Security, and consider a separate management port on an internal network.
+====
+
+[%collapsible]
+.Q9. Liveness versus readiness?
+====
+Liveness: is the process healthy enough to keep running? If not, the orchestrator restarts it.
+Readiness: can it serve traffic now? If not, it is taken out of load balancing but not restarted.
+Dependency checks go in readiness; liveness should reflect only the application's own state.
+====
+
+[%collapsible]
+.Q10. How do you make a Spring Boot service observable?
+====
+Structured logs with trace and correlation IDs, Micrometer metrics for rate, errors, latency and saturation, distributed tracing through OpenTelemetry, health probes, and dashboards with alerts on SLOs.
+Instrument outbound HTTP calls, database time and message processing, not only the controllers.
+====
+
+[%collapsible]
+.Q11. How do you test Spring configuration without starting everything?
+====
+Use slice tests (`@WebMvcTest`, `@DataJpaTest`, `@JsonTest`) to load only part of the context, and `ApplicationContextRunner` to test auto-configurations and conditions in isolation.
+Keep `@SpringBootTest` for a few end-to-end integration tests.
+See xref:interview-guide/testing.adoc[Testing].
+====
+
+[%collapsible]
+.Q12. What happens when a Spring Boot application receives SIGTERM?
+====
+With graceful shutdown (default since Boot 3.4), the web server stops accepting new connections, in-flight requests get up to `spring.lifecycle.timeout-per-shutdown-phase` to complete, readiness reports refusing traffic, and then the context closes and calls `@PreDestroy` methods.
+====
+
+[%collapsible]
+.Q13. What changed in Spring Boot 4, and how would you upgrade?
+====
+Spring Framework 7, Jakarta EE 11, Jackson 3, JUnit 6, Hibernate 7, modular starters, built-in API versioning, HTTP service client groups, `@Retryable`/`@ConcurrencyLimit` in core, JSpecify null safety, Undertow removed.
+Upgrade by moving to the latest 3.5.x, clearing deprecations, then switching to 4.x with the migration guide and OpenRewrite, and running the full test suite plus a performance test.
+====
+
+== Common traps
+
+* Main class in a sub-package, so beans in sibling packages are missed.
+* Exposing all Actuator endpoints (`include: "*"`) on a public port.
+* Dependency checks in the liveness probe.
+* Secrets in `application.yml` in Git.
+* `@Scheduled` jobs running on every instance of a clustered service.
+* Saying "Spring Boot is a different framework from Spring".
+
+== Follow-ups to expect
+
+* "A bean you expected is missing at startup. How do you find out why?" (Condition evaluation report, component scan base package, profiles.)
+* "How would you share common configuration across 30 microservices?" (A custom starter, or a config server.)
+* "How do you run the same JAR in dev, staging and prod?"
+
+== Quick revision
+
+* [ ] Three annotations inside `@SpringBootApplication`
+* [ ] Auto-configuration loading, conditions, back-off, debug report
+* [ ] Property precedence and relaxed binding
+* [ ] `@ConfigurationProperties` with a record and validation
+* [ ] Profiles and secrets handling
+* [ ] Actuator endpoints, liveness versus readiness, exposure
+* [ ] Spring Boot 4 headline changes
+
+Next: xref:interview-guide/rest-spring-mvc.adoc[REST APIs and Spring MVC].

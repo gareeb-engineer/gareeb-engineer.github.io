@@ -1,0 +1,456 @@
+= Spring AI and GenAI Integration
+:page-reading-assistant:
+:page-subtitle: ChatClient and ChatModel, prompts and structured output, embeddings and vector stores, retrieval-augmented generation, advisors and chat memory, tool calling and MCP, evaluation, security and production design.
+:page-difficulty: Medium
+:page-tags: Spring AI, Interview Preparation, RAG, LLM, Spring Boot
+:page-revdate: 2026-11-11
+
+Spring AI questions appear when a role mentions LLMs, RAG, chatbots or "AI features".
+Interviewers want to know whether you can add a model to a Spring service *safely*: grounded answers, validated output, authorised tool calls, cost and latency under control, and tests that catch regressions.
+This page follows questions 151 to 180 of the attached handbook and adds code and current version notes.
+
+== At a glance
+
+[cols="1,3"]
+|===
+|Weightage |*4 / 10* in general; *8 / 10* if the job description mentions GenAI, LLMs or RAG
+|Who gets asked |Role-specific; growing in 2026 interviews.
+|Preparation time |3 hours, plus building one small RAG demo
+|Handbook questions |Q151-Q180
+|Builds on |xref:interview-guide/spring-boot.adoc[Spring Boot], xref:interview-guide/spring-security.adoc[Security]
+|===
+
+IMPORTANT: Spring AI changes quickly.
+Spring AI 1.0 went GA in May 2025; Spring AI 2.0 went GA in June 2026, targets Spring Boot 4 and Spring Framework 7, and moved to Jackson 3 with several breaking changes in MCP packages.
+The concepts below are stable, but check starter names, property names and method signatures against the exact version in your project.
+
+== What Spring AI is
+
+Spring AI is a Spring project that gives portable abstractions over AI providers (OpenAI, Anthropic, Azure OpenAI, Amazon Bedrock, Google Vertex AI, Ollama and others) and AI infrastructure such as vector databases.
+It provides:
+
+* `ChatModel` and the fluent `ChatClient` for chat completions, with streaming.
+* `EmbeddingModel` to turn text into vectors.
+* `VectorStore` for similarity search over documents (PGvector, Redis, Elasticsearch, Pinecone, Milvus, Chroma, and others).
+* An ETL pipeline: document readers, splitters and writers for ingestion.
+* *Advisors* that wrap calls with reusable behaviour: memory, RAG, logging, safety.
+* Tool (function) calling and Model Context Protocol (MCP) clients and servers.
+* Structured output mapping to Java types.
+* Observability through Micrometer, and evaluation helpers.
+* Spring Boot starters and auto-configuration for all of the above.
+
+It does not remove the need to understand model behaviour, data quality, security and distributed-systems design.
+
+== ChatModel versus ChatClient
+
+`ChatModel` is the low-level interface: you pass a `Prompt` (a list of messages plus options) and get a `ChatResponse`.
+`ChatClient` is a fluent API on top: system and user messages, templates, advisors, tools, synchronous or streaming calls, and mapping to Java objects.
+Use `ChatClient` in application code; use `ChatModel` when you need direct control.
+
+[source,java]
+----
+@Configuration
+class AiConfig {
+
+    @Bean
+    ChatClient supportClient(ChatClient.Builder builder) {        // Builder is auto-configured
+        return builder
+                .defaultSystem("""
+                        You are a support assistant for an online shop.
+                        Answer only questions about orders, shipping and returns.
+                        If you do not know, say so.
+                        """)
+                .build();
+    }
+}
+
+@RestController
+class SupportController {
+
+    private final ChatClient chat;
+
+    SupportController(ChatClient chat) { this.chat = chat; }
+
+    @GetMapping("/support")
+    String ask(@RequestParam String question) {
+        return chat.prompt()
+                .user(question)
+                .call()
+                .content();
+    }
+
+    @GetMapping(value = "/support/stream", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
+    Flux<String> stream(@RequestParam String question) {
+        return chat.prompt().user(question).stream().content();    // tokens as they arrive
+    }
+}
+----
+
+Build the client once and reuse it; keep API keys in external configuration or a secret manager.
+
+== Messages, prompts and templates
+
+* *System message*: sets behaviour, role and constraints.
+* *User message*: the request and any data supplied with it.
+* *Assistant message*: a previous model reply, used to replay conversation history.
+* *Tool message*: the result of a tool call returned to the model.
+
+Roles structure the conversation but are *not* a security boundary.
+Text in user input or retrieved documents can contain instructions ("ignore previous instructions..."), which is *prompt injection*.
+Never treat such content as trusted policy.
+
+[source,java]
+----
+String answer = chat.prompt()
+        .user(u -> u.text("Summarise this review in {words} words: {review}")
+                    .param("words", 30)
+                    .param("review", reviewText))
+        .call()
+        .content();
+----
+
+Templates separate fixed instructions from runtime values, make prompts testable and versionable, and keep data insertion controlled.
+They do not prevent prompt injection on their own.
+
+*`call()` versus `stream()`*: `call()` waits for the complete response, which suits normal request-response APIs.
+`stream()` returns a `Flux` of partial content and improves perceived latency in chat UIs, but you must handle client disconnects, cancellation, timeouts and errors that occur after streaming has started.
+
+== Structured output
+
+[source,java]
+----
+record TicketTriage(Category category, Priority priority, String summary) { }
+
+TicketTriage triage = chat.prompt()
+        .user("Classify this support ticket: " + ticketText)
+        .call()
+        .entity(TicketTriage.class);          // Spring AI adds format instructions and parses JSON
+----
+
+Treat the result as *untrusted input*: validate required fields, enum values, ranges and business rules before using it.
+Reliability varies by model; some providers offer a native JSON schema mode that improves it.
+
+*ChatOptions* (model name, temperature, max tokens, provider-specific settings) control *how* the model generates.
+Prompt instructions describe *what* to do.
+Neither replaces validation, authorisation or deterministic business rules in code.
+
+== Embeddings and vector stores
+
+An *embedding* is a vector of numbers that represents the meaning of a piece of text.
+Texts with similar meaning have vectors that are close together (cosine similarity or dot product).
+Similarity is not proof of truth or relevance, and you must use the *same embedding model* for indexing and for queries.
+
+[source,java]
+----
+float[] vector = embeddingModel.embed("How do I return a damaged item?");
+
+vectorStore.add(List.of(
+        new Document("Damaged items can be returned within 30 days...",
+                     Map.of("source", "returns-policy.pdf", "page", 3, "tenant", "acme"))));
+
+List<Document> hits = vectorStore.similaritySearch(SearchRequest.builder()
+        .query("return damaged product")
+        .topK(4)
+        .similarityThreshold(0.7)
+        .filterExpression("tenant == 'acme'")          // metadata filter, applied server-side
+        .build());
+----
+
+`VectorStore` is portable across databases, but each database differs in index types (HNSW, IVF), filtering, consistency, scaling and distance metrics.
+PGvector is a common choice when the team already runs PostgreSQL.
+
+== Retrieval-augmented generation (RAG)
+
+A model only knows its training data.
+RAG retrieves relevant, current documents at query time and passes them to the model as context, so answers are grounded in your data and can cite sources.
+
+[source,text]
+----
+Ingestion (offline, repeatable)
+  read documents ─► clean ─► split into chunks ─► add metadata ─► embed ─► store in VectorStore
+
+Query (online)
+  user question ─► (optional) rewrite query ─► embed ─► similarity search with metadata filters
+               ─► (optional) rerank ─► build prompt with selected chunks ─► model ─► answer with citations
+----
+
+=== Ingestion with the ETL pipeline
+
+[source,java]
+----
+List<Document> pages = new PagePdfDocumentReader(new FileSystemResource("returns-policy.pdf")).get();
+List<Document> chunks = new TokenTextSplitter().apply(pages);
+chunks.forEach(d -> d.getMetadata().put("tenant", "acme"));
+vectorStore.add(chunks);       // embeds and stores
+----
+
+Keep ingestion repeatable, track source versions so stale chunks can be replaced, and handle parse failures.
+
+*Chunking* matters: very large chunks dilute relevance and waste context; very small chunks lose meaning.
+Choose size and overlap from the document structure and from evaluation results, and keep headings, page numbers and source IDs as metadata.
+
+=== RAG with advisors
+
+[source,java]
+----
+ChatClient ragClient = builder
+        .defaultAdvisors(QuestionAnswerAdvisor.builder(vectorStore)
+                .searchRequest(SearchRequest.builder().topK(5).similarityThreshold(0.7).build())
+                .build())
+        .build();
+
+String answer = ragClient.prompt()
+        .user(question)
+        .advisors(a -> a.param(QuestionAnswerAdvisor.FILTER_EXPRESSION, "tenant == '" + tenantId + "'"))
+        .call()
+        .content();
+----
+
+* `QuestionAnswerAdvisor` does a straightforward vector lookup for the question and adds the results to the prompt.
+* `RetrievalAugmentationAdvisor` composes modular RAG steps: query transformation (rewrite, translate, expand), document retrieval, joining results from several sources, post-processing, and context augmentation. Use it when a single vector search is not enough; the flexibility adds configuration and testing work.
+
+The tenant ID in the filter must come from the authenticated user on the server, never from the model or the request body.
+Validate or escape any value you put into a filter expression.
+
+=== Improving poor retrieval
+
+. Look at real queries and the chunks they retrieved before changing anything.
+. Check chunk boundaries and metadata.
+. Try a better embedding model, different `topK` and similarity threshold.
+. Add query rewriting, hybrid search (keyword plus vector), and *reranking*: retrieve a wider candidate set cheaply, then reorder it with a more precise model, at some extra latency and cost.
+. Measure retrieval quality (recall, precision) separately from answer quality.
+
+Do not try to fix retrieval by stuffing more text into the prompt.
+
+== Advisors and chat memory
+
+Advisors intercept requests and responses around a `ChatClient` call, like servlet filters for AI calls.
+They implement memory, RAG, logging (`SimpleLoggerAdvisor`), safety checks and tool handling.
+*Order matters*, because each advisor can change what the next one sees; test the full chain.
+
+Models are stateless between requests.
+*Chat memory* stores previous messages and an advisor adds them to each new prompt.
+
+[source,java]
+----
+ChatMemory memory = MessageWindowChatMemory.builder().maxMessages(20).build();   // keep the last 20
+
+ChatClient chatWithMemory = builder
+        .defaultAdvisors(MessageChatMemoryAdvisor.builder(memory).build())
+        .build();
+
+String reply = chatWithMemory.prompt()
+        .user(message)
+        .advisors(a -> a.param(ChatMemory.CONVERSATION_ID, conversationId))   // stable ID per conversation
+        .call()
+        .content();
+----
+
+For production, back memory with a database repository, and define retention, access control, tenant isolation and deletion (privacy requests).
+
+*Memory versus RAG*: memory answers "what did I say earlier?"; RAG answers questions from a knowledge base.
+They can be combined but need separate retention, authorisation and relevance rules.
+
+== Tool calling
+
+The application describes tools (name, description, typed parameters) to the model.
+The model may *request* a tool call; Spring AI runs the matching Java method and sends the result back so the model can finish its answer.
+
+[source,java]
+----
+class OrderTools {
+
+    private final OrderService orders;
+    OrderTools(OrderService orders) { this.orders = orders; }
+
+    @Tool(description = "Get the shipping status of one of the current user's orders by order ID")
+    OrderStatusView orderStatus(@ToolParam(description = "Order ID, e.g. A-1001") String orderId) {
+        return orders.statusForCurrentUser(orderId);      // authorisation enforced in the service
+    }
+}
+
+String answer = chat.prompt()
+        .user("Where is my order A-1001?")
+        .tools(new OrderTools(orderService))
+        .call()
+        .content();
+----
+
+A tool call is a *request from the model*, not an authorisation.
+
+* Expose an allowlist of small, focused tools.
+* Authenticate the caller and authorise every operation against the user and tenant inside the service.
+* Validate arguments as untrusted input.
+* Require human confirmation for high-impact actions (refunds, deletes, emails).
+* Apply timeouts, rate limits, idempotency and audit logs.
+* Never let model output become raw SQL, shell commands or arbitrary URLs.
+
+=== Model Context Protocol (MCP)
+
+MCP is an open protocol for connecting models to tools and data sources through MCP *servers*.
+Spring AI provides MCP client and server starters, so a Spring Boot app can use tools from other MCP servers or expose its own services as tools.
+Spring AI 2.0 added annotation-based servers (`@McpTool`, `@McpResource`) and favours the Streamable HTTP transport over the older SSE transport for remote servers.
+The same security rules as tool calling apply, plus authentication between client and server.
+
+== Hallucinations, evaluation and observability
+
+=== Reducing hallucinations
+
+* Retrieve trustworthy, current context and tell the model to answer only from it.
+* Instruct it to say "I don't know" when the context is insufficient, and treat that as a valid outcome.
+* Ask for citations of source documents and show them.
+* Validate structured output and apply deterministic business rules in code.
+* Evaluate faithfulness on a test set. Prompt wording alone cannot guarantee correct output.
+
+=== Evaluating a RAG application
+
+Build an evaluation set of representative questions with expected facts and the documents that contain them.
+Measure:
+
+* retrieval precision and recall (were the right chunks found?);
+* answer correctness and *faithfulness* (is every claim supported by the context?);
+* citation quality, latency and cost per request.
+
+Spring AI includes evaluators such as `RelevancyEvaluator` and `FactCheckingEvaluator` that use a model as a judge.
+Combine automatic scores with human review, and rerun the suite whenever prompts, models, chunking or indexes change, like a regression test suite.
+
+=== Observability
+
+Spring AI emits Micrometer observations for `ChatClient`, `ChatModel`, advisors, embeddings and vector stores.
+Track latency, errors, token usage (and therefore cost), retrieval hit counts and downstream dependencies in your normal dashboards and traces.
+Do not log full prompts and completions by default: they may contain personal data or secrets.
+
+== Designing a production Spring AI service
+
+[source,text]
+----
+Client ─► API layer (authN/authZ, input validation, rate limits)
+            │
+            ▼
+        Orchestration (prompt templates, advisors, tool allowlist, output validation)
+            │                 │                         │
+            ▼                 ▼                         ▼
+      Retrieval service   Model gateway             Business services (tools)
+      (tenant filters,    (timeouts, retries only   (authorisation inside,
+       reranking)          where safe, fallback      idempotency, audit)
+                           model, token budgets)
+            ▲
+      Ingestion pipeline (ETL, versioned sources, re-indexing)
+----
+
+Checklist:
+
+* Separate API, orchestration, retrieval, model access and ingestion responsibilities.
+* Tenant-aware retrieval and authorisation enforced in code.
+* Prompt-injection defences: treat retrieved and user text as data, limit tools, validate outputs.
+* Timeouts, bounded concurrency (a `Semaphore` or bulkhead around the provider), retries only for transient errors, caching of repeated answers or embeddings where appropriate.
+* Version prompts and models; record which versions produced each answer.
+* Continuous evaluation and a defined fallback or "I can't answer" behaviour.
+* Provider portability: use the common abstractions, isolate provider-specific options, and run the evaluation suite before switching providers, because models differ in context size, tool calling, structured output and safety behaviour.
+
+== Practice questions
+
+[%collapsible]
+.Q1. What is Spring AI, and what problem does it solve?
+====
+A Spring project with portable abstractions and Boot auto-configuration for chat, embeddings, vector stores, RAG, tool calling, memory and observability across many AI providers.
+It removes provider-specific plumbing; it does not remove the need to handle model behaviour, data quality and security.
+====
+
+[%collapsible]
+.Q2. ChatModel versus ChatClient?
+====
+`ChatModel` is the low-level call: prompt in, response out.
+`ChatClient` is the fluent, application-facing API with system and user messages, templates, advisors, tools, streaming and entity mapping.
+====
+
+[%collapsible]
+.Q3. Explain the RAG flow end to end.
+====
+Ingestion: load, clean, split, add metadata, embed and store chunks.
+Query: embed or rewrite the question, search with metadata filters, optionally rerank, add the selected chunks to the prompt, and generate a grounded answer with citations.
+Evaluate retrieval and answers separately.
+====
+
+[%collapsible]
+.Q4. QuestionAnswerAdvisor versus RetrievalAugmentationAdvisor?
+====
+`QuestionAnswerAdvisor` is a ready-made, simple RAG: one vector search, results appended to the prompt.
+`RetrievalAugmentationAdvisor` composes modular steps (query transformation, retrieval from several sources, post-processing, augmentation) for more complex pipelines.
+====
+
+[%collapsible]
+.Q5. How does chat memory work?
+====
+The model is stateless, so a `ChatMemory` stores prior messages per conversation ID, and a memory advisor adds the relevant history to each new prompt.
+Choose a window or summary strategy to stay within context limits, and define retention, tenant isolation and deletion.
+====
+
+[%collapsible]
+.Q6. How does tool calling work, and how do you keep it safe?
+====
+The app registers tool definitions; the model may ask for a call; Spring AI runs the Java method and returns the result to the model.
+Safety: allowlisted tools, authorisation inside the service for the real user, argument validation, human confirmation for high-impact actions, timeouts, rate limits, idempotency and audit logs.
+====
+
+[%collapsible]
+.Q7. What is metadata filtering, and why is it a security feature?
+====
+It restricts similarity search to documents matching attributes such as tenant, language or access level.
+It improves relevance and enforces data isolation, but only if the filter is built on the server from the authenticated identity, not chosen by the model or the client.
+====
+
+[%collapsible]
+.Q8. How do you reduce hallucinations?
+====
+Ground answers in retrieved, trusted context; constrain the task; allow and encourage abstention; require citations; validate structured output; enforce business rules in code; and measure faithfulness on an evaluation set.
+====
+
+[%collapsible]
+.Q9. How do you evaluate a RAG system?
+====
+A representative question set with expected facts and source documents; metrics for retrieval precision and recall, answer correctness, faithfulness, citation quality, latency and cost; automated evaluators plus human review; rerun on every prompt, model, chunking or index change.
+====
+
+[%collapsible]
+.Q10. How do you defend against prompt injection?
+====
+Treat user and retrieved text as data, never as policy; keep secrets and permissions out of the prompt; limit which tools exist and authorise each call in code; validate outputs; filter retrieval by the user's permissions; and monitor for abuse.
+No prompt wording fully prevents injection, so the real controls are outside the model.
+====
+
+[%collapsible]
+.Q11. How would you switch from one model provider to another?
+====
+Code against `ChatClient`, `EmbeddingModel` and `VectorStore`, keep provider options in configuration, and isolate provider-specific features behind adapters.
+Before switching, run the evaluation suite, because quality, context limits, tool calling and structured output differ.
+Changing the embedding model requires re-embedding the whole index.
+====
+
+== Common traps
+
+* Trusting model output without validation.
+* Letting the model choose the tenant or permission filter.
+* Logging full prompts with personal data.
+* Using a different embedding model for queries than for indexing.
+* No timeouts or concurrency limits on provider calls.
+* No evaluation set, so regressions go unnoticed.
+* Presenting Spring AI API details without checking the version.
+
+== Follow-ups to expect
+
+* "Design a support chatbot over 10,000 PDF manuals for many customers." (Ingestion, chunking, tenant filters, citations, evaluation, cost.)
+* "The bot gives confident wrong answers. How do you debug it?" (Check retrieval first, then the prompt, then the model.)
+* "How do you control cost?" (Token budgets, caching, smaller models for simple steps, limiting context size.)
+
+== Quick revision
+
+* [ ] Abstractions: ChatClient, ChatModel, EmbeddingModel, VectorStore, advisors
+* [ ] `call()` versus `stream()`, structured output with `entity()`
+* [ ] RAG ingestion and query flow, chunking, metadata filters, reranking
+* [ ] Chat memory with conversation IDs
+* [ ] Tool calling and MCP security rules
+* [ ] Hallucination reduction, evaluation metrics, observability
+* [ ] Production design checklist and version caveats
+
+Back to the xref:interview-guide/index.adoc[guide index].

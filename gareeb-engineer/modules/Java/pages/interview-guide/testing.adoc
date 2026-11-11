@@ -1,0 +1,312 @@
+= Testing: JUnit, Mockito and Spring Tests
+:page-reading-assistant:
+:page-subtitle: The test pyramid, what a good unit test looks like, JUnit and Mockito essentials, when mocking hurts, Spring slice tests, Testcontainers, and testing transactions and asynchronous code.
+:page-difficulty: Medium
+:page-tags: Java, Interview Preparation, Testing, JUnit, Mockito, Spring Boot
+:page-revdate: 2026-11-11
+
+Testing questions show whether you ship code you can trust.
+Interviewers rarely ask for annotation lists; they ask "how would you test this?" about code you just wrote, and they look for a sensible mix of fast unit tests and a few realistic integration tests.
+
+== At a glance
+
+[cols="1,3"]
+|===
+|Weightage |*6 / 10*
+|Who gets asked |Mid and senior; also asked as "write a test" after a coding question.
+|Preparation time |2 to 3 hours
+|Handbook questions |Q106-Q110
+|Builds on |xref:interview-guide/spring-boot.adoc[Spring Boot], xref:interview-guide/jpa-hibernate-transactions.adoc[Transactions]
+|===
+
+== Kinds of tests
+
+[cols="1,3,2",options="header"]
+|===
+|Kind |What it proves |Speed
+
+|Unit |One class or function behaves correctly, with collaborators replaced or real value objects. |Milliseconds
+|Integration |Your code works with real infrastructure or framework behaviour: database, Kafka, HTTP serialisation, Spring wiring, transactions. |Seconds
+|Contract |A provider and a consumer agree on an API or event schema (Spring Cloud Contract, Pact). |Seconds
+|End-to-end |A full user journey across deployed services. |Minutes; keep few
+|===
+
+The *test pyramid*: many unit tests, fewer integration tests, very few end-to-end tests.
+A suite made mostly of slow end-to-end tests is fragile and slow to give feedback.
+
+== A good unit test
+
+* One behaviour per test, with a name that says what it checks: `rejectsWithdrawalAboveBalance`.
+* Arrange, act, assert structure.
+* Deterministic: no real clock, randomness, network or shared state. Inject a `Clock`.
+* Meaningful assertions on outcomes, not on internal steps.
+* Covers boundaries, invalid input, failure paths and state transitions, not only the happy path.
+
+[source,java]
+----
+class AccountTest {
+
+    @Test
+    void rejectsWithdrawalAboveBalance() {
+        // arrange
+        Account account = new Account("A-1", new BigDecimal("100.00"));
+
+        // act + assert
+        assertThatThrownBy(() -> account.withdraw(new BigDecimal("100.01")))
+                .isInstanceOf(InsufficientFundsException.class)
+                .hasMessageContaining("A-1");
+        assertThat(account.balance()).isEqualByComparingTo("100.00");   // state unchanged
+    }
+
+    @ParameterizedTest
+    @CsvSource({"0.00, false", "-1.00, false", "50.00, true"})
+    void validatesDepositAmount(BigDecimal amount, boolean accepted) {
+        Account account = new Account("A-1", BigDecimal.ZERO);
+        assertThat(account.canDeposit(amount)).isEqualTo(accepted);
+    }
+}
+----
+
+== JUnit essentials
+
+* `@Test`, `@ParameterizedTest` with `@ValueSource`, `@CsvSource`, `@MethodSource`, `@EnumSource`.
+* `@BeforeEach`/`@AfterEach` per test; `@BeforeAll`/`@AfterAll` once per class (static unless `@TestInstance(PER_CLASS)`).
+* `@Nested` groups related tests; `@DisplayName` for readable names; `@Disabled` to skip; `@Tag` to filter.
+* `assertThrows`, `assertAll`, `assertTimeout`; most teams use AssertJ (`assertThat`) for readable assertions.
+* Extensions (`@ExtendWith`) plug in Mockito, Spring and others.
+* JUnit 5 (Jupiter) replaced JUnit 4's runners and rules with extensions. JUnit 6 (used by Spring Boot 4) keeps the Jupiter programming model and raises the baseline to Java 17.
+
+== Mockito
+
+[source,java]
+----
+@ExtendWith(MockitoExtension.class)
+class CheckoutServiceTest {
+
+    @Mock PaymentGateway gateway;
+    @Mock OrderRepository orders;
+    @InjectMocks CheckoutService checkout;
+
+    @Captor ArgumentCaptor<Order> savedOrder;
+
+    @Test
+    void savesPaidOrderWhenPaymentSucceeds() {
+        when(gateway.charge(any())).thenReturn(PaymentResult.approved("tx-1"));
+
+        checkout.checkout(cartWithOneItem());
+
+        verify(orders).save(savedOrder.capture());
+        assertThat(savedOrder.getValue().status()).isEqualTo(OrderStatus.PAID);
+    }
+
+    @Test
+    void doesNotSaveWhenPaymentFails() {
+        when(gateway.charge(any())).thenThrow(new PaymentDeclinedException("card expired"));
+
+        assertThatThrownBy(() -> checkout.checkout(cartWithOneItem()))
+                .isInstanceOf(PaymentDeclinedException.class);
+        verifyNoInteractions(orders);
+    }
+}
+----
+
+* `mock`: all methods return defaults unless stubbed. `spy`: wraps a real object; unstubbed methods run for real (stub spies with `+doReturn(...).when(spy).method()+`).
+* `+when(...).thenReturn/thenThrow/thenAnswer+` stubs; `verify(mock, times(1))`, `never()`, `verifyNoMoreInteractions` check calls.
+* Argument matchers (`any()`, `eq()`, `argThat`): if one argument uses a matcher, all must.
+* Mockito's strict stubs (the default with `MockitoExtension`) fail tests with unused stubs, which keeps tests honest.
+* Mockito can mock final classes and static methods (`mockStatic`) with its inline mock maker, the default since Mockito 5. Needing to mock statics is often a design hint to inject the dependency instead.
+
+=== When mocking hurts
+
+* Tests that verify every call (`verify(a).x(); verify(b).y();`) test *how* the code works, not *what* it achieves. They break on harmless refactoring and pass while real behaviour is broken.
+* Mocking value objects, collections or your own simple classes adds noise; use real ones.
+* Mocking a repository cannot prove the query works, the transaction rolls back or the constraint fires.
+* Rule of thumb: mock what you do not own *at the boundary* (wrap it in your own interface first), and use real objects inside.
+
+== Spring Boot tests
+
+[cols="2,3",options="header"]
+|===
+|Annotation |Loads
+
+|`@SpringBootTest` |The full application context. Add `webEnvironment = RANDOM_PORT` for a real server. Slowest; use for a few end-to-end-in-process tests.
+|`@WebMvcTest(OrderController.class)` |MVC layer only: controllers, advice, filters, converters, validation. Services are replaced with mocks.
+|`@DataJpaTest` |JPA layer: entities, repositories, `EntityManager`. Each test runs in a transaction that rolls back.
+|`@JsonTest` |Jackson configuration and serialisation.
+|`@RestClientTest` |A `RestClient`/`RestTemplate` client against a mock server.
+|`ApplicationContextRunner` |Tiny contexts to test auto-configuration and conditions.
+|===
+
+[source,java]
+----
+@WebMvcTest(OrderController.class)
+class OrderControllerTest {
+
+    @Autowired MockMvcTester mvc;                 // AssertJ-style MockMvc (Spring Framework 6.2+)
+    @MockitoBean OrderService orders;             // replaces @MockBean (deprecated in Boot 3.4, removed in Boot 4)
+
+    @Test
+    void returns404WhenOrderMissing() {
+        when(orders.find(42L)).thenThrow(new OrderNotFoundException(42L));
+
+        assertThat(mvc.get().uri("/api/v1/orders/42"))
+                .hasStatus(HttpStatus.NOT_FOUND)
+                .bodyJson().extractingPath("$.code").isEqualTo("ORDER_NOT_FOUND");
+    }
+
+    @Test
+    void rejectsInvalidRequest() {
+        assertThat(mvc.post().uri("/api/v1/orders")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content("{\"customerId\":\"\",\"lines\":[]}"))
+                .hasStatus(HttpStatus.BAD_REQUEST);
+    }
+}
+----
+
+Spring caches application contexts between test classes with the same configuration.
+Every different set of ``@MockitoBean``s or properties creates a new context, so keep test configurations consistent to keep the suite fast.
+
+== Testcontainers
+
+In-memory databases such as H2 behave differently from PostgreSQL or MySQL (SQL dialect, locking, constraints, JSON types).
+Testcontainers starts the real database, broker or cache in Docker for the test run.
+
+[source,java]
+----
+@SpringBootTest
+@Testcontainers
+class OrderRepositoryIT {
+
+    @Container
+    @ServiceConnection                                   // Spring Boot 3.1+: sets the datasource properties
+    static PostgreSQLContainer<?> postgres = new PostgreSQLContainer<>("postgres:17");
+
+    @Autowired OrderRepository orders;
+
+    @Test
+    void findsOrdersWithCustomerInOneQuery() {
+        // insert data, call the repository, assert results and the number of SQL statements
+    }
+}
+----
+
+`@ServiceConnection` replaces manual `@DynamicPropertySource` wiring for supported containers (PostgreSQL, MySQL, Kafka, Redis, MongoDB and others).
+
+== Testing transactions
+
+Mocks cannot prove transaction behaviour.
+Use an integration test with a real database and check:
+
+* Data is committed on success and rolled back on a runtime exception.
+* A checked exception commits unless `rollbackFor` is set.
+* Unique constraints and optimistic locking (`@Version`) raise the expected exceptions.
+* `REQUIRES_NEW` audit records survive an outer rollback.
+
+Be careful with `@Transactional` on test classes: the test's own transaction wraps the code under test and rolls back at the end, so you never see a real commit, `@TransactionalEventListener(AFTER_COMMIT)` never fires, and lazy loading works where production would fail.
+For commit behaviour, run without a test transaction and clean up explicitly.
+
+== Testing asynchronous code
+
+* Never use `Thread.sleep` to wait. It is slow and flaky.
+* Inject the `Executor` and use a synchronous one in unit tests.
+* Wait for an outcome with a deadline using Awaitility.
+* Use `CompletableFuture.get(timeout)` or `CountDownLatch.await(timeout)` in tests.
+
+[source,java]
+----
+@Test
+void publishesEventAfterOrderPlaced() {
+    orderService.place(order);
+
+    await().atMost(Duration.ofSeconds(5))
+           .untilAsserted(() -> assertThat(consumer.received()).contains(order.id()));
+}
+----
+
+== Practice questions
+
+[%collapsible]
+.Q1. Unit versus integration versus contract test?
+====
+Unit tests check one unit's logic quickly in isolation.
+Integration tests check collaboration with real infrastructure or framework behaviour.
+Contract tests check that a provider and consumer agree on an API or event schema, so services can deploy independently.
+====
+
+[%collapsible]
+.Q2. What makes a good unit test?
+====
+One behaviour, clear name, arrange-act-assert, deterministic inputs (injected clock), assertions on outcomes, coverage of edge and failure cases, and minimal mocking.
+It should fail for one reason and survive refactoring that does not change behaviour.
+====
+
+[%collapsible]
+.Q3. When is mocking harmful?
+====
+When tests verify the sequence of calls instead of results, mock value objects or your own simple classes, or mock away the very thing that needs proving (queries, transactions, serialisation).
+Such tests pass while the system is broken and break when the code is merely refactored.
+====
+
+[%collapsible]
+.Q4. `@SpringBootTest` versus `@WebMvcTest` versus `@DataJpaTest`?
+====
+`@SpringBootTest` loads everything, for a few broad integration tests.
+`@WebMvcTest` loads only the web layer with services mocked, for controller mapping, validation, error handling and JSON.
+`@DataJpaTest` loads only JPA, rolling back after each test, for repository queries.
+====
+
+[%collapsible]
+.Q5. `@Mock` versus `@MockitoBean`?
+====
+`@Mock` creates a plain Mockito mock, used in unit tests without Spring.
+`@MockitoBean` (Spring Framework 6.2+) replaces a bean in the Spring test context with a mock; it replaces the older `@MockBean`.
+====
+
+[%collapsible]
+.Q6. How do you test transactional behaviour?
+====
+With integration tests against a real database (Testcontainers), checking commit, rollback, constraints, locking and propagation.
+Avoid wrapping the test itself in a transaction when you need to observe real commits.
+====
+
+[%collapsible]
+.Q7. How do you test asynchronous code?
+====
+Make the executor injectable and synchronous in unit tests; in integration tests, wait for the expected state with a bounded timeout (Awaitility, latches, futures).
+No arbitrary sleeps, and clean up threads and queues after each test.
+====
+
+[%collapsible]
+.Q8. Why use Testcontainers instead of H2?
+====
+H2 differs from the production database in SQL dialect, types, locking and constraint behaviour, so tests can pass on H2 and fail in production.
+Testcontainers runs the same database version as production.
+====
+
+== Common traps
+
+* Tests that only cover the happy path.
+* `Thread.sleep` in tests.
+* `@SpringBootTest` for every test.
+* Verifying every interaction.
+* H2 hiding database-specific bugs.
+* Transactional tests hiding commit-time behaviour.
+* Chasing a coverage percentage instead of meaningful cases.
+
+== Follow-ups to expect
+
+* "Write tests for the function you just coded."
+* "How would you test a Kafka consumer?" (Call the handler directly in a unit test; use an embedded or Testcontainers Kafka for one integration test; test idempotency by sending the same event twice.)
+* "Your test suite takes 25 minutes. How do you speed it up?" (Fewer full contexts, context caching, parallel execution, moving logic tests down the pyramid.)
+
+== Quick revision
+
+* [ ] Pyramid and the four kinds of tests
+* [ ] Unit test checklist and a parameterised test
+* [ ] Mockito: stub, verify, captor, spy, strict stubs; when not to mock
+* [ ] Spring slices and `@MockitoBean`
+* [ ] Testcontainers with `@ServiceConnection`
+* [ ] Transaction and async testing rules
+
+Next: xref:interview-guide/senior-scenarios.adoc[Production Scenarios, Design and Behavioural].

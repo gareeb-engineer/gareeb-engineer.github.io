@@ -1,0 +1,355 @@
+= JVM, Memory and Garbage Collection
+:page-reading-assistant:
+:page-subtitle: How the JVM loads and runs code, where objects and variables live, how garbage collectors work and differ, and how to diagnose memory leaks, high CPU and OutOfMemoryError.
+:page-difficulty: Hard
+:page-tags: Java, Interview Preparation, JVM, Garbage Collection, Performance
+:page-revdate: 2026-11-11
+
+JVM questions test whether you can run Java in production, not just write it.
+Juniors are asked about heap versus stack.
+Seniors are asked how they would find a memory leak or why latency spikes every few minutes.
+
+== At a glance
+
+[cols="1,3"]
+|===
+|Weightage |*7 / 10*
+|Who gets asked |Mid and senior. Expected in depth for performance-sensitive roles.
+|Preparation time |4 hours
+|Handbook questions |Q50-Q52, Q55
+|Builds on |xref:interview-guide/concurrency.adoc[Concurrency]; see also xref:index.adoc[Garbage Collection] on this site
+|===
+
+== From source to running code
+
+. `javac` compiles `.java` files to platform-neutral bytecode in `.class` files.
+. The *class loader subsystem* loads classes when they are first needed.
+. The *execution engine* interprets bytecode and JIT-compiles hot code to native machine code.
+. The *runtime data areas* hold classes, objects and thread state.
+. The *garbage collector* reclaims memory from objects that are no longer reachable.
+
+== Class loading
+
+Loading happens in three phases:
+
+. *Loading*: find the bytes of the class and create a `Class` object.
+. *Linking*: *verify* the bytecode is safe, *prepare* static fields with default values, and *resolve* symbolic references (often lazily).
+. *Initialisation*: run static initialisers and assign static field values, the first time the class is actively used.
+
+Built-in class loaders:
+
+[cols="1,3",options="header"]
+|===
+|Loader |Loads
+
+|Bootstrap |Core classes from `java.base` (`java.lang.String` and so on). Implemented in native code; shows as `null`.
+|Platform |Other Java SE and JDK modules. Called the *extension* class loader before Java 9.
+|Application (system) |Classes on your classpath or module path.
+|===
+
+*Parent delegation*: a loader first asks its parent to load a class, and loads it itself only if the parent cannot.
+This stops application code from replacing core classes such as `java.lang.String`.
+A class is identified by its name *and* its class loader, so the same class loaded by two loaders gives two different types, the cause of the puzzling `ClassCastException: Foo cannot be cast to Foo` in application servers.
+
+`ClassNotFoundException` is thrown when code asks for a class by name (`Class.forName`) and it is not found.
+`NoClassDefFoundError` is thrown when a class that was present at compile time is missing at runtime, or its static initialisation failed earlier.
+
+== Runtime data areas
+
+[cols="1,1,3",options="header"]
+|===
+|Area |Shared? |Holds
+
+|Heap |All threads |Objects and arrays, including the string pool. Managed by GC.
+|Metaspace |All threads |Class metadata, method bytecode, constant pools. Native memory. Replaced PermGen in Java 8.
+|Code cache |All threads |JIT-compiled native code.
+|JVM stack |Per thread |One *frame* per method call: local variables, operand stack, return address.
+|PC register |Per thread |Address of the current bytecode instruction.
+|Native method stack |Per thread |Frames for native (JNI) methods.
+|===
+
+[source,java]
+----
+void placeOrder() {
+    int quantity = 3;                    // primitive local: in the stack frame
+    Order order = new Order("A-1");      // reference in the stack frame; the Order object on the heap
+    String name = "book";                // reference on the stack; the String in the pooled heap area
+}
+----
+
+* Too-deep recursion overflows the stack: `StackOverflowError`.
+* The JIT can avoid heap allocation entirely for objects that never escape a method (*escape analysis* with scalar replacement).
+
+== JIT compilation
+
+The JVM starts by interpreting bytecode.
+It counts method calls and loop iterations, and compiles hot methods to native code:
+
+* *C1* compiles quickly with light optimisation.
+* *C2* compiles slowly with aggressive optimisation (inlining, loop unrolling, escape analysis), based on the profile collected so far.
+
+This is *tiered compilation*, on by default.
+It explains why Java services are slower right after startup ("warm-up") and why benchmarks need warm-up iterations (use JMH).
+If an assumption behind an optimisation breaks (for example a second implementation of an interface gets loaded), the JVM *deoptimises* and recompiles.
+
+Startup-time alternatives: GraalVM native images (ahead-of-time compiled, fast start, lower memory, some reflection limits), Class Data Sharing, and the AOT cache work in Java 24 and 25 (Project Leyden).
+
+== Garbage collection basics
+
+An object is *garbage* when no chain of references leads to it from a *GC root*.
+GC roots include local variables and parameters on thread stacks, static fields of loaded classes, JNI references, and monitors held by threads.
+Reference counting is not used, so cycles of objects that point at each other are collected normally.
+
+=== The generational hypothesis
+
+Most objects die young (request-scoped strings, DTOs, iterators).
+So the heap is split:
+
+[source,text]
+----
+Young generation                       Old generation
+┌───────────┬──────────┬──────────┐   ┌─────────────────────────────┐
+│   Eden    │ Survivor │ Survivor │   │ Objects that survived many  │
+│ new objs  │   S0     │   S1     │   │ young collections           │
+└───────────┴──────────┴──────────┘   └─────────────────────────────┘
+----
+
+. New objects are allocated in Eden (very fast: a pointer bump in a thread-local buffer, TLAB).
+. When Eden fills, a *minor GC* copies live objects to a survivor space; everything else in Eden is reclaimed at once.
+. Objects that survive several minor GCs (the tenuring threshold, up to 15) are *promoted* to the old generation.
+. When the old generation fills, a *major* or *mixed* collection cleans it. A *full GC* collects everything and is usually the longest pause.
+
+Collection phases: *mark* live objects, then *sweep* the dead ones, and often *compact* the survivors to remove fragmentation.
+*Stop-the-world* (STW) pauses stop all application threads; modern collectors do most work *concurrently*.
+
+=== Collectors
+
+[cols="1,3,3",options="header"]
+|===
+|Collector |How it works |Best for
+
+|Serial (`-XX:+UseSerialGC`)
+|One thread, stop-the-world.
+|Small heaps, single-CPU containers, tools.
+
+|Parallel (`-XX:+UseParallelGC`)
+|Many threads, stop-the-world. Maximises throughput.
+|Batch jobs where pauses do not matter.
+
+|G1 (`-XX:+UseG1GC`, default since Java 9)
+|Heap split into equal regions; collects the regions with the most garbage first; aims for a pause-time goal (`-XX:MaxGCPauseMillis`, default 200 ms). Concurrent marking, STW evacuation.
+|General purpose. The right default for most services.
+
+|ZGC (`-XX:+UseZGC`)
+|Almost all work concurrent, including compaction, using coloured pointers and load barriers. Pauses well under a millisecond regardless of heap size. Generational since Java 21, generational by default since 23, and the non-generational mode was removed in 24.
+|Latency-sensitive services, very large heaps.
+
+|Shenandoah (`-XX:+UseShenandoahGC`)
+|Concurrent compaction, similar goals to ZGC. Generational mode became a product feature in Java 25.
+|Low latency; available in OpenJDK builds from most vendors.
+|===
+
+The trade-off has three corners: *throughput* (share of time doing useful work), *latency* (pause length) and *footprint* (extra memory and CPU the collector needs).
+No collector wins all three.
+
+=== Reference types
+
+[cols="1,3",options="header"]
+|===
+|Type |Collected when
+
+|Strong (normal) |Never, while reachable.
+|`SoftReference` |Only when memory is low. Was used for caches; a real cache library is better.
+|`WeakReference` |At the next GC once no strong references remain. `WeakHashMap` uses weak keys.
+|`PhantomReference` |After finalisation; used with a `ReferenceQueue` for cleanup (`Cleaner` builds on this).
+|===
+
+== Memory leaks in Java
+
+A Java memory leak is an object that is still *reachable* but no longer *needed*.
+Typical causes:
+
+* Static collections or caches that only grow (no size limit, no expiry).
+* `ThreadLocal` values never removed in pooled threads.
+* Listeners and callbacks registered but never unregistered.
+* Mutable keys in a `HashMap`, which make entries unreachable by lookup but still referenced.
+* Non-static inner classes or lambdas that capture a large outer object and outlive it.
+* Unclosed resources (streams, connections), which also leak native memory and file handles.
+* Class loader leaks in application servers after redeployment (Metaspace grows).
+
+== OutOfMemoryError types
+
+[cols="2,3",options="header"]
+|===
+|Message |Likely cause
+
+|`Java heap space` |Heap too small for the live data, or a leak.
+|`GC overhead limit exceeded` |GC runs almost constantly and reclaims almost nothing; a leak is likely.
+|`Metaspace` |Too many classes: class loader leaks, heavy dynamic proxy or bytecode generation.
+|`unable to create native thread` |Too many platform threads, or OS/container thread limits.
+|`Direct buffer memory` |Off-heap NIO buffers (Netty, NIO) exceed `-XX:MaxDirectMemorySize`.
+|`Requested array size exceeds VM limit` |Trying to allocate a huge array.
+|===
+
+== JVM flags you should know
+
+[source,bash]
+----
+# -Xms/-Xmx: initial and max heap (equal values avoid resizing)
+# -Xlog:gc*: unified GC logging (Java 9+)
+# -Xss: thread stack size
+java -Xms2g -Xmx2g \
+     -XX:+UseG1GC -XX:MaxGCPauseMillis=200 \
+     -XX:+HeapDumpOnOutOfMemoryError \
+     -XX:HeapDumpPath=/var/dumps \
+     -Xlog:gc*:file=/var/log/gc.log:time,uptime \
+     -Xss1m \
+     -jar app.jar
+
+# In containers, size the heap relative to the container memory limit:
+java -XX:MaxRAMPercentage=75.0 -jar app.jar
+----
+
+The JVM is container-aware since Java 10 (and 8u191): it reads cgroup CPU and memory limits.
+Leave room outside the heap for metaspace, thread stacks, code cache, direct buffers and the GC itself, or the container gets OOM-killed even though the heap looks fine.
+
+== Diagnosis tools
+
+[cols="1,3",options="header"]
+|===
+|Tool |Use
+
+|`jcmd <pid>` |Swiss-army knife: `Thread.print`, `GC.heap_info`, `GC.heap_dump`, `VM.flags`, `JFR.start`, `VM.native_memory`.
+|`jstack <pid>` |Thread dump: find deadlocks, blocked threads, hot loops.
+|`jmap -dump:live,format=b,file=heap.hprof <pid>` |Heap dump (pauses the JVM; careful in production).
+|`jstat -gcutil <pid> 1000` |GC statistics every second.
+|Java Flight Recorder (JFR) + JDK Mission Control |Low-overhead continuous profiling: allocation, locks, GC, I/O, hot methods. Safe for production.
+|Eclipse MAT, VisualVM |Analyse heap dumps: dominator tree, leak suspects, paths to GC roots.
+|async-profiler |CPU and allocation flame graphs.
+|===
+
+== Practice questions
+
+[%collapsible]
+.Q1. Explain heap, stack, metaspace and GC roots.
+====
+Each thread has a stack of frames holding locals and partial results.
+The heap holds objects and is shared and garbage-collected.
+Metaspace holds class metadata in native memory.
+GC starts from roots (thread stacks, static fields, JNI references) and treats everything reachable from them as live.
+====
+
+[%collapsible]
+.Q2. How does garbage collection decide what to collect?
+====
+By reachability, not reference counts.
+It marks every object reachable from GC roots; everything else is garbage.
+Cycles of unreachable objects are collected too.
+====
+
+[%collapsible]
+.Q3. Describe the young and old generations and a minor GC.
+====
+New objects go to Eden.
+A minor GC copies live Eden and survivor objects into the other survivor space and frees the rest in one step, which is cheap because most objects are dead.
+Objects that survive enough minor GCs move to the old generation, which is collected less often.
+====
+
+[%collapsible]
+.Q4. G1 versus ZGC: which would you choose?
+====
+G1 is the default and a good balance of throughput and pause time for most services, with pauses in the tens to hundreds of milliseconds.
+ZGC keeps pauses below a millisecond even with very large heaps, at the cost of some throughput and more CPU and memory headroom.
+Choose ZGC when tail latency (p99, p99.9) matters more than raw throughput, and measure with production-like load.
+====
+
+[%collapsible]
+.Q5. How can Java have memory leaks if it has a garbage collector?
+====
+GC frees unreachable objects, not unneeded ones.
+Anything still referenced, for example from a static map, an unremoved `ThreadLocal` or an unregistered listener, stays forever.
+====
+
+[%collapsible]
+.Q6. How do you investigate high memory usage or a suspected leak?
+====
+Check heap usage after full GCs over time: if the floor keeps rising, it is a leak.
+Look at GC logs and allocation rate.
+Take a heap dump (or use `-XX:+HeapDumpOnOutOfMemoryError`), open it in Eclipse MAT, and follow the dominator tree and the paths to GC roots of the biggest retained sets.
+If the heap is fine but the process is large, check native memory (`jcmd VM.native_memory`), thread count and direct buffers.
+====
+
+[%collapsible]
+.Q7. How do you investigate high CPU in a Java service?
+====
+Find the process, then the hot threads (`top -H -p <pid>`), convert the thread id to hex and find it in a thread dump (`jcmd <pid> Thread.print`).
+Take several dumps a few seconds apart to see what stays hot.
+Check whether it is GC (GC logs, `jstat`) or application code.
+Profile with JFR or async-profiler.
+Common causes: busy loops, catastrophic regular expressions, excessive serialisation or logging, retry storms, GC thrashing.
+====
+
+[%collapsible]
+.Q8. `ClassNotFoundException` versus `NoClassDefFoundError`?
+====
+`ClassNotFoundException` is a checked exception from explicit loading by name (`Class.forName`, `loadClass`) when the class is absent.
+`NoClassDefFoundError` is an error when a class present at compile time cannot be found at runtime, or its static initialiser previously failed.
+====
+
+[%collapsible]
+.Q9. What is the parent delegation model, and why does it exist?
+====
+A class loader asks its parent first and loads the class itself only if the parent cannot.
+It guarantees that core classes come from the bootstrap loader, so application code cannot replace `java.lang.Object` or `String`, and it avoids loading the same class twice.
+====
+
+[%collapsible]
+.Q10. What is the JIT compiler, and what does warm-up mean?
+====
+The JIT compiles frequently executed bytecode to optimised native code at runtime, using profiling data.
+Until hot paths are compiled, the service runs slower; this is warm-up.
+It matters for autoscaling and benchmarks (use JMH, which handles warm-up).
+====
+
+[%collapsible]
+.Q11. Why are connection pools important, and how do you size them?
+====
+Opening a database connection is expensive (TCP, TLS, authentication), and the database can only handle so many.
+A pool reuses connections and caps concurrency.
+Too large overloads the database; too small makes requests wait.
+Size from database capacity and transaction duration, then tune from pool metrics: active, idle, pending and wait time (HikariCP exposes these).
+====
+
+[%collapsible]
+.Q12. Why does a Java container get OOM-killed when the heap is not full?
+====
+The container limit covers the whole process: heap plus metaspace, thread stacks, code cache, direct buffers, GC structures and native libraries.
+Setting `-Xmx` equal to the container limit leaves no room for the rest.
+Use `-XX:MaxRAMPercentage` around 70-75% and check native memory tracking.
+====
+
+== Common traps
+
+* Saying the string pool is in PermGen (it moved to the heap in Java 7).
+* Calling `System.gc()` as a fix. It is only a hint, and it can trigger an expensive full GC.
+* Saying ZGC is "always better".
+* Forgetting non-heap memory in containers.
+* Taking a heap dump of a large production JVM without considering the pause.
+
+== Follow-ups to expect
+
+* "Latency spikes every few minutes. How do you prove whether GC is the cause?" (GC logs with pause times correlated against latency metrics.)
+* "What would you change after upgrading from Java 8 to 21?"
+* "What is in a thread dump, and how do you read one?"
+
+== Quick revision
+
+* [ ] Class loading phases and the three loaders
+* [ ] Runtime data areas table
+* [ ] Generational heap, minor/major/full GC, promotion
+* [ ] Serial, Parallel, G1, ZGC, Shenandoah: one line each
+* [ ] Leak causes and OOM types
+* [ ] `jcmd`, JFR, heap dump analysis
+* [ ] Container memory sizing
+
+Next: xref:interview-guide/spring-core.adoc[Spring Core: IoC, DI, Beans and AOP].

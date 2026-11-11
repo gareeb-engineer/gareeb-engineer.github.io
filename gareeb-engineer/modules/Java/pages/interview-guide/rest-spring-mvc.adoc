@@ -1,0 +1,408 @@
+= REST APIs and Spring MVC
+:page-reading-assistant:
+:page-subtitle: HTTP methods, status codes and idempotency, REST design choices, the Spring MVC request flow, validation, global error handling with ProblemDetail, filters versus interceptors, and calling other services.
+:page-difficulty: Medium
+:page-tags: Spring, Spring Boot, Interview Preparation, REST, HTTP
+:page-revdate: 2026-11-11
+
+Almost every Java backend role builds HTTP APIs, so interviewers check two layers: whether you understand HTTP itself (methods, status codes, idempotency) and whether you know how Spring MVC turns a request into a method call and back.
+
+== At a glance
+
+[cols="1,3"]
+|===
+|Weightage |*8 / 10*
+|Who gets asked |All levels.
+|Preparation time |3 to 4 hours
+|Handbook questions |Q71-Q72, Q85 (security in Q73-Q75 is on the xref:interview-guide/spring-security.adoc[Security] page)
+|Builds on |xref:interview-guide/spring-boot.adoc[Spring Boot]
+|===
+
+== HTTP methods
+
+[cols="1,3,1,1",options="header"]
+|===
+|Method |Use |Safe |Idempotent
+
+|`GET` |Read a resource. No body changes on the server. |Yes |Yes
+|`POST` |Create a resource in a collection, or trigger a processing action. |No |*No*
+|`PUT` |Replace the resource at a known URI with the full representation sent. |No |Yes
+|`PATCH` |Partially update a resource. |No |Not necessarily
+|`DELETE` |Remove a resource. |No |Yes
+|`HEAD` |Like `GET` without the body. |Yes |Yes
+|`OPTIONS` |Ask which methods are allowed (used by CORS preflight). |Yes |Yes
+|===
+
+* *Safe* means the request does not change server state.
+* *Idempotent* means sending the same request many times has the same effect on the server's state as sending it once. The response may differ: the first `DELETE` returns `204`, the second may return `404`, but the resource is gone either way.
+
+=== Idempotency keys for POST
+
+Clients and gateways retry on timeouts.
+A retried `POST /payments` could charge a customer twice.
+The fix is an *idempotency key*: the client sends a unique `Idempotency-Key` header; the server stores the key with the result, and on a repeat returns the stored result instead of processing again.
+
+[source,java]
+----
+@PostMapping("/payments")
+ResponseEntity<PaymentResponse> pay(@RequestHeader("Idempotency-Key") String key,
+                                    @Valid @RequestBody PaymentRequest request) {
+    return idempotencyStore.find(key)
+            .map(ResponseEntity::ok)                               // already processed: same answer
+            .orElseGet(() -> {
+                PaymentResponse result = paymentService.charge(request);
+                idempotencyStore.save(key, result);                // unique constraint on key in the DB
+                return ResponseEntity.status(HttpStatus.CREATED).body(result);
+            });
+}
+----
+
+In production, insert the key first with a unique constraint (so two concurrent retries cannot both pass the check), and give stored keys an expiry.
+
+== Status codes
+
+[cols="1,3",options="header"]
+|===
+|Code |When
+
+|`200 OK` |Successful `GET`, or an update that returns a body.
+|`201 Created` |Resource created. Include a `Location` header with its URI.
+|`202 Accepted` |Request accepted for asynchronous processing.
+|`204 No Content` |Success with no body (often `DELETE`).
+|`301` / `308` |Permanent redirect (`308` keeps the method).
+|`304 Not Modified` |Conditional `GET` and the cached version is still valid (`ETag`).
+|`400 Bad Request` |Malformed request or validation failure.
+|`401 Unauthorized` |Not authenticated: missing or invalid credentials.
+|`403 Forbidden` |Authenticated, but not allowed.
+|`404 Not Found` |Resource does not exist (also used to hide resources the caller may not see).
+|`405 Method Not Allowed` |Method not supported on this URI.
+|`409 Conflict` |State conflict: duplicate, version mismatch (optimistic locking).
+|`412 Precondition Failed` |`If-Match` ETag did not match.
+|`415 Unsupported Media Type` |Wrong `Content-Type`.
+|`422 Unprocessable Content` |Syntactically valid but violates business rules (some teams use 400 for this).
+|`429 Too Many Requests` |Rate limit hit. Include `Retry-After`.
+|`500 Internal Server Error` |Unexpected server failure.
+|`502 Bad Gateway` / `503 Service Unavailable` / `504 Gateway Timeout` |Upstream failure, overload or maintenance, upstream timeout.
+|===
+
+== REST design choices
+
+* *Resources are nouns, methods are verbs*: `GET /orders/42`, not `GET /getOrder?id=42`. Use plural collection names and nesting only for true ownership (`/customers/7/orders`).
+* *Pagination*: offset (`?page=2&size=20`) is simple but slow on deep pages and unstable when data changes; cursor or keyset pagination (`?after=lastId`) is stable and fast for large data sets.
+* *Filtering and sorting*: query parameters (`?status=PAID&sort=createdAt,desc`). Validate sort fields against an allowlist.
+* *Versioning*: URI (`/v2/orders`), header (`API-Version: 2`) or media type. URI versioning is the most common and easiest to route; Spring Framework 7 has built-in support for all three styles.
+* *Statelessness*: each request carries everything needed (token, parameters); the server keeps no client session, which makes horizontal scaling simple.
+* *Caching*: `ETag` and `Cache-Control` headers for `GET`; `If-None-Match` returns `304`.
+* *Optimistic concurrency*: return an `ETag` (the entity version) and require `If-Match` on updates; return `412` on mismatch.
+* *HATEOAS*: responses include links to related actions. Rarely required in interviews; know what the term means.
+* *Long-running work*: return `202 Accepted` with a status URL to poll, or notify through a webhook.
+
+== The Spring MVC request flow
+
+[source,text]
+----
+Client
+  │ HTTP request
+  ▼
+Servlet container (Tomcat)
+  │ Servlet Filters (security, CORS, logging, tracing)
+  ▼
+DispatcherServlet ── the front controller
+  │ 1. HandlerMapping finds the controller method for the URL and method
+  │ 2. HandlerInterceptor.preHandle (can stop the request)
+  │ 3. HandlerAdapter invokes the method:
+  │      argument resolvers build parameters (@PathVariable, @RequestParam, @RequestBody via
+  │      HttpMessageConverter / Jackson), validation runs
+  │ 4. Controller method returns a value
+  │ 5. Return value handler: @ResponseBody → HttpMessageConverter writes JSON
+  │                          (or a ViewResolver renders a template for @Controller)
+  │ 6. HandlerInterceptor.postHandle, then afterCompletion
+  │ Exceptions → HandlerExceptionResolver → @ExceptionHandler / @ControllerAdvice
+  ▼
+HTTP response
+----
+
+=== Filter versus interceptor
+
+[cols="1,2,2",options="header"]
+|===
+| |Servlet `Filter` |Spring `HandlerInterceptor`
+
+|Part of |Servlet specification |Spring MVC
+|Runs |Before `DispatcherServlet`, for every request (including static resources and errors) |Inside `DispatcherServlet`, around controller methods
+|Knows the handler method? |No |Yes (`HandlerMethod`)
+|Typical use |Security (Spring Security is a filter chain), CORS, compression, request logging, tracing |Auditing per endpoint, locale, timing per handler
+|===
+
+== A complete controller
+
+[source,java]
+----
+@RestController
+@RequestMapping("/api/v1/orders")
+class OrderController {
+
+    private final OrderService orders;
+
+    OrderController(OrderService orders) { this.orders = orders; }
+
+    @GetMapping("/{id}")
+    OrderResponse get(@PathVariable long id) {
+        return orders.find(id);                       // throws OrderNotFoundException if absent
+    }
+
+    @GetMapping
+    Page<OrderResponse> search(@RequestParam(required = false) OrderStatus status,
+                               @PageableDefault(size = 20, sort = "createdAt") Pageable pageable) {
+        return orders.search(status, pageable);
+    }
+
+    @PostMapping
+    ResponseEntity<OrderResponse> create(@Valid @RequestBody CreateOrderRequest request,
+                                         UriComponentsBuilder uri) {
+        OrderResponse created = orders.create(request);
+        URI location = uri.path("/api/v1/orders/{id}").buildAndExpand(created.id()).toUri();
+        return ResponseEntity.created(location).body(created);         // 201 + Location
+    }
+
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    void delete(@PathVariable long id) {
+        orders.delete(id);
+    }
+}
+
+record CreateOrderRequest(
+        @NotBlank String customerId,
+        @NotEmpty List<@Valid OrderLine> lines,
+        @Size(max = 500) String note) { }
+
+record OrderLine(@NotBlank String sku, @Positive int quantity) { }
+----
+
+Keep controllers thin: map HTTP to a service call and back.
+Use separate request and response DTOs (records work well) rather than exposing JPA entities, which leak internal fields, cause lazy-loading exceptions during serialisation and couple the API to the database schema.
+
+== Validation
+
+* Add `spring-boot-starter-validation`.
+* `@Valid` on a `@RequestBody` triggers Bean Validation; failures throw `MethodArgumentNotValidException` (400).
+* `@Validated` on a class enables validation of method parameters such as `@PathVariable @Min(1) long id`. In Spring Framework 6.1+, built-in method validation for controllers reports these as `HandlerMethodValidationException`.
+* Validation *groups* allow different rules for create and update.
+* Custom constraints: an annotation with `+@Constraint(validatedBy = ...)+` plus a `ConstraintValidator`.
+
+Validate *syntax* at the API boundary (required fields, formats, ranges) and *business rules* in the service or domain (stock available, credit limit).
+Never trust client-side validation alone.
+
+[#error-handling]
+== Global error handling
+
+[source,java]
+----
+@RestControllerAdvice
+class ApiExceptionHandler {
+
+    @ExceptionHandler(OrderNotFoundException.class)
+    ProblemDetail notFound(OrderNotFoundException ex) {
+        ProblemDetail pd = ProblemDetail.forStatusAndDetail(HttpStatus.NOT_FOUND, ex.getMessage());
+        pd.setTitle("Order not found");
+        pd.setType(URI.create("https://api.shop.example/errors/order-not-found"));
+        pd.setProperty("code", "ORDER_NOT_FOUND");
+        return pd;
+    }
+
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    ProblemDetail invalid(MethodArgumentNotValidException ex) {
+        ProblemDetail pd = ProblemDetail.forStatus(HttpStatus.BAD_REQUEST);
+        pd.setTitle("Validation failed");
+        pd.setProperty("errors", ex.getBindingResult().getFieldErrors().stream()
+                .map(e -> Map.of("field", e.getField(), "message", e.getDefaultMessage()))
+                .toList());
+        return pd;
+    }
+
+    @ExceptionHandler(Exception.class)
+    ProblemDetail unexpected(Exception ex) {
+        log.error("Unhandled error", ex);                          // full detail in logs only
+        return ProblemDetail.forStatusAndDetail(HttpStatus.INTERNAL_SERVER_ERROR,
+                "Unexpected error. Reference: " + MDC.get("traceId"));
+    }
+}
+----
+
+`ProblemDetail` implements RFC 9457 (formerly RFC 7807), a standard JSON error format with `type`, `title`, `status`, `detail` and `instance`.
+Set `spring.mvc.problemdetails.enabled=true` to make Spring's own exceptions use it, or extend `ResponseEntityExceptionHandler`.
+
+Good error responses have a stable machine-readable code, a human message, field errors for validation, and a correlation or trace ID.
+They never include stack traces, SQL or internal class names.
+
+Other options: `@ResponseStatus` on an exception class, or throwing `ResponseStatusException` for one-off cases.
+
+== Calling other services
+
+[cols="1,3",options="header"]
+|===
+|Client |Status
+
+|`RestTemplate` |Synchronous, template-style. In maintenance mode; no new features.
+|`WebClient` |Reactive, non-blocking (Spring WebFlux). Use in reactive apps or when you need streaming.
+|`RestClient` (Spring 6.1+) |Synchronous with a fluent API like `WebClient`. The default choice for blocking code, and works well with virtual threads.
+|HTTP interface clients (`@HttpExchange`) |Declare an interface; Spring generates the client on top of `RestClient` or `WebClient`. Spring Boot 4 can register them in groups with `@ImportHttpServices`.
+|OpenFeign (Spring Cloud) |Declarative clients, popular in older microservice code bases. HTTP interfaces now cover most of the same needs.
+|===
+
+[source,java]
+----
+@Bean
+RestClient inventoryClient(RestClient.Builder builder) {
+    HttpClient http = HttpClient.newBuilder()
+            .connectTimeout(Duration.ofSeconds(1))          // time to open the connection
+            .build();
+    JdkClientHttpRequestFactory factory = new JdkClientHttpRequestFactory(http);
+    factory.setReadTimeout(Duration.ofSeconds(2));          // time to wait for the response
+
+    return builder
+            .baseUrl("https://inventory.internal")
+            .requestFactory(factory)
+            .build();
+}
+
+Stock stock = inventoryClient.get()
+        .uri("/stock/{sku}", sku)
+        .retrieve()
+        .onStatus(HttpStatusCode::is4xxClientError, (req, res) -> { throw new SkuNotFoundException(sku); })
+        .body(Stock.class);
+
+// Declarative HTTP interface
+@HttpExchange("/stock")
+interface InventoryApi {
+    @GetExchange("/{sku}")
+    Stock get(@PathVariable String sku);
+}
+----
+
+*Always set connect and read timeouts.*
+Without them, one slow dependency can tie up every request thread.
+Pair calls with retries and circuit breakers from xref:interview-guide/microservices.adoc[Microservices].
+
+== Spring MVC versus Spring WebFlux
+
+* *Spring MVC*: one thread per request, blocking I/O, simple to write and debug. With virtual threads it scales to high concurrency for I/O-bound services.
+* *Spring WebFlux*: non-blocking, event-loop model (Netty), `Mono` and `Flux` types, backpressure. Suits streaming and very high concurrency with non-blocking drivers end to end. Mixing blocking calls (JDBC) into WebFlux blocks the event loop.
+
+For most CRUD services, Spring MVC (now with virtual threads) is the simpler choice.
+
+== Practice questions
+
+[%collapsible]
+.Q1. POST versus PUT versus PATCH?
+====
+`POST` creates a resource or triggers an action and is not idempotent.
+`PUT` replaces the whole resource at a known URI and is idempotent.
+`PATCH` changes part of a resource; it may or may not be idempotent (setting a field is; "increment by 1" is not).
+====
+
+[%collapsible]
+.Q2. What makes an API idempotent, and how do you make a POST idempotent?
+====
+Repeating the request leaves the server in the same state as doing it once.
+For `POST`, use an idempotency key stored with a unique constraint and the original result; repeats return the stored result.
+Consumers of messages need the same idea with event IDs.
+====
+
+[%collapsible]
+.Q3. 401 versus 403?
+====
+401: the caller is not authenticated (no or invalid credentials); the response should include `WWW-Authenticate`.
+403: the caller is authenticated but lacks permission.
+====
+
+[%collapsible]
+.Q4. Explain the Spring MVC request flow.
+====
+Filters, then `DispatcherServlet`, which asks `HandlerMapping` for the handler, runs interceptors' `preHandle`, calls the method through a `HandlerAdapter` (argument resolvers and message converters build parameters, validation runs), writes the return value with an `HttpMessageConverter`, runs `postHandle`/`afterCompletion`, and routes exceptions to `@ExceptionHandler` methods.
+====
+
+[%collapsible]
+.Q5. `@Controller` versus `@RestController`?
+====
+`@RestController` = `@Controller` + `@ResponseBody`.
+Return values are serialised into the response body rather than resolved as view names.
+====
+
+[%collapsible]
+.Q6. `@PathVariable` versus `@RequestParam`?
+====
+`@PathVariable` reads a segment of the URI template (`+/orders/{id}+`) and identifies a resource.
+`@RequestParam` reads a query parameter (`?status=PAID`) and usually filters, sorts or paginates.
+====
+
+[%collapsible]
+.Q7. How do you handle exceptions globally?
+====
+`@RestControllerAdvice` with `@ExceptionHandler` methods per exception type, returning `ProblemDetail` with a consistent structure: status, stable error code, message, field errors and trace ID.
+Log full details server-side; never return stack traces.
+====
+
+[%collapsible]
+.Q8. How do you design validation errors?
+====
+Validate syntax at the boundary with Bean Validation, business invariants in the service.
+Return 400 (or 422 for business rule failures, if the team uses it) with a machine-readable code and a list of field errors.
+====
+
+[%collapsible]
+.Q9. Filter versus interceptor?
+====
+Filters are Servlet-level, run before Spring MVC for every request and do not know the handler; Spring Security is a filter chain.
+Interceptors run inside `DispatcherServlet`, know the handler method, and suit per-endpoint concerns.
+====
+
+[%collapsible]
+.Q10. RestTemplate versus WebClient versus RestClient?
+====
+`RestTemplate` is in maintenance mode.
+`WebClient` is reactive and non-blocking.
+`RestClient` is the modern synchronous client with a fluent API and is the default for blocking code.
+HTTP interface clients generate implementations from annotated interfaces.
+====
+
+[%collapsible]
+.Q11. Why should controllers not return JPA entities?
+====
+Entities expose internal fields, can trigger lazy-loading exceptions or N+1 queries during serialisation, may recurse through bidirectional relations, and tie the API contract to the database schema.
+Map to response DTOs.
+====
+
+[%collapsible]
+.Q12. Offset versus cursor pagination?
+====
+Offset (`page`, `size`) is simple and allows jumping to a page, but the database still scans skipped rows and results shift when data changes.
+Cursor/keyset pagination (`WHERE id > :lastId ORDER BY id LIMIT :size`) is fast at any depth and stable, but cannot jump to arbitrary pages.
+====
+
+== Common traps
+
+* Returning `200` with `+{"error": ...}+` in the body.
+* Using `POST` for everything.
+* No timeouts on outbound HTTP calls.
+* Exposing entities or stack traces.
+* Calling blocking JDBC inside WebFlux.
+* Confusing 401 and 403.
+
+== Follow-ups to expect
+
+* "Design the API for a shopping cart." (Resources, methods, status codes, idempotency, versioning.)
+* "How would you add rate limiting to this API?"
+* "How would you return different JSON for API version 2 without breaking version 1 clients?"
+
+== Quick revision
+
+* [ ] Methods table: safe and idempotent columns
+* [ ] Status codes, especially 201, 204, 400, 401, 403, 404, 409, 422, 429, 503
+* [ ] Idempotency keys
+* [ ] DispatcherServlet flow; filter versus interceptor
+* [ ] Validation layers; `ProblemDetail` handler
+* [ ] `RestClient` with timeouts; HTTP interface clients
+
+Next: xref:interview-guide/jpa-hibernate-transactions.adoc[Spring Data JPA, Hibernate and Transactions].

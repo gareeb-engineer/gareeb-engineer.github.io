@@ -1,0 +1,354 @@
+= Spring Security, JWT and OAuth2
+:page-reading-assistant:
+:page-subtitle: Authentication versus authorisation, the security filter chain, how a login is processed, password storage, JWT validation, OAuth2 and OpenID Connect roles, CSRF, CORS and method security.
+:page-difficulty: Hard
+:page-tags: Spring Security, Interview Preparation, JWT, OAuth2, Security
+:page-revdate: 2026-11-11
+
+Security questions check whether you can protect an API correctly, not whether you remember class names.
+The best answers explain the request path through the filter chain and name what must be validated.
+
+== At a glance
+
+[cols="1,3"]
+|===
+|Weightage |*7 / 10*
+|Who gets asked |Mid and senior; mandatory for roles in banking, payments and identity.
+|Preparation time |3 to 4 hours
+|Handbook questions |Q73-Q75, Q105, Q119
+|Builds on |xref:interview-guide/rest-spring-mvc.adoc[REST and Spring MVC] (filters)
+|===
+
+== Authentication versus authorisation
+
+* *Authentication* answers "who are you?": password, token, certificate.
+* *Authorisation* answers "what may you do?": roles, permissions, ownership of the resource.
+
+Both must be enforced on the server.
+Hiding a button in the UI is not authorisation.
+
+== The filter chain
+
+Spring Security is a chain of Servlet filters in front of `DispatcherServlet`.
+
+[source,text]
+----
+Request
+  │
+  ▼
+DelegatingFilterProxy           (Servlet filter registered with the container)
+  │ delegates to the Spring bean
+  ▼
+FilterChainProxy                (picks the first SecurityFilterChain whose matcher fits the request)
+  │
+  ▼
+SecurityFilterChain             (ordered list of security filters), for example:
+  ├─ SecurityContextHolderFilter       load the SecurityContext (session, or empty for stateless)
+  ├─ CorsFilter
+  ├─ CsrfFilter
+  ├─ LogoutFilter
+  ├─ UsernamePasswordAuthenticationFilter / BearerTokenAuthenticationFilter   authenticate
+  ├─ ExceptionTranslationFilter        turns security exceptions into 401 / 403
+  └─ AuthorizationFilter               check access rules for the URL
+  │
+  ▼
+DispatcherServlet → controller
+----
+
+== How authentication works
+
+. A filter extracts credentials and builds an unauthenticated `Authentication` object (for example `UsernamePasswordAuthenticationToken`).
+. It calls the `AuthenticationManager`, usually a `ProviderManager`.
+. The `ProviderManager` asks each `AuthenticationProvider` that supports the token type.
+. `DaoAuthenticationProvider` loads the user through a `UserDetailsService` and checks the password with a `PasswordEncoder`.
+. On success, an authenticated `Authentication` (principal plus authorities) is stored in the `SecurityContext`, held by `SecurityContextHolder`, which uses a `ThreadLocal` by default.
+. On failure, an `AuthenticationException` leads to `401`. An `AccessDeniedException` for an authenticated user leads to `403`.
+
+[source,java]
+----
+// Anywhere in the request thread
+Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+String username = auth.getName();
+
+// In a controller
+@GetMapping("/me")
+UserView me(@AuthenticationPrincipal Jwt jwt) { return users.find(jwt.getSubject()); }
+----
+
+== Configuration (Spring Security 6 and 7)
+
+`WebSecurityConfigurerAdapter` was removed in Spring Security 6.
+Configuration is a `SecurityFilterChain` bean with the lambda DSL.
+
+[source,java]
+----
+@Configuration
+@EnableMethodSecurity                                    // enables @PreAuthorize
+class SecurityConfig {
+
+    @Bean
+    SecurityFilterChain api(HttpSecurity http) throws Exception {
+        http
+            .csrf(csrf -> csrf.disable())                // stateless API with bearer tokens only
+            .sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+            .authorizeHttpRequests(auth -> auth
+                .requestMatchers("/actuator/health/**").permitAll()
+                .requestMatchers(HttpMethod.GET, "/api/products/**").permitAll()
+                .requestMatchers("/api/admin/**").hasRole("ADMIN")
+                .anyRequest().authenticated())           // deny-by-default for everything else
+            .oauth2ResourceServer(oauth -> oauth.jwt(Customizer.withDefaults()));
+        return http.build();
+    }
+
+    @Bean
+    PasswordEncoder passwordEncoder() {
+        return PasswordEncoderFactories.createDelegatingPasswordEncoder();   // bcrypt by default
+    }
+}
+----
+
+[source,yaml]
+----
+spring:
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: https://login.example.com/realms/shop   # keys are fetched from the issuer's JWKS
+          audiences: shop-api
+----
+
+Rules are checked in order, so put specific matchers before general ones and end with `anyRequest()`.
+`hasRole("ADMIN")` checks for the authority `ROLE_ADMIN`; `hasAuthority("orders:write")` checks the exact string.
+
+== Method security
+
+[source,java]
+----
+@Service
+class OrderService {
+
+    @PreAuthorize("hasRole('ADMIN') or #customerId == authentication.name")
+    public List<Order> ordersFor(String customerId) { ... }
+
+    @PostAuthorize("returnObject.ownerId == authentication.name")
+    public Document load(long id) { ... }
+}
+----
+
+URL rules protect endpoints; method security protects business operations, including ones reached by other paths (messages, scheduled jobs).
+It is proxy-based, so self-invocation is not checked.
+Object-level checks ("is this *your* order?") are the most commonly missed authorisation bug (OWASP's broken object level authorisation).
+
+== Password storage
+
+* Never store plain text or fast hashes (MD5, SHA-256).
+* Use an adaptive, salted hash: *bcrypt*, *scrypt*, *Argon2* or *PBKDF2*. They are deliberately slow and include a random salt per password.
+* `DelegatingPasswordEncoder` stores an algorithm prefix (`+{bcrypt}$2a$10$...+`), so you can upgrade algorithms gradually.
+
+== Sessions versus tokens
+
+[cols="1,2,2",options="header"]
+|===
+| |Server session (cookie `JSESSIONID`) |Token (JWT bearer)
+
+|State |Stored on the server (or a shared store such as Redis) |Self-contained in the token
+|Scaling |Needs sticky sessions or a shared session store |Any instance can validate it
+|Revocation |Easy: delete the session |Hard: valid until expiry unless you keep a deny list
+|Sent by |Browser automatically (cookie) |Client explicitly (`+Authorization: Bearer ...+`)
+|Main threats |CSRF, session fixation |Token theft (XSS if stored in `localStorage`), long expiry
+|===
+
+== JWT
+
+A JSON Web Token has three Base64URL parts: `header.payload.signature`.
+
+* *Header*: algorithm (`RS256`, `ES256`, `HS256`) and key ID (`kid`).
+* *Payload*: claims such as `sub` (subject), `iss` (issuer), `aud` (audience), `exp` (expiry), `nbf` (not before), `iat` (issued at), plus custom claims like `scope` or `roles`.
+* *Signature*: proves the token was issued by the holder of the key and has not been changed.
+
+A signed JWT (JWS) is *encoded, not encrypted*: anyone can read the payload.
+Never put secrets or sensitive personal data in it.
+
+*What to validate on every request*:
+
+. The signature, with a trusted key (from the issuer's JWKS endpoint), and only with the algorithms you allow. Reject `alg: none`.
+. `iss` matches the expected issuer.
+. `aud` contains this API.
+. `exp` is in the future and `nbf` is in the past, allowing small clock skew.
+. Required claims are present; scopes or roles grant the needed permission.
+
+Spring's resource server does steps 1 to 4 when configured with `issuer-uri` and `audiences`.
+
+*Token lifecycle*: keep access tokens short-lived (minutes); use refresh tokens (stored securely, rotated on use) to get new ones; rotate signing keys with `kid`; for logout or compromise, revoke refresh tokens and, if needed, keep a short deny list of access token IDs (`jti`).
+
+*Symmetric versus asymmetric*: `HS256` uses one shared secret for signing and verifying, so every verifier could also mint tokens.
+`RS256`/`ES256` sign with a private key and verify with a public key, which is the right choice when many services verify tokens.
+
+== OAuth2 and OpenID Connect
+
+OAuth2 is a framework for *delegated authorisation*: a client gets an access token to call an API on behalf of a user or itself.
+OpenID Connect (OIDC) adds *authentication* on top: an ID token describing who the user is.
+
+[cols="1,3",options="header"]
+|===
+|Role |Example
+
+|Resource owner |The user.
+|Client |The web or mobile app that wants access.
+|Authorisation server |Keycloak, Okta, Auth0, Entra ID, Cognito, or Spring Authorization Server. Issues tokens.
+|Resource server |Your Spring Boot API that validates tokens and serves data.
+|===
+
+Grant types to know:
+
+* *Authorization Code with PKCE*: for web, mobile and single-page apps acting for a user. The browser receives a short-lived code; the client exchanges it for tokens. PKCE protects the code from interception.
+* *Client Credentials*: service-to-service calls with no user.
+* *Refresh Token*: get a new access token without logging in again.
+* *Implicit* and *Resource Owner Password* grants are deprecated; do not propose them.
+
+== CSRF
+
+Cross-site request forgery tricks a logged-in user's browser into sending a request to your site; the browser attaches the session cookie automatically.
+
+* It matters when authentication relies on *cookies*. Spring Security enables CSRF protection by default, requiring a token on state-changing requests.
+* A stateless API that accepts only `Authorization: Bearer` headers is not vulnerable in the same way, because the browser does not attach that header automatically. That is why such APIs often disable CSRF.
+* `SameSite=Lax` or `Strict` cookies reduce the risk but are not a complete defence on their own.
+
+== CORS
+
+Browsers block JavaScript from reading responses from another origin unless the server allows it with CORS headers (`Access-Control-Allow-Origin` and others).
+The browser sends a preflight `OPTIONS` request for non-simple requests.
+CORS is a browser rule, not a server-side security control: it does not stop `curl` or other servers.
+Configure an explicit list of allowed origins; avoid `*` together with credentials (browsers reject it anyway).
+
+[source,java]
+----
+http.cors(cors -> cors.configurationSource(request -> {
+    CorsConfiguration config = new CorsConfiguration();
+    config.setAllowedOrigins(List.of("https://shop.example.com"));
+    config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE"));
+    config.setAllowedHeaders(List.of("Authorization", "Content-Type"));
+    return config;
+}));
+----
+
+== Other security topics that come up
+
+* *SQL injection*: always use bind parameters (`JdbcTemplate` with `?`, JPA parameters, Spring Data). Never concatenate input into SQL. Validate dynamic sort and filter fields against an allowlist. Use least-privilege database accounts.
+* *Secrets*: keep them out of source code and images; inject from a secret manager or Kubernetes secrets; rotate them; never log them. A leaked credential is an incident: revoke it, rotate it, then investigate.
+* *Security headers*: Spring Security adds `X-Content-Type-Options`, `X-Frame-Options`, `Cache-Control` and HSTS (on HTTPS) by default.
+* *Rate limiting and brute force*: limit login attempts per account and per IP; lock or slow down after failures.
+* *Mass assignment*: bind requests to DTOs with only the allowed fields, never directly to entities (a request could set `role=ADMIN`).
+* *Dependency vulnerabilities*: scan with OWASP Dependency-Check, Snyk or GitHub Dependabot.
+
+== Practice questions
+
+[%collapsible]
+.Q1. Authentication versus authorisation?
+====
+Authentication establishes identity; authorisation decides what that identity may do.
+Both are enforced server-side, at the endpoint and at the business method or object level.
+====
+
+[%collapsible]
+.Q2. Walk through what happens when a request with a JWT reaches a Spring Boot API.
+====
+`DelegatingFilterProxy` hands it to `FilterChainProxy`, which selects the matching `SecurityFilterChain`.
+`BearerTokenAuthenticationFilter` extracts the token, `JwtAuthenticationProvider` decodes it with the issuer's public key and validates signature, issuer, audience and time claims, then converts scopes or roles into authorities.
+The authenticated `Authentication` is placed in the `SecurityContextHolder`.
+`AuthorizationFilter` checks URL rules; method security checks `@PreAuthorize`.
+Failures produce 401 or 403 through `ExceptionTranslationFilter`.
+====
+
+[%collapsible]
+.Q3. What must you validate in a JWT?
+====
+Signature with a trusted key and an allowed algorithm, issuer, audience, expiry, not-before (with small clock skew), and required claims and scopes.
+Also remember the payload is readable by anyone.
+====
+
+[%collapsible]
+.Q4. How do you log out or revoke a JWT?
+====
+A JWT stays valid until it expires, so keep access tokens short-lived.
+Revoke the refresh token at the authorisation server, and if immediate revocation is required, keep a deny list of token IDs (`jti`) in a fast store until their expiry, or use opaque tokens with introspection.
+====
+
+[%collapsible]
+.Q5. When does CSRF matter, and why do many REST APIs disable it?
+====
+When the browser sends credentials automatically, as with session cookies.
+APIs that authenticate only with bearer tokens in the `Authorization` header are not exposed in the same way, so CSRF protection is often disabled for them.
+If you store the token in a cookie, CSRF matters again.
+====
+
+[%collapsible]
+.Q6. How should passwords be stored?
+====
+With a slow, salted, adaptive hash such as bcrypt, scrypt, Argon2 or PBKDF2, through `DelegatingPasswordEncoder` so the algorithm can be upgraded later.
+Never with encryption, plain text or fast hashes.
+====
+
+[%collapsible]
+.Q7. Which OAuth2 grant would you use for a single-page app, and for a batch job calling an API?
+====
+Single-page or mobile app: Authorization Code with PKCE.
+Batch job or service-to-service: Client Credentials.
+Never Implicit or Password grants in new designs.
+====
+
+[%collapsible]
+.Q8. `hasRole` versus `hasAuthority`?
+====
+`hasRole("ADMIN")` checks for the authority `ROLE_ADMIN` (it adds the prefix).
+`hasAuthority("ADMIN")` checks the exact string.
+JWT scopes become authorities like `SCOPE_orders.read` by default.
+====
+
+[%collapsible]
+.Q9. How do you prevent SQL injection?
+====
+Parameterised queries everywhere (JDBC bind parameters, JPA named parameters, Spring Data methods), allowlists for dynamic column or sort names, least-privilege database users, and input validation as a second line.
+====
+
+[%collapsible]
+.Q10. How should a service handle secrets?
+====
+Store them in a secret manager or platform-managed secrets, inject at runtime, restrict access by workload identity, rotate regularly, keep them out of logs, code and images, and treat a leak as an incident: revoke, rotate, investigate.
+====
+
+[%collapsible]
+.Q11. What is CORS, and does it protect your API?
+====
+A browser mechanism that lets a server declare which other origins' scripts may read its responses.
+It does not protect the API from non-browser clients; authentication and authorisation do that.
+====
+
+== Common traps
+
+* Thinking a JWT is encrypted.
+* Using `HS256` shared secrets across many services.
+* Long-lived access tokens with no revocation plan.
+* Disabling CSRF on a cookie-based application.
+* URL rules without object-level checks.
+* Exposing Actuator endpoints without security.
+* `permitAll()` rules placed after `anyRequest()`.
+
+== Follow-ups to expect
+
+* "How would you secure service-to-service calls inside the cluster?" (Client credentials tokens, mTLS through a service mesh, network policies.)
+* "Where would you store tokens in a browser app?" (Prefer a backend-for-frontend with HttpOnly, Secure, SameSite cookies; avoid `localStorage`.)
+* "How do you implement multi-tenancy safely?" (Tenant from the token, enforced in queries server-side.)
+
+== Quick revision
+
+* [ ] Filter chain path: DelegatingFilterProxy, FilterChainProxy, SecurityFilterChain
+* [ ] AuthenticationManager, ProviderManager, AuthenticationProvider, UserDetailsService, PasswordEncoder
+* [ ] `SecurityFilterChain` bean with lambda DSL, resource server JWT
+* [ ] JWT structure and the five validations
+* [ ] OAuth2 roles and grants; OIDC
+* [ ] CSRF versus CORS
+* [ ] SQL injection and secrets handling
+
+Next: xref:interview-guide/microservices.adoc[Microservices and Distributed Systems].

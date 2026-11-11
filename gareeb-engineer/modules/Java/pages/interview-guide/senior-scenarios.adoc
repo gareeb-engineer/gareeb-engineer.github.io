@@ -1,0 +1,249 @@
+= Production Scenarios, Design and Behavioural
+:page-reading-assistant:
+:page-subtitle: Debugging playbooks for slow APIs, memory leaks, high CPU and stuck threads, a framework for trade-off and system design questions, and how to prepare incident and project stories.
+:page-difficulty: Hard
+:page-tags: Java, Interview Preparation, System Design, Production, Behavioural
+:page-revdate: 2026-11-11
+
+Senior interviews replace definitions with situations: "this endpoint got slow last night; what do you do?", "would you use Kafka or REST here?", "tell me about an incident you handled".
+There is no single right answer, so interviewers judge the *process*: measure first, form a hypothesis, check it, fix it, and prevent it from happening again.
+This page gives you repeatable structures for those answers.
+
+== At a glance
+
+[cols="1,3"]
+|===
+|Weightage |*7 / 10* (9 / 10 for senior, lead and architect roles)
+|Who gets asked |Senior and above; mid-level gets lighter versions.
+|Preparation time |4 hours, plus time to write your own stories
+|Handbook questions |Q99, Q115-Q120
+|Builds on |Every earlier topic, especially xref:interview-guide/jvm-memory-gc.adoc[JVM] and xref:interview-guide/microservices.adoc[Microservices]
+|===
+
+== Debugging playbooks
+
+Use the same five steps for every scenario and say them out loud:
+
+. *Scope the impact*: which endpoints, users, regions; since when; what changed (deployment, traffic, data, dependency).
+. *Look at the signals*: metrics, traces, logs, in that order.
+. *Form a hypothesis* and check it with one more piece of evidence.
+. *Mitigate first*: roll back, scale out, disable a feature flag, shed load. Restoring service comes before finding the root cause.
+. *Fix and prevent*: root cause fix, a test, an alert or dashboard, and a short post-incident review.
+
+=== "The API is slow"
+
+[cols="1,3",options="header"]
+|===
+|Check |What it tells you
+
+|p50, p95, p99 latency, error rate, throughput |Is everyone slow or only the tail? Did traffic grow?
+|Distributed trace of a slow request |Which span takes the time: our code, the database, a downstream call?
+|Database: slow query log, `EXPLAIN ANALYZE`, missing index, lock waits |Query plans change as data grows.
+|SQL count per request |N+1 queries after a new feature.
+|Connection pool metrics (active, pending, wait time) |Requests queueing for a connection.
+|Thread pool metrics and thread dumps |Request threads blocked on locks or slow I/O.
+|GC logs and pause times |Long pauses or GC thrashing from memory pressure.
+|Downstream latency and retry counts |A slow dependency plus retries multiplying load.
+|CPU throttling in the container |CPU limits too low for the JIT and GC.
+|===
+
+Common fixes: add an index or rewrite a query, fetch joins or projections, caching stable data, parallelising independent downstream calls, timeouts and circuit breakers, smaller payloads, pool tuning.
+Validate with a load test and compare percentiles against the baseline.
+
+=== "Memory keeps growing until OutOfMemoryError"
+
+. Confirm with heap-after-GC graphs: a rising floor means a leak; a sawtooth with a stable floor is normal.
+. Get a heap dump (`-XX:+HeapDumpOnOutOfMemoryError`, or `jcmd <pid> GC.heap_dump` on one instance taken out of the load balancer).
+. Open it in Eclipse MAT: dominator tree, leak suspects, path to GC roots for the largest retained objects.
+. Usual suspects: unbounded caches or static maps, `ThreadLocal` not removed, listeners not unregistered, huge result sets loaded into memory, session data growth.
+. If the heap is fine but the process is big: native memory tracking (`-XX:NativeMemoryTracking=summary`, `jcmd VM.native_memory`), thread count, direct buffers, metaspace.
+
+=== "CPU is at 100%"
+
+. Find the hot threads: `top -H -p <pid>`, convert the thread ID to hex, match it in `jcmd <pid> Thread.print`.
+. Take three thread dumps a few seconds apart; look for the same stacks.
+. Check GC first: if GC threads are hot, it is a memory problem.
+. Profile with JFR or async-profiler for a flame graph.
+. Usual suspects: infinite or busy loops, catastrophic regex backtracking, heavy JSON serialisation or logging, tight retry loops, inefficient algorithms on data that grew.
+
+=== "Requests hang; the service stops responding"
+
+. Thread dump: are all request threads `BLOCKED` on the same lock, `WAITING` for pool connections, or stuck in socket reads without timeouts?
+. A Java-level deadlock appears at the bottom of the dump.
+. Check connection pool exhaustion and downstream calls missing timeouts.
+. Fix: timeouts everywhere, bounded pools with rejection, lock ordering, moving slow work out of locks and transactions.
+
+=== "Kafka consumer lag keeps rising"
+
+Processing time per record versus arrival rate; number of partitions versus consumers; frequent rebalances (processing exceeding `max.poll.interval.ms`); a poison message retried forever; slow downstream calls inside the consumer.
+
+== Answering trade-off questions
+
+Use this structure for "X or Y?" questions such as REST versus Kafka, SQL versus NoSQL, cache or not, monolith or microservices:
+
+. *Requirements and constraints*: consistency needs, latency, throughput, data size, team skills, cost, deadline.
+. *Two or three viable options*, not ten.
+. *Compare* them on the criteria that matter here: consistency, latency, failure behaviour, operational burden, cost, complexity, reversibility.
+. *Decide*, and say why.
+. *Name the risk* and what evidence would make you revisit the decision.
+
+[example]
+====
+"Should order events go over REST callbacks or Kafka?"
+
+Requirements: five downstream consumers, must not lose events, consumers can lag a few seconds, order service must stay up when consumers are down.
+REST callbacks couple the order service to every consumer's availability and need our own retry storage.
+Kafka decouples them, retains events for replay, and lets new consumers join without changing the order service, at the cost of running Kafka and handling duplicates.
+Decision: Kafka with an outbox and idempotent consumers.
+Revisit if there were only one consumer that needed a synchronous answer.
+====
+
+== System design prompts for Java engineers
+
+Practise these with the steps: requirements (functional and non-functional), rough capacity estimates, API, data model, high-level components, deep dive into one or two hard parts, failure handling, scaling, observability.
+
+[cols="1,3",options="header"]
+|===
+|Prompt |Hard parts to discuss
+
+|URL shortener |Key generation (base62 counter versus hash, collisions), read-heavy caching, redirects (301 versus 302), analytics asynchronously.
+|Rate limiter |Algorithm choice, distributed counters in Redis, atomicity (Lua scripts), per-tenant limits, failure mode if Redis is down.
+|Notification service |Channels, preferences, provider rate limits, retries, deduplication, delivery status.
+|Order and payment flow |Idempotency keys, saga with compensation, outbox, payment provider callbacks, reconciliation.
+|Distributed cache |Eviction, consistency with the database, stampede protection, hot keys, sharding.
+|Job scheduler |Exactly-one execution across instances (locks, leases), retries, time zones, missed runs.
+|Chat or live feed |WebSockets, fan-out on write versus read, presence, ordering per conversation.
+|File upload service |Pre-signed URLs to object storage, chunked uploads, virus scanning, metadata store.
+|===
+
+For low-level design and machine-coding rounds, use the xref:Low-Level-Design:index.adoc[Low Level Design] section.
+
+== Code review questions
+
+"How do you review a pull request?" Check, in order:
+
+. *Correctness* against the requirement, including failure paths and edge cases.
+. *Security*: input validation, authorisation, secrets, injection.
+. *Data and transactions*: consistency, migrations that are backward compatible, locking.
+. *Performance*: queries in loops, unbounded collections, missing pagination or timeouts.
+. *Observability*: logs with context, metrics, no sensitive data in logs.
+. *Tests*: do they prove the behaviour, including failures?
+. *Maintainability*: naming, size, duplication; is it easy to change or delete later?
+
+Separate blocking defects from style preferences, and explain the reason behind each comment.
+
+== Deployment knowledge for senior Java developers
+
+* Packaging: executable JAR, layered JARs and container images (Buildpacks, Jib), GraalVM native images when startup matters.
+* Configuration per environment, secrets from a vault, feature flags.
+* Health probes (liveness, readiness, startup), graceful shutdown, resource requests and limits, JVM memory settings for containers.
+* Release strategies: rolling, blue-green, canary; automated rollback on SLO breach.
+* Database migrations with Flyway or Liquibase, using *expand and contract*: add new columns first, deploy code that writes both, backfill, switch reads, then remove the old column in a later release. Each step must work with the previous code version during a rolling deploy.
+* Observability: logs, metrics, traces, dashboards, alerts tied to SLOs, on-call runbooks.
+
+== Behavioural questions
+
+Prepare your stories in advance with the *STAR* structure: Situation, Task, Action, Result.
+Spend most of the time on *Action*, use "I" for what you did, and give numbers for the result.
+
+Stories to have ready:
+
+* *Two production incidents*: context, symptoms, impact, how it was detected, immediate mitigation, root cause, permanent fix, tests and monitoring added, lesson learned. Do not blame individuals; describe the system conditions that allowed it.
+* *One architecture or design decision*: the options, the trade-off, the result, and what you would do differently.
+* *A disagreement* with a colleague or manager, and how it was resolved with data.
+* *A time you improved performance or reliability*, with before and after numbers.
+* *A mistake you made* and what changed afterwards.
+* *Mentoring or leading*: helping someone grow, or driving a change across teams.
+* *Working with ambiguous requirements*.
+
+[example]
+====
+*Incident story outline*
+
+Situation: checkout p99 latency rose from 300 ms to 8 s on a Friday evening; 15% of orders timed out.
+Task: I was on call and owned the checkout service.
+Action: traces showed time spent waiting for a database connection.
+Thread dumps showed request threads waiting in HikariCP.
+A new feature called the loyalty service *inside* a transaction, and that service had slowed down, so every request held a connection for seconds.
+I disabled the feature flag (latency recovered in 2 minutes), then moved the loyalty call outside the transaction, added a 500 ms timeout and a circuit breaker.
+Result: no recurrence; we added an alert on pool pending connections and a review checklist item for remote calls inside transactions.
+====
+
+== Practice questions
+
+[%collapsible]
+.Q1. How would you investigate a slow API in production?
+====
+Scope it with p50/p95/p99, errors and throughput, and check recent changes.
+Use traces to find which span is slow.
+Then check database queries and plans, query counts, connection and thread pools, GC pauses, locks and downstream latency and retries.
+Mitigate (rollback, scale, feature flag) before the deep fix, then validate the fix with a load test against the baseline.
+====
+
+[%collapsible]
+.Q2. How do you reduce API latency?
+====
+Measure first.
+Remove unnecessary calls, run independent I/O in parallel, fix queries and indexes, avoid N+1, cache stable data, reduce payload size, tune pools, add timeouts, and remove retry or serialisation overhead.
+Confirm with percentiles, not averages.
+====
+
+[%collapsible]
+.Q3. Describe a production incident you handled.
+====
+Use the incident outline: context, symptoms, impact, detection, mitigation, root cause, permanent fix, monitoring and tests added, lesson.
+Keep it blameless and specific with numbers.
+====
+
+[%collapsible]
+.Q4. How do you answer an architecture trade-off question?
+====
+Start with requirements and constraints, compare two or three options on consistency, latency, cost, complexity, failure behaviour, team skills and operational load, state the decision, and say what would make you revisit it.
+====
+
+[%collapsible]
+.Q5. How do you review a pull request?
+====
+Correctness and failure paths, security, data and transactions, performance, observability, tests, maintainability and operational impact.
+Separate blocking issues from preferences and explain the reasons.
+====
+
+[%collapsible]
+.Q6. What should a senior Java developer know about deployment?
+====
+Packaging and images, configuration and secrets, health probes and graceful shutdown, container resource limits and JVM memory flags, GC behaviour, logging, metrics, tracing, release and rollback strategies, backward-compatible schema migrations, and incident response.
+====
+
+[%collapsible]
+.Q7. How do you make a database schema change with zero downtime?
+====
+Expand and contract: add new structures in a backward-compatible way, deploy code that works with both, migrate data in batches, switch reads, and remove old structures in a later release.
+Avoid long locks: create indexes concurrently where the database supports it, and batch large updates.
+====
+
+== Common traps
+
+* Jumping to a fix before measuring.
+* Describing the root cause before mitigating customer impact.
+* Stories that use "we" for everything.
+* No numbers in results.
+* Blaming a person.
+* Proposing a complex design without stating requirements.
+
+== Follow-ups to expect
+
+* "What would you do differently next time?"
+* "How did you know the fix worked?"
+* "What alert would have caught this earlier?"
+* "What happens to your design at ten times the traffic?"
+
+== Quick revision
+
+* [ ] Five-step debugging process
+* [ ] Playbooks: slow API, memory, CPU, hangs, consumer lag
+* [ ] Trade-off answer structure
+* [ ] Two incident stories and one design story written in STAR form
+* [ ] Expand-and-contract migrations
+* [ ] PR review checklist
+
+Next: xref:interview-guide/spring-ai.adoc[Spring AI and GenAI Integration], or back to the xref:interview-guide/index.adoc[guide index].

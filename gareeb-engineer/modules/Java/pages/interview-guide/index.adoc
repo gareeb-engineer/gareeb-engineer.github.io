@@ -1,0 +1,266 @@
+= Java Software Engineer Interview Guide
+:page-reading-assistant:
+:page-subtitle: Every topic a Java backend interview covers, with a weightage out of 10, a study order, and a detailed page per topic with explanations, code and practice questions.
+:page-difficulty: Medium
+:page-tags: Java, Interview Preparation, Spring, Spring Boot
+:page-revdate: 2026-11-11
+
+This guide prepares you for a software engineer interview where Java is the main language.
+It covers core Java, the JVM, concurrency, Spring and Spring Boot, persistence, security, microservices, testing, the coding round and the senior scenario round.
+Each topic has its own page, and every page uses the same layout so you always know where to look.
+
+The guide targets backend roles with roughly 0 to 8 years of experience.
+Where expectations differ by level, the page says so.
+
+== How to use this guide
+
+. Read the <<topic-index,topic index>> and note the weightage of each topic.
+. Study the topics in the order of the table. Earlier topics are prerequisites for later ones.
+. On each page, read the concepts first, then answer the practice questions *aloud* before opening the answer.
+. Mark the questions you could not answer in two minutes and revisit them two days later.
+. Finish with the <<final-checklist,final checklist>> on the day before the interview.
+
+TIP: Interviewers rarely stop at a definition.
+After your first answer, expect "why?", "what happens under load?", "how would you test it?" and "how would you monitor it?".
+Every page has a *Follow-ups to expect* section for this reason.
+
+[#topic-index]
+== Topic index and weightage
+
+The weightage is a score out of 10 that combines two things: how often the topic comes up in Java backend interviews, and how much a weak answer hurts the overall result.
+A 10 means you will almost certainly be asked about it and a poor answer can end the interview.
+A 4 means it depends on the role.
+
+[cols="^1,6,^2,4,^2",options="header"]
+|===
+|# |Topic |Weightage |Level focus |Handbook Qs
+
+|1
+|xref:interview-guide/core-java-oop.adoc[Core Java and OOP] +
+OOP pillars, `equals`/`hashCode`, String, immutability, exceptions, keywords
+|*9 / 10*
+|All levels, first screen
+|1-15
+
+|2
+|xref:interview-guide/collections-generics.adoc[Collections and Generics] +
+HashMap internals, ConcurrentHashMap, List/Set/Map choice, generics, PECS
+|*10 / 10*
+|All levels, deep at mid and senior
+|16-25
+
+|3
+|xref:interview-guide/java8-streams-functional.adoc[Java 8: Lambdas, Streams and Optional] +
+Functional interfaces, stream pipeline, collectors, stream coding drills
+|*9 / 10*
+|All levels, very common in live coding
+|26-30, 35-38
+
+|4
+|xref:interview-guide/modern-java.adoc[Modern Java (11 to 25)] +
+Records, sealed types, pattern matching, virtual threads, Java 21 and 25 features
+|*7 / 10*
+|Mid and senior
+|31-34
+
+|5
+|xref:interview-guide/concurrency.adoc[Concurrency and Multithreading] +
+Thread lifecycle, JMM, `synchronized`, `volatile`, executors, CompletableFuture
+|*9 / 10*
+|Mid and senior
+|39-49, 53-54
+
+|6
+|xref:interview-guide/jvm-memory-gc.adoc[JVM, Memory and Garbage Collection] +
+Class loading, heap/stack/metaspace, GC algorithms, leaks, diagnosis tools
+|*7 / 10*
+|Mid and senior
+|50-52, 55
+
+|7
+|xref:interview-guide/spring-core.adoc[Spring Core: IoC, DI, Beans and AOP] +
+Container, bean lifecycle, scopes, injection types, proxies
+|*9 / 10*
+|All levels with Spring on the CV
+|56-62
+
+|8
+|xref:interview-guide/spring-boot.adoc[Spring Boot] +
+Auto-configuration, starters, configuration, profiles, Actuator, Boot 4
+|*9 / 10*
+|All levels with Spring on the CV
+|63-70
+
+|9
+|xref:interview-guide/rest-spring-mvc.adoc[REST APIs and Spring MVC] +
+HTTP semantics, request flow, validation, error handling, HTTP clients
+|*8 / 10*
+|All levels
+|71-72, 85
+
+|10
+|xref:interview-guide/jpa-hibernate-transactions.adoc[Spring Data JPA, Hibernate and Transactions] +
+Entity states, N+1, fetching, `@Transactional`, isolation, locking, SQL basics
+|*8 / 10*
+|Mid and senior
+|76-84
+
+|11
+|xref:interview-guide/spring-security.adoc[Spring Security, JWT and OAuth2] +
+Filter chain, authentication flow, JWT validation, CSRF, method security
+|*7 / 10*
+|Mid and senior
+|73-75, 105, 119
+
+|12
+|xref:interview-guide/microservices.adoc[Microservices and Distributed Systems] +
+Resilience, messaging, Kafka, saga, outbox, caching, rate limiting
+|*8 / 10*
+|Mid and senior
+|86-105
+
+|13
+|xref:Low-Level-Design:index.adoc[Design Patterns, SOLID and LLD] +
+Existing pages on this site: principles, SOLID, Gang of Four patterns
+|*7 / 10*
+|All levels, machine-coding rounds
+|114
+
+|14
+|xref:interview-guide/coding-round.adoc[Coding Round in Java] +
+Java idioms for DSA, complexity, problem patterns, classic programs
+|*9 / 10*
+|All levels
+|111-113
+
+|15
+|xref:interview-guide/testing.adoc[Testing: JUnit, Mockito and Spring Tests] +
+Unit vs integration vs contract, mocking, slice tests, Testcontainers
+|*6 / 10*
+|Mid and senior
+|106-110
+
+|16
+|xref:interview-guide/senior-scenarios.adoc[Production Scenarios, Design and Behavioural] +
+Debugging playbooks, trade-off answers, incident stories, system design prompts
+|*7 / 10*
+|Senior, also lead and architect
+|99, 115-120
+
+|17
+|xref:interview-guide/spring-ai.adoc[Spring AI and GenAI Integration] +
+ChatClient, prompts, embeddings, RAG, advisors, tool calling, MCP
+|*4 / 10* (8 if the role mentions GenAI)
+|Role-specific
+|151-180
+|===
+
+=== How the weightage was set
+
+The scores are an editorial judgement, not measured data.
+They come from comparing the topic lists and question banks of the sources in <<sources,Sources>> and from the attached handbook.
+A few patterns were consistent across those sources:
+
+* Java interview questions cluster around core Java and OOP, collections internals, concurrency, the JVM and Spring Boot.
+* HashMap and ConcurrentHashMap internals are named as the most predictable topic for experienced candidates, which is why collections is the only 10.
+* Modern Java features from Java 17 and 21 (records, sealed classes, pattern matching, virtual threads) now appear regularly, and many older question lists skip them.
+* Spring Boot questions for experienced candidates focus on proxies, auto-configuration and transaction boundaries rather than annotation names.
+* Senior interviews replace definitions with production scenarios: memory leaks, deadlocks and slow endpoints.
+
+Adjust the scores for your target role.
+A bank or service company tends to ask more core Java and Java 8 stream programs.
+A product company tends to weigh the coding round and system design more.
+A role that mentions LLMs or RAG raises Spring AI to about 8.
+
+== What each topic page contains
+
+Every topic page follows the same layout:
+
+[cols="1,3",options="header"]
+|===
+|Section |What it gives you
+
+|At a glance
+|Weightage, who gets asked, preparation time, and the matching handbook questions.
+
+|Concept sections
+|Explanations in plain language with short Java examples. Read these first.
+
+|Practice questions
+|Interview questions as collapsible blocks. Say your answer aloud, then expand to compare.
+
+|Common traps
+|Mistakes that interviewers deliberately probe for.
+
+|Follow-ups to expect
+|The second and third questions that usually follow the first.
+
+|Quick revision
+|A checklist to scan the night before.
+|===
+
+== Study plans
+
+Pick the plan that matches the time you have.
+Hours are estimates for someone who already writes Java at work.
+
+[cols="1,4",options="header"]
+|===
+|Time available |Plan
+
+|1 week (crash)
+|Days 1-2: topics 1, 2 and 3. Day 3: topics 5 and 7. Day 4: topics 8, 9 and 10. Day 5: topic 14, solve 10 problems. Day 6: topics 12 and 16. Day 7: practice questions only, then the final checklist.
+
+|2 weeks
+|Week 1: topics 1 to 6, plus 2 coding problems a day. Week 2: topics 7 to 12 and 15, plus 2 coding problems a day. Last two days: topic 16, mock interview, final checklist.
+
+|4 weeks
+|Week 1: topics 1 to 4. Week 2: topics 5, 6 and 13. Week 3: topics 7 to 11. Week 4: topics 12, 15, 16 and 17 if relevant. Solve 3 coding problems a day throughout, and do one timed mock interview each weekend.
+|===
+
+== The attached handbook
+
+The file `9to5_Hustlers_Java_SpringBoot_Spring_AI_180_Interview_Questions_Designed.pdf` in the repository root is used here as an extension.
+Its questions are mapped to the topic pages in the *Handbook Qs* column above, and each topic page covers those questions in its own words with added detail and code.
+
+NOTE: The handbook cover promises 180 questions, but the copy in this repository contains questions 1-120 (Java and Spring Boot) and 151-180 (Spring AI).
+Questions 121-150 are not in the file.
+
+[#final-checklist]
+== Final checklist
+
+Use this the day before the interview.
+
+* [ ] I can explain each major concept in my own words, without a memorised one-line definition.
+* [ ] For every "X versus Y" question, I can say when each one is the right choice.
+* [ ] I know the time complexity of the main collection operations and of my coding solutions.
+* [ ] I can state the thread-safety guarantees of the classes I mention.
+* [ ] I can explain where a transaction starts and ends in my last project, and what happens on failure.
+* [ ] I can write code without IDE auto-complete: a HashMap-based solution, a stream pipeline, a thread-safe class.
+* [ ] I have two production incident stories and one architecture decision story ready (see xref:interview-guide/senior-scenarios.adoc[Production Scenarios]).
+* [ ] I can discuss observability, security, testing, deployment and rollback for a service I built.
+* [ ] I know which Java and Spring Boot versions my current project uses, and one feature from each that I have used.
+
+[#sources]
+== Sources
+
+The topic selection and weightage were checked against these pages.
+Content was rephrased for compliance with licensing restrictions; facts were cross-checked against official documentation where possible.
+
+* https://techscreen.app/articles/java-interview-questions-2026[TechScreen: Java Interview Questions for Software Engineers (2026 Guide)]
+* https://www.datacamp.com/blog/java-interview-questions[DataCamp: Top Java Interview Questions and Answers 2026]
+* https://techoral.com/java/java-senior-interview-questions.html[Techoral: Java Senior Interview Questions 2026]
+* https://go.intervue.io/blog/faang-java-mock-interview-questions[Intervue: Java mock interview questions]
+* https://www.golinuxcloud.com/spring-boot-interview-questions-experienced/[GoLinuxCloud: Spring Boot Interview Questions for Experienced Developers]
+* https://huru.ai/spring-boot-interview-questions/[Huru: Spring Boot Interview Questions and Answers (2026)]
+* https://www.upgrad.com/blog/spring-boot-interview-questions-and-answers-beginners-experienced/[upGrad: Spring Boot Interview Questions]
+* https://howtodoinjava.com/interview-questions/java-concurrency-interview-questions/[HowToDoInJava: Java Concurrency Interview Questions]
+* https://prachub.com/resources/java-virtual-thread-interview-questions-pinning-resource-limits-and-version-differences[PracHub: Virtual Thread Interview Questions]
+* https://howtodoinjava.com/java/java-25-features/[HowToDoInJava: Java 25 Features]
+* https://docs.oracle.com/en/java/javase/25/language/java-language-changes-summary.html[Oracle: Java Language Changes Summary (JDK 25)]
+* https://openjdk.org/jeps/439[OpenJDK: JEP 439 Generational ZGC]
+* https://howtodoinjava.com/spring-boot/spring-boot-4/[HowToDoInJava: Spring Boot 4 What's New]
+* https://www.infoq.com/news/2025/11/spring-7-spring-boot-4/[InfoQ: Spring Framework 7 and Spring Boot 4]
+* https://dev.to/anantghadi/spring-boot-transactional-7-interview-traps-that-catch-experienced-developers-5h7l[DEV: @Transactional interview traps]
+* https://spring.io/blog/2026/08/21/spring-ai-2-0-1-available-now/[Spring blog: Spring AI 2.0.1]
+* 9to5 Hustlers, _Java and Spring Boot + Spring AI Deep Technical Interview Handbook_ (attached PDF)

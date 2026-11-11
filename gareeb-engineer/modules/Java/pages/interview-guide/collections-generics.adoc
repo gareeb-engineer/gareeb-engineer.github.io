@@ -1,0 +1,543 @@
+= Collections and Generics
+:page-reading-assistant:
+:page-subtitle: HashMap and ConcurrentHashMap internals, choosing the right List, Set, Map and Queue, iterator behaviour, and generics with wildcards and type erasure.
+:page-difficulty: Medium
+:page-tags: Java, Interview Preparation, Collections, Generics
+:page-revdate: 2026-11-11
+
+Collections is the most predictable topic in a Java interview.
+"How does HashMap work internally?" is asked at nearly every level, and the follow-ups go deep: collisions, resizing, treeification, thread safety and why `ConcurrentHashMap` rejects `null`.
+This page also covers generics, because questions about `List<? extends T>` usually follow collection questions.
+
+== At a glance
+
+[cols="1,3"]
+|===
+|Weightage |*10 / 10*
+|Who gets asked |Everyone. Mid and senior candidates are expected to know internals.
+|Preparation time |5 to 6 hours
+|Handbook questions |Q16-Q25
+|Builds on |xref:interview-guide/core-java-oop.adoc[Core Java]: `equals`/`hashCode`, `Comparable`/`Comparator`
+|===
+
+== The collection hierarchy
+
+[source,text]
+----
+Iterable
+└── Collection
+    ├── List        ArrayList, LinkedList, CopyOnWriteArrayList, (Vector, Stack: legacy)
+    ├── Set         HashSet, LinkedHashSet, TreeSet (SortedSet/NavigableSet), EnumSet
+    ├── Queue       PriorityQueue, ArrayDeque, LinkedList, BlockingQueue implementations
+    │   └── Deque   ArrayDeque, LinkedList, ConcurrentLinkedDeque
+    └── SequencedCollection (Java 21): common first/last operations for ordered collections
+
+Map (not a Collection)
+    HashMap, LinkedHashMap, TreeMap (SortedMap/NavigableMap), EnumMap, WeakHashMap,
+    IdentityHashMap, ConcurrentHashMap, ConcurrentSkipListMap, (Hashtable: legacy)
+----
+
+=== Which one to choose
+
+[cols="2,2,3",options="header"]
+|===
+|Need |Choose |Why
+
+|A list, mostly read by index or appended
+|`ArrayList`
+|Contiguous array, O(1) index access, cache-friendly. The default list.
+
+|A stack or a FIFO queue
+|`ArrayDeque`
+|Faster than `Stack` (synchronized, legacy) and `LinkedList` (node allocation).
+
+|Unique elements, no order needed
+|`HashSet`
+|Expected O(1) `add`/`contains`.
+
+|Unique elements in insertion order
+|`LinkedHashSet`
+|Hash set plus a linked list through the entries.
+
+|Sorted unique elements, range queries
+|`TreeSet`
+|Red-black tree, O(log n), `floor`, `ceiling`, `headSet`, `tailSet`.
+
+|Key-value lookup
+|`HashMap`
+|Expected O(1) `get`/`put`.
+
+|Key-value in insertion or access order, LRU cache
+|`LinkedHashMap`
+|`accessOrder=true` plus `removeEldestEntry` gives an LRU cache.
+
+|Sorted keys, "nearest key" lookups
+|`TreeMap`
+|`floorKey`, `ceilingKey`, `subMap`, all O(log n).
+
+|Always take the smallest or largest next
+|`PriorityQueue`
+|Binary heap: O(log n) `offer`/`poll`, O(1) `peek`.
+
+|Key-value shared between threads
+|`ConcurrentHashMap`
+|Fine-grained locking, atomic compound operations.
+|===
+
+=== Time complexity
+
+[cols="2,1,1,1,1",options="header"]
+|===
+|Collection |Get / contains |Add |Remove |Notes
+
+|`ArrayList` |O(1) by index, O(n) contains |O(1) amortised at end |O(n) |Middle insert shifts elements
+|`LinkedList` |O(n) |O(1) at ends |O(1) at a known node |Finding the node is O(n)
+|`HashMap`/`HashSet` |O(1) expected |O(1) expected |O(1) expected |O(log n) worst case per bucket after treeification
+|`TreeMap`/`TreeSet` |O(log n) |O(log n) |O(log n) |Sorted
+|`PriorityQueue` |O(1) peek, O(n) contains |O(log n) |O(log n) poll |Iteration is *not* sorted
+|`ArrayDeque` |O(1) at ends |O(1) at ends |O(1) at ends |No `null` elements
+|===
+
+== How HashMap works internally
+
+This is the single most important answer on the page.
+Practise saying it in under two minutes, in this order.
+
+. *Structure.* A `HashMap` holds an array of buckets (`Node<K,V>[] table`). Each node stores `hash`, `key`, `value` and `next`.
+. *Hashing.* On `put(key, value)` it computes `key.hashCode()`, then spreads the high bits into the low bits: `hash = h ^ (h >>> 16)`. This reduces collisions for keys whose hash codes differ only in high bits.
+. *Index.* The bucket index is `(n - 1) & hash`, where `n` is the table length. `n` is always a power of two, so this is a fast modulo.
+. *Collision.* If the bucket is empty, the node is placed there. Otherwise it walks the bucket: if a node has the same hash *and* an equal key (`==` or `equals`), the value is replaced; otherwise the new node is appended.
+. *Treeification (Java 8+).* When one bucket holds more than 8 nodes (`TREEIFY_THRESHOLD`) *and* the table has at least 64 buckets (`MIN_TREEIFY_CAPACITY`), the list becomes a red-black tree, so the worst case per bucket drops from O(n) to O(log n). If the table is smaller than 64, the map resizes instead. A tree turns back into a list when it shrinks to 6 nodes.
+. *Resize.* The default capacity is 16 and the load factor is 0.75, so the first resize happens when the 13th entry is added (16 × 0.75 = 12). Resizing doubles the table. Because the size is a power of two, each node either stays at index `i` or moves to `i + oldCapacity`, so the map does not need to recompute every hash.
+. *`get(key)`* repeats steps 2 to 4: hash, index, then compare hash and `equals` within the bucket.
+
+[source,java]
+----
+Map<String, Integer> counts = new HashMap<>();   // table is created lazily on first put
+
+counts.put("java", 1);        // hash("java") -> bucket index -> new node
+counts.put("java", 2);        // same key: value replaced, returns old value 1
+counts.merge("java", 1, Integer::sum);           // 3, atomic-looking but NOT thread-safe
+counts.getOrDefault("go", 0); // 0
+counts.computeIfAbsent("spring", k -> 0);        // inserts 0 if absent
+
+// Pre-size when you know the number of entries, to avoid repeated resizing.
+Map<String, Integer> big = HashMap.newHashMap(10_000);   // Java 19+; accounts for load factor
+----
+
+Other facts:
+
+* One `null` key is allowed (it always goes to bucket 0). Any number of `null` values are allowed.
+* Iteration order is not defined and can change after a resize.
+* `HashMap` is not thread-safe. Concurrent `put` calls can lose updates or corrupt the structure. (Before Java 8, a concurrent resize could even create a cycle and an infinite loop.)
+* `HashSet` is a `HashMap` underneath: elements are keys, and every value is the same dummy object.
+
+[%collapsible]
+.Why does a poor `hashCode()` hurt so much?
+====
+If every key returns the same hash code, every entry goes to one bucket.
+Before Java 8 that made lookups O(n).
+With treeification it becomes O(log n), but only if keys are `Comparable`; otherwise the tree falls back to slower tie-breaking.
+A good `hashCode` spreads values across all 32 bits, which `Objects.hash` and records do well enough.
+====
+
+== ConcurrentHashMap
+
+[cols="1,2,2",options="header"]
+|===
+| |`HashMap` |`ConcurrentHashMap`
+
+|Thread-safe |No |Yes
+|`null` keys/values |Allowed |Not allowed
+|Locking |None |CAS for an empty bucket; `synchronized` on the first node of a non-empty bucket
+|Iterators |Fail-fast |Weakly consistent, never throw `ConcurrentModificationException`
+|Reads |Plain |Non-blocking (volatile reads)
+|`size()` |Exact |An estimate while other threads are writing; use `mappingCount()` for large maps
+|===
+
+How it changed:
+
+* *Java 7*: the map was split into 16 `Segment` objects, each a lock. At most 16 writers could proceed at once.
+* *Java 8+*: segments are gone. Each bucket is locked independently: an insert into an empty bucket uses a compare-and-swap (CAS) without locking; an insert into an occupied bucket synchronizes only on that bucket's first node. Resizing is shared by the writing threads.
+
+*Why no `null`?*
+In a concurrent map, `get(key)` returning `null` must mean "absent".
+If `null` values were allowed, you could not tell "absent" from "mapped to null", and checking with `containsKey` afterwards is not atomic because another thread may change the map in between.
+
+*Compound operations.*
+Individual calls are thread-safe, but a sequence of calls is not:
+
+[source,java]
+----
+// WRONG: race between containsKey and put. Two threads can both insert.
+if (!map.containsKey(user)) {
+    map.put(user, new Session(user));
+}
+
+// RIGHT: one atomic operation.
+map.computeIfAbsent(user, Session::new);
+
+// Atomic counter per key.
+ConcurrentHashMap<String, LongAdder> hits = new ConcurrentHashMap<>();
+hits.computeIfAbsent(page, k -> new LongAdder()).increment();
+----
+
+Keep the function passed to `compute*` short and do not modify the same map inside it; it runs while the bucket is locked.
+
+=== Other thread-safe options
+
+* `Collections.synchronizedMap(map)` locks the whole map for every call. Iteration still needs manual `+synchronized (map) { ... }+`.
+* `Hashtable` is legacy, fully synchronized, and rejects `null`.
+* `CopyOnWriteArrayList` copies the whole array on every write. Good for lists that are read constantly and changed rarely, such as listener lists.
+* `ConcurrentSkipListMap` is a sorted, concurrent map (the concurrent counterpart to `TreeMap`).
+
+== ArrayList versus LinkedList
+
+* `ArrayList` uses a resizable array. Its default capacity is 10, created on the first `add`, and it grows by about 1.5 times. Index access is O(1); inserting in the middle shifts elements; appending is amortised O(1).
+* `LinkedList` is a doubly linked list. Insertion is O(1) only if you already hold the node (through an iterator). Reaching the node is O(n), and each node costs an extra object with two pointers.
+
+In practice `ArrayList` wins almost every benchmark because arrays are cache-friendly.
+Say so, and mention that `ArrayDeque` is the better queue.
+
+== Fail-fast versus fail-safe iterators
+
+Most `java.util` collections keep a `modCount`.
+The iterator remembers it, and if the collection is structurally modified other than through the iterator, the next `next()` throws `ConcurrentModificationException`.
+This is a best-effort bug detector, not a thread-safety guarantee.
+
+[source,java]
+----
+List<Integer> numbers = new ArrayList<>(List.of(1, 2, 3, 4));
+
+for (Integer n : numbers) {
+    if (n % 2 == 0) numbers.remove(n);   // ConcurrentModificationException
+}
+
+numbers.removeIf(n -> n % 2 == 0);       // correct and clear
+
+Iterator<Integer> it = numbers.iterator();
+while (it.hasNext()) {
+    if (it.next() % 2 == 0) it.remove(); // also correct
+}
+----
+
+Concurrent collections (`ConcurrentHashMap`, `CopyOnWriteArrayList`) have *weakly consistent* (sometimes called fail-safe) iterators.
+They never throw `ConcurrentModificationException`, and they may or may not reflect changes made after the iterator was created.
+`CopyOnWriteArrayList` iterates over a snapshot.
+
+== Immutable versus unmodifiable collections
+
+[source,java]
+----
+List<String> source = new ArrayList<>(List.of("a", "b"));
+
+List<String> view = Collections.unmodifiableList(source); // read-only VIEW
+source.add("c");
+System.out.println(view);           // [a, b, c]: the view reflects the change
+
+List<String> copy = List.copyOf(source);                   // truly immutable copy
+List<String> literal = List.of("x", "y");                  // truly immutable, rejects null
+List<String> streamed = source.stream().toList();          // unmodifiable (Java 16+)
+----
+
+`List.of`, `Set.of` and `Map.of` throw `NullPointerException` for `null` elements, and `Set.of`/`Map.of` throw `IllegalArgumentException` for duplicates.
+Their iteration order is deliberately unspecified.
+
+== Sequenced collections (Java 21)
+
+Java 21 added `SequencedCollection`, `SequencedSet` and `SequencedMap`, which give ordered collections common methods: `getFirst()`, `getLast()`, `addFirst()`, `addLast()`, `removeFirst()`, `removeLast()` and `reversed()`.
+`List`, `Deque`, `LinkedHashSet`, `SortedSet`, `LinkedHashMap` and `SortedMap` implement them.
+Before this, getting the last element of a `LinkedHashSet` needed a full iteration.
+
+== LRU cache with LinkedHashMap
+
+This is a common coding question.
+The short answer uses `LinkedHashMap` in access order:
+
+[source,java]
+----
+class LruCache<K, V> extends LinkedHashMap<K, V> {
+    private final int capacity;
+
+    LruCache(int capacity) {
+        super(16, 0.75f, true);        // true = access order: get() moves the entry to the end
+        this.capacity = capacity;
+    }
+
+    @Override
+    protected boolean removeEldestEntry(Map.Entry<K, V> eldest) {
+        return size() > capacity;      // evict the least recently used entry
+    }
+}
+----
+
+If the interviewer asks you to build it from scratch, use a `HashMap<K, Node>` plus a doubly linked list, which gives O(1) `get` and `put`.
+It is not thread-safe; wrap access in a lock or use a cache library such as Caffeine in production.
+
+== PriorityQueue
+
+`PriorityQueue` is a binary min-heap by default.
+The head is the smallest element; iteration order is *not* sorted.
+
+[source,java]
+----
+// Top 3 largest numbers: keep a min-heap of size 3.
+PriorityQueue<Integer> heap = new PriorityQueue<>();
+for (int n : new int[]{5, 1, 9, 3, 7, 8}) {
+    heap.offer(n);
+    if (heap.size() > 3) heap.poll();   // drop the smallest
+}
+System.out.println(heap);              // contains 7, 8, 9 in heap order
+
+PriorityQueue<Task> byPriority =
+    new PriorityQueue<>(Comparator.comparingInt(Task::priority).reversed());
+----
+
+This runs in O(n log k) time and O(k) memory, which beats sorting when k is small.
+
+== Generics
+
+Generics give compile-time type safety and remove casts.
+
+=== Type erasure
+
+The compiler checks generic types, then *erases* most of them: `List<String>` and `List<Integer>` are both `List` at runtime.
+This kept bytecode compatible with pre-Java 5 code.
+Consequences:
+
+* No `new T()` and no `new T[]`.
+* No `instanceof List<String>` (only `instanceof List<?>`).
+* No primitives as type arguments: `List<int>` is illegal. Use `List<Integer>` or `IntStream`.
+* You cannot overload `void process(List<String>)` and `void process(List<Integer>)`: they have the same erasure.
+* Static fields are shared by all parameterisations.
+
+=== Invariance and wildcards
+
+`List<Integer>` is *not* a `List<Number>`, even though `Integer` is a `Number`.
+If it were, this would compile and break type safety:
+
+[source,java]
+----
+List<Integer> ints = new ArrayList<>();
+List<Number> nums = ints;      // does not compile, and this is why:
+nums.add(3.14);                // a Double inside a List<Integer>
+----
+
+Wildcards express the variance you need.
+Remember *PECS: Producer Extends, Consumer Super.*
+
+[source,java]
+----
+// Producer: we only READ Numbers out of the list.
+static double sum(List<? extends Number> numbers) {
+    double total = 0;
+    for (Number n : numbers) total += n.doubleValue();
+    return total;          // numbers.add(1) would not compile
+}
+
+// Consumer: we only WRITE Integers into the list.
+static void fill(List<? super Integer> target) {
+    for (int i = 0; i < 3; i++) target.add(i);
+}
+
+sum(List.of(1, 2, 3));                 // List<Integer> works
+sum(List.of(1.5, 2.5));                // List<Double> works
+fill(new ArrayList<Number>());         // List<Number> works
+fill(new ArrayList<Object>());         // List<Object> works
+
+// Collections.copy uses both: public static <T> void copy(List<? super T> dest, List<? extends T> src)
+----
+
+=== Bounded type parameters
+
+[source,java]
+----
+static <T extends Comparable<? super T>> T max(Collection<? extends T> items) {
+    Iterator<? extends T> it = items.iterator();
+    T best = it.next();
+    while (it.hasNext()) {
+        T next = it.next();
+        if (next.compareTo(best) > 0) best = next;
+    }
+    return best;
+}
+----
+
+`T extends Comparable<? super T>` lets the method work for a class whose parent implements `Comparable`, for example `java.sql.Date` extending `java.util.Date`.
+
+== Practice questions
+
+[%collapsible]
+.Q1. Explain how `HashMap.put` and `get` work internally.
+====
+Hash the key (`hashCode` with high bits spread in), pick the bucket with `(n - 1) & hash`, then walk the bucket comparing hash and `equals`.
+Replace the value on a match, otherwise append a node.
+After the put, if size exceeds capacity × load factor (16 × 0.75 by default), double the table.
+A bucket with more than 8 nodes becomes a red-black tree when the table has at least 64 buckets.
+`get` repeats the hash, index and compare steps.
+====
+
+[%collapsible]
+.Q2. What happens when two keys have the same hash code?
+====
+They go to the same bucket.
+The map distinguishes them with `equals`, storing both as separate nodes in a list (or a tree once the bucket is large).
+Lookups for either key still work, just a little slower.
+====
+
+[%collapsible]
+.Q3. Why is the table size always a power of two?
+====
+So that `(n - 1) & hash` gives the same result as `hash % n` but faster, and so that on resize each node either stays at its index or moves exactly `oldCapacity` positions, without rehashing.
+If you pass a capacity like 100 to the constructor, it is rounded up to 128.
+====
+
+[%collapsible]
+.Q4. What happens if a key is mutated after it is put in a HashMap?
+====
+Its hash code changes, but the node stays in the bucket chosen by the old hash.
+`get` with the mutated key looks in a different bucket and returns `null`; `get` with an equal copy of the old key finds the bucket but fails `equals`.
+The entry is effectively lost and leaks memory.
+Use immutable keys such as `String`, records or enums.
+====
+
+[%collapsible]
+.Q5. HashMap versus ConcurrentHashMap versus Hashtable versus synchronizedMap?
+====
+`HashMap`: not thread-safe, allows one null key.
+`Hashtable` and `synchronizedMap`: one lock for the whole map, so threads queue up; iteration still needs external locking.
+`ConcurrentHashMap`: per-bucket locking with CAS, non-blocking reads, weakly consistent iterators, atomic `compute`/`merge`/`putIfAbsent`, and no nulls.
+====
+
+[%collapsible]
+.Q6. Why does ConcurrentHashMap not allow null keys or values?
+====
+Because `get` returning `null` must unambiguously mean "no mapping".
+In a concurrent setting you cannot follow up with `containsKey` to disambiguate, as the map may change between the two calls.
+====
+
+[%collapsible]
+.Q7. Is `map.get()` followed by `map.put()` on a ConcurrentHashMap thread-safe?
+====
+Each call is, but the pair is not.
+Two threads can both read the old value and both write, losing one update.
+Use `compute`, `merge`, `computeIfAbsent` or `putIfAbsent`, which run atomically per key.
+====
+
+[%collapsible]
+.Q8. How does `HashSet` ensure uniqueness?
+====
+It stores elements as keys of an internal `HashMap` with a shared dummy value.
+`add` returns `false` when `map.put` finds an existing equal key.
+So uniqueness depends entirely on correct `equals` and `hashCode`.
+====
+
+[%collapsible]
+.Q9. `HashSet` versus `LinkedHashSet` versus `TreeSet`?
+====
+`HashSet`: O(1) expected, no order.
+`LinkedHashSet`: O(1) expected, insertion order, slightly more memory.
+`TreeSet`: O(log n), sorted by natural order or a comparator, supports range queries, does not allow `null` with natural ordering.
+`TreeSet` uses `compareTo`, not `equals`, to detect duplicates.
+====
+
+[%collapsible]
+.Q10. What is `ConcurrentModificationException` and how do you avoid it?
+====
+Thrown by fail-fast iterators when the collection is structurally modified during iteration by something other than the iterator.
+It happens even on a single thread, such as removing inside a for-each loop.
+Use `Iterator.remove`, `removeIf`, collect changes and apply them after the loop, or use a concurrent collection.
+====
+
+[%collapsible]
+.Q11. Comparable versus Comparator, and how do you sort by two fields?
+====
+`Comparable` is the class's natural order; `Comparator` is an external, swappable order.
+`employees.sort(Comparator.comparing(Employee::department).thenComparing(Employee::salary, Comparator.reverseOrder()));`
+====
+
+[%collapsible]
+.Q12. What is type erasure, and what can you not do because of it?
+====
+Generic type arguments are checked at compile time and removed from the bytecode.
+You cannot create `new T()` or `new T[]`, check `instanceof List<String>`, use primitives as type arguments, or overload methods that differ only by type argument.
+====
+
+[%collapsible]
+.Q13. Explain PECS with an example.
+====
+Producer Extends, Consumer Super.
+`sum(List<? extends Number>)` reads from the list, so any list of a `Number` subtype works.
+`fill(List<? super Integer>)` writes integers, so a list of `Integer`, `Number` or `Object` works.
+`Collections.copy(List<? super T> dest, List<? extends T> src)` uses both.
+====
+
+[%collapsible]
+.Q14. Why can't you assign `List<Integer>` to `List<Number>`?
+====
+Generics are invariant.
+If it were allowed, you could add a `Double` through the `List<Number>` reference into a list that other code believes holds only `Integer`.
+Use `List<? extends Number>` for read-only access.
+====
+
+[%collapsible]
+.Q15. Unmodifiable view versus immutable collection?
+====
+`Collections.unmodifiableList` wraps the original; you cannot change it through the wrapper, but changes to the original show through.
+`List.copyOf` and `List.of` create independent collections that nobody can change.
+Use the immutable kind when you publish a collection to other threads or callers.
+====
+
+[%collapsible]
+.Q16. How does PriorityQueue work, and is its iteration order sorted?
+====
+It is an array-backed binary heap.
+`offer` and `poll` are O(log n) because they sift up or down; `peek` is O(1).
+Only the head is guaranteed to be the minimum; `toString` and iteration show heap order, not sorted order.
+====
+
+[%collapsible]
+.Q17. How would you implement an LRU cache?
+====
+Quick version: extend `LinkedHashMap` with `accessOrder = true` and override `removeEldestEntry` to return `size() > capacity`.
+From scratch: a `HashMap` from key to node plus a doubly linked list; move a node to the head on access and remove the tail when over capacity, all O(1).
+For production and concurrency, use Caffeine.
+====
+
+[%collapsible]
+.Q18. What is the initial capacity of an ArrayList and how does it grow?
+====
+An empty `new ArrayList<>()` shares an empty array; the first `add` allocates 10 slots.
+When full, it grows to about 1.5 times the old capacity (`old + (old >> 1)`) and copies the elements.
+Pass an initial capacity when you know the size, or call `ensureCapacity`.
+====
+
+== Common traps
+
+* Saying `HashMap` lookup is "always O(1)".
+* Forgetting the 64-bucket condition for treeification.
+* Claiming `ConcurrentHashMap` locks segments in Java 8+.
+* Believing `Collections.unmodifiableList` is immutable.
+* Comparing in a comparator with `a - b` (overflow).
+* Removing from a list inside a for-each loop.
+* Using `LinkedList` "because inserts are O(1)".
+
+== Follow-ups to expect
+
+* "What changed in HashMap in Java 8 and why?"
+* "How would you make your custom class a good HashMap key?"
+* "Your HashMap has millions of entries and lookups got slow. What do you check?" (Hash distribution, mutable keys, resizing, memory pressure and GC.)
+* "How do `computeIfAbsent` and `merge` differ?"
+* "Design a thread-safe cache with expiry."
+
+== Quick revision
+
+* [ ] HashMap: hash spreading, index, collision, treeify (8 / 64 / 6), resize (16, 0.75, doubling)
+* [ ] ConcurrentHashMap: CAS + bucket lock, no nulls, atomic compound methods, weakly consistent iterators
+* [ ] Collection selection table and complexity table
+* [ ] Fail-fast versus weakly consistent iterators
+* [ ] Unmodifiable versus immutable
+* [ ] LRU cache with `LinkedHashMap`
+* [ ] Type erasure limits, invariance, PECS
+
+Next: xref:interview-guide/java8-streams-functional.adoc[Java 8: Lambdas, Streams and Optional].

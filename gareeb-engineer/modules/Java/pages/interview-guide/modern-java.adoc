@@ -1,0 +1,425 @@
+= Modern Java (11 to 25)
+:page-reading-assistant:
+:page-subtitle: What changed after Java 8 and what interviewers now ask about it: var, records, sealed types, pattern matching, virtual threads, scoped values and the Java 21 and 25 LTS releases.
+:page-difficulty: Medium
+:page-tags: Java, Interview Preparation, Java 21, Java 25, Records, Virtual Threads
+:page-revdate: 2026-11-11
+
+Many question lists stop at Java 8, but interviews no longer do.
+Java 17, 21 and 25 are long-term support (LTS) releases, and most new Spring Boot projects run on 21 or 25.
+Interviewers use this topic to see whether you keep up and whether you can use new features for the right reasons.
+
+== At a glance
+
+[cols="1,3"]
+|===
+|Weightage |*7 / 10*
+|Who gets asked |Mid and senior. Freshers get "what is a record?" at most.
+|Preparation time |3 hours
+|Handbook questions |Q31-Q34
+|Builds on |xref:interview-guide/core-java-oop.adoc[Core Java], xref:interview-guide/concurrency.adoc[Concurrency] for virtual threads
+|===
+
+== Release model
+
+Since Java 10, a new feature release ships every six months (March and September).
+Every two years one of them is an LTS release that vendors support for years: *Java 11 (2018), 17 (2021), 21 (2023) and 25 (September 2025)*.
+Features often appear first as *preview* (disabled unless you pass `--enable-preview`) or *incubator* modules, then become final.
+
+TIP: Know the Java version of your current project and one feature from it that you used.
+"We moved from 17 to 21 to use virtual threads in our I/O-heavy service" is a much stronger answer than a feature list.
+
+== Features by LTS release
+
+[cols="1,4",options="header"]
+|===
+|Release |Features worth knowing
+
+|Java 9 to 11
+|Module system (JPMS), `jshell`, `List.of`/`Set.of`/`Map.of`, private interface methods, `var` for local variables (10), the standard `HttpClient` (11), new `String` methods `isBlank`, `strip`, `lines`, `repeat` (11), `Files.readString` (11), running a single source file with `java Hello.java` (11).
+
+|Java 12 to 17
+|Switch expressions (14), helpful `NullPointerException` messages that name the null variable (14), text blocks (15), records (16), pattern matching for `instanceof` (16), `Stream.toList()` (16), sealed classes (17), strong encapsulation of JDK internals (17).
+
+|Java 18 to 21
+|UTF-8 as the default charset (18), `finalize` deprecated for removal (18), *virtual threads* (21), sequenced collections (21), record patterns (21), pattern matching for `switch` (21), generational ZGC (21).
+
+|Java 22 to 25
+|Unnamed variables and patterns `+_+` (22), Foreign Function and Memory API (22), Markdown in Javadoc (23), stream gatherers (24), virtual threads no longer pinned by `synchronized` (24), scoped values (25), module import declarations (25), compact source files and instance `main` methods (25), flexible constructor bodies (25), compact object headers as a product option (25).
+|===
+
+== var
+
+`var` lets the compiler infer the type of a *local* variable from its initializer.
+The variable is still statically typed.
+
+[source,java]
+----
+var orders = new ArrayList<Order>();             // ArrayList<Order>
+for (var entry : map.entrySet()) { ... }         // Map.Entry<K, V>
+try (var in = Files.newInputStream(path)) { ... }
+----
+
+It cannot be used for fields, method parameters or return types, or without an initializer, and `var x = null;` does not compile.
+Use it when the type is obvious from the right-hand side; avoid it when it hides the type (`var result = service.process();`).
+
+== Switch expressions
+
+[source,java]
+----
+int days = switch (month) {
+    case FEBRUARY -> 28;
+    case APRIL, JUNE, SEPTEMBER, NOVEMBER -> 30;
+    default -> 31;
+};
+
+String label = switch (status) {
+    case ACTIVE -> "Active";
+    case SUSPENDED -> {
+        log.info("Suspended account");
+        yield "Suspended";           // yield returns a value from a block
+    }
+    case CLOSED -> "Closed";
+};
+----
+
+Arrow cases do not fall through, and a switch *expression* over an enum must cover every constant (or have `default`), so the compiler catches a missed case.
+
+== Text blocks
+
+[source,java]
+----
+String json = """
+        {
+          "id": %d,
+          "name": "%s"
+        }
+        """.formatted(id, name);
+----
+
+Indentation common to all lines is removed, based on the position of the closing `"""`.
+
+== Records
+
+A record is a concise, transparent carrier for immutable data.
+The compiler generates a canonical constructor, accessor methods (`name()`, not `getName()`), `equals`, `hashCode` and `toString`.
+
+[source,java]
+----
+public record Money(BigDecimal amount, String currency) {
+
+    public Money {                                  // compact constructor: validation only
+        Objects.requireNonNull(amount);
+        if (amount.signum() < 0) throw new IllegalArgumentException("negative amount");
+        currency = currency.toUpperCase();          // can normalise parameters
+    }
+
+    public Money add(Money other) {                 // ordinary methods are allowed
+        return new Money(amount.add(other.amount), currency);
+    }
+
+    public static Money zero(String currency) {     // static factories too
+        return new Money(BigDecimal.ZERO, currency);
+    }
+}
+----
+
+Rules:
+
+* Records are implicitly `final` and extend `java.lang.Record`, so they cannot extend another class. They can implement interfaces.
+* All component fields are `private final`. You cannot add other instance fields; static fields are fine.
+* Immutability is *shallow*: a `List` component can still be modified unless you copy it with `List.copyOf` in the compact constructor.
+* Good uses: DTOs, API requests and responses, events, map keys, multiple return values, value objects.
+* Bad fit: JPA entities, because JPA needs a no-argument constructor, mutable state and proxies. Records work well as JPA *projections*.
+
+== Sealed classes and interfaces
+
+A sealed type lists exactly which classes may extend or implement it.
+
+[source,java]
+----
+public sealed interface PaymentResult permits Approved, Declined, Pending {}
+
+public record Approved(String transactionId) implements PaymentResult {}
+public record Declined(String reason) implements PaymentResult {}
+public record Pending(Instant retryAt) implements PaymentResult {}
+----
+
+Each permitted subclass must be `final`, `sealed` or `non-sealed`, and must be in the same module (or the same package if there is no module).
+Records are implicitly final, so they fit naturally.
+
+Why it matters: the compiler knows every possible subtype, so a `switch` over the sealed type can be checked for exhaustiveness.
+This is called *algebraic data types* or *data-oriented programming*.
+
+== Pattern matching
+
+=== instanceof
+
+[source,java]
+----
+// Before
+if (shape instanceof Circle) {
+    Circle c = (Circle) shape;
+    return Math.PI * c.radius() * c.radius();
+}
+
+// Java 16+
+if (shape instanceof Circle c && c.radius() > 0) {
+    return Math.PI * c.radius() * c.radius();
+}
+----
+
+=== switch with type patterns, record patterns and guards (Java 21)
+
+[source,java]
+----
+String describe(PaymentResult result) {
+    return switch (result) {
+        case Approved(String txId)                  -> "Approved: " + txId;   // record pattern
+        case Declined(String reason) when reason.isBlank() -> "Declined";     // guard
+        case Declined(String reason)                -> "Declined: " + reason;
+        case Pending p                              -> "Retry at " + p.retryAt();
+    };   // no default needed: the compiler knows the sealed hierarchy is fully covered
+}
+----
+
+If someone adds a fourth permitted type, every such `switch` without a `default` stops compiling, which shows exactly what code must change.
+A switch over objects can also handle `case null`.
+
+Since Java 22, an unnamed pattern `+_+` ignores parts you do not need: `+case Approved(_) -> "Approved"+`.
+
+== Virtual threads (Java 21)
+
+A *platform thread* is a thin wrapper around an operating-system thread.
+OS threads are expensive (around a megabyte of stack reserved, costly context switches), so servers use pools of a few hundred.
+In a thread-per-request server, a request blocked on a database call holds its thread the whole time, so the pool size caps concurrency.
+
+A *virtual thread* is managed by the JVM.
+It runs on a small pool of platform threads called *carrier threads* (a `ForkJoinPool` sized to the number of cores).
+When a virtual thread blocks on I/O, `sleep`, a lock or a `BlockingQueue`, the JVM *unmounts* it from the carrier, which then runs another virtual thread.
+You can have millions of virtual threads.
+
+[source,java]
+----
+// One virtual thread per task. Do not pool virtual threads.
+try (ExecutorService executor = Executors.newVirtualThreadPerTaskExecutor()) {
+    List<Future<Quote>> quotes = suppliers.stream()
+            .map(s -> executor.submit(() -> s.fetchQuote(productId)))   // blocking HTTP call
+            .toList();
+    // ... collect results
+}   // close() waits for all tasks
+
+Thread.ofVirtual().name("worker").start(() -> process(order));
+----
+
+In Spring Boot 3.2+, `spring.threads.virtual.enabled=true` makes Tomcat, `@Async` and scheduled tasks use virtual threads.
+
+What virtual threads do *not* do:
+
+* They do not make CPU-bound code faster. They help when threads mostly *wait*.
+* They do not remove downstream limits. If the database pool has 20 connections, 10,000 virtual threads still queue for 20 connections. Use a `Semaphore` to limit concurrency to a scarce resource, not a thread pool.
+* They should not be pooled; creating one is cheap.
+
+*Pinning.*
+A virtual thread is *pinned* when it cannot unmount while blocked, so it holds its carrier.
+In Java 21, blocking inside a `synchronized` block or method pinned the thread, which could starve the small carrier pool; the advice was to use `ReentrantLock`.
+Java 24 (JEP 491) removed that limitation for `synchronized`.
+Blocking inside native code or certain class-initialisation paths can still pin.
+Always say which JDK version you mean when you answer.
+
+*ThreadLocal.*
+Virtual threads support `ThreadLocal`, but with millions of threads, per-thread caches (for example a `ThreadLocal<SimpleDateFormat>`) can waste a lot of memory.
+Scoped values are the newer alternative.
+
+== Scoped values (Java 25)
+
+A `ScopedValue` passes data down a call chain without method parameters, like a `ThreadLocal`, but the value is immutable and only exists for the duration of a bounded call.
+
+[source,java]
+----
+private static final ScopedValue<String> REQUEST_ID = ScopedValue.newInstance();
+
+void handle(Request request) {
+    ScopedValue.where(REQUEST_ID, request.id())
+               .run(() -> service.process(request));   // value bound only inside run()
+}
+
+void logSomething() {
+    log.info("request {}", REQUEST_ID.get());          // readable anywhere below handle()
+}
+----
+
+Compared with `ThreadLocal`: no `remove()` to forget, no accidental mutation, and cheap inheritance by child threads in structured concurrency.
+
+*Structured concurrency* (`StructuredTaskScope`) treats a group of subtasks as one unit: if one fails, the others are cancelled, and the parent waits for all of them.
+It is still a preview API in Java 25, so mention it as "coming" rather than as production-ready.
+
+== Other Java 25 features
+
+[source,java]
+----
+// Compact source file (JEP 512): no class declaration for small programs.
+void main() {
+    IO.println("Hello, Java 25");
+}
+----
+
+[source,java]
+----
+// Flexible constructor bodies (JEP 513): validate before calling super().
+class Employee extends Person {
+    Employee(String name, int age) {
+        if (age < 18) throw new IllegalArgumentException("too young");  // before super(): allowed now
+        super(name, age);
+    }
+}
+----
+
+[source,java]
+----
+// Module import declaration (JEP 511): import every package a module exports.
+import module java.base;
+----
+
+*Compact object headers* (JEP 519) shrink the object header from 12 to 8 bytes on 64-bit JVMs, which reduces heap usage for applications with many small objects.
+It is opt-in with `-XX:+UseCompactObjectHeaders`.
+
+== Stream gatherers (Java 24)
+
+`+Stream.gather(...)+` adds custom intermediate operations, the way `collect` allows custom terminal ones.
+Built-in examples: `Gatherers.windowFixed(3)`, `Gatherers.windowSliding(3)`, `+Gatherers.fold(...)+`, `+Gatherers.mapConcurrent(...)+`.
+
+[source,java]
+----
+List<List<Integer>> batches = Stream.of(1, 2, 3, 4, 5, 6, 7)
+        .gather(Gatherers.windowFixed(3))
+        .toList();    // [[1, 2, 3], [4, 5, 6], [7]]
+----
+
+== HttpClient (Java 11)
+
+[source,java]
+----
+HttpClient client = HttpClient.newBuilder()
+        .connectTimeout(Duration.ofSeconds(2))
+        .build();
+
+HttpRequest request = HttpRequest.newBuilder(URI.create("https://api.example.com/orders/42"))
+        .timeout(Duration.ofSeconds(5))
+        .GET()
+        .build();
+
+HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+CompletableFuture<HttpResponse<String>> async =
+        client.sendAsync(request, HttpResponse.BodyHandlers.ofString());
+----
+
+It supports HTTP/2 and async calls, and replaced the old `HttpURLConnection`.
+In Spring applications, `RestClient` or HTTP interface clients are usually preferred (see xref:interview-guide/rest-spring-mvc.adoc[REST and Spring MVC]).
+
+== Practice questions
+
+[%collapsible]
+.Q1. What are records, and when would you not use one?
+====
+Records are final, shallowly immutable data carriers with generated constructor, accessors, `equals`, `hashCode` and `toString`.
+Use them for DTOs, events, value objects and map keys.
+Avoid them for JPA entities (need mutability, a no-arg constructor and proxying), for classes that need inheritance, and for data that must stay deeply immutable unless you copy mutable components.
+====
+
+[%collapsible]
+.Q2. What problem do sealed classes solve?
+====
+They make a type hierarchy closed and explicit.
+Readers and the compiler know every subtype, so `switch` can be checked for exhaustiveness without a `default`.
+It replaces "visitor pattern" boilerplate and stops unknown subclasses from appearing in other modules.
+====
+
+[%collapsible]
+.Q3. How does pattern matching for switch improve code?
+====
+It replaces `if-instanceof-cast` chains with one expression that deconstructs records, supports guards with `when` and `case null`, and is checked for exhaustiveness over sealed types.
+Adding a new subtype turns missed cases into compile errors rather than runtime bugs.
+====
+
+[%collapsible]
+.Q4. What are virtual threads, and when do they help?
+====
+JVM-managed threads that unmount from a carrier OS thread while blocked.
+They help thread-per-request code that spends most of its time waiting on I/O: many more concurrent requests with the same simple blocking code.
+They do not help CPU-bound work and do not remove limits such as connection pools.
+====
+
+[%collapsible]
+.Q5. Should you pool virtual threads? How do you limit concurrency?
+====
+No.
+They are cheap to create; pooling adds nothing and hides the per-task model.
+To protect a scarce resource, limit concurrency with a `Semaphore` (or the resource's own pool), not with a fixed number of threads.
+====
+
+[%collapsible]
+.Q6. What is pinning, and is it still a problem?
+====
+A pinned virtual thread cannot unmount while it blocks, so it occupies a carrier thread.
+On Java 21, blocking inside `synchronized` caused pinning; the usual fix was `ReentrantLock`.
+Java 24 (JEP 491) lets virtual threads unmount inside `synchronized`, so that advice is no longer needed on 24+.
+Native frames can still pin.
+Diagnose with JFR's `jdk.VirtualThreadPinned` event.
+====
+
+[%collapsible]
+.Q7. ThreadLocal versus ScopedValue?
+====
+`ThreadLocal` is mutable, lives as long as the thread unless `remove()` is called, and leaks in thread pools when forgotten.
+`ScopedValue` (final in Java 25) is immutable, bound for a bounded call with `+where(...).run(...)+`, and automatically gone afterwards.
+Prefer scoped values for request context in new code.
+====
+
+[%collapsible]
+.Q8. What does `var` do, and what are its limits?
+====
+Local type inference at compile time; the type is still static.
+Only for local variables with initializers, loop variables and try-with-resources.
+Not for fields, parameters or return types, and not with `null` initializers.
+====
+
+[%collapsible]
+.Q9. Which Java version does your project use, and what would you gain by upgrading?
+====
+Answer with facts from your project.
+Typical gains from 17 to 21 or 25: virtual threads, pattern matching for switch, sequenced collections, generational ZGC, better G1 performance, and scoped values plus compact object headers on 25.
+Mention the risk side too: library compatibility, removed APIs, and the need for performance testing.
+====
+
+[%collapsible]
+.Q10. What are helpful NullPointerExceptions?
+====
+Since Java 14 (on by default since 15), the NPE message names what was null, for example `Cannot invoke "String.length()" because "user.name" is null`.
+This makes production stack traces much easier to debug.
+====
+
+== Common traps
+
+* Saying virtual threads make code "faster".
+* Recommending `ReentrantLock` over `synchronized` for virtual threads without mentioning the JDK version.
+* Calling records "fully immutable".
+* Using records as JPA entities.
+* Presenting preview features (structured concurrency) as production-ready.
+
+== Follow-ups to expect
+
+* "How would you migrate a Spring Boot service to virtual threads? What would you measure?"
+* "Model a payment result with sealed types and handle it in a switch."
+* "What is the difference between a preview and an incubator feature?"
+
+== Quick revision
+
+* [ ] LTS releases: 11, 17, 21, 25
+* [ ] Records rules and shallow immutability
+* [ ] Sealed types plus exhaustive switch with record patterns
+* [ ] Virtual threads: unmounting, no pooling, Semaphore, pinning before and after JDK 24
+* [ ] Scoped values versus ThreadLocal
+* [ ] Java 25: compact source files, flexible constructor bodies, module imports, compact object headers
+
+Next: xref:interview-guide/concurrency.adoc[Concurrency and Multithreading].

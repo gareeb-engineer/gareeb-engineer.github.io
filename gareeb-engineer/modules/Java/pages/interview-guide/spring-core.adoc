@@ -1,0 +1,459 @@
+= Spring Core: IoC, DI, Beans and AOP
+:page-reading-assistant:
+:page-subtitle: The Spring container, dependency injection styles, bean lifecycle and scopes, resolving ambiguous beans, circular dependencies, and how AOP proxies really work.
+:page-difficulty: Medium
+:page-tags: Spring, Interview Preparation, Dependency Injection, AOP, Java
+:page-revdate: 2026-11-11
+
+Spring Core is the foundation under Spring Boot, Spring Data and Spring Security.
+Many "Spring Boot" interview questions are really Spring Core questions: why `@Transactional` did not work, why a bean is `null`, why the application fails with a circular reference.
+All of them come back to the container and proxies explained on this page.
+
+== At a glance
+
+[cols="1,3"]
+|===
+|Weightage |*9 / 10*
+|Who gets asked |Anyone with Spring on the CV, which is most Java backend candidates.
+|Preparation time |4 hours
+|Handbook questions |Q56-Q62
+|Builds on |xref:interview-guide/core-java-oop.adoc[Core Java] (interfaces, reflection, annotations)
+|===
+
+== Inversion of Control and Dependency Injection
+
+*Inversion of Control (IoC)* means your code does not create and wire its own collaborators; a container does.
+*Dependency Injection (DI)* is the way Spring implements IoC: the container passes dependencies in through constructors, setters or fields.
+
+[source,java]
+----
+// Without DI: OrderService decides which classes to use and how to build them.
+class OrderService {
+    private final PaymentGateway gateway = new CardGateway(new HttpClient(), "secret-key");
+}
+
+// With DI: OrderService declares what it needs; the container supplies it.
+@Service
+class OrderService {
+    private final PaymentGateway gateway;
+
+    OrderService(PaymentGateway gateway) {   // single constructor: @Autowired is optional
+        this.gateway = gateway;
+    }
+}
+----
+
+Benefits: loose coupling, easy testing with fakes, one place to configure infrastructure, and lifecycle management.
+
+=== BeanFactory versus ApplicationContext
+
+`BeanFactory` is the basic container: it creates beans lazily and injects dependencies.
+`ApplicationContext` extends it and adds eager creation of singletons at startup, events, internationalisation (`MessageSource`), resource loading, environment and profiles, and automatic registration of ``BeanPostProcessor``s.
+Applications always use an `ApplicationContext`; Spring Boot creates one for you.
+
+== Defining beans
+
+[source,java]
+----
+// 1. Component scanning with stereotype annotations
+@Service
+class InvoiceService { }
+
+// 2. @Bean methods in a @Configuration class, typically for third-party classes
+@Configuration
+class ClientConfig {
+
+    @Bean
+    RestClient partnerClient(RestClient.Builder builder) {
+        return builder.baseUrl("https://partner.example.com").build();
+    }
+}
+----
+
+[cols="1,3",options="header"]
+|===
+|Annotation |Meaning
+
+|`@Component` |Generic Spring-managed component.
+|`@Service` |Business logic. Same behaviour as `@Component`; documents intent.
+|`@Repository` |Data access. Adds translation of persistence exceptions into Spring's `DataAccessException` hierarchy.
+|`@Controller` |Web controller returning views.
+|`@RestController` |`@Controller` + `@ResponseBody`: return values are written to the response body (JSON).
+|`@Configuration` |Holds `@Bean` methods. Proxied with CGLIB so that calling one `@Bean` method from another returns the same singleton.
+|===
+
+[%collapsible]
+.Why does `@Configuration` need a proxy? What does `proxyBeanMethods = false` do?
+====
+In a `@Configuration` class, `dataSource()` called from inside another `@Bean` method would normally create a new object.
+Spring subclasses the class with CGLIB and intercepts those calls to return the existing singleton.
+`@Configuration(proxyBeanMethods = false)` (the "lite" mode, also what `@Component` classes with `@Bean` methods get) skips the proxy: faster startup, but inter-bean method calls create new instances, so inject dependencies as method parameters instead.
+Spring Boot's own auto-configurations use `proxyBeanMethods = false`.
+====
+
+== Injection types
+
+[cols="1,3,3",options="header"]
+|===
+|Type |Pros |Cons
+
+|*Constructor*
+|Dependencies are explicit and can be `final`; the object is never half-built; easy to test with `new`; circular dependencies fail fast.
+|Long constructors when a class has many dependencies (which is a design smell anyway).
+
+|Setter
+|Good for optional dependencies or reconfiguration.
+|Object can be used before it is fully set up; fields cannot be `final`.
+
+|Field (`@Autowired` on a field)
+|Shortest code.
+|Hidden dependencies, needs reflection or Spring to test, cannot be `final`. Not recommended.
+|===
+
+Constructor injection is the recommended default, and Spring's own documentation says so.
+With Lombok, `@RequiredArgsConstructor` on a class with `private final` fields generates the constructor.
+
+== Resolving which bean to inject
+
+`@Autowired` resolves *by type*.
+When more than one bean matches:
+
+. A bean marked `@Primary` wins.
+. `@Qualifier("name")` at the injection point selects by qualifier or bean name.
+. Otherwise, Spring falls back to matching the parameter or field *name* against bean names.
+. If still ambiguous: `NoUniqueBeanDefinitionException`. If nothing matches: `NoSuchBeanDefinitionException`.
+
+[source,java]
+----
+@Component("card") class CardGateway implements PaymentGateway { }
+@Component("upi") @Primary class UpiGateway implements PaymentGateway { }
+
+@Service
+class CheckoutService {
+    CheckoutService(PaymentGateway defaultGateway,                    // UpiGateway (@Primary)
+                    @Qualifier("card") PaymentGateway cardGateway,    // CardGateway
+                    List<PaymentGateway> all,                         // both beans
+                    Map<String, PaymentGateway> byName) { }           // {"card"=..., "upi"=...}
+}
+----
+
+Injecting a `List` or `Map` of an interface is the Spring way to implement the Strategy pattern without a `switch`.
+Use `ObjectProvider<T>` or `Optional<T>` for optional or lazily resolved dependencies.
+
+== Bean lifecycle
+
+[source,text]
+----
+1. Instantiate              constructor called (constructor injection happens here)
+2. Populate properties      setter and field injection
+3. Aware callbacks          BeanNameAware, BeanFactoryAware, ApplicationContextAware
+4. BeanPostProcessor        postProcessBeforeInitialization  (@PostConstruct runs here)
+5. Initialisation           InitializingBean.afterPropertiesSet(), then custom init-method
+6. BeanPostProcessor        postProcessAfterInitialization   (AOP proxies are created here)
+7. Ready                    bean is in use
+8. Destruction              @PreDestroy, DisposableBean.destroy(), custom destroy-method
+                            (on context close; singletons only)
+----
+
+[source,java]
+----
+@Component
+class CacheWarmer {
+
+    @PostConstruct
+    void warmUp() { /* dependencies are injected; safe to use them */ }
+
+    @PreDestroy
+    void flush() { /* release resources on shutdown */ }
+}
+----
+
+For work that needs the *whole* application to be ready (for example, start consuming messages), use an `ApplicationRunner`, `CommandLineRunner` or an `ApplicationReadyEvent` listener rather than `@PostConstruct`.
+
+`BeanPostProcessor` is the extension point behind most Spring "magic": `@Autowired` processing, `@Async`, `@Transactional` and `@Validated` proxies are all created by post-processors.
+`BeanFactoryPostProcessor` runs earlier and changes bean *definitions* before any bean is created (for example, resolving `+${...}+` placeholders).
+
+== Bean scopes
+
+[cols="1,3",options="header"]
+|===
+|Scope |Instances
+
+|`singleton` (default) |One per application context. Must be stateless or thread-safe, because all requests share it.
+|`prototype` |A new instance each time it is requested. Spring does not call destruction callbacks for it.
+|`request` |One per HTTP request (web applications).
+|`session` |One per HTTP session.
+|`application` |One per `ServletContext`.
+|`websocket` |One per WebSocket session.
+|===
+
+A Spring singleton is "one per container", not the Gang of Four singleton "one per class loader".
+You can register two beans of the same class with different names.
+
+=== Prototype inside a singleton
+
+[source,java]
+----
+@Component @Scope("prototype")
+class ReportBuilder { }
+
+@Service
+class ReportService {
+    private final ReportBuilder builder;          // injected ONCE: always the same instance
+
+    private final ObjectProvider<ReportBuilder> builders;   // fix: ask for a new one each time
+
+    ReportService(ReportBuilder builder, ObjectProvider<ReportBuilder> builders) {
+        this.builder = builder;
+        this.builders = builders;
+    }
+
+    Report create() {
+        return builders.getObject().build();      // new ReportBuilder per call
+    }
+}
+----
+
+Other fixes: a `@Lookup` method, or a scoped proxy (`@Scope(value = "prototype", proxyMode = ScopedProxyMode.TARGET_CLASS)`).
+Request- and session-scoped beans injected into singletons need a scoped proxy for the same reason; `@RequestScope` sets it up automatically.
+
+== Circular dependencies
+
+A circular dependency is A needing B while B needs A.
+
+* With *constructor injection*, Spring cannot create either one first, so startup fails with `BeanCurrentlyInCreationException`.
+* With setter or field injection, Spring used to resolve it with early references to half-built beans. *Since Spring Boot 2.6, circular references are prohibited by default* (`spring.main.allow-circular-references=false`).
+
+Fix the design rather than the symptom:
+
+* Extract the shared logic into a third bean that both use.
+* Invert one dependency with an interface or an application event (`ApplicationEventPublisher`).
+* Re-check responsibilities: a cycle usually means two classes do each other's jobs.
+
+`@Lazy` on one injection point breaks the cycle by injecting a proxy, but it hides the design problem.
+
+== Aspect-Oriented Programming
+
+AOP moves *cross-cutting concerns* (transactions, security, logging, metrics, retries, caching) out of business code.
+
+[cols="1,3",options="header"]
+|===
+|Term |Meaning
+
+|Aspect |A class that holds cross-cutting logic (`@Aspect`).
+|Join point |A point in execution where an aspect can apply. In Spring AOP, always a method call.
+|Pointcut |An expression that selects join points: `execution(* com.shop.service..*(..))`, `@annotation(Audited)`.
+|Advice |The code that runs: `@Before`, `@AfterReturning`, `@AfterThrowing`, `@After` (finally), `@Around`.
+|Weaving |Linking aspects to targets. Spring AOP weaves at runtime with proxies; AspectJ can weave at compile or load time.
+|===
+
+[source,java]
+----
+@Target(ElementType.METHOD)
+@Retention(RetentionPolicy.RUNTIME)
+@interface Timed { }
+
+@Aspect
+@Component
+class TimingAspect {
+
+    @Around("@annotation(Timed)")
+    Object time(ProceedingJoinPoint pjp) throws Throwable {
+        long start = System.nanoTime();
+        try {
+            return pjp.proceed();                       // call the real method
+        } finally {
+            log.info("{} took {} ms", pjp.getSignature(),
+                     (System.nanoTime() - start) / 1_000_000);
+        }
+    }
+}
+----
+
+=== How Spring AOP proxies work
+
+When a bean needs advice, Spring wraps it in a *proxy* and injects the proxy instead of the real object.
+A caller invokes the proxy, the proxy runs the advice, then calls the target.
+
+* *JDK dynamic proxy*: implements the bean's interfaces. Works only through interfaces.
+* *CGLIB proxy*: generates a subclass of the bean class at runtime. Spring Boot uses CGLIB by default (`spring.aop.proxy-target-class=true`).
+
+Proxy limitations, which are the most-asked part:
+
+* *Self-invocation bypasses the proxy.* `this.otherMethod()` inside the bean calls the target directly, so advice on `otherMethod` (including `@Transactional`, `@Async`, `@Cacheable`) does not run.
+* `final` methods and `final` classes cannot be proxied by CGLIB.
+* `private` methods are never intercepted.
+* Only Spring beans are proxied; objects you create with `new` are not.
+
+[source,java]
+----
+@Service
+class ReportService {
+
+    public void generateAll() {
+        for (var id : ids()) {
+            generate(id);          // self-invocation: @Transactional below is IGNORED
+        }
+    }
+
+    @Transactional
+    public void generate(long id) { /* ... */ }
+}
+----
+
+Fixes: move `generate` to another bean, inject the bean's own proxy (`@Lazy` self-injection or `ObjectProvider<ReportService>`), or use `TransactionTemplate` for programmatic transactions.
+
+== Events
+
+[source,java]
+----
+record OrderPlaced(long orderId) { }
+
+@Service
+class OrderService {
+    private final ApplicationEventPublisher events;
+    OrderService(ApplicationEventPublisher events) { this.events = events; }
+
+    @Transactional
+    public void place(Order order) {
+        // save order ...
+        events.publishEvent(new OrderPlaced(order.id()));
+    }
+}
+
+@Component
+class EmailListener {
+    @TransactionalEventListener(phase = TransactionPhase.AFTER_COMMIT)
+    void on(OrderPlaced event) { /* send email only if the order was committed */ }
+}
+----
+
+Listeners run synchronously on the publishing thread by default.
+`@TransactionalEventListener` delays them until the transaction commits; add `@Async` to run them on another thread.
+
+== Practice questions
+
+[%collapsible]
+.Q1. What are IoC and DI, and why are they useful?
+====
+IoC: the container, not your code, creates objects and manages their lifecycle.
+DI: the container supplies a class's dependencies through its constructor or setters.
+Result: loose coupling, easy substitution of implementations and test doubles, and central configuration of infrastructure.
+====
+
+[%collapsible]
+.Q2. Why is constructor injection preferred?
+====
+Dependencies are explicit and `final`, objects are never partially initialised, classes are testable without Spring, and circular dependencies fail at startup rather than hiding.
+A constructor with too many parameters is a visible signal that the class does too much.
+====
+
+[%collapsible]
+.Q3. Walk through the bean lifecycle.
+====
+Instantiate, inject properties, Aware callbacks, `postProcessBeforeInitialization` (which runs `@PostConstruct`), `afterPropertiesSet` and init-method, `postProcessAfterInitialization` (where AOP proxies wrap the bean), use, then `@PreDestroy`/`destroy` on shutdown for singletons.
+====
+
+[%collapsible]
+.Q4. Is a singleton bean thread-safe?
+====
+No, not automatically.
+One instance serves all threads, so it must be stateless or protect its mutable state.
+Keep request data in method parameters and local variables, not in fields.
+====
+
+[%collapsible]
+.Q5. What happens when you inject a prototype bean into a singleton?
+====
+It is injected once, when the singleton is created, so the singleton always uses the same prototype instance.
+To get a new one per use, inject `ObjectProvider<T>` and call `getObject()`, use `@Lookup`, or use a scoped proxy.
+====
+
+[%collapsible]
+.Q6. Two beans implement the same interface. How does Spring choose?
+====
+By `@Primary` if present, by `@Qualifier` at the injection point, or by matching the parameter name to a bean name.
+Otherwise startup fails with `NoUniqueBeanDefinitionException`.
+You can also inject all of them as a `List` or a `Map<String, T>`.
+====
+
+[%collapsible]
+.Q7. What is a circular dependency, and how do you fix it?
+====
+A depends on B and B on A.
+Constructor injection fails at startup, and Spring Boot 2.6+ forbids cycles by default even with field injection.
+Fix by extracting a third component, using an event or interface to invert one direction, or redistributing responsibilities.
+`@Lazy` hides the cycle and is a last resort.
+====
+
+[%collapsible]
+.Q8. `@Component` versus `@Bean`?
+====
+`@Component` goes on your own class and is discovered by component scanning.
+`@Bean` goes on a factory method in a configuration class; use it for third-party classes you cannot annotate, or when construction needs logic.
+====
+
+[%collapsible]
+.Q9. What does `@Repository` add over `@Component`?
+====
+Exception translation: a post-processor converts persistence-specific exceptions (JPA, JDBC, Hibernate) into Spring's `DataAccessException` hierarchy, so service code does not depend on the persistence technology.
+====
+
+[%collapsible]
+.Q10. JDK dynamic proxy versus CGLIB proxy?
+====
+JDK proxies implement the target's interfaces and can only intercept interface methods.
+CGLIB subclasses the target class, so it works without interfaces but cannot intercept `final` methods or proxy `final` classes.
+Spring Boot defaults to CGLIB.
+====
+
+[%collapsible]
+.Q11. Why does `@Transactional` not work when a method calls another method in the same class?
+====
+Advice lives in the proxy.
+`this.method()` calls the target object directly, skipping the proxy, so no transaction starts.
+Move the method to another bean, call it through the proxy, or use `TransactionTemplate`.
+The same applies to `@Async`, `@Cacheable` and `@Retryable`.
+====
+
+[%collapsible]
+.Q12. What are the AOP advice types, and when do you use `@Around`?
+====
+`@Before`, `@AfterReturning`, `@AfterThrowing`, `@After` (always) and `@Around`.
+Use `@Around` when you need to control the call: measure time, retry, change arguments or the return value, or skip the call.
+It must call `proceed()` and return its result.
+====
+
+[%collapsible]
+.Q13. What is the difference between `BeanPostProcessor` and `BeanFactoryPostProcessor`?
+====
+`BeanFactoryPostProcessor` changes bean *definitions* before beans exist, for example placeholder resolution.
+`BeanPostProcessor` works on bean *instances* during initialisation, for example wrapping them in proxies or processing annotations.
+====
+
+== Common traps
+
+* Mutable state in singleton beans.
+* Expecting `@Transactional` or `@Async` to work on self-calls or private methods.
+* Field injection everywhere.
+* `@PostConstruct` doing slow I/O that blocks startup.
+* Using `@Lazy` to "fix" a cycle.
+* Saying a Spring singleton is the same as the GoF singleton.
+
+== Follow-ups to expect
+
+* "How would you write a custom annotation that logs method execution time?"
+* "How does Spring know to create a proxy for a `@Transactional` bean?" (An auto-configured post-processor checks for the annotation and wraps the bean after initialisation.)
+* "How would you switch a payment implementation per country at runtime?"
+
+== Quick revision
+
+* [ ] IoC versus DI, BeanFactory versus ApplicationContext
+* [ ] Stereotype annotations and `@Configuration` proxying
+* [ ] Constructor injection and bean resolution order
+* [ ] Lifecycle steps and where proxies appear
+* [ ] Scopes and the prototype-in-singleton fix
+* [ ] Circular dependencies and Spring Boot 2.6+ behaviour
+* [ ] AOP terms, JDK versus CGLIB, self-invocation
+
+Next: xref:interview-guide/spring-boot.adoc[Spring Boot].

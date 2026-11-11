@@ -1,0 +1,607 @@
+= Core Java and OOP
+:page-reading-assistant:
+:page-subtitle: The language contracts every Java interview starts with: OOP, equality, String, immutability, exceptions and the keywords that trip people up.
+:page-difficulty: Easy
+:page-tags: Java, Interview Preparation, OOP, Core Java
+:page-revdate: 2026-11-11
+
+Core Java is the first screen in almost every Java interview.
+The interviewer checks whether you understand the contracts of the language, not whether you remember keywords.
+A shaky answer here makes the interviewer doubt everything that follows, so this is the topic to make airtight.
+
+== At a glance
+
+[cols="1,3"]
+|===
+|Weightage |*9 / 10*
+|Who gets asked |Everyone. Freshers get definitions; experienced candidates get the "why" and the edge cases.
+|Preparation time |5 to 6 hours
+|Handbook questions |Q1-Q15
+|Builds on |Nothing. Start here.
+|===
+
+== JDK, JRE and JVM
+
+* The *JVM* (Java Virtual Machine) runs bytecode. It loads classes, verifies them, interprets or JIT-compiles them, and manages memory.
+* The *JRE* (Java Runtime Environment) is the JVM plus the standard class libraries. Since Java 11 there is no separate JRE download; `jlink` builds a trimmed runtime instead.
+* The *JDK* (Java Development Kit) is the runtime plus development tools: `javac`, `jar`, `jshell`, `jcmd`, `jlink` and others.
+
+Java is "write once, run anywhere" because `javac` produces platform-neutral bytecode (`.class` files), and each platform has its own JVM that runs it.
+The JVM itself is platform-specific.
+
+== The four pillars of OOP
+
+Explain each pillar with what it *protects you from*, and use one business example throughout.
+
+Encapsulation::
+Keep state private and change it only through methods that enforce the rules (invariants).
+An `Account` exposes `withdraw(amount)` instead of a public `balance` field, so a negative balance is impossible.
+
+Abstraction::
+Expose a stable contract and hide how it works.
+`PaymentGateway.charge(order)` hides whether the payment goes through card, UPI or wallet.
+
+Inheritance::
+Reuse behaviour through an "is-a" relationship.
+It creates tight coupling to the parent, so use it only when the child can truly stand in for the parent (Liskov substitution).
+
+Polymorphism::
+One call, many behaviours.
+The caller works with the interface; the JVM picks the implementation at runtime (dynamic dispatch).
+
+[source,java]
+----
+interface PaymentGateway {
+    PaymentResult charge(Order order);
+}
+
+class CardGateway implements PaymentGateway {
+    public PaymentResult charge(Order order) { /* call card network */ return PaymentResult.ok(); }
+}
+
+class UpiGateway implements PaymentGateway {
+    public PaymentResult charge(Order order) { /* call UPI switch */ return PaymentResult.ok(); }
+}
+
+class OrderService {
+    private final PaymentGateway gateway;          // abstraction
+
+    OrderService(PaymentGateway gateway) {         // composition: has-a gateway
+        this.gateway = gateway;
+    }
+
+    void checkout(Order order) {
+        PaymentResult result = gateway.charge(order); // polymorphism: runtime picks the class
+    }
+}
+----
+
+=== Overloading versus overriding
+
+[cols="1,3,3",options="header"]
+|===
+| |Overloading |Overriding
+
+|What
+|Same name, different parameter list, in the same class or a subclass
+|Same signature in a subclass, replacing the parent behaviour
+
+|Resolved
+|At compile time (static binding), using the declared types of the arguments
+|At runtime (dynamic dispatch), using the actual type of the object
+
+|Return type
+|Can differ, but return type alone cannot distinguish two overloads
+|Same type or a subtype (covariant return)
+
+|Access
+|Any
+|Cannot be more restrictive than the parent
+
+|Exceptions
+|Any
+|Cannot throw new or broader *checked* exceptions
+
+|`static` methods
+|Can be overloaded
+|Cannot be overridden. A static method with the same signature in a subclass *hides* the parent one.
+|===
+
+=== Abstract class versus interface
+
+* An *abstract class* can have instance fields, constructors, concrete methods and abstract methods. A class can extend only one.
+* An *interface* defines a contract. Since Java 8 it can have `default` and `static` methods; since Java 9, `private` methods. Fields are implicitly `public static final`. A class can implement many.
+
+Use an interface for a capability that unrelated classes share (`Comparable`, `PaymentGateway`).
+Use an abstract class when subclasses share state or a fixed algorithm with replaceable steps (the Template Method pattern).
+
+.Diamond problem with default methods
+[source,java]
+----
+interface Walker { default String move() { return "walk"; } }
+interface Swimmer { default String move() { return "swim"; } }
+
+class Duck implements Walker, Swimmer {
+    @Override
+    public String move() {             // compile error unless the conflict is resolved here
+        return Walker.super.move();    // pick one explicitly
+    }
+}
+----
+
+Rule order for default-method conflicts: a class method always wins; then the most specific interface wins; otherwise the class must override.
+
+=== Composition over inheritance
+
+Composition means a class holds a reference to a collaborator and delegates to it ("has-a").
+It lets you swap behaviour at runtime and avoids fragile base-class problems, where a change in the parent silently breaks children.
+Prefer `OrderService` composed with `PaymentGateway` and `InventoryService` over a deep hierarchy like `+BaseService -> PaymentAwareService -> OrderService+`.
+
+See xref:Low-Level-Design:design-principles.adoc[Design Principles] and xref:Low-Level-Design:solid-principles.adoc[SOLID] for the full treatment.
+
+== Pass-by-value
+
+Java is *always* pass-by-value.
+For an object, the value that is copied is the *reference*.
+So a method can change the object the reference points to, but cannot make the caller's variable point to a different object.
+
+[source,java]
+----
+static void rename(Person p) {
+    p.setName("Ravi");        // visible to the caller: same object
+    p = new Person("Amit");   // not visible: only the local copy of the reference changes
+}
+
+Person person = new Person("Ayush");
+rename(person);
+System.out.println(person.getName()); // Ravi
+----
+
+== `==`, `equals()` and `hashCode()`
+
+* `==` compares primitive values, or object *identity* (same memory reference) for objects.
+* `equals()` defines *logical* equality. The default in `Object` is identity.
+* `hashCode()` returns an `int` used by hash-based collections to pick a bucket.
+
+The contract:
+
+. If `a.equals(b)` is true, then `a.hashCode() == b.hashCode()` must be true.
+. Equal hash codes do *not* imply equality (collisions are allowed).
+. `equals` must be reflexive, symmetric, transitive, consistent, and `x.equals(null)` must be false.
+
+If you override `equals` without `hashCode`, two "equal" objects land in different buckets and `HashMap.get` returns `null` for a key you just put.
+
+[source,java]
+----
+public final class EmployeeId {
+    private final String region;
+    private final int number;
+
+    public EmployeeId(String region, int number) {
+        this.region = Objects.requireNonNull(region);
+        this.number = number;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof EmployeeId other)) return false;   // pattern matching, Java 16+
+        return number == other.number && region.equals(other.region);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(region, number);
+    }
+}
+----
+
+A record (`record EmployeeId(String region, int number) {}`) generates the same `equals` and `hashCode` for you.
+
+IMPORTANT: Fields used in `equals`/`hashCode` should not change while the object is a key in a `HashMap` or element in a `HashSet`.
+If they change, the object sits in the wrong bucket and can no longer be found or removed.
+
+== String, StringBuilder and the string pool
+
+`String` is immutable.
+Reasons interviewers expect:
+
+* *String pool*: literals are interned and shared, which is safe only because no one can change them.
+* *Cached hash code*: computed once, which makes strings fast `HashMap` keys.
+* *Thread safety*: immutable objects can be shared without locks.
+* *Security*: a file path or class name cannot change after it has been validated.
+
+[source,java]
+----
+String a = "java";                 // from the pool
+String b = "java";                 // same pooled object
+String c = new String("java");     // new object on the heap
+String d = c.intern();             // returns the pooled instance
+
+System.out.println(a == b);        // true
+System.out.println(a == c);        // false
+System.out.println(a == d);        // true
+System.out.println(a.equals(c));   // true: always compare strings with equals
+----
+
+[cols="1,2,2",options="header"]
+|===
+|Class |Mutable? |Use when
+
+|`String` |No |The value does not change, or for map keys and constants.
+|`StringBuilder` |Yes, not synchronized |Building a string in a loop on one thread. This is the default choice.
+|`StringBuffer` |Yes, synchronized |Rarely. Only for legacy APIs that need it.
+|===
+
+Facts worth knowing:
+
+* The string pool lives in the heap since Java 7 (it used to be in PermGen).
+* Since Java 9, a `String` stores Latin-1 text in one byte per character ("compact strings").
+* `"a" + b + "c"` in a single expression is compiled efficiently (via `invokedynamic` since Java 9). Concatenation *inside a loop* still creates a new string each iteration, so use `StringBuilder` there.
+
+== Designing an immutable class
+
+. Declare the class `final` so a subclass cannot add mutable state or override methods.
+. Make all fields `private final`.
+. Set them only in the constructor.
+. Provide no setters.
+. Defensively copy mutable inputs and mutable outputs.
+
+[source,java]
+----
+public final class Order {
+    private final String id;
+    private final List<String> items;
+    private final Instant createdAt;           // Instant is already immutable
+
+    public Order(String id, List<String> items, Instant createdAt) {
+        this.id = id;
+        this.items = List.copyOf(items);       // defensive, unmodifiable copy
+        this.createdAt = createdAt;
+    }
+
+    public List<String> items() {
+        return items;                          // safe: already unmodifiable
+    }
+
+    public Order withItem(String item) {       // "modification" returns a new object
+        List<String> next = new ArrayList<>(items);
+        next.add(item);
+        return new Order(id, next, createdAt);
+    }
+}
+----
+
+Immutable objects are thread-safe, safe as map keys and easy to reason about.
+The cost is extra allocation when values change often.
+
+== Keywords that come up
+
+`final`, `finally`, `finalize`::
+* `final` on a variable prevents reassignment, on a method prevents overriding, on a class prevents subclassing.
+* `finally` is a block that runs after `try`/`catch`, whether or not an exception was thrown. It does not run if the JVM exits (`System.exit`) or the thread is killed.
+* `finalize()` was a GC callback. It is deprecated for removal (Java 18, JEP 421) because it is unpredictable and slow. Use `try`-with-resources or `java.lang.ref.Cleaner`.
+
+`static`::
+Belongs to the class, not an instance.
+A static method cannot use `this` and cannot be overridden.
+Static fields are initialised once, when the class is initialised.
+
+`this` and `super`::
+`this` refers to the current object; `+this(...)+` calls another constructor of the same class.
+`super` refers to the parent; `+super(...)+` must be the first statement of a constructor (Java 25 relaxes this, see xref:interview-guide/modern-java.adoc[Modern Java]).
+
+`transient` and `volatile`::
+`transient` excludes a field from Java serialization.
+`volatile` is a concurrency keyword, covered in xref:interview-guide/concurrency.adoc[Concurrency].
+
+=== Initialisation order
+
+[source,java]
+----
+class Parent {
+    static { System.out.println("1. Parent static block"); }
+    { System.out.println("3. Parent instance block"); }
+    Parent() { System.out.println("4. Parent constructor"); }
+}
+
+class Child extends Parent {
+    static { System.out.println("2. Child static block"); }
+    { System.out.println("5. Child instance block"); }
+    Child() { System.out.println("6. Child constructor"); }
+}
+
+new Child(); // prints 1 to 6 in order. A second new Child() prints only 3 to 6.
+----
+
+== Primitives, wrappers and autoboxing
+
+[cols="1,1,2",options="header"]
+|===
+|Type |Size |Default (as a field)
+
+|`byte` |8 bits |0
+|`short` |16 bits |0
+|`int` |32 bits |0
+|`long` |64 bits |0L
+|`float` |32 bits |0.0f
+|`double` |64 bits |0.0d
+|`char` |16 bits (UTF-16 unit) |`+'\u0000'+`
+|`boolean` |JVM-dependent |false
+|===
+
+Autoboxing converts `int` to `Integer` automatically.
+Two traps follow from it:
+
+[source,java]
+----
+Integer a = 127, b = 127;
+Integer c = 128, d = 128;
+System.out.println(a == b);   // true: values -128..127 are cached
+System.out.println(c == d);   // false: two different Integer objects
+System.out.println(c.equals(d)); // true
+
+Integer missing = null;
+int value = missing;          // NullPointerException on unboxing
+----
+
+Use `BigDecimal` (constructed from a `String`) for money, never `double`: `0.1 + 0.2` is `0.30000000000000004`.
+
+== Exceptions
+
+[source,text]
+----
+Throwable
+├── Error                     (JVM problems: OutOfMemoryError, StackOverflowError; do not catch)
+└── Exception                 (checked: IOException, SQLException; must be caught or declared)
+    └── RuntimeException      (unchecked: NullPointerException, IllegalArgumentException,
+                               IllegalStateException, ArithmeticException, ...)
+----
+
+* *Checked* exceptions are checked by the compiler. Use them when the caller can reasonably recover, for example a missing file the user can choose again.
+* *Unchecked* exceptions signal programming errors or failures the immediate caller cannot fix. Spring converts most checked exceptions into unchecked ones, because checked exceptions do not work well with lambdas and layered code.
+* Never swallow an exception silently. Either handle it, or wrap it with context and rethrow (`throw new OrderFailedException("order " + id, e)`), keeping the cause.
+
+=== try-with-resources
+
+[source,java]
+----
+try (var in = Files.newBufferedReader(path);
+     var out = Files.newBufferedWriter(target)) {
+    in.transferTo(out);
+} // out is closed first, then in (reverse order), even if an exception is thrown
+----
+
+Any class that implements `AutoCloseable` works here.
+If both the body and `close()` throw, the body's exception is thrown and the close exception is attached to it as a *suppressed* exception (`e.getSuppressed()`).
+
+.Classic trap: `return` in `finally`
+[source,java]
+----
+static int value() {
+    try {
+        return 1;
+    } finally {
+        return 2;   // overrides the try's return and also swallows any exception
+    }
+}
+// value() returns 2. Never return from finally.
+----
+
+== Object class methods
+
+`equals`, `hashCode`, `toString`, `getClass`, `clone`, `wait`, `notify`, `notifyAll`, and the deprecated `finalize`.
+Being able to list them and say what each does is a common fresher question.
+
+=== Shallow copy versus deep copy
+
+A *shallow copy* copies the outer object but shares the objects it references.
+A *deep copy* also copies the referenced objects, recursively.
+`Object.clone()` is shallow by default, requires implementing `Cloneable`, and is widely considered a broken design.
+Prefer copy constructors or static factories (`new Order(other)`, `List.copyOf(list)`), or immutable objects that never need copying.
+
+== Serialization
+
+Java serialization turns an object graph into bytes (`ObjectOutputStream`) and back.
+
+* A class must implement `Serializable`. `transient` and `static` fields are not written.
+* Declare `private static final long serialVersionUID`. Without it, a recompiled class may get a different generated ID and old data fails with `InvalidClassException`.
+* Native serialization is a known security risk: deserializing untrusted data can execute code through "gadget chains". Prefer JSON or Protocol Buffers for anything crossing a trust boundary, and use deserialization filters (`ObjectInputFilter`) if you must use it.
+
+== Annotations and reflection
+
+* Annotations attach metadata. `@Retention` decides where it survives: `SOURCE` (discarded by the compiler, e.g. `@Override`), `CLASS` (in bytecode, not visible at runtime), `RUNTIME` (readable via reflection, e.g. `@Transactional`).
+* Reflection inspects and invokes classes, fields and methods at runtime (`Class.forName`, `getDeclaredMethods`, `setAccessible`).
+* Frameworks such as Spring, Hibernate and Jackson rely on both. The cost is weaker compile-time checking and some startup overhead.
+
+== Nested classes and enums
+
+[cols="1,3",options="header"]
+|===
+|Kind |Key fact
+
+|Static nested class |No reference to an outer instance. Default choice for a helper class (e.g. a `Builder`).
+|Inner (non-static) class |Holds an implicit reference to the outer instance. Can cause memory leaks if it outlives the outer object.
+|Local class |Declared inside a method; can capture effectively final local variables.
+|Anonymous class |One-off implementation, mostly replaced by lambdas for functional interfaces.
+|===
+
+Enums are full classes: they can have fields, constructors, methods and per-constant behaviour.
+An enum with a single constant is the simplest thread-safe singleton and is safe against reflection and serialization attacks.
+`EnumMap` and `EnumSet` are faster and more compact than their hash-based equivalents for enum keys.
+
+== Practice questions
+
+Answer each one aloud before expanding it.
+
+[%collapsible]
+.Q1. Explain the four pillars of OOP using an example from a real project.
+====
+Pick one domain and use it for all four.
+Encapsulation: `Account` hides its balance and only allows `deposit`/`withdraw`, which enforce "balance never negative".
+Abstraction: services depend on a `PaymentGateway` interface, not on a card or UPI client.
+Inheritance: use only when the child truly satisfies the parent's contract; a `SavingsAccount` that refuses withdrawals after a limit may break the contract of `Account`.
+Polymorphism: `gateway.charge(order)` runs a different implementation depending on the runtime type.
+Close by saying you prefer composition and interfaces over deep inheritance.
+====
+
+[%collapsible]
+.Q2. Is Java pass-by-value or pass-by-reference?
+====
+Always pass-by-value.
+For object parameters, the value copied is the reference.
+Mutating the object through it is visible to the caller; reassigning the parameter is not.
+Show the `rename(Person p)` example.
+====
+
+[%collapsible]
+.Q3. What happens if you override `equals()` but not `hashCode()`?
+====
+Two logically equal objects get different hash codes (identity-based by default), so they land in different buckets.
+`map.put(k1, v)` followed by `map.get(k2)` with an equal `k2` returns `null`, and a `HashSet` can contain "duplicates".
+The contract requires equal objects to have equal hash codes.
+====
+
+[%collapsible]
+.Q4. Why is String immutable, and why is it final?
+====
+Immutability allows the string pool, a cached hash code, safe sharing across threads, and security for values like paths and class names that are validated once.
+It is `final` so no subclass can override methods and break those guarantees.
+====
+
+[%collapsible]
+.Q5. How many objects does `new String("hello")` create?
+====
+Up to two.
+The literal `"hello"` is placed in the string pool when the class is loaded, if it is not already there.
+`+new String(...)+` then always creates a separate object on the heap.
+If the literal was already pooled, only one new object is created by this statement.
+====
+
+[%collapsible]
+.Q6. Difference between `final`, `finally` and `finalize`?
+====
+`final` is a modifier that prevents reassignment, overriding or subclassing.
+`finally` is a block that runs after `try`/`catch` for cleanup.
+`finalize` was a GC hook on `Object`; it is deprecated for removal because timing is unpredictable and it slows GC.
+Use try-with-resources or `Cleaner` instead.
+====
+
+[%collapsible]
+.Q7. Can you override a static method? A private method?
+====
+No to both.
+A static method with the same signature in a subclass *hides* the parent method; which one runs depends on the declared type, not the object.
+A private method is not visible to the subclass, so a same-named method in the subclass is a new, unrelated method.
+====
+
+[%collapsible]
+.Q8. Abstract class versus interface: when do you pick each?
+====
+Interface for a capability or a replaceable contract, especially when unrelated classes share it or a class needs several.
+Abstract class when subclasses share state or a fixed algorithm (Template Method).
+Since Java 8, interfaces can carry `default` methods, so the remaining differences are state, constructors and single inheritance.
+====
+
+[%collapsible]
+.Q9. How do you design an immutable class? Are records immutable?
+====
+`final` class, `private final` fields, set in the constructor, no setters, defensive copies of mutable inputs and outputs.
+A record is *shallowly* immutable: its fields are final, but if a component is a mutable `List`, the list can still change.
+Use `List.copyOf` in a compact constructor to make it fully immutable.
+====
+
+[%collapsible]
+.Q10. Checked versus unchecked exceptions: which do you use for your own errors?
+====
+Checked when the caller can and should recover, and the condition is part of the method's contract.
+Unchecked for programming errors (bad arguments, illegal state) and for failures that the immediate caller cannot handle, which is most cases in service code.
+In Spring applications, custom business exceptions are usually unchecked and handled centrally by a `@RestControllerAdvice`.
+Note that Spring's `@Transactional` rolls back on unchecked exceptions by default but not on checked ones.
+====
+
+[%collapsible]
+.Q11. What does try-with-resources do that `finally` does not?
+====
+It closes every `AutoCloseable` automatically, in reverse order of declaration, and keeps both exceptions: the body's exception is thrown and the close exception is added as suppressed.
+A hand-written `finally` that throws from `close()` replaces the original exception and loses it.
+====
+
+[%collapsible]
+.Q12. Shallow copy versus deep copy, and what is wrong with `clone()`?
+====
+Shallow copies share referenced objects; deep copies duplicate them.
+`clone()` is shallow, bypasses constructors, needs the `Cloneable` marker interface, returns `Object`, and declares a checked exception.
+Copy constructors, static factories or immutable objects are clearer.
+====
+
+[%collapsible]
+.Q13. `Comparable` versus `Comparator`?
+====
+`Comparable.compareTo` defines the *natural* order inside the class (one per class).
+`Comparator` defines an *external* order, and you can have many: `Comparator.comparing(Employee::dept).thenComparing(Employee::salary, Comparator.reverseOrder())`.
+Ordering should be consistent with `equals`, especially for `TreeSet`/`TreeMap`, which treat `compare == 0` as "same element".
+Do not compare with subtraction (`a - b`); it overflows. Use `Integer.compare(a, b)`.
+====
+
+[%collapsible]
+.Q14. What are the risks of Java serialization?
+====
+Security: deserializing untrusted bytes can trigger code execution through gadget chains in classes on the classpath.
+Compatibility: class changes break old data unless `serialVersionUID` is managed.
+Performance and size are poor compared with JSON or Protobuf.
+Use explicit formats for APIs and messages; apply `ObjectInputFilter` if native serialization is unavoidable.
+====
+
+[%collapsible]
+.Q15. What is printed: `Integer a = 128, b = 128; System.out.println(a == b);`?
+====
+`false`.
+`Integer.valueOf` caches only -128 to 127, so 128 creates two objects and `==` compares references.
+Use `equals` or compare `int` values.
+====
+
+[%collapsible]
+.Q16. Why is `main` `public static void`? Can you overload it?
+====
+`public` so the launcher can call it, `static` so no object is needed, `void` because the exit code is set with `System.exit`.
+You can overload `main`, but the JVM calls only the `String[]` version.
+Since Java 25, compact source files allow an instance `void main()` for simple programs (JEP 512).
+====
+
+[%collapsible]
+.Q17. What are reflection and annotations used for, and what is the cost?
+====
+Annotations are metadata; reflection reads metadata and members at runtime.
+Spring uses both for component scanning, dependency injection and proxies; Jackson uses them for JSON mapping.
+Costs: less compile-time safety, slower startup, and access checks that the module system may block.
+====
+
+== Common traps
+
+* Comparing strings with `==`.
+* Using mutable fields in `hashCode`.
+* `return` inside `finally`.
+* `catch (Exception e) {}` with an empty body.
+* Using `double` for money.
+* Saying "Java passes objects by reference".
+* Saying an interface "cannot have method bodies" (it can, since Java 8).
+
+== Follow-ups to expect
+
+* "Show me a bug caused by a broken `equals`/`hashCode`."
+* "Your immutable class has a `Date` field. What do you change?" (Defensive copy, or switch to `Instant`.)
+* "Why does Spring prefer unchecked exceptions?"
+* "When is inheritance the right choice in your project?"
+
+== Quick revision
+
+* [ ] Four pillars with one consistent example
+* [ ] Overloading versus overriding rules table
+* [ ] `equals`/`hashCode` contract and the mutable-key trap
+* [ ] String pool, `intern`, `StringBuilder` versus `StringBuffer`
+* [ ] Immutable class recipe
+* [ ] Exception hierarchy, checked versus unchecked, try-with-resources, suppressed exceptions
+* [ ] Integer cache and unboxing NPE
+
+Next: xref:interview-guide/collections-generics.adoc[Collections and Generics].
