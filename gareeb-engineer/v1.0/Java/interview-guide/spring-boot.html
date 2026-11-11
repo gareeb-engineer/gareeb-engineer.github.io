@@ -1,0 +1,1204 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>Spring Boot · Ayush Nigam</title>
+  
+  <link rel="preload" href="../../../../_/fonts/inter-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="../../../../_/css/site.css?v=21">
+</head>
+<body class="docs-page">
+  <a class="skip-link" href="#article-main">Skip to content</a>
+  <header class="docs-header">
+    <div class="docs-header-inner">
+      <a class="docs-logo" href="../../index.html"><span class="docs-logo-mark">AN</span><span>Ayush Nigam</span></a>
+          <nav class="header-adoc-nav docs-toplinks" aria-label="Header links" data-header-source-url="../../headers/header-links.html">
+            <div class="header-adoc-content"><div class="ulist header-menu-links">
+<ul>
+<li>
+<p><a href="contact.html" class="xref page">Contact</a></p>
+</li>
+<li>
+<p><a href="https://www.linkedin.com/in/the-ayush-nigam/">LinkedIn</a></p>
+</li>
+<li>
+<p><a href="https://github.com/gareeb-engineer">GitHub</a></p>
+</li>
+</ul>
+</div>
+</div>
+          </nav>
+      <a class="header-avatar" href="../../index.html" aria-hidden="true" tabindex="-1"><img src="../../../../_/img/profile-photo.png" alt="Ayush Nigam profile photo" width="36" height="36"></a>
+<button type="button" class="mobile-nav-toggle" aria-label="Toggle documentation navigation" aria-expanded="false" aria-controls="docs-sidebar">☰ Menu</button>
+      <span class="read-progress-label" aria-hidden="true" hidden>Reading <span class="read-progress-value">0%</span></span>
+    </div>
+    <div class="read-progress" role="progressbar" aria-label="Article reading progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" hidden><span class="read-progress-fill"></span></div>
+  </header>
+  <div class="docs-shell">
+    <aside class="docs-sidebar" id="docs-sidebar" aria-label="Documentation sidebar">
+      <div class="sidebar-inner">
+      <div class="sidebar-top"><span class="sidebar-eyebrow">ENGINEERING LIBRARY</span></div>
+      <input id="nav-filter" class="nav-filter" type="search" placeholder="Filter pages…" aria-label="Filter navigation" autocomplete="off">
+      <nav aria-label="Documentation pages"><ul class="nav-tree">
+  <li class="nav-item nav-parent">
+        <div class="nav-group">
+          <button type="button" class="nav-row nav-toggle" aria-expanded="true">
+            <span class="nav-label">Java</span>
+            <span class="nav-chevron" aria-hidden="true">▾</span>
+          </button>
+          <div class="nav-children">
+            <ul class="nav-tree">
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../index.html" title="Open Java overview">Overview</a>
+      </div>
+  </li>
+  <li class="nav-item nav-parent">
+        <div class="nav-group nav-linked-group">
+          <div class="nav-row nav-linked-row">
+            <a href="index.html">Java Interview Guide</a>
+            <button type="button" class="nav-toggle nav-linked-toggle" aria-expanded="true" aria-label="Toggle subtopics">
+              <span class="nav-chevron" aria-hidden="true">▾</span>
+            </button>
+          </div>
+          <div class="nav-children"><ul class="nav-tree">
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="core-java-oop.html">Core Java and OOP</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="collections-generics.html">Collections and Generics</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="java8-streams-functional.html">Java 8: Lambdas, Streams, Optional</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="modern-java.html">Modern Java (11 to 25)</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="concurrency.html">Concurrency and Multithreading</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="jvm-memory-gc.html">JVM, Memory and GC</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="spring-core.html">Spring Core: IoC, DI, AOP</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="spring-boot.html" class="is-current" aria-current="page">Spring Boot</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="rest-spring-mvc.html">REST APIs and Spring MVC</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="jpa-hibernate-transactions.html">JPA, Hibernate, Transactions</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="spring-security.html">Spring Security, JWT, OAuth2</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="microservices.html">Microservices</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="coding-round.html">Coding Round in Java</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="testing.html">Testing</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="senior-scenarios.html">Production Scenarios and Behavioural</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="spring-ai.html">Spring AI and GenAI</a>
+      </div>
+  </li>
+</ul>
+</div>
+        </div>
+  </li>
+</ul>
+          </div>
+        </div>
+  </li>
+  <li class="nav-item nav-parent">
+        <div class="nav-group is-collapsed">
+          <button type="button" class="nav-row nav-toggle" aria-expanded="false">
+            <span class="nav-label">Architecture Diagram&#8217;s</span>
+            <span class="nav-chevron" aria-hidden="true">▸</span>
+          </button>
+          <div class="nav-children">
+            <ul class="nav-tree">
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Arcitecture-diagram/index.html" title="Open Architecture Diagram’s overview">Overview</a>
+      </div>
+  </li>
+</ul>
+          </div>
+        </div>
+  </li>
+  <li class="nav-item nav-parent">
+        <div class="nav-group is-collapsed">
+          <button type="button" class="nav-row nav-toggle" aria-expanded="false">
+            <span class="nav-label">References</span>
+            <span class="nav-chevron" aria-hidden="true">▸</span>
+          </button>
+          <div class="nav-children">
+            <ul class="nav-tree">
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../DevOps-Refs/index.html" title="Open References overview">Overview</a>
+      </div>
+  </li>
+</ul>
+          </div>
+        </div>
+  </li>
+  <li class="nav-item nav-parent">
+        <div class="nav-group is-collapsed">
+          <button type="button" class="nav-row nav-toggle" aria-expanded="false">
+            <span class="nav-label">Data Structure</span>
+            <span class="nav-chevron" aria-hidden="true">▸</span>
+          </button>
+          <div class="nav-children">
+            <ul class="nav-tree">
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Data-Structure/index.html" title="Open Data Structure overview">Overview</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Data-Structure/arrays/index.html">Arrays</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Data-Structure/linked-list/index.html">Linked Lists</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Data-Structure/stacks-n-queue/index.html">Stacks</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Data-Structure/trees/index.html">Trees</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Data-Structure/hash-map/index.html">Hash Map</a>
+      </div>
+  </li>
+  <li class="nav-item nav-parent">
+        <div class="nav-group nav-linked-group is-collapsed">
+          <div class="nav-row nav-linked-row">
+            <a href="../../Data-Structure/dynamic-programming/index.html">Dynamic Programming</a>
+            <button type="button" class="nav-toggle nav-linked-toggle" aria-expanded="false" aria-label="Toggle subtopics">
+              <span class="nav-chevron" aria-hidden="true">▸</span>
+            </button>
+          </div>
+          <div class="nav-children"><ul class="nav-tree">
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Data-Structure/dynamic-programming/fibonacci-series.html">Fibonacci Series</a>
+      </div>
+  </li>
+</ul>
+</div>
+        </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Data-Structure/graphs/index.html">Graphs</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Data-Structure/backtracking/index.html">Backtracking</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Data-Structure/pattern-printing/index.html">Pattern Printing</a>
+      </div>
+  </li>
+  <li class="nav-item nav-parent">
+        <div class="nav-group nav-linked-group is-collapsed">
+          <div class="nav-row nav-linked-row">
+            <a href="../../Data-Structure/recursion/index.html">Recursion</a>
+            <button type="button" class="nav-toggle nav-linked-toggle" aria-expanded="false" aria-label="Toggle subtopics">
+              <span class="nav-chevron" aria-hidden="true">▸</span>
+            </button>
+          </div>
+          <div class="nav-children"><ul class="nav-tree">
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Data-Structure/recursion/sum-of-all-element.html">Sum of all elements</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Data-Structure/recursion/all-indices-of-array.html">All indices of array</a>
+      </div>
+  </li>
+</ul>
+</div>
+        </div>
+  </li>
+</ul>
+          </div>
+        </div>
+  </li>
+  <li class="nav-item nav-parent">
+        <div class="nav-group is-collapsed">
+          <button type="button" class="nav-row nav-toggle" aria-expanded="false">
+            <span class="nav-label">Low Level Design</span>
+            <span class="nav-chevron" aria-hidden="true">▸</span>
+          </button>
+          <div class="nav-children">
+            <ul class="nav-tree">
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Low-Level-Design/index.html" title="Open Low Level Design overview">Overview</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Low-Level-Design/design-principles.html">Design Principles</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Low-Level-Design/solid-principles.html">SOLID Principles</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Low-Level-Design/design-patterns.html">Gang of Four Design Patterns</a>
+      </div>
+  </li>
+</ul>
+          </div>
+        </div>
+  </li>
+</ul>
+</nav>
+      </div>
+    </aside>
+    <main id="article-main" class="docs-article">
+      <nav class="breadcrumbs" aria-label="Breadcrumb"><a href="../../index.html">Home</a><span aria-hidden="true">/</span><a href="index.html">Java Interview Guide</a><span aria-hidden="true">/</span><a href="spring-boot.html">Spring Boot</a></nav>
+      <article class="article-body" data-reading-progress>
+        <header class="article-header">
+          <h1>Spring Boot</h1>
+          
+          <p class="article-subtitle">What Spring Boot adds on top of Spring, how auto-configuration decides what to create, starters, externalised configuration and profiles, Actuator and observability, and what changed in Spring Boot 4.</p>
+          <ul class="article-chips">
+            <li class="chip chip-difficulty chip-medium">Medium</li><li class="chip chip-tag">Spring Boot</li><li class="chip chip-tag">Interview Preparation</li><li class="chip chip-tag">Spring</li><li class="chip chip-tag">Java</li>
+          </ul>
+          <div class="article-meta">
+            <span class="article-meta-item" title="Estimated at 220 words per minute">
+              <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+              ~7 min read
+            </span>
+            <span class="article-meta-item">
+              <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="4" y="5" width="16" height="16" rx="2"/><path d="M16 3v4M8 3v4M4 10h16"/></svg>
+              Updated <time datetime="2026-11-11">Nov 11, 2026</time>
+            </span>
+            <button type="button" class="ra-open" aria-controls="reading-assistant" aria-expanded="false" hidden>
+              <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/></svg>
+              Listen
+            </button>
+          </div>
+        </header>
+        <div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>Spring Boot questions look simple ("what is a starter?") but interviewers for experienced roles push on <strong>how</strong> it works: why a bean was or was not created, which property wins, and how the service behaves in production.
+This page explains the mechanisms, then the production features.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_at_a_glance"><a class="anchor" href="#_at_a_glance"></a>At a glance</h2>
+<div class="sectionbody">
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 75%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Weightage</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>9 / 10</strong></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Who gets asked</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Anyone with Spring Boot on the CV.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Preparation time</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">4 hours</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Handbook questions</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Q63-Q70</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Builds on</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="spring-core.html" class="xref page">Spring Core</a></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_what_spring_boot_adds"><a class="anchor" href="#_what_spring_boot_adds"></a>What Spring Boot adds</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Spring Framework provides the container, MVC, transactions and so on, but leaves the setup to you.
+Spring Boot is an opinionated layer on top that removes the setup:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Auto-configuration</strong> creates sensible beans based on what is on the classpath and in your properties.</p>
+</li>
+<li>
+<p><strong>Starters</strong> are curated dependency sets with compatible versions.</p>
+</li>
+<li>
+<p><strong>Embedded server</strong> (Tomcat by default, or Jetty): the application is a runnable JAR, <code>java -jar app.jar</code>.</p>
+</li>
+<li>
+<p><strong>Externalised configuration</strong> with a well-defined property precedence, profiles and type-safe binding.</p>
+</li>
+<li>
+<p><strong>Production features</strong> through Actuator: health, metrics, info, probes.</p>
+</li>
+<li>
+<p><strong>Dependency management</strong>: the parent POM or BOM pins versions of hundreds of libraries that are tested together.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_springbootapplication"><a class="anchor" href="#_springbootapplication"></a>@SpringBootApplication</h2>
+<div class="sectionbody">
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@SpringBootApplication
+public class ShopApplication {
+    public static void main(String[] args) {
+        SpringApplication.run(ShopApplication.class, args);
+    }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>It combines three annotations:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>@SpringBootConfiguration</code>: a specialised <code>@Configuration</code>.</p>
+</li>
+<li>
+<p><code>@EnableAutoConfiguration</code>: turns on auto-configuration.</p>
+</li>
+<li>
+<p><code>@ComponentScan</code>: scans the package of this class <strong>and its sub-packages</strong>.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Put the main class in the root package (for example <code>com.shop</code>).
+Classes in a sibling package like <code>com.other</code> are not scanned, a common cause of "my bean is not found".</p>
+</div>
+<div class="paragraph">
+<p><code>SpringApplication.run</code> creates the <code>ApplicationContext</code>, loads properties, runs auto-configuration, refreshes the context (creating singletons), starts the embedded server, then calls <code>ApplicationRunner</code> and <code>CommandLineRunner</code> beans.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_how_auto_configuration_works"><a class="anchor" href="#_how_auto_configuration_works"></a>How auto-configuration works</h2>
+<div class="sectionbody">
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><code>@EnableAutoConfiguration</code> loads the list of auto-configuration classes from <code>META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports</code> in every JAR on the classpath. (Before Spring Boot 2.7 this list lived in <code>spring.factories</code>.)</p>
+</li>
+<li>
+<p>Each class is a normal <code>@AutoConfiguration</code> class guarded by <strong>conditions</strong>.</p>
+</li>
+<li>
+<p>Spring evaluates the conditions and registers only the beans whose conditions match.</p>
+</li>
+<li>
+<p>Auto-configurations run <strong>after</strong> your own configuration, so they can back off when you define your own bean.</p>
+</li>
+</ol>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@AutoConfiguration
+@ConditionalOnClass(DataSource.class)                  // only if the JDBC API is on the classpath
+@EnableConfigurationProperties(DataSourceProperties.class)
+public class DataSourceAutoConfiguration {
+
+    @Bean
+    @ConditionalOnMissingBean                           // back off if the user defined one
+    @ConditionalOnProperty(prefix = "spring.datasource", name = "url")
+    DataSource dataSource(DataSourceProperties props) {
+        return props.initializeDataSourceBuilder().build();
+    }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>(Simplified; the real class is more involved.)</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 40%;">
+<col style="width: 60%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Condition</th>
+<th class="tableblock halign-left valign-top">Matches when</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>@ConditionalOnClass</code> / <code>@ConditionalOnMissingClass</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A class is (or is not) on the classpath.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>@ConditionalOnBean</code> / <code>@ConditionalOnMissingBean</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A bean of a type exists (or does not).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>@ConditionalOnProperty</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A property has a given value.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>@ConditionalOnWebApplication</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">It is a servlet or reactive web application.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>@ConditionalOnResource</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A resource file exists.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>@ConditionalOnExpression</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A SpEL expression is true.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p><strong>Debugging</strong>: start with <code>--debug</code> (or <code>debug=true</code>) to print the <strong>condition evaluation report</strong>, which lists every auto-configuration as a positive or negative match and why.
+With Actuator, <code>/actuator/conditions</code> shows the same.</p>
+</div>
+<div class="paragraph">
+<p><strong>Excluding</strong>: <code>@SpringBootApplication(exclude = DataSourceAutoConfiguration.class)</code> or <code>spring.autoconfigure.exclude=...</code>.
+Exclude only when you replace it with something deliberate.</p>
+</div>
+<div class="sect2">
+<h3 id="_writing_a_custom_starter"><a class="anchor" href="#_writing_a_custom_starter"></a>Writing a custom starter</h3>
+<div class="paragraph">
+<p>A starter is two modules: an <strong>autoconfigure</strong> module with the <code>@AutoConfiguration</code> class and its <code>AutoConfiguration.imports</code> file, and a <strong>starter</strong> module that only declares dependencies.
+Use <code>@ConditionalOnMissingBean</code> so applications can override your beans, and <code>@ConfigurationProperties</code> for settings.
+This is how companies share logging, security or client setup across many services.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_starters"><a class="anchor" href="#_starters"></a>Starters</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>A starter is a dependency descriptor that pulls in everything for one capability.</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 40%;">
+<col style="width: 60%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Starter</th>
+<th class="tableblock halign-left valign-top">Brings</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>spring-boot-starter-web</code> (Boot 3) / <code>spring-boot-starter-webmvc</code> (Boot 4)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Spring MVC, embedded Tomcat, Jackson</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>spring-boot-starter-webflux</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Reactive web stack on Netty</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>spring-boot-starter-data-jpa</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Spring Data JPA, Hibernate, HikariCP</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>spring-boot-starter-security</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Spring Security</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>spring-boot-starter-validation</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Jakarta Bean Validation (Hibernate Validator)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>spring-boot-starter-actuator</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Health, metrics, Micrometer</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>spring-boot-starter-test</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">JUnit, Mockito, AssertJ, Spring Test</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>To switch Tomcat to Jetty, exclude <code>spring-boot-starter-tomcat</code> and add <code>spring-boot-starter-jetty</code>.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_externalised_configuration"><a class="anchor" href="#_externalised_configuration"></a>Externalised configuration</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_property_precedence"><a class="anchor" href="#_property_precedence"></a>Property precedence</h3>
+<div class="paragraph">
+<p>Later sources in this list override earlier ones (simplified, highest priority last):</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Default properties (<code>SpringApplication.setDefaultProperties</code>)</p>
+</li>
+<li>
+<p><code>@PropertySource</code> on configuration classes</p>
+</li>
+<li>
+<p><code>application.properties</code> / <code>application.yml</code> inside the JAR</p>
+</li>
+<li>
+<p><code>application-{profile}.properties</code> inside the JAR</p>
+</li>
+<li>
+<p><code>application.properties</code> outside the JAR (current directory or <code>config/</code> folder)</p>
+</li>
+<li>
+<p><code>application-{profile}.properties</code> outside the JAR</p>
+</li>
+<li>
+<p>OS environment variables (<code>SERVER_PORT=9090</code> maps to <code>server.port</code> through <strong>relaxed binding</strong>)</p>
+</li>
+<li>
+<p>Java system properties (<code>-Dserver.port=9090</code>)</p>
+</li>
+<li>
+<p>Command-line arguments (<code>--server.port=9090</code>)</p>
+</li>
+<li>
+<p>Test properties (<code>@SpringBootTest(properties = ...)</code>, <code>@TestPropertySource</code>, <code>@DynamicPropertySource</code>)</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>The practical rule: packaged files hold defaults, the environment overrides them per deployment, and command-line arguments override everything.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_value_versus_configurationproperties"><a class="anchor" href="#_value_versus_configurationproperties"></a>@Value versus @ConfigurationProperties</h3>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">// @Value: one value at a time, supports SpEL and defaults
+@Value("${payment.timeout:5s}")
+private Duration timeout;
+
+// @ConfigurationProperties: a typed, validated group (preferred for real settings)
+@ConfigurationProperties(prefix = "payment")
+@Validated
+public record PaymentProperties(
+        @NotNull URI baseUrl,
+        @DefaultValue("5s") Duration timeout,
+        @Min(1) @DefaultValue("3") int maxRetries) { }
+
+@SpringBootApplication
+@ConfigurationPropertiesScan
+public class ShopApplication { }</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">payment:
+  base-url: https://pay.example.com
+  timeout: 3s
+  max-retries: 5</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><code>@ConfigurationProperties</code> gives type conversion (<code>Duration</code>, <code>DataSize</code>, lists, maps), relaxed binding (<code>max-retries</code>, <code>maxRetries</code>, <code>PAYMENT_MAXRETRIES</code>), validation at startup and IDE auto-completion.
+<code>@Value</code> is fine for a single value or an expression.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_profiles"><a class="anchor" href="#_profiles"></a>Profiles</h3>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml"># application.yml: shared defaults
+spring:
+  application:
+    name: shop
+---
+spring:
+  config:
+    activate:
+      on-profile: prod
+  datasource:
+    url: jdbc:postgresql://db.prod:5432/shop</code></pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Activate with <code>spring.profiles.active=prod</code> (property, environment variable <code>SPRING_PROFILES_ACTIVE</code>, or <code>--spring.profiles.active=prod</code>).</p>
+</li>
+<li>
+<p><code>@Profile("dev")</code> on a bean or configuration class registers it only for that profile; <code>@Profile("!prod")</code> negates.</p>
+</li>
+<li>
+<p>Profile groups combine several: <code>spring.profiles.group.prod=prod-db,prod-mq</code>.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p><strong>Secrets</strong> never belong in properties files in Git.
+Inject them from the environment, Kubernetes secrets, Vault or a cloud secret manager, and use <code>spring.config.import</code> (for example <code>configtree:</code> or a Vault or AWS integration) to load them.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_actuator_and_observability"><a class="anchor" href="#_actuator_and_observability"></a>Actuator and observability</h2>
+<div class="sectionbody">
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">management:
+  endpoints:
+    web:
+      exposure:
+        include: health, info, metrics, prometheus
+  endpoint:
+    health:
+      probes:
+        enabled: true          # /actuator/health/liveness and /readiness
+      show-details: when-authorized</code></pre>
+</div>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 75%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Endpoint</th>
+<th class="tableblock halign-left valign-top">Shows</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>/actuator/health</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Aggregated status of the app and its dependencies (database, disk, broker).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>/actuator/health/liveness</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Is the process alive? A failure makes Kubernetes <strong>restart</strong> the pod.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>/actuator/health/readiness</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Can it take traffic? A failure removes the pod from the load balancer <strong>without</strong> restarting it.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>/actuator/metrics</code>, <code>/actuator/prometheus</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Micrometer metrics: HTTP latency, JVM memory, GC, pools.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>/actuator/info</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Build and Git information.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>/actuator/env</code>, <code>/configprops</code>, <code>/beans</code>, <code>/mappings</code>, <code>/conditions</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Debugging views. Sensitive: never expose publicly.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>/actuator/loggers</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Read and change log levels at runtime.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>/actuator/threaddump</code>, <code>/heapdump</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Diagnostics. Sensitive.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>Only <code>health</code> is exposed over HTTP by default.
+Expose the minimum, secure the rest with Spring Security, or move the management port (<code>management.server.port</code>) to an internal network.</p>
+</div>
+<div class="paragraph">
+<p>Do not include downstream services in the <strong>liveness</strong> check: if the database is down, restarting every pod makes things worse.
+Database checks belong in <strong>readiness</strong>, if anywhere.</p>
+</div>
+<div class="paragraph">
+<p><strong>Observability</strong> in Spring Boot 3 and 4 is built on Micrometer:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Metrics</strong>: <code>MeterRegistry</code> with counters, timers and gauges; exported to Prometheus, Datadog and others.</p>
+</li>
+<li>
+<p><strong>Tracing</strong>: Micrometer Tracing with OpenTelemetry or Brave (Spring Cloud Sleuth was replaced in Boot 3). Trace and span IDs are added to log lines automatically.</p>
+</li>
+<li>
+<p><strong>Logs</strong>: structured JSON logging is built in since Boot 3.4 (<code>logging.structured.format.console=ecs</code>).</p>
+</li>
+<li>
+<p>The <code>@Observed</code> annotation or the <code>Observation</code> API creates a metric and a span at once.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Measure the four golden signals for each service: request rate, error rate, latency (p50, p95, p99) and saturation (pool usage, CPU, memory).</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_graceful_shutdown"><a class="anchor" href="#_graceful_shutdown"></a>Graceful shutdown</h2>
+<div class="sectionbody">
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">server:
+  shutdown: graceful                       # default since Spring Boot 3.4
+spring:
+  lifecycle:
+    timeout-per-shutdown-phase: 30s</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>On <code>SIGTERM</code>, the server stops accepting new requests, readiness turns to "refusing traffic", in-flight requests get up to the timeout to finish, and then beans are destroyed.
+Message consumers should stop polling and finish or hand back the current message.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_exception_handling_overview"><a class="anchor" href="#_exception_handling_overview"></a>Exception handling (overview)</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Use <code>@RestControllerAdvice</code> with <code>@ExceptionHandler</code> methods and return <code>ProblemDetail</code> (RFC 9457) responses.
+Details and code are in <a href="rest-spring-mvc.html#error-handling" class="xref page">REST and Spring MVC</a>.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_virtual_threads_async_and_scheduling"><a class="anchor" href="#_virtual_threads_async_and_scheduling"></a>Virtual threads, async and scheduling</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><code>spring.threads.virtual.enabled=true</code> (Boot 3.2+, Java 21+) runs Tomcat request handling, <code>@Async</code> and <code>@Scheduled</code> on virtual threads.</p>
+</li>
+<li>
+<p><code>@EnableAsync</code> + <code>@Async</code> runs a method on a task executor. The return type should be <code>void</code> or <code>CompletableFuture</code>. It is proxy-based, so self-invocation does not work.</p>
+</li>
+<li>
+<p><code>@EnableScheduling</code> + <code>@Scheduled(fixedRate = 5000)</code> or <code>cron = "0 0 * * * *"</code> for periodic jobs. In a cluster, every instance runs the job unless you add a lock (ShedLock) or use a scheduler service.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_spring_boot_4"><a class="anchor" href="#_spring_boot_4"></a>Spring Boot 4</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Spring Boot 4.0 was released in November 2025 and 4.1 in June 2026.
+Free open-source support for Spring Boot 3.5 ended on 30 June 2026, so upgrade questions are now common.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Built on <strong>Spring Framework 7</strong>, <strong>Jakarta EE 11</strong> (Servlet 6.1), <strong>Jackson 3</strong> (new <code>tools.jackson</code> packages), <strong>JUnit 6</strong> and <strong>Hibernate 7</strong>.</p>
+</li>
+<li>
+<p>Java 17 is still the minimum; Java 25 is supported.</p>
+</li>
+<li>
+<p><strong>Modular starters and auto-configuration</strong>: the large auto-configure JAR was split into focused modules, and starters were renamed (for example <code>spring-boot-starter-webmvc</code>).</p>
+</li>
+<li>
+<p><strong>API versioning</strong> is built into Spring MVC and WebFlux: <code>@GetMapping(path = "/orders", version = "2")</code>.</p>
+</li>
+<li>
+<p><strong>HTTP service clients</strong> (<code>@HttpExchange</code> interfaces) can be registered in groups with <code>@ImportHttpServices</code> and configured from properties.</p>
+</li>
+<li>
+<p><strong>Resilience</strong> annotations in core Spring: <code>@Retryable</code> and <code>@ConcurrencyLimit</code> (enabled with <code>@EnableResilientMethods</code>), so simple retries no longer need Spring Retry.</p>
+</li>
+<li>
+<p><strong>Null safety</strong> with JSpecify annotations (<code>@Nullable</code>, <code>@NullMarked</code>) across the Spring portfolio.</p>
+</li>
+<li>
+<p>Undertow support was removed; Tomcat 11 and Jetty 12.1 remain.</p>
+</li>
+<li>
+<p>Spring Security 7 and a new OpenTelemetry starter.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Upgrade path: get to the latest 3.5.x first, fix deprecation warnings, then move to 4.x, using the official migration guide and OpenRewrite recipes.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_practice_questions"><a class="anchor" href="#_practice_questions"></a>Practice questions</h2>
+<div class="sectionbody">
+<details>
+<summary class="title">Q1. What is the difference between Spring and Spring Boot?</summary>
+<div class="content">
+<div class="paragraph">
+<p>Spring Framework provides the container and modules (MVC, data, transactions) but needs explicit configuration.
+Spring Boot adds auto-configuration, starters, an embedded server, externalised configuration and Actuator, so a production-ready service runs with very little setup.
+Boot does not replace Spring; it configures it.</p>
+</div>
+</div>
+</details>
+<details>
+<summary class="title">Q2. How does auto-configuration work?</summary>
+<div class="content">
+<div class="paragraph">
+<p><code>@EnableAutoConfiguration</code> loads candidate classes listed in <code>AutoConfiguration.imports</code> files on the classpath.
+Each is guarded by conditions such as <code>@ConditionalOnClass</code> and <code>@ConditionalOnMissingBean</code>.
+Matching ones register beans, after user configuration, and back off if you define your own bean.
+<code>--debug</code> prints the condition evaluation report.</p>
+</div>
+</div>
+</details>
+<details>
+<summary class="title">Q3. What does <code>@SpringBootApplication</code> do, and why does its package matter?</summary>
+<div class="content">
+<div class="paragraph">
+<p>It is <code>@SpringBootConfiguration</code> + <code>@EnableAutoConfiguration</code> + <code>@ComponentScan</code>.
+Component scanning starts at the annotated class&#8217;s package, so beans outside that package tree are not found unless you add <code>scanBasePackages</code>.</p>
+</div>
+</div>
+</details>
+<details>
+<summary class="title">Q4. How do you override an auto-configured bean?</summary>
+<div class="content">
+<div class="paragraph">
+<p>Define your own bean of the same type; <code>@ConditionalOnMissingBean</code> makes the auto-configuration back off.
+Many auto-configurations also expose properties or customiser beans (for example <code>RestClientCustomizer</code>, or the Jackson builder customiser) so you can adjust the auto-configured bean rather than replace it.</p>
+</div>
+</div>
+</details>
+<details>
+<summary class="title">Q5. In which order are properties resolved?</summary>
+<div class="content">
+<div class="paragraph">
+<p>Command-line arguments beat system properties, which beat environment variables, which beat external files, which beat packaged files; profile-specific files beat their non-profile versions.
+Test property annotations override everything in tests.</p>
+</div>
+</div>
+</details>
+<details>
+<summary class="title">Q6. <code>@Value</code> versus <code>@ConfigurationProperties</code>?</summary>
+<div class="content">
+<div class="paragraph">
+<p><code>@Value</code> injects one value and supports SpEL.
+<code>@ConfigurationProperties</code> binds a group of settings into a typed object (often a record) with relaxed binding, conversion, validation at startup and metadata for IDEs.
+Prefer it for anything more than one or two values.</p>
+</div>
+</div>
+</details>
+<details>
+<summary class="title">Q7. How do profiles work?</summary>
+<div class="content">
+<div class="paragraph">
+<p>A profile is a named set of beans and properties.
+<code>application-prod.yml</code> and <code>@Profile("prod")</code> beans are active only when <code>prod</code> is in <code>spring.profiles.active</code>.
+Use them for environment differences, not for feature flags, and never for secrets.</p>
+</div>
+</div>
+</details>
+<details>
+<summary class="title">Q8. What is Actuator used for, and how do you secure it?</summary>
+<div class="content">
+<div class="paragraph">
+<p>Operational endpoints: health, liveness and readiness probes, metrics, info, loggers, thread dumps.
+Expose only what is needed (<code>management.endpoints.web.exposure.include</code>), protect sensitive endpoints with Spring Security, and consider a separate management port on an internal network.</p>
+</div>
+</div>
+</details>
+<details>
+<summary class="title">Q9. Liveness versus readiness?</summary>
+<div class="content">
+<div class="paragraph">
+<p>Liveness: is the process healthy enough to keep running? If not, the orchestrator restarts it.
+Readiness: can it serve traffic now? If not, it is taken out of load balancing but not restarted.
+Dependency checks go in readiness; liveness should reflect only the application&#8217;s own state.</p>
+</div>
+</div>
+</details>
+<details>
+<summary class="title">Q10. How do you make a Spring Boot service observable?</summary>
+<div class="content">
+<div class="paragraph">
+<p>Structured logs with trace and correlation IDs, Micrometer metrics for rate, errors, latency and saturation, distributed tracing through OpenTelemetry, health probes, and dashboards with alerts on SLOs.
+Instrument outbound HTTP calls, database time and message processing, not only the controllers.</p>
+</div>
+</div>
+</details>
+<details>
+<summary class="title">Q11. How do you test Spring configuration without starting everything?</summary>
+<div class="content">
+<div class="paragraph">
+<p>Use slice tests (<code>@WebMvcTest</code>, <code>@DataJpaTest</code>, <code>@JsonTest</code>) to load only part of the context, and <code>ApplicationContextRunner</code> to test auto-configurations and conditions in isolation.
+Keep <code>@SpringBootTest</code> for a few end-to-end integration tests.
+See <a href="testing.html" class="xref page">Testing</a>.</p>
+</div>
+</div>
+</details>
+<details>
+<summary class="title">Q12. What happens when a Spring Boot application receives SIGTERM?</summary>
+<div class="content">
+<div class="paragraph">
+<p>With graceful shutdown (default since Boot 3.4), the web server stops accepting new connections, in-flight requests get up to <code>spring.lifecycle.timeout-per-shutdown-phase</code> to complete, readiness reports refusing traffic, and then the context closes and calls <code>@PreDestroy</code> methods.</p>
+</div>
+</div>
+</details>
+<details>
+<summary class="title">Q13. What changed in Spring Boot 4, and how would you upgrade?</summary>
+<div class="content">
+<div class="paragraph">
+<p>Spring Framework 7, Jakarta EE 11, Jackson 3, JUnit 6, Hibernate 7, modular starters, built-in API versioning, HTTP service client groups, <code>@Retryable</code>/<code>@ConcurrencyLimit</code> in core, JSpecify null safety, Undertow removed.
+Upgrade by moving to the latest 3.5.x, clearing deprecations, then switching to 4.x with the migration guide and OpenRewrite, and running the full test suite plus a performance test.</p>
+</div>
+</div>
+</details>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_common_traps"><a class="anchor" href="#_common_traps"></a>Common traps</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p>Main class in a sub-package, so beans in sibling packages are missed.</p>
+</li>
+<li>
+<p>Exposing all Actuator endpoints (<code>include: "*"</code>) on a public port.</p>
+</li>
+<li>
+<p>Dependency checks in the liveness probe.</p>
+</li>
+<li>
+<p>Secrets in <code>application.yml</code> in Git.</p>
+</li>
+<li>
+<p><code>@Scheduled</code> jobs running on every instance of a clustered service.</p>
+</li>
+<li>
+<p>Saying "Spring Boot is a different framework from Spring".</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_follow_ups_to_expect"><a class="anchor" href="#_follow_ups_to_expect"></a>Follow-ups to expect</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p>"A bean you expected is missing at startup. How do you find out why?" (Condition evaluation report, component scan base package, profiles.)</p>
+</li>
+<li>
+<p>"How would you share common configuration across 30 microservices?" (A custom starter, or a config server.)</p>
+</li>
+<li>
+<p>"How do you run the same JAR in dev, staging and prod?"</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_quick_revision"><a class="anchor" href="#_quick_revision"></a>Quick revision</h2>
+<div class="sectionbody">
+<div class="ulist checklist">
+<ul class="checklist">
+<li>
+<p><i class="fa fa-square-o"></i> Three annotations inside <code>@SpringBootApplication</code></p>
+</li>
+<li>
+<p><i class="fa fa-square-o"></i> Auto-configuration loading, conditions, back-off, debug report</p>
+</li>
+<li>
+<p><i class="fa fa-square-o"></i> Property precedence and relaxed binding</p>
+</li>
+<li>
+<p><i class="fa fa-square-o"></i> <code>@ConfigurationProperties</code> with a record and validation</p>
+</li>
+<li>
+<p><i class="fa fa-square-o"></i> Profiles and secrets handling</p>
+</li>
+<li>
+<p><i class="fa fa-square-o"></i> Actuator endpoints, liveness versus readiness, exposure</p>
+</li>
+<li>
+<p><i class="fa fa-square-o"></i> Spring Boot 4 headline changes</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Next: <a href="rest-spring-mvc.html" class="xref page">REST APIs and Spring MVC</a>.</p>
+</div>
+</div>
+</div>
+      </article>
+      <div class="article-pagination">
+        <a class="prev" href="spring-core.html"><span>← Previous</span><strong>Spring Core: IoC, DI, AOP</strong></a>
+        <a class="next" href="rest-spring-mvc.html"><span>Next →</span><strong>REST APIs and Spring MVC</strong></a>
+      </div>
+    </main>
+    <aside class="docs-toc reading-assistant" id="reading-assistant" aria-label="Reading assistant">
+  <div class="toc-inner ra-inner">
+    <div class="ra-head">
+      <h2 class="ra-title">Reading Assistant</h2>
+      <button type="button" class="ra-close" aria-label="Close reading assistant">
+        <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+    </div>
+
+    <section class="ra-card ra-listen" aria-labelledby="reading-assistant-listen" hidden>
+      <div class="ra-card-head">
+        <svg class="ra-card-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/></svg>
+        <div>
+          <h3 class="ra-card-title" id="reading-assistant-listen">Listen to Article</h3>
+          <p class="ra-card-desc">Listen to the explanation of this article. Code blocks are skipped.</p>
+        </div>
+      </div>
+
+      <div class="ra-ready">
+        <div class="ra-player">
+          <button type="button" class="ra-play" aria-label="Play article">
+            <svg class="ra-icon-play" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M8 5.5v13l11-6.5z"/></svg>
+            <svg class="ra-icon-pause" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M7 5h3.5v14H7zM13.5 5H17v14h-3.5z"/></svg>
+          </button>
+          <div class="ra-track">
+            <div class="ra-meter" role="progressbar" aria-label="Listening progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><span class="ra-meter-fill"></span></div>
+            <span class="ra-time" title="Estimated. Browser speech does not report an exact duration."></span>
+          </div>
+          <button type="button" class="ra-stop" aria-label="Stop listening" disabled>
+            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="6.5" y="6.5" width="11" height="11" rx="1.5"/></svg>
+          </button>
+        </div>
+
+        <div class="ra-controls">
+          <label class="ra-field ra-field-rate">
+            <span class="ra-field-label">Speed</span>
+            <select class="ra-rate">
+              <option value="0.75">0.75×</option>
+              <option value="1" selected>1×</option>
+              <option value="1.25">1.25×</option>
+              <option value="1.5">1.5×</option>
+              <option value="2">2×</option>
+            </select>
+          </label>
+        </div>
+
+        <label class="ra-check"><input type="checkbox" class="ra-follow" checked> Highlight and follow along</label>
+        <p class="ra-status" role="status" aria-live="polite">Ready</p>
+
+        <p class="ra-tip">
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M9 18h6M10 21h4"/><path d="M12 3a6 6 0 0 0-3.5 10.9V16h7v-2.1A6 6 0 0 0 12 3z"/></svg>
+          <span><strong>Tip:</strong> Headings and explanations are read aloud; code is skipped. Read in Google UK English Male on Chrome; other browsers use their closest British English voice.</span>
+        </p>
+      </div>
+
+      <p class="ra-unsupported" hidden>Listening isn&#8217;t available in this browser. The article itself works as usual.</p>
+    </section>
+
+    <section class="ra-card ra-jump" aria-labelledby="reading-assistant-sections" hidden>
+      <h3 class="ra-card-title" id="reading-assistant-sections">Jump to Section</h3>
+      <ol class="ra-sections"></ol>
+    </section>
+
+    <section class="ra-card ra-info" aria-labelledby="reading-assistant-info">
+      <h3 class="ra-card-title" id="reading-assistant-info">Page Info</h3>
+      <ul class="ra-info-list">
+        <li>
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+          <span title="Estimated at 220 words per minute">~7 min read</span>
+        </li>
+        <li>
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h6"/></svg>
+          <span title="Prose only; code is not counted">~1,439 words</span>
+        </li>
+        <li>
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="4" y="5" width="16" height="16" rx="2"/><path d="M16 3v4M8 3v4M4 10h16"/></svg>
+          <span>Last updated <time datetime="2026-11-11">Nov 11, 2026</time></span>
+        </li>
+      </ul>
+    </section>
+  </div>
+</aside>
+  </div>
+  <footer class="docs-footer">© 2026 Ayush Nigam · <a href="../../index.html">Home</a></footer>
+  <script src="../../../../_/js/reading-assistant.js?v=2" defer></script>
+  <script src="../../../../_/js/site.js?v=15" defer></script>
+</body>
+</html>

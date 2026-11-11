@@ -1,0 +1,1242 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>Coding Round in Java · Ayush Nigam</title>
+  
+  <link rel="preload" href="../../../../_/fonts/inter-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="../../../../_/css/site.css?v=21">
+</head>
+<body class="docs-page">
+  <a class="skip-link" href="#article-main">Skip to content</a>
+  <header class="docs-header">
+    <div class="docs-header-inner">
+      <a class="docs-logo" href="../../index.html"><span class="docs-logo-mark">AN</span><span>Ayush Nigam</span></a>
+          <nav class="header-adoc-nav docs-toplinks" aria-label="Header links" data-header-source-url="../../headers/header-links.html">
+            <div class="header-adoc-content"><div class="ulist header-menu-links">
+<ul>
+<li>
+<p><a href="contact.html" class="xref page">Contact</a></p>
+</li>
+<li>
+<p><a href="https://www.linkedin.com/in/the-ayush-nigam/">LinkedIn</a></p>
+</li>
+<li>
+<p><a href="https://github.com/gareeb-engineer">GitHub</a></p>
+</li>
+</ul>
+</div>
+</div>
+          </nav>
+      <a class="header-avatar" href="../../index.html" aria-hidden="true" tabindex="-1"><img src="../../../../_/img/profile-photo.png" alt="Ayush Nigam profile photo" width="36" height="36"></a>
+<button type="button" class="mobile-nav-toggle" aria-label="Toggle documentation navigation" aria-expanded="false" aria-controls="docs-sidebar">☰ Menu</button>
+      <span class="read-progress-label" aria-hidden="true" hidden>Reading <span class="read-progress-value">0%</span></span>
+    </div>
+    <div class="read-progress" role="progressbar" aria-label="Article reading progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" hidden><span class="read-progress-fill"></span></div>
+  </header>
+  <div class="docs-shell">
+    <aside class="docs-sidebar" id="docs-sidebar" aria-label="Documentation sidebar">
+      <div class="sidebar-inner">
+      <div class="sidebar-top"><span class="sidebar-eyebrow">ENGINEERING LIBRARY</span></div>
+      <input id="nav-filter" class="nav-filter" type="search" placeholder="Filter pages…" aria-label="Filter navigation" autocomplete="off">
+      <nav aria-label="Documentation pages"><ul class="nav-tree">
+  <li class="nav-item nav-parent">
+        <div class="nav-group">
+          <button type="button" class="nav-row nav-toggle" aria-expanded="true">
+            <span class="nav-label">Java</span>
+            <span class="nav-chevron" aria-hidden="true">▾</span>
+          </button>
+          <div class="nav-children">
+            <ul class="nav-tree">
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../index.html" title="Open Java overview">Overview</a>
+      </div>
+  </li>
+  <li class="nav-item nav-parent">
+        <div class="nav-group nav-linked-group">
+          <div class="nav-row nav-linked-row">
+            <a href="index.html">Java Interview Guide</a>
+            <button type="button" class="nav-toggle nav-linked-toggle" aria-expanded="true" aria-label="Toggle subtopics">
+              <span class="nav-chevron" aria-hidden="true">▾</span>
+            </button>
+          </div>
+          <div class="nav-children"><ul class="nav-tree">
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="core-java-oop.html">Core Java and OOP</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="collections-generics.html">Collections and Generics</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="java8-streams-functional.html">Java 8: Lambdas, Streams, Optional</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="modern-java.html">Modern Java (11 to 25)</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="concurrency.html">Concurrency and Multithreading</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="jvm-memory-gc.html">JVM, Memory and GC</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="spring-core.html">Spring Core: IoC, DI, AOP</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="spring-boot.html">Spring Boot</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="rest-spring-mvc.html">REST APIs and Spring MVC</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="jpa-hibernate-transactions.html">JPA, Hibernate, Transactions</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="spring-security.html">Spring Security, JWT, OAuth2</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="microservices.html">Microservices</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="coding-round.html" class="is-current" aria-current="page">Coding Round in Java</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="testing.html">Testing</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="senior-scenarios.html">Production Scenarios and Behavioural</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="spring-ai.html">Spring AI and GenAI</a>
+      </div>
+  </li>
+</ul>
+</div>
+        </div>
+  </li>
+</ul>
+          </div>
+        </div>
+  </li>
+  <li class="nav-item nav-parent">
+        <div class="nav-group is-collapsed">
+          <button type="button" class="nav-row nav-toggle" aria-expanded="false">
+            <span class="nav-label">Architecture Diagram&#8217;s</span>
+            <span class="nav-chevron" aria-hidden="true">▸</span>
+          </button>
+          <div class="nav-children">
+            <ul class="nav-tree">
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Arcitecture-diagram/index.html" title="Open Architecture Diagram’s overview">Overview</a>
+      </div>
+  </li>
+</ul>
+          </div>
+        </div>
+  </li>
+  <li class="nav-item nav-parent">
+        <div class="nav-group is-collapsed">
+          <button type="button" class="nav-row nav-toggle" aria-expanded="false">
+            <span class="nav-label">References</span>
+            <span class="nav-chevron" aria-hidden="true">▸</span>
+          </button>
+          <div class="nav-children">
+            <ul class="nav-tree">
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../DevOps-Refs/index.html" title="Open References overview">Overview</a>
+      </div>
+  </li>
+</ul>
+          </div>
+        </div>
+  </li>
+  <li class="nav-item nav-parent">
+        <div class="nav-group is-collapsed">
+          <button type="button" class="nav-row nav-toggle" aria-expanded="false">
+            <span class="nav-label">Data Structure</span>
+            <span class="nav-chevron" aria-hidden="true">▸</span>
+          </button>
+          <div class="nav-children">
+            <ul class="nav-tree">
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Data-Structure/index.html" title="Open Data Structure overview">Overview</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Data-Structure/arrays/index.html">Arrays</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Data-Structure/linked-list/index.html">Linked Lists</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Data-Structure/stacks-n-queue/index.html">Stacks</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Data-Structure/trees/index.html">Trees</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Data-Structure/hash-map/index.html">Hash Map</a>
+      </div>
+  </li>
+  <li class="nav-item nav-parent">
+        <div class="nav-group nav-linked-group is-collapsed">
+          <div class="nav-row nav-linked-row">
+            <a href="../../Data-Structure/dynamic-programming/index.html">Dynamic Programming</a>
+            <button type="button" class="nav-toggle nav-linked-toggle" aria-expanded="false" aria-label="Toggle subtopics">
+              <span class="nav-chevron" aria-hidden="true">▸</span>
+            </button>
+          </div>
+          <div class="nav-children"><ul class="nav-tree">
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Data-Structure/dynamic-programming/fibonacci-series.html">Fibonacci Series</a>
+      </div>
+  </li>
+</ul>
+</div>
+        </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Data-Structure/graphs/index.html">Graphs</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Data-Structure/backtracking/index.html">Backtracking</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Data-Structure/pattern-printing/index.html">Pattern Printing</a>
+      </div>
+  </li>
+  <li class="nav-item nav-parent">
+        <div class="nav-group nav-linked-group is-collapsed">
+          <div class="nav-row nav-linked-row">
+            <a href="../../Data-Structure/recursion/index.html">Recursion</a>
+            <button type="button" class="nav-toggle nav-linked-toggle" aria-expanded="false" aria-label="Toggle subtopics">
+              <span class="nav-chevron" aria-hidden="true">▸</span>
+            </button>
+          </div>
+          <div class="nav-children"><ul class="nav-tree">
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Data-Structure/recursion/sum-of-all-element.html">Sum of all elements</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Data-Structure/recursion/all-indices-of-array.html">All indices of array</a>
+      </div>
+  </li>
+</ul>
+</div>
+        </div>
+  </li>
+</ul>
+          </div>
+        </div>
+  </li>
+  <li class="nav-item nav-parent">
+        <div class="nav-group is-collapsed">
+          <button type="button" class="nav-row nav-toggle" aria-expanded="false">
+            <span class="nav-label">Low Level Design</span>
+            <span class="nav-chevron" aria-hidden="true">▸</span>
+          </button>
+          <div class="nav-children">
+            <ul class="nav-tree">
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Low-Level-Design/index.html" title="Open Low Level Design overview">Overview</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Low-Level-Design/design-principles.html">Design Principles</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Low-Level-Design/solid-principles.html">SOLID Principles</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Low-Level-Design/design-patterns.html">Gang of Four Design Patterns</a>
+      </div>
+  </li>
+</ul>
+          </div>
+        </div>
+  </li>
+</ul>
+</nav>
+      </div>
+    </aside>
+    <main id="article-main" class="docs-article">
+      <nav class="breadcrumbs" aria-label="Breadcrumb"><a href="../../index.html">Home</a><span aria-hidden="true">/</span><a href="index.html">Java Interview Guide</a><span aria-hidden="true">/</span><a href="coding-round.html">Coding Round in Java</a></nav>
+      <article class="article-body" data-reading-progress>
+        <header class="article-header">
+          <h1>Coding Round in Java</h1>
+          
+          <p class="article-subtitle">How to approach a live coding round, the Java APIs and idioms that save time, problem patterns with templates, and worked solutions to the problems asked most often.</p>
+          <ul class="article-chips">
+            <li class="chip chip-difficulty chip-medium">Medium</li><li class="chip chip-tag">Java</li><li class="chip chip-tag">Interview Preparation</li><li class="chip chip-tag">Data Structures</li><li class="chip chip-tag">Algorithms</li><li class="chip chip-tag">Coding Interview</li>
+          </ul>
+          <div class="article-meta">
+            <span class="article-meta-item" title="Estimated at 220 words per minute">
+              <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+              ~3 min read
+            </span>
+            <span class="article-meta-item">
+              <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="4" y="5" width="16" height="16" rx="2"/><path d="M16 3v4M8 3v4M4 10h16"/></svg>
+              Updated <time datetime="2026-11-11">Nov 11, 2026</time>
+            </span>
+            <button type="button" class="ra-open" aria-controls="reading-assistant" aria-expanded="false" hidden>
+              <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/></svg>
+              Listen
+            </button>
+          </div>
+        </header>
+        <div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>Almost every Java interview includes a coding round, from a simple string program at a service company to two algorithm problems in 45 minutes at a product company.
+This page focuses on doing it <strong>in Java</strong>: the APIs and idioms that make solutions short and correct, the common patterns, and worked solutions.
+For the data structures themselves, see the <a href="../../Data-Structure/index.html" class="xref page">Data Structure</a> section of this site.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_at_a_glance"><a class="anchor" href="#_at_a_glance"></a>At a glance</h2>
+<div class="sectionbody">
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 75%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Weightage</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>9 / 10</strong></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Who gets asked</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Everyone.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Preparation time</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Ongoing: 2 to 3 problems a day for 3 to 4 weeks</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Handbook questions</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Q111-Q113 (and Q114 for the singleton)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Builds on</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="collections-generics.html" class="xref page">Collections</a>, <a href="java8-streams-functional.html" class="xref page">Streams</a></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_how_to_run_the_round"><a class="anchor" href="#_how_to_run_the_round"></a>How to run the round</h2>
+<div class="sectionbody">
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><strong>Clarify</strong> (2 to 3 minutes). Restate the problem. Ask about input size, empty input, duplicates, negative numbers, character set (ASCII or Unicode), and whether to return indices or values.</p>
+</li>
+<li>
+<p><strong>Examples</strong>. Walk through one normal and one edge case by hand.</p>
+</li>
+<li>
+<p><strong>Brute force first</strong>. State it and its complexity in one sentence. It shows you can solve the problem at all.</p>
+</li>
+<li>
+<p><strong>Optimise</strong>. Name the pattern (hash map, two pointers, sliding window, heap) and the new complexity before coding.</p>
+</li>
+<li>
+<p><strong>Code</strong> cleanly with clear names. Talk while you write.</p>
+</li>
+<li>
+<p><strong>Test</strong> by running your examples through the code by hand, then the edge cases.</p>
+</li>
+<li>
+<p><strong>Complexity</strong>. State time and space at the end, and what you would change for larger inputs.</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>Interviewers grade communication and testing as well as correctness.
+A clean, explained O(n log n) solution often scores better than a silent, buggy O(n) one.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_java_toolbox_for_coding_rounds"><a class="anchor" href="#_java_toolbox_for_coding_rounds"></a>Java toolbox for coding rounds</h2>
+<div class="sectionbody">
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">// Maps and counting
+Map&lt;Character, Integer&gt; freq = new HashMap&lt;&gt;();
+freq.merge(c, 1, Integer::sum);                    // increment
+freq.getOrDefault(c, 0);
+map.computeIfAbsent(key, k -&gt; new ArrayList&lt;&gt;()).add(value);   // multimap
+
+int[] counts = new int[26];                        // faster for lowercase letters
+counts[ch - 'a']++;
+
+// Stack and queue: use ArrayDeque, not Stack or LinkedList
+Deque&lt;Integer&gt; stack = new ArrayDeque&lt;&gt;();
+stack.push(1); stack.pop(); stack.peek();
+Queue&lt;int[]&gt; queue = new ArrayDeque&lt;&gt;();
+queue.offer(new int[]{r, c}); queue.poll();
+
+// Heaps
+PriorityQueue&lt;Integer&gt; minHeap = new PriorityQueue&lt;&gt;();
+PriorityQueue&lt;Integer&gt; maxHeap = new PriorityQueue&lt;&gt;(Comparator.reverseOrder());
+PriorityQueue&lt;int[]&gt; byDistance = new PriorityQueue&lt;&gt;(Comparator.comparingInt(p -&gt; p[0] * p[0] + p[1] * p[1]));
+
+// Sorting
+Arrays.sort(arr);                                  // primitives: dual-pivot quicksort
+Arrays.sort(intervals, (a, b) -&gt; Integer.compare(a[0], b[0]));   // never a[0] - b[0]: overflow
+list.sort(Comparator.comparing(Person::age).thenComparing(Person::name));
+
+// Strings
+StringBuilder sb = new StringBuilder();
+sb.append(x).reverse().toString();
+char[] chars = s.toCharArray(); Arrays.sort(chars); String key = new String(chars);
+s.charAt(i); s.substring(i, j); String.valueOf(chars); Character.isLetterOrDigit(c);
+
+// Sorted structures
+TreeMap&lt;Integer, Integer&gt; tm = new TreeMap&lt;&gt;();
+tm.floorKey(x); tm.ceilingKey(x); tm.firstKey(); tm.pollFirstEntry();
+
+// Arrays and numbers
+Arrays.fill(dp, -1);
+int[] copy = Arrays.copyOfRange(arr, from, to);
+int mid = lo + (hi - lo) / 2;                      // avoids overflow of (lo + hi) / 2
+long product = (long) a * b;                       // widen before multiplying
+Math.floorMod(-3, 5);                              // 2, unlike -3 % 5 == -3
+Integer.MAX_VALUE; Long.MIN_VALUE;</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_complexity_cheat_sheet"><a class="anchor" href="#_complexity_cheat_sheet"></a>Complexity cheat sheet</h2>
+<div class="sectionbody">
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Input size n</th>
+<th class="tableblock halign-left valign-top">Target complexity</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">n ≤ 10</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">O(n!) or O(2ⁿ) backtracking is fine</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">n ≤ 20</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">O(2ⁿ)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">n ≤ 500</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">O(n³)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">n ≤ 5,000</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">O(n²)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">n ≤ 10⁶</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">O(n log n) or O(n)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">n &gt; 10⁸</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">O(log n) or O(1)</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_problem_patterns"><a class="anchor" href="#_problem_patterns"></a>Problem patterns</h2>
+<div class="sectionbody">
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 40%;">
+<col style="width: 40%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Pattern</th>
+<th class="tableblock halign-left valign-top">Recognise it when</th>
+<th class="tableblock halign-left valign-top">Examples</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Hash map / set</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">"Find a pair", "count", "seen before", "group by"</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Two sum, anagram groups, first unique character</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Two pointers</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Sorted array, pairs, palindromes, removing in place</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Pair with sum in sorted array, container with most water, 3Sum</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Sliding window</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Longest or shortest <strong>contiguous</strong> subarray or substring meeting a condition</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Longest substring without repeats, max sum of size k</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Prefix sum</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Range sums, subarray sum equals k</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Subarray sum equals k (prefix sum + hash map)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Binary search</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Sorted data, or "minimum value that satisfies a monotonic condition"</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Search in rotated array, first bad version, capacity to ship packages</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Stack</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Matching brackets, "next greater element", undo</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Valid parentheses, daily temperatures, min stack</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Heap</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Top k, k-th largest, merge k sorted, scheduling</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Top k frequent, k closest points, merge k lists</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">BFS</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Shortest path in unweighted graph or grid, level order</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Number of islands, rotting oranges, word ladder</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">DFS / backtracking</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">All combinations, permutations, paths, connected components</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Subsets, permutations, N-Queens</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Dynamic programming</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Optimal value, count of ways, overlapping sub-problems</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Climbing stairs, coin change, longest common subsequence, knapsack</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Linked list pointers</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">In-place reversal, cycle, middle, merge</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Reverse list, detect cycle, merge two sorted lists</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Intervals</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Overlapping ranges</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Merge intervals, meeting rooms</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_worked_solutions"><a class="anchor" href="#_worked_solutions"></a>Worked solutions</h2>
+<div class="sectionbody">
+<details>
+<summary class="title">Two Sum: indices of two numbers that add up to a target.</summary>
+<div class="content">
+<div class="paragraph">
+<p>Store each number&#8217;s index in a map and look up the complement.
+O(n) time, O(n) space.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">static int[] twoSum(int[] nums, int target) {
+    Map&lt;Integer, Integer&gt; indexOf = new HashMap&lt;&gt;();
+    for (int i = 0; i &lt; nums.length; i++) {
+        Integer j = indexOf.get(target - nums[i]);
+        if (j != null) return new int[]{j, i};
+        indexOf.put(nums[i], i);
+    }
+    return new int[0];
+}</code></pre>
+</div>
+</div>
+</div>
+</details>
+<details>
+<summary class="title">Valid parentheses.</summary>
+<div class="content">
+<div class="paragraph">
+<p>Push expected closers; on a closer, it must match the top.
+O(n) time and space.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">static boolean isValid(String s) {
+    Deque&lt;Character&gt; stack = new ArrayDeque&lt;&gt;();
+    for (char c : s.toCharArray()) {
+        switch (c) {
+            case '(' -&gt; stack.push(')');
+            case '[' -&gt; stack.push(']');
+            case '{' -&gt; stack.push('}');
+            default -&gt; { if (stack.isEmpty() || stack.pop() != c) return false; }
+        }
+    }
+    return stack.isEmpty();
+}</code></pre>
+</div>
+</div>
+</div>
+</details>
+<details>
+<summary class="title">Longest substring without repeating characters.</summary>
+<div class="content">
+<div class="paragraph">
+<p>Sliding window: remember the last index of each character and move the left edge past a repeat.
+O(n) time, O(alphabet) space.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">static int longestUnique(String s) {
+    Map&lt;Character, Integer&gt; last = new HashMap&lt;&gt;();
+    int best = 0;
+    for (int left = 0, right = 0; right &lt; s.length(); right++) {
+        char c = s.charAt(right);
+        if (last.containsKey(c) &amp;&amp; last.get(c) &gt;= left) {
+            left = last.get(c) + 1;
+        }
+        last.put(c, right);
+        best = Math.max(best, right - left + 1);
+    }
+    return best;
+}</code></pre>
+</div>
+</div>
+</div>
+</details>
+<details>
+<summary class="title">Top K frequent elements.</summary>
+<div class="content">
+<div class="paragraph">
+<p>Count with a map, then keep a min-heap of size k by frequency.
+O(n log k) time, O(n) space.
+Mention bucket sort for O(n) if asked.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">static List&lt;Integer&gt; topK(int[] nums, int k) {
+    Map&lt;Integer, Integer&gt; count = new HashMap&lt;&gt;();
+    for (int n : nums) count.merge(n, 1, Integer::sum);
+
+    PriorityQueue&lt;Map.Entry&lt;Integer, Integer&gt;&gt; heap =
+            new PriorityQueue&lt;&gt;(Map.Entry.comparingByValue());
+    for (var e : count.entrySet()) {
+        heap.offer(e);
+        if (heap.size() &gt; k) heap.poll();
+    }
+    List&lt;Integer&gt; result = new ArrayList&lt;&gt;();
+    while (!heap.isEmpty()) result.add(heap.poll().getKey());
+    Collections.reverse(result);
+    return result;
+}</code></pre>
+</div>
+</div>
+</div>
+</details>
+<details>
+<summary class="title">First non-repeated character.</summary>
+<div class="content">
+<div class="paragraph">
+<p>Count while keeping insertion order, then return the first with count 1.
+O(n) time.
+For full Unicode, iterate code points (<code>s.codePoints()</code>) instead of <code>char</code>s.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">static Character firstUnique(String s) {
+    Map&lt;Character, Integer&gt; count = new LinkedHashMap&lt;&gt;();
+    for (char c : s.toCharArray()) count.merge(c, 1, Integer::sum);
+    for (var e : count.entrySet()) {
+        if (e.getValue() == 1) return e.getKey();
+    }
+    return null;
+}</code></pre>
+</div>
+</div>
+</div>
+</details>
+<details>
+<summary class="title">Detect a cycle in a linked list (Floyd&#8217;s algorithm).</summary>
+<div class="content">
+<div class="paragraph">
+<p>A slow pointer moves one step, a fast pointer two.
+If they meet, there is a cycle.
+O(n) time, O(1) space.
+To find the start of the cycle, reset one pointer to the head and move both one step until they meet.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">static boolean hasCycle(ListNode head) {
+    ListNode slow = head, fast = head;
+    while (fast != null &amp;&amp; fast.next != null) {
+        slow = slow.next;
+        fast = fast.next.next;
+        if (slow == fast) return true;
+    }
+    return false;
+}</code></pre>
+</div>
+</div>
+</div>
+</details>
+<details>
+<summary class="title">Reverse a linked list.</summary>
+<div class="content">
+<div class="paragraph">
+<p>O(n) time, O(1) space.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">static ListNode reverse(ListNode head) {
+    ListNode prev = null, current = head;
+    while (current != null) {
+        ListNode next = current.next;
+        current.next = prev;
+        prev = current;
+        current = next;
+    }
+    return prev;
+}</code></pre>
+</div>
+</div>
+</div>
+</details>
+<details>
+<summary class="title">Merge overlapping intervals.</summary>
+<div class="content">
+<div class="paragraph">
+<p>Sort by start, then extend or append.
+O(n log n) time.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">static int[][] merge(int[][] intervals) {
+    Arrays.sort(intervals, Comparator.comparingInt(a -&gt; a[0]));
+    List&lt;int[]&gt; merged = new ArrayList&lt;&gt;();
+    for (int[] in : intervals) {
+        if (merged.isEmpty() || merged.getLast()[1] &lt; in[0]) {
+            merged.add(in);
+        } else {
+            merged.getLast()[1] = Math.max(merged.getLast()[1], in[1]);
+        }
+    }
+    return merged.toArray(new int[0][]);
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><code>getLast()</code> is Java 21 (sequenced collections); use <code>merged.get(merged.size() - 1)</code> on older versions.</p>
+</div>
+</div>
+</details>
+<details>
+<summary class="title">Binary search, including the first position of a target.</summary>
+<div class="content">
+<div class="paragraph">
+<p>O(log n).</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">static int firstIndexOf(int[] a, int target) {
+    int lo = 0, hi = a.length - 1, answer = -1;
+    while (lo &lt;= hi) {
+        int mid = lo + (hi - lo) / 2;
+        if (a[mid] &gt;= target) {
+            if (a[mid] == target) answer = mid;
+            hi = mid - 1;                 // keep searching left
+        } else {
+            lo = mid + 1;
+        }
+    }
+    return answer;
+}</code></pre>
+</div>
+</div>
+</div>
+</details>
+<details>
+<summary class="title">Number of islands (grid BFS/DFS).</summary>
+<div class="content">
+<div class="paragraph">
+<p>Each unvisited land cell starts a flood fill.
+O(rows × cols) time.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">static int islands(char[][] grid) {
+    int count = 0;
+    for (int r = 0; r &lt; grid.length; r++) {
+        for (int c = 0; c &lt; grid[0].length; c++) {
+            if (grid[r][c] == '1') {
+                count++;
+                sink(grid, r, c);
+            }
+        }
+    }
+    return count;
+}
+
+static void sink(char[][] g, int r, int c) {
+    if (r &lt; 0 || c &lt; 0 || r &gt;= g.length || c &gt;= g[0].length || g[r][c] != '1') return;
+    g[r][c] = '0';
+    sink(g, r + 1, c); sink(g, r - 1, c); sink(g, r, c + 1); sink(g, r, c - 1);
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>For very large grids, use an explicit queue to avoid <code>StackOverflowError</code>.</p>
+</div>
+</div>
+</details>
+<details>
+<summary class="title">Subarray sum equals k.</summary>
+<div class="content">
+<div class="paragraph">
+<p>Prefix sums plus a map of how many times each prefix sum occurred.
+O(n).</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">static int subarraySum(int[] nums, int k) {
+    Map&lt;Integer, Integer&gt; seen = new HashMap&lt;&gt;(Map.of(0, 1));
+    int sum = 0, count = 0;
+    for (int n : nums) {
+        sum += n;
+        count += seen.getOrDefault(sum - k, 0);
+        seen.merge(sum, 1, Integer::sum);
+    }
+    return count;
+}</code></pre>
+</div>
+</div>
+</div>
+</details>
+<details>
+<summary class="title">Coin change: minimum number of coins.</summary>
+<div class="content">
+<div class="paragraph">
+<p>Bottom-up DP: <code>dp[a]</code> is the fewest coins for amount <code>a</code>.
+O(amount × coins) time.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">static int coinChange(int[] coins, int amount) {
+    int[] dp = new int[amount + 1];
+    Arrays.fill(dp, amount + 1);           // "infinity"
+    dp[0] = 0;
+    for (int a = 1; a &lt;= amount; a++) {
+        for (int coin : coins) {
+            if (coin &lt;= a) dp[a] = Math.min(dp[a], dp[a - coin] + 1);
+        }
+    }
+    return dp[amount] &gt; amount ? -1 : dp[amount];
+}</code></pre>
+</div>
+</div>
+</div>
+</details>
+<details>
+<summary class="title">Group anagrams.</summary>
+<div class="content">
+<div class="paragraph">
+<p>The sorted characters form the key.
+O(n × m log m) for n words of length m.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">static Collection&lt;List&lt;String&gt;&gt; groupAnagrams(String[] words) {
+    Map&lt;String, List&lt;String&gt;&gt; groups = new HashMap&lt;&gt;();
+    for (String w : words) {
+        char[] chars = w.toCharArray();
+        Arrays.sort(chars);
+        groups.computeIfAbsent(new String(chars), k -&gt; new ArrayList&lt;&gt;()).add(w);
+    }
+    return groups.values();
+}</code></pre>
+</div>
+</div>
+</div>
+</details>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_classic_java_programs_service_company_rounds"><a class="anchor" href="#_classic_java_programs_service_company_rounds"></a>Classic Java programs (service company rounds)</h2>
+<div class="sectionbody">
+<details>
+<summary class="title">Reverse a string without library reverse, and check a palindrome.</summary>
+<div class="content">
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">static String reverse(String s) {
+    char[] c = s.toCharArray();
+    for (int i = 0, j = c.length - 1; i &lt; j; i++, j--) {
+        char t = c[i]; c[i] = c[j]; c[j] = t;
+    }
+    return new String(c);
+}
+
+static boolean isPalindrome(String s) {
+    int i = 0, j = s.length() - 1;
+    while (i &lt; j) {
+        if (s.charAt(i++) != s.charAt(j--)) return false;
+    }
+    return true;
+}</code></pre>
+</div>
+</div>
+</div>
+</details>
+<details>
+<summary class="title">Check whether a number is prime, and print primes up to n (sieve).</summary>
+<div class="content">
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">static boolean isPrime(int n) {
+    if (n &lt; 2) return false;
+    for (int i = 2; (long) i * i &lt;= n; i++) {
+        if (n % i == 0) return false;
+    }
+    return true;
+}
+
+static List&lt;Integer&gt; primesUpTo(int n) {
+    boolean[] composite = new boolean[n + 1];
+    List&lt;Integer&gt; primes = new ArrayList&lt;&gt;();
+    for (int i = 2; i &lt;= n; i++) {
+        if (!composite[i]) {
+            primes.add(i);
+            for (long j = (long) i * i; j &lt;= n; j += i) composite[(int) j] = true;
+        }
+    }
+    return primes;
+}</code></pre>
+</div>
+</div>
+</div>
+</details>
+<details>
+<summary class="title">Fibonacci: recursive, memoised and iterative.</summary>
+<div class="content">
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">static long fibIterative(int n) {
+    long a = 0, b = 1;
+    for (int i = 0; i &lt; n; i++) {
+        long next = a + b;
+        a = b;
+        b = next;
+    }
+    return a;
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Naive recursion is O(2ⁿ); memoisation and iteration are O(n).
+See <a href="../../Data-Structure/dynamic-programming/fibonacci-series.html" class="xref page">Fibonacci Series</a> for all versions.</p>
+</div>
+</div>
+</details>
+<details>
+<summary class="title">Swap two numbers without a temporary variable.</summary>
+<div class="content">
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">a = a + b; b = a - b; a = a - b;     // can overflow
+a = a ^ b; b = a ^ b; a = a ^ b;     // XOR version; zeroes the value if both are the same array slot</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Mention that a temporary variable is clearer in real code.</p>
+</div>
+</div>
+</details>
+<details>
+<summary class="title">Find the missing number in 1..n.</summary>
+<div class="content">
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">static int missing(int[] nums, int n) {
+    long expected = (long) n * (n + 1) / 2;
+    long actual = 0;
+    for (int x : nums) actual += x;
+    return (int) (expected - actual);
+}</code></pre>
+</div>
+</div>
+</div>
+</details>
+<details>
+<summary class="title">Thread-safe singleton.</summary>
+<div class="content">
+<div class="paragraph">
+<p>Prefer an enum, or the holder idiom; in Spring, a singleton bean.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">public enum IdGenerator {
+    INSTANCE;
+    private final AtomicLong next = new AtomicLong();
+    public long nextId() { return next.incrementAndGet(); }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>For double-checked locking with <code>volatile</code>, see <a href="concurrency.html#_double_checked_locking_singleton" class="xref page">Concurrency</a>.</p>
+</div>
+</div>
+</details>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_machine_coding_rounds"><a class="anchor" href="#_machine_coding_rounds"></a>Machine-coding rounds</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Some companies give 60 to 90 minutes to build a small working system: parking lot, elevator, splitwise, library management, rate limiter, LRU cache.
+They grade class design, SOLID, extensibility, and working code over completeness.
+The <a href="../../Low-Level-Design/index.html" class="xref page">Low Level Design</a> section and its <a href="../../Low-Level-Design/design-patterns.html" class="xref page">design patterns</a> page cover the approach.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_common_traps"><a class="anchor" href="#_common_traps"></a>Common traps</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><code>a - b</code> in comparators.</p>
+</li>
+<li>
+<p><code>(lo + hi) / 2</code> overflow.</p>
+</li>
+<li>
+<p><code>int</code> overflow in products and sums: use <code>long</code>.</p>
+</li>
+<li>
+<p>Comparing <code>Integer</code> objects with <code>==</code> (works only from -128 to 127).</p>
+</li>
+<li>
+<p>Using <code>Stack</code> or <code>LinkedList</code> instead of <code>ArrayDeque</code>.</p>
+</li>
+<li>
+<p>Forgetting empty input and single-element input.</p>
+</li>
+<li>
+<p>Modifying a collection while iterating over it.</p>
+</li>
+<li>
+<p>Recursion too deep on large inputs.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_follow_ups_to_expect"><a class="anchor" href="#_follow_ups_to_expect"></a>Follow-ups to expect</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p>"Can you do it in O(1) extra space?"</p>
+</li>
+<li>
+<p>"What if the input does not fit in memory?" (Streaming, external sort, partitioning by hash.)</p>
+</li>
+<li>
+<p>"What if this runs concurrently?"</p>
+</li>
+<li>
+<p>"Write tests for your function."</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_quick_revision"><a class="anchor" href="#_quick_revision"></a>Quick revision</h2>
+<div class="sectionbody">
+<div class="ulist checklist">
+<ul class="checklist">
+<li>
+<p><i class="fa fa-square-o"></i> The seven-step approach, said aloud</p>
+</li>
+<li>
+<p><i class="fa fa-square-o"></i> Java toolbox: <code>merge</code>, <code>computeIfAbsent</code>, <code>ArrayDeque</code>, <code>PriorityQueue</code> with comparator, <code>TreeMap</code> navigation</p>
+</li>
+<li>
+<p><i class="fa fa-square-o"></i> Pattern table and how to recognise each</p>
+</li>
+<li>
+<p><i class="fa fa-square-o"></i> All worked solutions written once without help</p>
+</li>
+<li>
+<p><i class="fa fa-square-o"></i> Overflow-safe midpoint and comparator</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Next: <a href="testing.html" class="xref page">Testing: JUnit, Mockito and Spring Tests</a>.</p>
+</div>
+</div>
+</div>
+      </article>
+      <div class="article-pagination">
+        <a class="prev" href="microservices.html"><span>← Previous</span><strong>Microservices</strong></a>
+        <a class="next" href="testing.html"><span>Next →</span><strong>Testing</strong></a>
+      </div>
+    </main>
+    <aside class="docs-toc reading-assistant" id="reading-assistant" aria-label="Reading assistant">
+  <div class="toc-inner ra-inner">
+    <div class="ra-head">
+      <h2 class="ra-title">Reading Assistant</h2>
+      <button type="button" class="ra-close" aria-label="Close reading assistant">
+        <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+    </div>
+
+    <section class="ra-card ra-listen" aria-labelledby="reading-assistant-listen" hidden>
+      <div class="ra-card-head">
+        <svg class="ra-card-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/></svg>
+        <div>
+          <h3 class="ra-card-title" id="reading-assistant-listen">Listen to Article</h3>
+          <p class="ra-card-desc">Listen to the explanation of this article. Code blocks are skipped.</p>
+        </div>
+      </div>
+
+      <div class="ra-ready">
+        <div class="ra-player">
+          <button type="button" class="ra-play" aria-label="Play article">
+            <svg class="ra-icon-play" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M8 5.5v13l11-6.5z"/></svg>
+            <svg class="ra-icon-pause" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M7 5h3.5v14H7zM13.5 5H17v14h-3.5z"/></svg>
+          </button>
+          <div class="ra-track">
+            <div class="ra-meter" role="progressbar" aria-label="Listening progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><span class="ra-meter-fill"></span></div>
+            <span class="ra-time" title="Estimated. Browser speech does not report an exact duration."></span>
+          </div>
+          <button type="button" class="ra-stop" aria-label="Stop listening" disabled>
+            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="6.5" y="6.5" width="11" height="11" rx="1.5"/></svg>
+          </button>
+        </div>
+
+        <div class="ra-controls">
+          <label class="ra-field ra-field-rate">
+            <span class="ra-field-label">Speed</span>
+            <select class="ra-rate">
+              <option value="0.75">0.75×</option>
+              <option value="1" selected>1×</option>
+              <option value="1.25">1.25×</option>
+              <option value="1.5">1.5×</option>
+              <option value="2">2×</option>
+            </select>
+          </label>
+        </div>
+
+        <label class="ra-check"><input type="checkbox" class="ra-follow" checked> Highlight and follow along</label>
+        <p class="ra-status" role="status" aria-live="polite">Ready</p>
+
+        <p class="ra-tip">
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M9 18h6M10 21h4"/><path d="M12 3a6 6 0 0 0-3.5 10.9V16h7v-2.1A6 6 0 0 0 12 3z"/></svg>
+          <span><strong>Tip:</strong> Headings and explanations are read aloud; code is skipped. Read in Google UK English Male on Chrome; other browsers use their closest British English voice.</span>
+        </p>
+      </div>
+
+      <p class="ra-unsupported" hidden>Listening isn&#8217;t available in this browser. The article itself works as usual.</p>
+    </section>
+
+    <section class="ra-card ra-jump" aria-labelledby="reading-assistant-sections" hidden>
+      <h3 class="ra-card-title" id="reading-assistant-sections">Jump to Section</h3>
+      <ol class="ra-sections"></ol>
+    </section>
+
+    <section class="ra-card ra-info" aria-labelledby="reading-assistant-info">
+      <h3 class="ra-card-title" id="reading-assistant-info">Page Info</h3>
+      <ul class="ra-info-list">
+        <li>
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+          <span title="Estimated at 220 words per minute">~3 min read</span>
+        </li>
+        <li>
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h6"/></svg>
+          <span title="Prose only; code is not counted">~683 words</span>
+        </li>
+        <li>
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="4" y="5" width="16" height="16" rx="2"/><path d="M16 3v4M8 3v4M4 10h16"/></svg>
+          <span>Last updated <time datetime="2026-11-11">Nov 11, 2026</time></span>
+        </li>
+      </ul>
+    </section>
+  </div>
+</aside>
+  </div>
+  <footer class="docs-footer">© 2026 Ayush Nigam · <a href="../../index.html">Home</a></footer>
+  <script src="../../../../_/js/reading-assistant.js?v=2" defer></script>
+  <script src="../../../../_/js/site.js?v=15" defer></script>
+</body>
+</html>

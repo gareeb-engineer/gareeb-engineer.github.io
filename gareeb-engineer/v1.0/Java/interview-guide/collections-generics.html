@@ -1,0 +1,1330 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>Collections and Generics · Ayush Nigam</title>
+  
+  <link rel="preload" href="../../../../_/fonts/inter-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="../../../../_/css/site.css?v=21">
+</head>
+<body class="docs-page">
+  <a class="skip-link" href="#article-main">Skip to content</a>
+  <header class="docs-header">
+    <div class="docs-header-inner">
+      <a class="docs-logo" href="../../index.html"><span class="docs-logo-mark">AN</span><span>Ayush Nigam</span></a>
+          <nav class="header-adoc-nav docs-toplinks" aria-label="Header links" data-header-source-url="../../headers/header-links.html">
+            <div class="header-adoc-content"><div class="ulist header-menu-links">
+<ul>
+<li>
+<p><a href="contact.html" class="xref page">Contact</a></p>
+</li>
+<li>
+<p><a href="https://www.linkedin.com/in/the-ayush-nigam/">LinkedIn</a></p>
+</li>
+<li>
+<p><a href="https://github.com/gareeb-engineer">GitHub</a></p>
+</li>
+</ul>
+</div>
+</div>
+          </nav>
+      <a class="header-avatar" href="../../index.html" aria-hidden="true" tabindex="-1"><img src="../../../../_/img/profile-photo.png" alt="Ayush Nigam profile photo" width="36" height="36"></a>
+<button type="button" class="mobile-nav-toggle" aria-label="Toggle documentation navigation" aria-expanded="false" aria-controls="docs-sidebar">☰ Menu</button>
+      <span class="read-progress-label" aria-hidden="true" hidden>Reading <span class="read-progress-value">0%</span></span>
+    </div>
+    <div class="read-progress" role="progressbar" aria-label="Article reading progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" hidden><span class="read-progress-fill"></span></div>
+  </header>
+  <div class="docs-shell">
+    <aside class="docs-sidebar" id="docs-sidebar" aria-label="Documentation sidebar">
+      <div class="sidebar-inner">
+      <div class="sidebar-top"><span class="sidebar-eyebrow">ENGINEERING LIBRARY</span></div>
+      <input id="nav-filter" class="nav-filter" type="search" placeholder="Filter pages…" aria-label="Filter navigation" autocomplete="off">
+      <nav aria-label="Documentation pages"><ul class="nav-tree">
+  <li class="nav-item nav-parent">
+        <div class="nav-group">
+          <button type="button" class="nav-row nav-toggle" aria-expanded="true">
+            <span class="nav-label">Java</span>
+            <span class="nav-chevron" aria-hidden="true">▾</span>
+          </button>
+          <div class="nav-children">
+            <ul class="nav-tree">
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../index.html" title="Open Java overview">Overview</a>
+      </div>
+  </li>
+  <li class="nav-item nav-parent">
+        <div class="nav-group nav-linked-group">
+          <div class="nav-row nav-linked-row">
+            <a href="index.html">Java Interview Guide</a>
+            <button type="button" class="nav-toggle nav-linked-toggle" aria-expanded="true" aria-label="Toggle subtopics">
+              <span class="nav-chevron" aria-hidden="true">▾</span>
+            </button>
+          </div>
+          <div class="nav-children"><ul class="nav-tree">
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="core-java-oop.html">Core Java and OOP</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="collections-generics.html" class="is-current" aria-current="page">Collections and Generics</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="java8-streams-functional.html">Java 8: Lambdas, Streams, Optional</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="modern-java.html">Modern Java (11 to 25)</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="concurrency.html">Concurrency and Multithreading</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="jvm-memory-gc.html">JVM, Memory and GC</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="spring-core.html">Spring Core: IoC, DI, AOP</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="spring-boot.html">Spring Boot</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="rest-spring-mvc.html">REST APIs and Spring MVC</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="jpa-hibernate-transactions.html">JPA, Hibernate, Transactions</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="spring-security.html">Spring Security, JWT, OAuth2</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="microservices.html">Microservices</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="coding-round.html">Coding Round in Java</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="testing.html">Testing</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="senior-scenarios.html">Production Scenarios and Behavioural</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="spring-ai.html">Spring AI and GenAI</a>
+      </div>
+  </li>
+</ul>
+</div>
+        </div>
+  </li>
+</ul>
+          </div>
+        </div>
+  </li>
+  <li class="nav-item nav-parent">
+        <div class="nav-group is-collapsed">
+          <button type="button" class="nav-row nav-toggle" aria-expanded="false">
+            <span class="nav-label">Architecture Diagram&#8217;s</span>
+            <span class="nav-chevron" aria-hidden="true">▸</span>
+          </button>
+          <div class="nav-children">
+            <ul class="nav-tree">
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Arcitecture-diagram/index.html" title="Open Architecture Diagram’s overview">Overview</a>
+      </div>
+  </li>
+</ul>
+          </div>
+        </div>
+  </li>
+  <li class="nav-item nav-parent">
+        <div class="nav-group is-collapsed">
+          <button type="button" class="nav-row nav-toggle" aria-expanded="false">
+            <span class="nav-label">References</span>
+            <span class="nav-chevron" aria-hidden="true">▸</span>
+          </button>
+          <div class="nav-children">
+            <ul class="nav-tree">
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../DevOps-Refs/index.html" title="Open References overview">Overview</a>
+      </div>
+  </li>
+</ul>
+          </div>
+        </div>
+  </li>
+  <li class="nav-item nav-parent">
+        <div class="nav-group is-collapsed">
+          <button type="button" class="nav-row nav-toggle" aria-expanded="false">
+            <span class="nav-label">Data Structure</span>
+            <span class="nav-chevron" aria-hidden="true">▸</span>
+          </button>
+          <div class="nav-children">
+            <ul class="nav-tree">
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Data-Structure/index.html" title="Open Data Structure overview">Overview</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Data-Structure/arrays/index.html">Arrays</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Data-Structure/linked-list/index.html">Linked Lists</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Data-Structure/stacks-n-queue/index.html">Stacks</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Data-Structure/trees/index.html">Trees</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Data-Structure/hash-map/index.html">Hash Map</a>
+      </div>
+  </li>
+  <li class="nav-item nav-parent">
+        <div class="nav-group nav-linked-group is-collapsed">
+          <div class="nav-row nav-linked-row">
+            <a href="../../Data-Structure/dynamic-programming/index.html">Dynamic Programming</a>
+            <button type="button" class="nav-toggle nav-linked-toggle" aria-expanded="false" aria-label="Toggle subtopics">
+              <span class="nav-chevron" aria-hidden="true">▸</span>
+            </button>
+          </div>
+          <div class="nav-children"><ul class="nav-tree">
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Data-Structure/dynamic-programming/fibonacci-series.html">Fibonacci Series</a>
+      </div>
+  </li>
+</ul>
+</div>
+        </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Data-Structure/graphs/index.html">Graphs</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Data-Structure/backtracking/index.html">Backtracking</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Data-Structure/pattern-printing/index.html">Pattern Printing</a>
+      </div>
+  </li>
+  <li class="nav-item nav-parent">
+        <div class="nav-group nav-linked-group is-collapsed">
+          <div class="nav-row nav-linked-row">
+            <a href="../../Data-Structure/recursion/index.html">Recursion</a>
+            <button type="button" class="nav-toggle nav-linked-toggle" aria-expanded="false" aria-label="Toggle subtopics">
+              <span class="nav-chevron" aria-hidden="true">▸</span>
+            </button>
+          </div>
+          <div class="nav-children"><ul class="nav-tree">
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Data-Structure/recursion/sum-of-all-element.html">Sum of all elements</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Data-Structure/recursion/all-indices-of-array.html">All indices of array</a>
+      </div>
+  </li>
+</ul>
+</div>
+        </div>
+  </li>
+</ul>
+          </div>
+        </div>
+  </li>
+  <li class="nav-item nav-parent">
+        <div class="nav-group is-collapsed">
+          <button type="button" class="nav-row nav-toggle" aria-expanded="false">
+            <span class="nav-label">Low Level Design</span>
+            <span class="nav-chevron" aria-hidden="true">▸</span>
+          </button>
+          <div class="nav-children">
+            <ul class="nav-tree">
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Low-Level-Design/index.html" title="Open Low Level Design overview">Overview</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Low-Level-Design/design-principles.html">Design Principles</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Low-Level-Design/solid-principles.html">SOLID Principles</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Low-Level-Design/design-patterns.html">Gang of Four Design Patterns</a>
+      </div>
+  </li>
+</ul>
+          </div>
+        </div>
+  </li>
+</ul>
+</nav>
+      </div>
+    </aside>
+    <main id="article-main" class="docs-article">
+      <nav class="breadcrumbs" aria-label="Breadcrumb"><a href="../../index.html">Home</a><span aria-hidden="true">/</span><a href="index.html">Java Interview Guide</a><span aria-hidden="true">/</span><a href="collections-generics.html">Collections and Generics</a></nav>
+      <article class="article-body" data-reading-progress>
+        <header class="article-header">
+          <h1>Collections and Generics</h1>
+          
+          <p class="article-subtitle">HashMap and ConcurrentHashMap internals, choosing the right List, Set, Map and Queue, iterator behaviour, and generics with wildcards and type erasure.</p>
+          <ul class="article-chips">
+            <li class="chip chip-difficulty chip-medium">Medium</li><li class="chip chip-tag">Java</li><li class="chip chip-tag">Interview Preparation</li><li class="chip chip-tag">Collections</li><li class="chip chip-tag">Generics</li>
+          </ul>
+          <div class="article-meta">
+            <span class="article-meta-item" title="Estimated at 220 words per minute">
+              <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+              ~7 min read
+            </span>
+            <span class="article-meta-item">
+              <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="4" y="5" width="16" height="16" rx="2"/><path d="M16 3v4M8 3v4M4 10h16"/></svg>
+              Updated <time datetime="2026-11-11">Nov 11, 2026</time>
+            </span>
+            <button type="button" class="ra-open" aria-controls="reading-assistant" aria-expanded="false" hidden>
+              <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/></svg>
+              Listen
+            </button>
+          </div>
+        </header>
+        <div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>Collections is the most predictable topic in a Java interview.
+"How does HashMap work internally?" is asked at nearly every level, and the follow-ups go deep: collisions, resizing, treeification, thread safety and why <code>ConcurrentHashMap</code> rejects <code>null</code>.
+This page also covers generics, because questions about <code>List&lt;? extends T&gt;</code> usually follow collection questions.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_at_a_glance"><a class="anchor" href="#_at_a_glance"></a>At a glance</h2>
+<div class="sectionbody">
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 75%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Weightage</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>10 / 10</strong></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Who gets asked</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Everyone. Mid and senior candidates are expected to know internals.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Preparation time</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">5 to 6 hours</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Handbook questions</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Q16-Q25</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Builds on</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="core-java-oop.html" class="xref page">Core Java</a>: <code>equals</code>/<code>hashCode</code>, <code>Comparable</code>/<code>Comparator</code></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_the_collection_hierarchy"><a class="anchor" href="#_the_collection_hierarchy"></a>The collection hierarchy</h2>
+<div class="sectionbody">
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-text hljs" data-lang="text">Iterable
+└── Collection
+    ├── List        ArrayList, LinkedList, CopyOnWriteArrayList, (Vector, Stack: legacy)
+    ├── Set         HashSet, LinkedHashSet, TreeSet (SortedSet/NavigableSet), EnumSet
+    ├── Queue       PriorityQueue, ArrayDeque, LinkedList, BlockingQueue implementations
+    │   └── Deque   ArrayDeque, LinkedList, ConcurrentLinkedDeque
+    └── SequencedCollection (Java 21): common first/last operations for ordered collections
+
+Map (not a Collection)
+    HashMap, LinkedHashMap, TreeMap (SortedMap/NavigableMap), EnumMap, WeakHashMap,
+    IdentityHashMap, ConcurrentHashMap, ConcurrentSkipListMap, (Hashtable: legacy)</code></pre>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_which_one_to_choose"><a class="anchor" href="#_which_one_to_choose"></a>Which one to choose</h3>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 28.5714%;">
+<col style="width: 28.5714%;">
+<col style="width: 42.8572%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Need</th>
+<th class="tableblock halign-left valign-top">Choose</th>
+<th class="tableblock halign-left valign-top">Why</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A list, mostly read by index or appended</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>ArrayList</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Contiguous array, O(1) index access, cache-friendly. The default list.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A stack or a FIFO queue</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>ArrayDeque</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Faster than <code>Stack</code> (synchronized, legacy) and <code>LinkedList</code> (node allocation).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Unique elements, no order needed</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>HashSet</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Expected O(1) <code>add</code>/<code>contains</code>.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Unique elements in insertion order</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>LinkedHashSet</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Hash set plus a linked list through the entries.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Sorted unique elements, range queries</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>TreeSet</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Red-black tree, O(log n), <code>floor</code>, <code>ceiling</code>, <code>headSet</code>, <code>tailSet</code>.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Key-value lookup</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>HashMap</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Expected O(1) <code>get</code>/<code>put</code>.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Key-value in insertion or access order, LRU cache</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>LinkedHashMap</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>accessOrder=true</code> plus <code>removeEldestEntry</code> gives an LRU cache.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Sorted keys, "nearest key" lookups</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>TreeMap</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>floorKey</code>, <code>ceilingKey</code>, <code>subMap</code>, all O(log n).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Always take the smallest or largest next</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>PriorityQueue</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Binary heap: O(log n) <code>offer</code>/<code>poll</code>, O(1) <code>peek</code>.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Key-value shared between threads</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>ConcurrentHashMap</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Fine-grained locking, atomic compound operations.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect2">
+<h3 id="_time_complexity"><a class="anchor" href="#_time_complexity"></a>Time complexity</h3>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 16.6666%;">
+<col style="width: 16.6666%;">
+<col style="width: 16.6666%;">
+<col style="width: 16.6669%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Collection</th>
+<th class="tableblock halign-left valign-top">Get / contains</th>
+<th class="tableblock halign-left valign-top">Add</th>
+<th class="tableblock halign-left valign-top">Remove</th>
+<th class="tableblock halign-left valign-top">Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>ArrayList</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">O(1) by index, O(n) contains</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">O(1) amortised at end</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">O(n)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Middle insert shifts elements</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>LinkedList</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">O(n)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">O(1) at ends</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">O(1) at a known node</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Finding the node is O(n)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>HashMap</code>/<code>HashSet</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">O(1) expected</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">O(1) expected</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">O(1) expected</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">O(log n) worst case per bucket after treeification</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>TreeMap</code>/<code>TreeSet</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">O(log n)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">O(log n)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">O(log n)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Sorted</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>PriorityQueue</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">O(1) peek, O(n) contains</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">O(log n)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">O(log n) poll</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Iteration is <strong>not</strong> sorted</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>ArrayDeque</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">O(1) at ends</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">O(1) at ends</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">O(1) at ends</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">No <code>null</code> elements</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_how_hashmap_works_internally"><a class="anchor" href="#_how_hashmap_works_internally"></a>How HashMap works internally</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>This is the single most important answer on the page.
+Practise saying it in under two minutes, in this order.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><strong>Structure.</strong> A <code>HashMap</code> holds an array of buckets (<code>Node&lt;K,V&gt;[] table</code>). Each node stores <code>hash</code>, <code>key</code>, <code>value</code> and <code>next</code>.</p>
+</li>
+<li>
+<p><strong>Hashing.</strong> On <code>put(key, value)</code> it computes <code>key.hashCode()</code>, then spreads the high bits into the low bits: <code>hash = h ^ (h &gt;&gt;&gt; 16)</code>. This reduces collisions for keys whose hash codes differ only in high bits.</p>
+</li>
+<li>
+<p><strong>Index.</strong> The bucket index is <code>(n - 1) &amp; hash</code>, where <code>n</code> is the table length. <code>n</code> is always a power of two, so this is a fast modulo.</p>
+</li>
+<li>
+<p><strong>Collision.</strong> If the bucket is empty, the node is placed there. Otherwise it walks the bucket: if a node has the same hash <strong>and</strong> an equal key (<code>==</code> or <code>equals</code>), the value is replaced; otherwise the new node is appended.</p>
+</li>
+<li>
+<p><strong>Treeification (Java 8+).</strong> When one bucket holds more than 8 nodes (<code>TREEIFY_THRESHOLD</code>) <strong>and</strong> the table has at least 64 buckets (<code>MIN_TREEIFY_CAPACITY</code>), the list becomes a red-black tree, so the worst case per bucket drops from O(n) to O(log n). If the table is smaller than 64, the map resizes instead. A tree turns back into a list when it shrinks to 6 nodes.</p>
+</li>
+<li>
+<p><strong>Resize.</strong> The default capacity is 16 and the load factor is 0.75, so the first resize happens when the 13th entry is added (16 × 0.75 = 12). Resizing doubles the table. Because the size is a power of two, each node either stays at index <code>i</code> or moves to <code>i + oldCapacity</code>, so the map does not need to recompute every hash.</p>
+</li>
+<li>
+<p><strong><code>get(key)</code></strong> repeats steps 2 to 4: hash, index, then compare hash and <code>equals</code> within the bucket.</p>
+</li>
+</ol>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">Map&lt;String, Integer&gt; counts = new HashMap&lt;&gt;();   // table is created lazily on first put
+
+counts.put("java", 1);        // hash("java") -&gt; bucket index -&gt; new node
+counts.put("java", 2);        // same key: value replaced, returns old value 1
+counts.merge("java", 1, Integer::sum);           // 3, atomic-looking but NOT thread-safe
+counts.getOrDefault("go", 0); // 0
+counts.computeIfAbsent("spring", k -&gt; 0);        // inserts 0 if absent
+
+// Pre-size when you know the number of entries, to avoid repeated resizing.
+Map&lt;String, Integer&gt; big = HashMap.newHashMap(10_000);   // Java 19+; accounts for load factor</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Other facts:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>One <code>null</code> key is allowed (it always goes to bucket 0). Any number of <code>null</code> values are allowed.</p>
+</li>
+<li>
+<p>Iteration order is not defined and can change after a resize.</p>
+</li>
+<li>
+<p><code>HashMap</code> is not thread-safe. Concurrent <code>put</code> calls can lose updates or corrupt the structure. (Before Java 8, a concurrent resize could even create a cycle and an infinite loop.)</p>
+</li>
+<li>
+<p><code>HashSet</code> is a <code>HashMap</code> underneath: elements are keys, and every value is the same dummy object.</p>
+</li>
+</ul>
+</div>
+<details>
+<summary class="title">Why does a poor <code>hashCode()</code> hurt so much?</summary>
+<div class="content">
+<div class="paragraph">
+<p>If every key returns the same hash code, every entry goes to one bucket.
+Before Java 8 that made lookups O(n).
+With treeification it becomes O(log n), but only if keys are <code>Comparable</code>; otherwise the tree falls back to slower tie-breaking.
+A good <code>hashCode</code> spreads values across all 32 bits, which <code>Objects.hash</code> and records do well enough.</p>
+</div>
+</div>
+</details>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_concurrenthashmap"><a class="anchor" href="#_concurrenthashmap"></a>ConcurrentHashMap</h2>
+<div class="sectionbody">
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 40%;">
+<col style="width: 40%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top"></th>
+<th class="tableblock halign-left valign-top"><code>HashMap</code></th>
+<th class="tableblock halign-left valign-top"><code>ConcurrentHashMap</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Thread-safe</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">No</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Yes</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>null</code> keys/values</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Allowed</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Not allowed</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Locking</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">None</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">CAS for an empty bucket; <code>synchronized</code> on the first node of a non-empty bucket</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Iterators</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Fail-fast</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Weakly consistent, never throw <code>ConcurrentModificationException</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Reads</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Plain</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Non-blocking (volatile reads)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>size()</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Exact</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">An estimate while other threads are writing; use <code>mappingCount()</code> for large maps</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>How it changed:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Java 7</strong>: the map was split into 16 <code>Segment</code> objects, each a lock. At most 16 writers could proceed at once.</p>
+</li>
+<li>
+<p><strong>Java 8+</strong>: segments are gone. Each bucket is locked independently: an insert into an empty bucket uses a compare-and-swap (CAS) without locking; an insert into an occupied bucket synchronizes only on that bucket&#8217;s first node. Resizing is shared by the writing threads.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p><strong>Why no <code>null</code>?</strong>
+In a concurrent map, <code>get(key)</code> returning <code>null</code> must mean "absent".
+If <code>null</code> values were allowed, you could not tell "absent" from "mapped to null", and checking with <code>containsKey</code> afterwards is not atomic because another thread may change the map in between.</p>
+</div>
+<div class="paragraph">
+<p><strong>Compound operations.</strong>
+Individual calls are thread-safe, but a sequence of calls is not:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">// WRONG: race between containsKey and put. Two threads can both insert.
+if (!map.containsKey(user)) {
+    map.put(user, new Session(user));
+}
+
+// RIGHT: one atomic operation.
+map.computeIfAbsent(user, Session::new);
+
+// Atomic counter per key.
+ConcurrentHashMap&lt;String, LongAdder&gt; hits = new ConcurrentHashMap&lt;&gt;();
+hits.computeIfAbsent(page, k -&gt; new LongAdder()).increment();</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Keep the function passed to <code>compute*</code> short and do not modify the same map inside it; it runs while the bucket is locked.</p>
+</div>
+<div class="sect2">
+<h3 id="_other_thread_safe_options"><a class="anchor" href="#_other_thread_safe_options"></a>Other thread-safe options</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><code>Collections.synchronizedMap(map)</code> locks the whole map for every call. Iteration still needs manual <code>synchronized (map) { ... }</code>.</p>
+</li>
+<li>
+<p><code>Hashtable</code> is legacy, fully synchronized, and rejects <code>null</code>.</p>
+</li>
+<li>
+<p><code>CopyOnWriteArrayList</code> copies the whole array on every write. Good for lists that are read constantly and changed rarely, such as listener lists.</p>
+</li>
+<li>
+<p><code>ConcurrentSkipListMap</code> is a sorted, concurrent map (the concurrent counterpart to <code>TreeMap</code>).</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_arraylist_versus_linkedlist"><a class="anchor" href="#_arraylist_versus_linkedlist"></a>ArrayList versus LinkedList</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><code>ArrayList</code> uses a resizable array. Its default capacity is 10, created on the first <code>add</code>, and it grows by about 1.5 times. Index access is O(1); inserting in the middle shifts elements; appending is amortised O(1).</p>
+</li>
+<li>
+<p><code>LinkedList</code> is a doubly linked list. Insertion is O(1) only if you already hold the node (through an iterator). Reaching the node is O(n), and each node costs an extra object with two pointers.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>In practice <code>ArrayList</code> wins almost every benchmark because arrays are cache-friendly.
+Say so, and mention that <code>ArrayDeque</code> is the better queue.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_fail_fast_versus_fail_safe_iterators"><a class="anchor" href="#_fail_fast_versus_fail_safe_iterators"></a>Fail-fast versus fail-safe iterators</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Most <code>java.util</code> collections keep a <code>modCount</code>.
+The iterator remembers it, and if the collection is structurally modified other than through the iterator, the next <code>next()</code> throws <code>ConcurrentModificationException</code>.
+This is a best-effort bug detector, not a thread-safety guarantee.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">List&lt;Integer&gt; numbers = new ArrayList&lt;&gt;(List.of(1, 2, 3, 4));
+
+for (Integer n : numbers) {
+    if (n % 2 == 0) numbers.remove(n);   // ConcurrentModificationException
+}
+
+numbers.removeIf(n -&gt; n % 2 == 0);       // correct and clear
+
+Iterator&lt;Integer&gt; it = numbers.iterator();
+while (it.hasNext()) {
+    if (it.next() % 2 == 0) it.remove(); // also correct
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Concurrent collections (<code>ConcurrentHashMap</code>, <code>CopyOnWriteArrayList</code>) have <strong>weakly consistent</strong> (sometimes called fail-safe) iterators.
+They never throw <code>ConcurrentModificationException</code>, and they may or may not reflect changes made after the iterator was created.
+<code>CopyOnWriteArrayList</code> iterates over a snapshot.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_immutable_versus_unmodifiable_collections"><a class="anchor" href="#_immutable_versus_unmodifiable_collections"></a>Immutable versus unmodifiable collections</h2>
+<div class="sectionbody">
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">List&lt;String&gt; source = new ArrayList&lt;&gt;(List.of("a", "b"));
+
+List&lt;String&gt; view = Collections.unmodifiableList(source); // read-only VIEW
+source.add("c");
+System.out.println(view);           // [a, b, c]: the view reflects the change
+
+List&lt;String&gt; copy = List.copyOf(source);                   // truly immutable copy
+List&lt;String&gt; literal = List.of("x", "y");                  // truly immutable, rejects null
+List&lt;String&gt; streamed = source.stream().toList();          // unmodifiable (Java 16+)</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><code>List.of</code>, <code>Set.of</code> and <code>Map.of</code> throw <code>NullPointerException</code> for <code>null</code> elements, and <code>Set.of</code>/<code>Map.of</code> throw <code>IllegalArgumentException</code> for duplicates.
+Their iteration order is deliberately unspecified.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_sequenced_collections_java_21"><a class="anchor" href="#_sequenced_collections_java_21"></a>Sequenced collections (Java 21)</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Java 21 added <code>SequencedCollection</code>, <code>SequencedSet</code> and <code>SequencedMap</code>, which give ordered collections common methods: <code>getFirst()</code>, <code>getLast()</code>, <code>addFirst()</code>, <code>addLast()</code>, <code>removeFirst()</code>, <code>removeLast()</code> and <code>reversed()</code>.
+<code>List</code>, <code>Deque</code>, <code>LinkedHashSet</code>, <code>SortedSet</code>, <code>LinkedHashMap</code> and <code>SortedMap</code> implement them.
+Before this, getting the last element of a <code>LinkedHashSet</code> needed a full iteration.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_lru_cache_with_linkedhashmap"><a class="anchor" href="#_lru_cache_with_linkedhashmap"></a>LRU cache with LinkedHashMap</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>This is a common coding question.
+The short answer uses <code>LinkedHashMap</code> in access order:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">class LruCache&lt;K, V&gt; extends LinkedHashMap&lt;K, V&gt; {
+    private final int capacity;
+
+    LruCache(int capacity) {
+        super(16, 0.75f, true);        // true = access order: get() moves the entry to the end
+        this.capacity = capacity;
+    }
+
+    @Override
+    protected boolean removeEldestEntry(Map.Entry&lt;K, V&gt; eldest) {
+        return size() &gt; capacity;      // evict the least recently used entry
+    }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>If the interviewer asks you to build it from scratch, use a <code>HashMap&lt;K, Node&gt;</code> plus a doubly linked list, which gives O(1) <code>get</code> and <code>put</code>.
+It is not thread-safe; wrap access in a lock or use a cache library such as Caffeine in production.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_priorityqueue"><a class="anchor" href="#_priorityqueue"></a>PriorityQueue</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><code>PriorityQueue</code> is a binary min-heap by default.
+The head is the smallest element; iteration order is <strong>not</strong> sorted.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">// Top 3 largest numbers: keep a min-heap of size 3.
+PriorityQueue&lt;Integer&gt; heap = new PriorityQueue&lt;&gt;();
+for (int n : new int[]{5, 1, 9, 3, 7, 8}) {
+    heap.offer(n);
+    if (heap.size() &gt; 3) heap.poll();   // drop the smallest
+}
+System.out.println(heap);              // contains 7, 8, 9 in heap order
+
+PriorityQueue&lt;Task&gt; byPriority =
+    new PriorityQueue&lt;&gt;(Comparator.comparingInt(Task::priority).reversed());</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This runs in O(n log k) time and O(k) memory, which beats sorting when k is small.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_generics"><a class="anchor" href="#_generics"></a>Generics</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Generics give compile-time type safety and remove casts.</p>
+</div>
+<div class="sect2">
+<h3 id="_type_erasure"><a class="anchor" href="#_type_erasure"></a>Type erasure</h3>
+<div class="paragraph">
+<p>The compiler checks generic types, then <strong>erases</strong> most of them: <code>List&lt;String&gt;</code> and <code>List&lt;Integer&gt;</code> are both <code>List</code> at runtime.
+This kept bytecode compatible with pre-Java 5 code.
+Consequences:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>No <code>new T()</code> and no <code>new T[]</code>.</p>
+</li>
+<li>
+<p>No <code>instanceof List&lt;String&gt;</code> (only <code>instanceof List&lt;?&gt;</code>).</p>
+</li>
+<li>
+<p>No primitives as type arguments: <code>List&lt;int&gt;</code> is illegal. Use <code>List&lt;Integer&gt;</code> or <code>IntStream</code>.</p>
+</li>
+<li>
+<p>You cannot overload <code>void process(List&lt;String&gt;)</code> and <code>void process(List&lt;Integer&gt;)</code>: they have the same erasure.</p>
+</li>
+<li>
+<p>Static fields are shared by all parameterisations.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_invariance_and_wildcards"><a class="anchor" href="#_invariance_and_wildcards"></a>Invariance and wildcards</h3>
+<div class="paragraph">
+<p><code>List&lt;Integer&gt;</code> is <strong>not</strong> a <code>List&lt;Number&gt;</code>, even though <code>Integer</code> is a <code>Number</code>.
+If it were, this would compile and break type safety:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">List&lt;Integer&gt; ints = new ArrayList&lt;&gt;();
+List&lt;Number&gt; nums = ints;      // does not compile, and this is why:
+nums.add(3.14);                // a Double inside a List&lt;Integer&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Wildcards express the variance you need.
+Remember <strong>PECS: Producer Extends, Consumer Super.</strong></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">// Producer: we only READ Numbers out of the list.
+static double sum(List&lt;? extends Number&gt; numbers) {
+    double total = 0;
+    for (Number n : numbers) total += n.doubleValue();
+    return total;          // numbers.add(1) would not compile
+}
+
+// Consumer: we only WRITE Integers into the list.
+static void fill(List&lt;? super Integer&gt; target) {
+    for (int i = 0; i &lt; 3; i++) target.add(i);
+}
+
+sum(List.of(1, 2, 3));                 // List&lt;Integer&gt; works
+sum(List.of(1.5, 2.5));                // List&lt;Double&gt; works
+fill(new ArrayList&lt;Number&gt;());         // List&lt;Number&gt; works
+fill(new ArrayList&lt;Object&gt;());         // List&lt;Object&gt; works
+
+// Collections.copy uses both: public static &lt;T&gt; void copy(List&lt;? super T&gt; dest, List&lt;? extends T&gt; src)</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_bounded_type_parameters"><a class="anchor" href="#_bounded_type_parameters"></a>Bounded type parameters</h3>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">static &lt;T extends Comparable&lt;? super T&gt;&gt; T max(Collection&lt;? extends T&gt; items) {
+    Iterator&lt;? extends T&gt; it = items.iterator();
+    T best = it.next();
+    while (it.hasNext()) {
+        T next = it.next();
+        if (next.compareTo(best) &gt; 0) best = next;
+    }
+    return best;
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><code>T extends Comparable&lt;? super T&gt;</code> lets the method work for a class whose parent implements <code>Comparable</code>, for example <code>java.sql.Date</code> extending <code>java.util.Date</code>.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_practice_questions"><a class="anchor" href="#_practice_questions"></a>Practice questions</h2>
+<div class="sectionbody">
+<details>
+<summary class="title">Q1. Explain how <code>HashMap.put</code> and <code>get</code> work internally.</summary>
+<div class="content">
+<div class="paragraph">
+<p>Hash the key (<code>hashCode</code> with high bits spread in), pick the bucket with <code>(n - 1) &amp; hash</code>, then walk the bucket comparing hash and <code>equals</code>.
+Replace the value on a match, otherwise append a node.
+After the put, if size exceeds capacity × load factor (16 × 0.75 by default), double the table.
+A bucket with more than 8 nodes becomes a red-black tree when the table has at least 64 buckets.
+<code>get</code> repeats the hash, index and compare steps.</p>
+</div>
+</div>
+</details>
+<details>
+<summary class="title">Q2. What happens when two keys have the same hash code?</summary>
+<div class="content">
+<div class="paragraph">
+<p>They go to the same bucket.
+The map distinguishes them with <code>equals</code>, storing both as separate nodes in a list (or a tree once the bucket is large).
+Lookups for either key still work, just a little slower.</p>
+</div>
+</div>
+</details>
+<details>
+<summary class="title">Q3. Why is the table size always a power of two?</summary>
+<div class="content">
+<div class="paragraph">
+<p>So that <code>(n - 1) &amp; hash</code> gives the same result as <code>hash % n</code> but faster, and so that on resize each node either stays at its index or moves exactly <code>oldCapacity</code> positions, without rehashing.
+If you pass a capacity like 100 to the constructor, it is rounded up to 128.</p>
+</div>
+</div>
+</details>
+<details>
+<summary class="title">Q4. What happens if a key is mutated after it is put in a HashMap?</summary>
+<div class="content">
+<div class="paragraph">
+<p>Its hash code changes, but the node stays in the bucket chosen by the old hash.
+<code>get</code> with the mutated key looks in a different bucket and returns <code>null</code>; <code>get</code> with an equal copy of the old key finds the bucket but fails <code>equals</code>.
+The entry is effectively lost and leaks memory.
+Use immutable keys such as <code>String</code>, records or enums.</p>
+</div>
+</div>
+</details>
+<details>
+<summary class="title">Q5. HashMap versus ConcurrentHashMap versus Hashtable versus synchronizedMap?</summary>
+<div class="content">
+<div class="paragraph">
+<p><code>HashMap</code>: not thread-safe, allows one null key.
+<code>Hashtable</code> and <code>synchronizedMap</code>: one lock for the whole map, so threads queue up; iteration still needs external locking.
+<code>ConcurrentHashMap</code>: per-bucket locking with CAS, non-blocking reads, weakly consistent iterators, atomic <code>compute</code>/<code>merge</code>/<code>putIfAbsent</code>, and no nulls.</p>
+</div>
+</div>
+</details>
+<details>
+<summary class="title">Q6. Why does ConcurrentHashMap not allow null keys or values?</summary>
+<div class="content">
+<div class="paragraph">
+<p>Because <code>get</code> returning <code>null</code> must unambiguously mean "no mapping".
+In a concurrent setting you cannot follow up with <code>containsKey</code> to disambiguate, as the map may change between the two calls.</p>
+</div>
+</div>
+</details>
+<details>
+<summary class="title">Q7. Is <code>map.get()</code> followed by <code>map.put()</code> on a ConcurrentHashMap thread-safe?</summary>
+<div class="content">
+<div class="paragraph">
+<p>Each call is, but the pair is not.
+Two threads can both read the old value and both write, losing one update.
+Use <code>compute</code>, <code>merge</code>, <code>computeIfAbsent</code> or <code>putIfAbsent</code>, which run atomically per key.</p>
+</div>
+</div>
+</details>
+<details>
+<summary class="title">Q8. How does <code>HashSet</code> ensure uniqueness?</summary>
+<div class="content">
+<div class="paragraph">
+<p>It stores elements as keys of an internal <code>HashMap</code> with a shared dummy value.
+<code>add</code> returns <code>false</code> when <code>map.put</code> finds an existing equal key.
+So uniqueness depends entirely on correct <code>equals</code> and <code>hashCode</code>.</p>
+</div>
+</div>
+</details>
+<details>
+<summary class="title">Q9. <code>HashSet</code> versus <code>LinkedHashSet</code> versus <code>TreeSet</code>?</summary>
+<div class="content">
+<div class="paragraph">
+<p><code>HashSet</code>: O(1) expected, no order.
+<code>LinkedHashSet</code>: O(1) expected, insertion order, slightly more memory.
+<code>TreeSet</code>: O(log n), sorted by natural order or a comparator, supports range queries, does not allow <code>null</code> with natural ordering.
+<code>TreeSet</code> uses <code>compareTo</code>, not <code>equals</code>, to detect duplicates.</p>
+</div>
+</div>
+</details>
+<details>
+<summary class="title">Q10. What is <code>ConcurrentModificationException</code> and how do you avoid it?</summary>
+<div class="content">
+<div class="paragraph">
+<p>Thrown by fail-fast iterators when the collection is structurally modified during iteration by something other than the iterator.
+It happens even on a single thread, such as removing inside a for-each loop.
+Use <code>Iterator.remove</code>, <code>removeIf</code>, collect changes and apply them after the loop, or use a concurrent collection.</p>
+</div>
+</div>
+</details>
+<details>
+<summary class="title">Q11. Comparable versus Comparator, and how do you sort by two fields?</summary>
+<div class="content">
+<div class="paragraph">
+<p><code>Comparable</code> is the class&#8217;s natural order; <code>Comparator</code> is an external, swappable order.
+<code>employees.sort(Comparator.comparing(Employee::department).thenComparing(Employee::salary, Comparator.reverseOrder()));</code></p>
+</div>
+</div>
+</details>
+<details>
+<summary class="title">Q12. What is type erasure, and what can you not do because of it?</summary>
+<div class="content">
+<div class="paragraph">
+<p>Generic type arguments are checked at compile time and removed from the bytecode.
+You cannot create <code>new T()</code> or <code>new T[]</code>, check <code>instanceof List&lt;String&gt;</code>, use primitives as type arguments, or overload methods that differ only by type argument.</p>
+</div>
+</div>
+</details>
+<details>
+<summary class="title">Q13. Explain PECS with an example.</summary>
+<div class="content">
+<div class="paragraph">
+<p>Producer Extends, Consumer Super.
+<code>sum(List&lt;? extends Number&gt;)</code> reads from the list, so any list of a <code>Number</code> subtype works.
+<code>fill(List&lt;? super Integer&gt;)</code> writes integers, so a list of <code>Integer</code>, <code>Number</code> or <code>Object</code> works.
+<code>Collections.copy(List&lt;? super T&gt; dest, List&lt;? extends T&gt; src)</code> uses both.</p>
+</div>
+</div>
+</details>
+<details>
+<summary class="title">Q14. Why can&#8217;t you assign <code>List&lt;Integer&gt;</code> to <code>List&lt;Number&gt;</code>?</summary>
+<div class="content">
+<div class="paragraph">
+<p>Generics are invariant.
+If it were allowed, you could add a <code>Double</code> through the <code>List&lt;Number&gt;</code> reference into a list that other code believes holds only <code>Integer</code>.
+Use <code>List&lt;? extends Number&gt;</code> for read-only access.</p>
+</div>
+</div>
+</details>
+<details>
+<summary class="title">Q15. Unmodifiable view versus immutable collection?</summary>
+<div class="content">
+<div class="paragraph">
+<p><code>Collections.unmodifiableList</code> wraps the original; you cannot change it through the wrapper, but changes to the original show through.
+<code>List.copyOf</code> and <code>List.of</code> create independent collections that nobody can change.
+Use the immutable kind when you publish a collection to other threads or callers.</p>
+</div>
+</div>
+</details>
+<details>
+<summary class="title">Q16. How does PriorityQueue work, and is its iteration order sorted?</summary>
+<div class="content">
+<div class="paragraph">
+<p>It is an array-backed binary heap.
+<code>offer</code> and <code>poll</code> are O(log n) because they sift up or down; <code>peek</code> is O(1).
+Only the head is guaranteed to be the minimum; <code>toString</code> and iteration show heap order, not sorted order.</p>
+</div>
+</div>
+</details>
+<details>
+<summary class="title">Q17. How would you implement an LRU cache?</summary>
+<div class="content">
+<div class="paragraph">
+<p>Quick version: extend <code>LinkedHashMap</code> with <code>accessOrder = true</code> and override <code>removeEldestEntry</code> to return <code>size() &gt; capacity</code>.
+From scratch: a <code>HashMap</code> from key to node plus a doubly linked list; move a node to the head on access and remove the tail when over capacity, all O(1).
+For production and concurrency, use Caffeine.</p>
+</div>
+</div>
+</details>
+<details>
+<summary class="title">Q18. What is the initial capacity of an ArrayList and how does it grow?</summary>
+<div class="content">
+<div class="paragraph">
+<p>An empty <code>new ArrayList&lt;&gt;()</code> shares an empty array; the first <code>add</code> allocates 10 slots.
+When full, it grows to about 1.5 times the old capacity (<code>old + (old &gt;&gt; 1)</code>) and copies the elements.
+Pass an initial capacity when you know the size, or call <code>ensureCapacity</code>.</p>
+</div>
+</div>
+</details>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_common_traps"><a class="anchor" href="#_common_traps"></a>Common traps</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p>Saying <code>HashMap</code> lookup is "always O(1)".</p>
+</li>
+<li>
+<p>Forgetting the 64-bucket condition for treeification.</p>
+</li>
+<li>
+<p>Claiming <code>ConcurrentHashMap</code> locks segments in Java 8+.</p>
+</li>
+<li>
+<p>Believing <code>Collections.unmodifiableList</code> is immutable.</p>
+</li>
+<li>
+<p>Comparing in a comparator with <code>a - b</code> (overflow).</p>
+</li>
+<li>
+<p>Removing from a list inside a for-each loop.</p>
+</li>
+<li>
+<p>Using <code>LinkedList</code> "because inserts are O(1)".</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_follow_ups_to_expect"><a class="anchor" href="#_follow_ups_to_expect"></a>Follow-ups to expect</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p>"What changed in HashMap in Java 8 and why?"</p>
+</li>
+<li>
+<p>"How would you make your custom class a good HashMap key?"</p>
+</li>
+<li>
+<p>"Your HashMap has millions of entries and lookups got slow. What do you check?" (Hash distribution, mutable keys, resizing, memory pressure and GC.)</p>
+</li>
+<li>
+<p>"How do <code>computeIfAbsent</code> and <code>merge</code> differ?"</p>
+</li>
+<li>
+<p>"Design a thread-safe cache with expiry."</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_quick_revision"><a class="anchor" href="#_quick_revision"></a>Quick revision</h2>
+<div class="sectionbody">
+<div class="ulist checklist">
+<ul class="checklist">
+<li>
+<p><i class="fa fa-square-o"></i> HashMap: hash spreading, index, collision, treeify (8 / 64 / 6), resize (16, 0.75, doubling)</p>
+</li>
+<li>
+<p><i class="fa fa-square-o"></i> ConcurrentHashMap: CAS + bucket lock, no nulls, atomic compound methods, weakly consistent iterators</p>
+</li>
+<li>
+<p><i class="fa fa-square-o"></i> Collection selection table and complexity table</p>
+</li>
+<li>
+<p><i class="fa fa-square-o"></i> Fail-fast versus weakly consistent iterators</p>
+</li>
+<li>
+<p><i class="fa fa-square-o"></i> Unmodifiable versus immutable</p>
+</li>
+<li>
+<p><i class="fa fa-square-o"></i> LRU cache with <code>LinkedHashMap</code></p>
+</li>
+<li>
+<p><i class="fa fa-square-o"></i> Type erasure limits, invariance, PECS</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Next: <a href="java8-streams-functional.html" class="xref page">Java 8: Lambdas, Streams and Optional</a>.</p>
+</div>
+</div>
+</div>
+      </article>
+      <div class="article-pagination">
+        <a class="prev" href="core-java-oop.html"><span>← Previous</span><strong>Core Java and OOP</strong></a>
+        <a class="next" href="java8-streams-functional.html"><span>Next →</span><strong>Java 8: Lambdas, Streams, Optional</strong></a>
+      </div>
+    </main>
+    <aside class="docs-toc reading-assistant" id="reading-assistant" aria-label="Reading assistant">
+  <div class="toc-inner ra-inner">
+    <div class="ra-head">
+      <h2 class="ra-title">Reading Assistant</h2>
+      <button type="button" class="ra-close" aria-label="Close reading assistant">
+        <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+    </div>
+
+    <section class="ra-card ra-listen" aria-labelledby="reading-assistant-listen" hidden>
+      <div class="ra-card-head">
+        <svg class="ra-card-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/></svg>
+        <div>
+          <h3 class="ra-card-title" id="reading-assistant-listen">Listen to Article</h3>
+          <p class="ra-card-desc">Listen to the explanation of this article. Code blocks are skipped.</p>
+        </div>
+      </div>
+
+      <div class="ra-ready">
+        <div class="ra-player">
+          <button type="button" class="ra-play" aria-label="Play article">
+            <svg class="ra-icon-play" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M8 5.5v13l11-6.5z"/></svg>
+            <svg class="ra-icon-pause" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M7 5h3.5v14H7zM13.5 5H17v14h-3.5z"/></svg>
+          </button>
+          <div class="ra-track">
+            <div class="ra-meter" role="progressbar" aria-label="Listening progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><span class="ra-meter-fill"></span></div>
+            <span class="ra-time" title="Estimated. Browser speech does not report an exact duration."></span>
+          </div>
+          <button type="button" class="ra-stop" aria-label="Stop listening" disabled>
+            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="6.5" y="6.5" width="11" height="11" rx="1.5"/></svg>
+          </button>
+        </div>
+
+        <div class="ra-controls">
+          <label class="ra-field ra-field-rate">
+            <span class="ra-field-label">Speed</span>
+            <select class="ra-rate">
+              <option value="0.75">0.75×</option>
+              <option value="1" selected>1×</option>
+              <option value="1.25">1.25×</option>
+              <option value="1.5">1.5×</option>
+              <option value="2">2×</option>
+            </select>
+          </label>
+        </div>
+
+        <label class="ra-check"><input type="checkbox" class="ra-follow" checked> Highlight and follow along</label>
+        <p class="ra-status" role="status" aria-live="polite">Ready</p>
+
+        <p class="ra-tip">
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M9 18h6M10 21h4"/><path d="M12 3a6 6 0 0 0-3.5 10.9V16h7v-2.1A6 6 0 0 0 12 3z"/></svg>
+          <span><strong>Tip:</strong> Headings and explanations are read aloud; code is skipped. Read in Google UK English Male on Chrome; other browsers use their closest British English voice.</span>
+        </p>
+      </div>
+
+      <p class="ra-unsupported" hidden>Listening isn&#8217;t available in this browser. The article itself works as usual.</p>
+    </section>
+
+    <section class="ra-card ra-jump" aria-labelledby="reading-assistant-sections" hidden>
+      <h3 class="ra-card-title" id="reading-assistant-sections">Jump to Section</h3>
+      <ol class="ra-sections"></ol>
+    </section>
+
+    <section class="ra-card ra-info" aria-labelledby="reading-assistant-info">
+      <h3 class="ra-card-title" id="reading-assistant-info">Page Info</h3>
+      <ul class="ra-info-list">
+        <li>
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+          <span title="Estimated at 220 words per minute">~7 min read</span>
+        </li>
+        <li>
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h6"/></svg>
+          <span title="Prose only; code is not counted">~1,592 words</span>
+        </li>
+        <li>
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="4" y="5" width="16" height="16" rx="2"/><path d="M16 3v4M8 3v4M4 10h16"/></svg>
+          <span>Last updated <time datetime="2026-11-11">Nov 11, 2026</time></span>
+        </li>
+      </ul>
+    </section>
+  </div>
+</aside>
+  </div>
+  <footer class="docs-footer">© 2026 Ayush Nigam · <a href="../../index.html">Home</a></footer>
+  <script src="../../../../_/js/reading-assistant.js?v=2" defer></script>
+  <script src="../../../../_/js/site.js?v=15" defer></script>
+</body>
+</html>

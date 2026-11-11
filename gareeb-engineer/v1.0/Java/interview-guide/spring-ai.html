@@ -1,0 +1,1176 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>Spring AI and GenAI Integration · Ayush Nigam</title>
+  
+  <link rel="preload" href="../../../../_/fonts/inter-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="../../../../_/css/site.css?v=21">
+</head>
+<body class="docs-page">
+  <a class="skip-link" href="#article-main">Skip to content</a>
+  <header class="docs-header">
+    <div class="docs-header-inner">
+      <a class="docs-logo" href="../../index.html"><span class="docs-logo-mark">AN</span><span>Ayush Nigam</span></a>
+          <nav class="header-adoc-nav docs-toplinks" aria-label="Header links" data-header-source-url="../../headers/header-links.html">
+            <div class="header-adoc-content"><div class="ulist header-menu-links">
+<ul>
+<li>
+<p><a href="contact.html" class="xref page">Contact</a></p>
+</li>
+<li>
+<p><a href="https://www.linkedin.com/in/the-ayush-nigam/">LinkedIn</a></p>
+</li>
+<li>
+<p><a href="https://github.com/gareeb-engineer">GitHub</a></p>
+</li>
+</ul>
+</div>
+</div>
+          </nav>
+      <a class="header-avatar" href="../../index.html" aria-hidden="true" tabindex="-1"><img src="../../../../_/img/profile-photo.png" alt="Ayush Nigam profile photo" width="36" height="36"></a>
+<button type="button" class="mobile-nav-toggle" aria-label="Toggle documentation navigation" aria-expanded="false" aria-controls="docs-sidebar">☰ Menu</button>
+      <span class="read-progress-label" aria-hidden="true" hidden>Reading <span class="read-progress-value">0%</span></span>
+    </div>
+    <div class="read-progress" role="progressbar" aria-label="Article reading progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" hidden><span class="read-progress-fill"></span></div>
+  </header>
+  <div class="docs-shell">
+    <aside class="docs-sidebar" id="docs-sidebar" aria-label="Documentation sidebar">
+      <div class="sidebar-inner">
+      <div class="sidebar-top"><span class="sidebar-eyebrow">ENGINEERING LIBRARY</span></div>
+      <input id="nav-filter" class="nav-filter" type="search" placeholder="Filter pages…" aria-label="Filter navigation" autocomplete="off">
+      <nav aria-label="Documentation pages"><ul class="nav-tree">
+  <li class="nav-item nav-parent">
+        <div class="nav-group">
+          <button type="button" class="nav-row nav-toggle" aria-expanded="true">
+            <span class="nav-label">Java</span>
+            <span class="nav-chevron" aria-hidden="true">▾</span>
+          </button>
+          <div class="nav-children">
+            <ul class="nav-tree">
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../index.html" title="Open Java overview">Overview</a>
+      </div>
+  </li>
+  <li class="nav-item nav-parent">
+        <div class="nav-group nav-linked-group">
+          <div class="nav-row nav-linked-row">
+            <a href="index.html">Java Interview Guide</a>
+            <button type="button" class="nav-toggle nav-linked-toggle" aria-expanded="true" aria-label="Toggle subtopics">
+              <span class="nav-chevron" aria-hidden="true">▾</span>
+            </button>
+          </div>
+          <div class="nav-children"><ul class="nav-tree">
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="core-java-oop.html">Core Java and OOP</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="collections-generics.html">Collections and Generics</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="java8-streams-functional.html">Java 8: Lambdas, Streams, Optional</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="modern-java.html">Modern Java (11 to 25)</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="concurrency.html">Concurrency and Multithreading</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="jvm-memory-gc.html">JVM, Memory and GC</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="spring-core.html">Spring Core: IoC, DI, AOP</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="spring-boot.html">Spring Boot</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="rest-spring-mvc.html">REST APIs and Spring MVC</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="jpa-hibernate-transactions.html">JPA, Hibernate, Transactions</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="spring-security.html">Spring Security, JWT, OAuth2</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="microservices.html">Microservices</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="coding-round.html">Coding Round in Java</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="testing.html">Testing</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="senior-scenarios.html">Production Scenarios and Behavioural</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="spring-ai.html" class="is-current" aria-current="page">Spring AI and GenAI</a>
+      </div>
+  </li>
+</ul>
+</div>
+        </div>
+  </li>
+</ul>
+          </div>
+        </div>
+  </li>
+  <li class="nav-item nav-parent">
+        <div class="nav-group is-collapsed">
+          <button type="button" class="nav-row nav-toggle" aria-expanded="false">
+            <span class="nav-label">Architecture Diagram&#8217;s</span>
+            <span class="nav-chevron" aria-hidden="true">▸</span>
+          </button>
+          <div class="nav-children">
+            <ul class="nav-tree">
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Arcitecture-diagram/index.html" title="Open Architecture Diagram’s overview">Overview</a>
+      </div>
+  </li>
+</ul>
+          </div>
+        </div>
+  </li>
+  <li class="nav-item nav-parent">
+        <div class="nav-group is-collapsed">
+          <button type="button" class="nav-row nav-toggle" aria-expanded="false">
+            <span class="nav-label">References</span>
+            <span class="nav-chevron" aria-hidden="true">▸</span>
+          </button>
+          <div class="nav-children">
+            <ul class="nav-tree">
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../DevOps-Refs/index.html" title="Open References overview">Overview</a>
+      </div>
+  </li>
+</ul>
+          </div>
+        </div>
+  </li>
+  <li class="nav-item nav-parent">
+        <div class="nav-group is-collapsed">
+          <button type="button" class="nav-row nav-toggle" aria-expanded="false">
+            <span class="nav-label">Data Structure</span>
+            <span class="nav-chevron" aria-hidden="true">▸</span>
+          </button>
+          <div class="nav-children">
+            <ul class="nav-tree">
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Data-Structure/index.html" title="Open Data Structure overview">Overview</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Data-Structure/arrays/index.html">Arrays</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Data-Structure/linked-list/index.html">Linked Lists</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Data-Structure/stacks-n-queue/index.html">Stacks</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Data-Structure/trees/index.html">Trees</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Data-Structure/hash-map/index.html">Hash Map</a>
+      </div>
+  </li>
+  <li class="nav-item nav-parent">
+        <div class="nav-group nav-linked-group is-collapsed">
+          <div class="nav-row nav-linked-row">
+            <a href="../../Data-Structure/dynamic-programming/index.html">Dynamic Programming</a>
+            <button type="button" class="nav-toggle nav-linked-toggle" aria-expanded="false" aria-label="Toggle subtopics">
+              <span class="nav-chevron" aria-hidden="true">▸</span>
+            </button>
+          </div>
+          <div class="nav-children"><ul class="nav-tree">
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Data-Structure/dynamic-programming/fibonacci-series.html">Fibonacci Series</a>
+      </div>
+  </li>
+</ul>
+</div>
+        </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Data-Structure/graphs/index.html">Graphs</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Data-Structure/backtracking/index.html">Backtracking</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Data-Structure/pattern-printing/index.html">Pattern Printing</a>
+      </div>
+  </li>
+  <li class="nav-item nav-parent">
+        <div class="nav-group nav-linked-group is-collapsed">
+          <div class="nav-row nav-linked-row">
+            <a href="../../Data-Structure/recursion/index.html">Recursion</a>
+            <button type="button" class="nav-toggle nav-linked-toggle" aria-expanded="false" aria-label="Toggle subtopics">
+              <span class="nav-chevron" aria-hidden="true">▸</span>
+            </button>
+          </div>
+          <div class="nav-children"><ul class="nav-tree">
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Data-Structure/recursion/sum-of-all-element.html">Sum of all elements</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Data-Structure/recursion/all-indices-of-array.html">All indices of array</a>
+      </div>
+  </li>
+</ul>
+</div>
+        </div>
+  </li>
+</ul>
+          </div>
+        </div>
+  </li>
+  <li class="nav-item nav-parent">
+        <div class="nav-group is-collapsed">
+          <button type="button" class="nav-row nav-toggle" aria-expanded="false">
+            <span class="nav-label">Low Level Design</span>
+            <span class="nav-chevron" aria-hidden="true">▸</span>
+          </button>
+          <div class="nav-children">
+            <ul class="nav-tree">
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Low-Level-Design/index.html" title="Open Low Level Design overview">Overview</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Low-Level-Design/design-principles.html">Design Principles</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Low-Level-Design/solid-principles.html">SOLID Principles</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Low-Level-Design/design-patterns.html">Gang of Four Design Patterns</a>
+      </div>
+  </li>
+</ul>
+          </div>
+        </div>
+  </li>
+</ul>
+</nav>
+      </div>
+    </aside>
+    <main id="article-main" class="docs-article">
+      <nav class="breadcrumbs" aria-label="Breadcrumb"><a href="../../index.html">Home</a><span aria-hidden="true">/</span><a href="index.html">Java Interview Guide</a><span aria-hidden="true">/</span><a href="spring-ai.html">Spring AI and GenAI</a></nav>
+      <article class="article-body" data-reading-progress>
+        <header class="article-header">
+          <h1>Spring AI and GenAI Integration</h1>
+          
+          <p class="article-subtitle">ChatClient and ChatModel, prompts and structured output, embeddings and vector stores, retrieval-augmented generation, advisors and chat memory, tool calling and MCP, evaluation, security and production design.</p>
+          <ul class="article-chips">
+            <li class="chip chip-difficulty chip-medium">Medium</li><li class="chip chip-tag">Spring AI</li><li class="chip chip-tag">Interview Preparation</li><li class="chip chip-tag">RAG</li><li class="chip chip-tag">LLM</li><li class="chip chip-tag">Spring Boot</li>
+          </ul>
+          <div class="article-meta">
+            <span class="article-meta-item" title="Estimated at 220 words per minute">
+              <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+              ~8 min read
+            </span>
+            <span class="article-meta-item">
+              <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="4" y="5" width="16" height="16" rx="2"/><path d="M16 3v4M8 3v4M4 10h16"/></svg>
+              Updated <time datetime="2026-11-11">Nov 11, 2026</time>
+            </span>
+            <button type="button" class="ra-open" aria-controls="reading-assistant" aria-expanded="false" hidden>
+              <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/></svg>
+              Listen
+            </button>
+          </div>
+        </header>
+        <div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>Spring AI questions appear when a role mentions LLMs, RAG, chatbots or "AI features".
+Interviewers want to know whether you can add a model to a Spring service <strong>safely</strong>: grounded answers, validated output, authorised tool calls, cost and latency under control, and tests that catch regressions.
+This page follows questions 151 to 180 of the attached handbook and adds code and current version notes.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_at_a_glance"><a class="anchor" href="#_at_a_glance"></a>At a glance</h2>
+<div class="sectionbody">
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 75%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Weightage</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>4 / 10</strong> in general; <strong>8 / 10</strong> if the job description mentions GenAI, LLMs or RAG</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Who gets asked</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Role-specific; growing in 2026 interviews.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Preparation time</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">3 hours, plus building one small RAG demo</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Handbook questions</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Q151-Q180</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Builds on</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="spring-boot.html" class="xref page">Spring Boot</a>, <a href="spring-security.html" class="xref page">Security</a></p></td>
+</tr>
+</tbody>
+</table>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+Spring AI changes quickly.
+Spring AI 1.0 went GA in May 2025; Spring AI 2.0 went GA in June 2026, targets Spring Boot 4 and Spring Framework 7, and moved to Jackson 3 with several breaking changes in MCP packages.
+The concepts below are stable, but check starter names, property names and method signatures against the exact version in your project.
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_what_spring_ai_is"><a class="anchor" href="#_what_spring_ai_is"></a>What Spring AI is</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Spring AI is a Spring project that gives portable abstractions over AI providers (OpenAI, Anthropic, Azure OpenAI, Amazon Bedrock, Google Vertex AI, Ollama and others) and AI infrastructure such as vector databases.
+It provides:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>ChatModel</code> and the fluent <code>ChatClient</code> for chat completions, with streaming.</p>
+</li>
+<li>
+<p><code>EmbeddingModel</code> to turn text into vectors.</p>
+</li>
+<li>
+<p><code>VectorStore</code> for similarity search over documents (PGvector, Redis, Elasticsearch, Pinecone, Milvus, Chroma, and others).</p>
+</li>
+<li>
+<p>An ETL pipeline: document readers, splitters and writers for ingestion.</p>
+</li>
+<li>
+<p><strong>Advisors</strong> that wrap calls with reusable behaviour: memory, RAG, logging, safety.</p>
+</li>
+<li>
+<p>Tool (function) calling and Model Context Protocol (MCP) clients and servers.</p>
+</li>
+<li>
+<p>Structured output mapping to Java types.</p>
+</li>
+<li>
+<p>Observability through Micrometer, and evaluation helpers.</p>
+</li>
+<li>
+<p>Spring Boot starters and auto-configuration for all of the above.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>It does not remove the need to understand model behaviour, data quality, security and distributed-systems design.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_chatmodel_versus_chatclient"><a class="anchor" href="#_chatmodel_versus_chatclient"></a>ChatModel versus ChatClient</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><code>ChatModel</code> is the low-level interface: you pass a <code>Prompt</code> (a list of messages plus options) and get a <code>ChatResponse</code>.
+<code>ChatClient</code> is a fluent API on top: system and user messages, templates, advisors, tools, synchronous or streaming calls, and mapping to Java objects.
+Use <code>ChatClient</code> in application code; use <code>ChatModel</code> when you need direct control.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Configuration
+class AiConfig {
+
+    @Bean
+    ChatClient supportClient(ChatClient.Builder builder) {        // Builder is auto-configured
+        return builder
+                .defaultSystem("""
+                        You are a support assistant for an online shop.
+                        Answer only questions about orders, shipping and returns.
+                        If you do not know, say so.
+                        """)
+                .build();
+    }
+}
+
+@RestController
+class SupportController {
+
+    private final ChatClient chat;
+
+    SupportController(ChatClient chat) { this.chat = chat; }
+
+    @GetMapping("/support")
+    String ask(@RequestParam String question) {
+        return chat.prompt()
+                .user(question)
+                .call()
+                .content();
+    }
+
+    @GetMapping(value = "/support/stream", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
+    Flux&lt;String&gt; stream(@RequestParam String question) {
+        return chat.prompt().user(question).stream().content();    // tokens as they arrive
+    }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Build the client once and reuse it; keep API keys in external configuration or a secret manager.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_messages_prompts_and_templates"><a class="anchor" href="#_messages_prompts_and_templates"></a>Messages, prompts and templates</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><strong>System message</strong>: sets behaviour, role and constraints.</p>
+</li>
+<li>
+<p><strong>User message</strong>: the request and any data supplied with it.</p>
+</li>
+<li>
+<p><strong>Assistant message</strong>: a previous model reply, used to replay conversation history.</p>
+</li>
+<li>
+<p><strong>Tool message</strong>: the result of a tool call returned to the model.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Roles structure the conversation but are <strong>not</strong> a security boundary.
+Text in user input or retrieved documents can contain instructions ("ignore previous instructions&#8230;&#8203;"), which is <strong>prompt injection</strong>.
+Never treat such content as trusted policy.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">String answer = chat.prompt()
+        .user(u -&gt; u.text("Summarise this review in {words} words: {review}")
+                    .param("words", 30)
+                    .param("review", reviewText))
+        .call()
+        .content();</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Templates separate fixed instructions from runtime values, make prompts testable and versionable, and keep data insertion controlled.
+They do not prevent prompt injection on their own.</p>
+</div>
+<div class="paragraph">
+<p><strong><code>call()</code> versus <code>stream()</code></strong>: <code>call()</code> waits for the complete response, which suits normal request-response APIs.
+<code>stream()</code> returns a <code>Flux</code> of partial content and improves perceived latency in chat UIs, but you must handle client disconnects, cancellation, timeouts and errors that occur after streaming has started.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_structured_output"><a class="anchor" href="#_structured_output"></a>Structured output</h2>
+<div class="sectionbody">
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">record TicketTriage(Category category, Priority priority, String summary) { }
+
+TicketTriage triage = chat.prompt()
+        .user("Classify this support ticket: " + ticketText)
+        .call()
+        .entity(TicketTriage.class);          // Spring AI adds format instructions and parses JSON</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Treat the result as <strong>untrusted input</strong>: validate required fields, enum values, ranges and business rules before using it.
+Reliability varies by model; some providers offer a native JSON schema mode that improves it.</p>
+</div>
+<div class="paragraph">
+<p><strong>ChatOptions</strong> (model name, temperature, max tokens, provider-specific settings) control <strong>how</strong> the model generates.
+Prompt instructions describe <strong>what</strong> to do.
+Neither replaces validation, authorisation or deterministic business rules in code.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_embeddings_and_vector_stores"><a class="anchor" href="#_embeddings_and_vector_stores"></a>Embeddings and vector stores</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>An <strong>embedding</strong> is a vector of numbers that represents the meaning of a piece of text.
+Texts with similar meaning have vectors that are close together (cosine similarity or dot product).
+Similarity is not proof of truth or relevance, and you must use the <strong>same embedding model</strong> for indexing and for queries.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">float[] vector = embeddingModel.embed("How do I return a damaged item?");
+
+vectorStore.add(List.of(
+        new Document("Damaged items can be returned within 30 days...",
+                     Map.of("source", "returns-policy.pdf", "page", 3, "tenant", "acme"))));
+
+List&lt;Document&gt; hits = vectorStore.similaritySearch(SearchRequest.builder()
+        .query("return damaged product")
+        .topK(4)
+        .similarityThreshold(0.7)
+        .filterExpression("tenant == 'acme'")          // metadata filter, applied server-side
+        .build());</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><code>VectorStore</code> is portable across databases, but each database differs in index types (HNSW, IVF), filtering, consistency, scaling and distance metrics.
+PGvector is a common choice when the team already runs PostgreSQL.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_retrieval_augmented_generation_rag"><a class="anchor" href="#_retrieval_augmented_generation_rag"></a>Retrieval-augmented generation (RAG)</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>A model only knows its training data.
+RAG retrieves relevant, current documents at query time and passes them to the model as context, so answers are grounded in your data and can cite sources.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-text hljs" data-lang="text">Ingestion (offline, repeatable)
+  read documents ─► clean ─► split into chunks ─► add metadata ─► embed ─► store in VectorStore
+
+Query (online)
+  user question ─► (optional) rewrite query ─► embed ─► similarity search with metadata filters
+               ─► (optional) rerank ─► build prompt with selected chunks ─► model ─► answer with citations</code></pre>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_ingestion_with_the_etl_pipeline"><a class="anchor" href="#_ingestion_with_the_etl_pipeline"></a>Ingestion with the ETL pipeline</h3>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">List&lt;Document&gt; pages = new PagePdfDocumentReader(new FileSystemResource("returns-policy.pdf")).get();
+List&lt;Document&gt; chunks = new TokenTextSplitter().apply(pages);
+chunks.forEach(d -&gt; d.getMetadata().put("tenant", "acme"));
+vectorStore.add(chunks);       // embeds and stores</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Keep ingestion repeatable, track source versions so stale chunks can be replaced, and handle parse failures.</p>
+</div>
+<div class="paragraph">
+<p><strong>Chunking</strong> matters: very large chunks dilute relevance and waste context; very small chunks lose meaning.
+Choose size and overlap from the document structure and from evaluation results, and keep headings, page numbers and source IDs as metadata.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_rag_with_advisors"><a class="anchor" href="#_rag_with_advisors"></a>RAG with advisors</h3>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">ChatClient ragClient = builder
+        .defaultAdvisors(QuestionAnswerAdvisor.builder(vectorStore)
+                .searchRequest(SearchRequest.builder().topK(5).similarityThreshold(0.7).build())
+                .build())
+        .build();
+
+String answer = ragClient.prompt()
+        .user(question)
+        .advisors(a -&gt; a.param(QuestionAnswerAdvisor.FILTER_EXPRESSION, "tenant == '" + tenantId + "'"))
+        .call()
+        .content();</code></pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>QuestionAnswerAdvisor</code> does a straightforward vector lookup for the question and adds the results to the prompt.</p>
+</li>
+<li>
+<p><code>RetrievalAugmentationAdvisor</code> composes modular RAG steps: query transformation (rewrite, translate, expand), document retrieval, joining results from several sources, post-processing, and context augmentation. Use it when a single vector search is not enough; the flexibility adds configuration and testing work.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>The tenant ID in the filter must come from the authenticated user on the server, never from the model or the request body.
+Validate or escape any value you put into a filter expression.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_improving_poor_retrieval"><a class="anchor" href="#_improving_poor_retrieval"></a>Improving poor retrieval</h3>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Look at real queries and the chunks they retrieved before changing anything.</p>
+</li>
+<li>
+<p>Check chunk boundaries and metadata.</p>
+</li>
+<li>
+<p>Try a better embedding model, different <code>topK</code> and similarity threshold.</p>
+</li>
+<li>
+<p>Add query rewriting, hybrid search (keyword plus vector), and <strong>reranking</strong>: retrieve a wider candidate set cheaply, then reorder it with a more precise model, at some extra latency and cost.</p>
+</li>
+<li>
+<p>Measure retrieval quality (recall, precision) separately from answer quality.</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>Do not try to fix retrieval by stuffing more text into the prompt.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_advisors_and_chat_memory"><a class="anchor" href="#_advisors_and_chat_memory"></a>Advisors and chat memory</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Advisors intercept requests and responses around a <code>ChatClient</code> call, like servlet filters for AI calls.
+They implement memory, RAG, logging (<code>SimpleLoggerAdvisor</code>), safety checks and tool handling.
+<strong>Order matters</strong>, because each advisor can change what the next one sees; test the full chain.</p>
+</div>
+<div class="paragraph">
+<p>Models are stateless between requests.
+<strong>Chat memory</strong> stores previous messages and an advisor adds them to each new prompt.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">ChatMemory memory = MessageWindowChatMemory.builder().maxMessages(20).build();   // keep the last 20
+
+ChatClient chatWithMemory = builder
+        .defaultAdvisors(MessageChatMemoryAdvisor.builder(memory).build())
+        .build();
+
+String reply = chatWithMemory.prompt()
+        .user(message)
+        .advisors(a -&gt; a.param(ChatMemory.CONVERSATION_ID, conversationId))   // stable ID per conversation
+        .call()
+        .content();</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>For production, back memory with a database repository, and define retention, access control, tenant isolation and deletion (privacy requests).</p>
+</div>
+<div class="paragraph">
+<p><strong>Memory versus RAG</strong>: memory answers "what did I say earlier?"; RAG answers questions from a knowledge base.
+They can be combined but need separate retention, authorisation and relevance rules.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_tool_calling"><a class="anchor" href="#_tool_calling"></a>Tool calling</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The application describes tools (name, description, typed parameters) to the model.
+The model may <strong>request</strong> a tool call; Spring AI runs the matching Java method and sends the result back so the model can finish its answer.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">class OrderTools {
+
+    private final OrderService orders;
+    OrderTools(OrderService orders) { this.orders = orders; }
+
+    @Tool(description = "Get the shipping status of one of the current user's orders by order ID")
+    OrderStatusView orderStatus(@ToolParam(description = "Order ID, e.g. A-1001") String orderId) {
+        return orders.statusForCurrentUser(orderId);      // authorisation enforced in the service
+    }
+}
+
+String answer = chat.prompt()
+        .user("Where is my order A-1001?")
+        .tools(new OrderTools(orderService))
+        .call()
+        .content();</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>A tool call is a <strong>request from the model</strong>, not an authorisation.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Expose an allowlist of small, focused tools.</p>
+</li>
+<li>
+<p>Authenticate the caller and authorise every operation against the user and tenant inside the service.</p>
+</li>
+<li>
+<p>Validate arguments as untrusted input.</p>
+</li>
+<li>
+<p>Require human confirmation for high-impact actions (refunds, deletes, emails).</p>
+</li>
+<li>
+<p>Apply timeouts, rate limits, idempotency and audit logs.</p>
+</li>
+<li>
+<p>Never let model output become raw SQL, shell commands or arbitrary URLs.</p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_model_context_protocol_mcp"><a class="anchor" href="#_model_context_protocol_mcp"></a>Model Context Protocol (MCP)</h3>
+<div class="paragraph">
+<p>MCP is an open protocol for connecting models to tools and data sources through MCP <strong>servers</strong>.
+Spring AI provides MCP client and server starters, so a Spring Boot app can use tools from other MCP servers or expose its own services as tools.
+Spring AI 2.0 added annotation-based servers (<code>@McpTool</code>, <code>@McpResource</code>) and favours the Streamable HTTP transport over the older SSE transport for remote servers.
+The same security rules as tool calling apply, plus authentication between client and server.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_hallucinations_evaluation_and_observability"><a class="anchor" href="#_hallucinations_evaluation_and_observability"></a>Hallucinations, evaluation and observability</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_reducing_hallucinations"><a class="anchor" href="#_reducing_hallucinations"></a>Reducing hallucinations</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>Retrieve trustworthy, current context and tell the model to answer only from it.</p>
+</li>
+<li>
+<p>Instruct it to say "I don&#8217;t know" when the context is insufficient, and treat that as a valid outcome.</p>
+</li>
+<li>
+<p>Ask for citations of source documents and show them.</p>
+</li>
+<li>
+<p>Validate structured output and apply deterministic business rules in code.</p>
+</li>
+<li>
+<p>Evaluate faithfulness on a test set. Prompt wording alone cannot guarantee correct output.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_evaluating_a_rag_application"><a class="anchor" href="#_evaluating_a_rag_application"></a>Evaluating a RAG application</h3>
+<div class="paragraph">
+<p>Build an evaluation set of representative questions with expected facts and the documents that contain them.
+Measure:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>retrieval precision and recall (were the right chunks found?);</p>
+</li>
+<li>
+<p>answer correctness and <strong>faithfulness</strong> (is every claim supported by the context?);</p>
+</li>
+<li>
+<p>citation quality, latency and cost per request.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Spring AI includes evaluators such as <code>RelevancyEvaluator</code> and <code>FactCheckingEvaluator</code> that use a model as a judge.
+Combine automatic scores with human review, and rerun the suite whenever prompts, models, chunking or indexes change, like a regression test suite.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_observability"><a class="anchor" href="#_observability"></a>Observability</h3>
+<div class="paragraph">
+<p>Spring AI emits Micrometer observations for <code>ChatClient</code>, <code>ChatModel</code>, advisors, embeddings and vector stores.
+Track latency, errors, token usage (and therefore cost), retrieval hit counts and downstream dependencies in your normal dashboards and traces.
+Do not log full prompts and completions by default: they may contain personal data or secrets.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_designing_a_production_spring_ai_service"><a class="anchor" href="#_designing_a_production_spring_ai_service"></a>Designing a production Spring AI service</h2>
+<div class="sectionbody">
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-text hljs" data-lang="text">Client ─► API layer (authN/authZ, input validation, rate limits)
+            │
+            ▼
+        Orchestration (prompt templates, advisors, tool allowlist, output validation)
+            │                 │                         │
+            ▼                 ▼                         ▼
+      Retrieval service   Model gateway             Business services (tools)
+      (tenant filters,    (timeouts, retries only   (authorisation inside,
+       reranking)          where safe, fallback      idempotency, audit)
+                           model, token budgets)
+            ▲
+      Ingestion pipeline (ETL, versioned sources, re-indexing)</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Checklist:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Separate API, orchestration, retrieval, model access and ingestion responsibilities.</p>
+</li>
+<li>
+<p>Tenant-aware retrieval and authorisation enforced in code.</p>
+</li>
+<li>
+<p>Prompt-injection defences: treat retrieved and user text as data, limit tools, validate outputs.</p>
+</li>
+<li>
+<p>Timeouts, bounded concurrency (a <code>Semaphore</code> or bulkhead around the provider), retries only for transient errors, caching of repeated answers or embeddings where appropriate.</p>
+</li>
+<li>
+<p>Version prompts and models; record which versions produced each answer.</p>
+</li>
+<li>
+<p>Continuous evaluation and a defined fallback or "I can&#8217;t answer" behaviour.</p>
+</li>
+<li>
+<p>Provider portability: use the common abstractions, isolate provider-specific options, and run the evaluation suite before switching providers, because models differ in context size, tool calling, structured output and safety behaviour.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_practice_questions"><a class="anchor" href="#_practice_questions"></a>Practice questions</h2>
+<div class="sectionbody">
+<details>
+<summary class="title">Q1. What is Spring AI, and what problem does it solve?</summary>
+<div class="content">
+<div class="paragraph">
+<p>A Spring project with portable abstractions and Boot auto-configuration for chat, embeddings, vector stores, RAG, tool calling, memory and observability across many AI providers.
+It removes provider-specific plumbing; it does not remove the need to handle model behaviour, data quality and security.</p>
+</div>
+</div>
+</details>
+<details>
+<summary class="title">Q2. ChatModel versus ChatClient?</summary>
+<div class="content">
+<div class="paragraph">
+<p><code>ChatModel</code> is the low-level call: prompt in, response out.
+<code>ChatClient</code> is the fluent, application-facing API with system and user messages, templates, advisors, tools, streaming and entity mapping.</p>
+</div>
+</div>
+</details>
+<details>
+<summary class="title">Q3. Explain the RAG flow end to end.</summary>
+<div class="content">
+<div class="paragraph">
+<p>Ingestion: load, clean, split, add metadata, embed and store chunks.
+Query: embed or rewrite the question, search with metadata filters, optionally rerank, add the selected chunks to the prompt, and generate a grounded answer with citations.
+Evaluate retrieval and answers separately.</p>
+</div>
+</div>
+</details>
+<details>
+<summary class="title">Q4. QuestionAnswerAdvisor versus RetrievalAugmentationAdvisor?</summary>
+<div class="content">
+<div class="paragraph">
+<p><code>QuestionAnswerAdvisor</code> is a ready-made, simple RAG: one vector search, results appended to the prompt.
+<code>RetrievalAugmentationAdvisor</code> composes modular steps (query transformation, retrieval from several sources, post-processing, augmentation) for more complex pipelines.</p>
+</div>
+</div>
+</details>
+<details>
+<summary class="title">Q5. How does chat memory work?</summary>
+<div class="content">
+<div class="paragraph">
+<p>The model is stateless, so a <code>ChatMemory</code> stores prior messages per conversation ID, and a memory advisor adds the relevant history to each new prompt.
+Choose a window or summary strategy to stay within context limits, and define retention, tenant isolation and deletion.</p>
+</div>
+</div>
+</details>
+<details>
+<summary class="title">Q6. How does tool calling work, and how do you keep it safe?</summary>
+<div class="content">
+<div class="paragraph">
+<p>The app registers tool definitions; the model may ask for a call; Spring AI runs the Java method and returns the result to the model.
+Safety: allowlisted tools, authorisation inside the service for the real user, argument validation, human confirmation for high-impact actions, timeouts, rate limits, idempotency and audit logs.</p>
+</div>
+</div>
+</details>
+<details>
+<summary class="title">Q7. What is metadata filtering, and why is it a security feature?</summary>
+<div class="content">
+<div class="paragraph">
+<p>It restricts similarity search to documents matching attributes such as tenant, language or access level.
+It improves relevance and enforces data isolation, but only if the filter is built on the server from the authenticated identity, not chosen by the model or the client.</p>
+</div>
+</div>
+</details>
+<details>
+<summary class="title">Q8. How do you reduce hallucinations?</summary>
+<div class="content">
+<div class="paragraph">
+<p>Ground answers in retrieved, trusted context; constrain the task; allow and encourage abstention; require citations; validate structured output; enforce business rules in code; and measure faithfulness on an evaluation set.</p>
+</div>
+</div>
+</details>
+<details>
+<summary class="title">Q9. How do you evaluate a RAG system?</summary>
+<div class="content">
+<div class="paragraph">
+<p>A representative question set with expected facts and source documents; metrics for retrieval precision and recall, answer correctness, faithfulness, citation quality, latency and cost; automated evaluators plus human review; rerun on every prompt, model, chunking or index change.</p>
+</div>
+</div>
+</details>
+<details>
+<summary class="title">Q10. How do you defend against prompt injection?</summary>
+<div class="content">
+<div class="paragraph">
+<p>Treat user and retrieved text as data, never as policy; keep secrets and permissions out of the prompt; limit which tools exist and authorise each call in code; validate outputs; filter retrieval by the user&#8217;s permissions; and monitor for abuse.
+No prompt wording fully prevents injection, so the real controls are outside the model.</p>
+</div>
+</div>
+</details>
+<details>
+<summary class="title">Q11. How would you switch from one model provider to another?</summary>
+<div class="content">
+<div class="paragraph">
+<p>Code against <code>ChatClient</code>, <code>EmbeddingModel</code> and <code>VectorStore</code>, keep provider options in configuration, and isolate provider-specific features behind adapters.
+Before switching, run the evaluation suite, because quality, context limits, tool calling and structured output differ.
+Changing the embedding model requires re-embedding the whole index.</p>
+</div>
+</div>
+</details>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_common_traps"><a class="anchor" href="#_common_traps"></a>Common traps</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p>Trusting model output without validation.</p>
+</li>
+<li>
+<p>Letting the model choose the tenant or permission filter.</p>
+</li>
+<li>
+<p>Logging full prompts with personal data.</p>
+</li>
+<li>
+<p>Using a different embedding model for queries than for indexing.</p>
+</li>
+<li>
+<p>No timeouts or concurrency limits on provider calls.</p>
+</li>
+<li>
+<p>No evaluation set, so regressions go unnoticed.</p>
+</li>
+<li>
+<p>Presenting Spring AI API details without checking the version.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_follow_ups_to_expect"><a class="anchor" href="#_follow_ups_to_expect"></a>Follow-ups to expect</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p>"Design a support chatbot over 10,000 PDF manuals for many customers." (Ingestion, chunking, tenant filters, citations, evaluation, cost.)</p>
+</li>
+<li>
+<p>"The bot gives confident wrong answers. How do you debug it?" (Check retrieval first, then the prompt, then the model.)</p>
+</li>
+<li>
+<p>"How do you control cost?" (Token budgets, caching, smaller models for simple steps, limiting context size.)</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_quick_revision"><a class="anchor" href="#_quick_revision"></a>Quick revision</h2>
+<div class="sectionbody">
+<div class="ulist checklist">
+<ul class="checklist">
+<li>
+<p><i class="fa fa-square-o"></i> Abstractions: ChatClient, ChatModel, EmbeddingModel, VectorStore, advisors</p>
+</li>
+<li>
+<p><i class="fa fa-square-o"></i> <code>call()</code> versus <code>stream()</code>, structured output with <code>entity()</code></p>
+</li>
+<li>
+<p><i class="fa fa-square-o"></i> RAG ingestion and query flow, chunking, metadata filters, reranking</p>
+</li>
+<li>
+<p><i class="fa fa-square-o"></i> Chat memory with conversation IDs</p>
+</li>
+<li>
+<p><i class="fa fa-square-o"></i> Tool calling and MCP security rules</p>
+</li>
+<li>
+<p><i class="fa fa-square-o"></i> Hallucination reduction, evaluation metrics, observability</p>
+</li>
+<li>
+<p><i class="fa fa-square-o"></i> Production design checklist and version caveats</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Back to the <a href="index.html" class="xref page">guide index</a>.</p>
+</div>
+</div>
+</div>
+      </article>
+      <div class="article-pagination">
+        <a class="prev" href="senior-scenarios.html"><span>← Previous</span><strong>Production Scenarios and Behavioural</strong></a>
+        <a class="next" href="../../Arcitecture-diagram/index.html"><span>Next →</span><strong>Architecture Diagram&#8217;s</strong></a>
+      </div>
+    </main>
+    <aside class="docs-toc reading-assistant" id="reading-assistant" aria-label="Reading assistant">
+  <div class="toc-inner ra-inner">
+    <div class="ra-head">
+      <h2 class="ra-title">Reading Assistant</h2>
+      <button type="button" class="ra-close" aria-label="Close reading assistant">
+        <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+    </div>
+
+    <section class="ra-card ra-listen" aria-labelledby="reading-assistant-listen" hidden>
+      <div class="ra-card-head">
+        <svg class="ra-card-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/></svg>
+        <div>
+          <h3 class="ra-card-title" id="reading-assistant-listen">Listen to Article</h3>
+          <p class="ra-card-desc">Listen to the explanation of this article. Code blocks are skipped.</p>
+        </div>
+      </div>
+
+      <div class="ra-ready">
+        <div class="ra-player">
+          <button type="button" class="ra-play" aria-label="Play article">
+            <svg class="ra-icon-play" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M8 5.5v13l11-6.5z"/></svg>
+            <svg class="ra-icon-pause" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M7 5h3.5v14H7zM13.5 5H17v14h-3.5z"/></svg>
+          </button>
+          <div class="ra-track">
+            <div class="ra-meter" role="progressbar" aria-label="Listening progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><span class="ra-meter-fill"></span></div>
+            <span class="ra-time" title="Estimated. Browser speech does not report an exact duration."></span>
+          </div>
+          <button type="button" class="ra-stop" aria-label="Stop listening" disabled>
+            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="6.5" y="6.5" width="11" height="11" rx="1.5"/></svg>
+          </button>
+        </div>
+
+        <div class="ra-controls">
+          <label class="ra-field ra-field-rate">
+            <span class="ra-field-label">Speed</span>
+            <select class="ra-rate">
+              <option value="0.75">0.75×</option>
+              <option value="1" selected>1×</option>
+              <option value="1.25">1.25×</option>
+              <option value="1.5">1.5×</option>
+              <option value="2">2×</option>
+            </select>
+          </label>
+        </div>
+
+        <label class="ra-check"><input type="checkbox" class="ra-follow" checked> Highlight and follow along</label>
+        <p class="ra-status" role="status" aria-live="polite">Ready</p>
+
+        <p class="ra-tip">
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M9 18h6M10 21h4"/><path d="M12 3a6 6 0 0 0-3.5 10.9V16h7v-2.1A6 6 0 0 0 12 3z"/></svg>
+          <span><strong>Tip:</strong> Headings and explanations are read aloud; code is skipped. Read in Google UK English Male on Chrome; other browsers use their closest British English voice.</span>
+        </p>
+      </div>
+
+      <p class="ra-unsupported" hidden>Listening isn&#8217;t available in this browser. The article itself works as usual.</p>
+    </section>
+
+    <section class="ra-card ra-jump" aria-labelledby="reading-assistant-sections" hidden>
+      <h3 class="ra-card-title" id="reading-assistant-sections">Jump to Section</h3>
+      <ol class="ra-sections"></ol>
+    </section>
+
+    <section class="ra-card ra-info" aria-labelledby="reading-assistant-info">
+      <h3 class="ra-card-title" id="reading-assistant-info">Page Info</h3>
+      <ul class="ra-info-list">
+        <li>
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+          <span title="Estimated at 220 words per minute">~8 min read</span>
+        </li>
+        <li>
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h6"/></svg>
+          <span title="Prose only; code is not counted">~1,734 words</span>
+        </li>
+        <li>
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="4" y="5" width="16" height="16" rx="2"/><path d="M16 3v4M8 3v4M4 10h16"/></svg>
+          <span>Last updated <time datetime="2026-11-11">Nov 11, 2026</time></span>
+        </li>
+      </ul>
+    </section>
+  </div>
+</aside>
+  </div>
+  <footer class="docs-footer">© 2026 Ayush Nigam · <a href="../../index.html">Home</a></footer>
+  <script src="../../../../_/js/reading-assistant.js?v=2" defer></script>
+  <script src="../../../../_/js/site.js?v=15" defer></script>
+</body>
+</html>

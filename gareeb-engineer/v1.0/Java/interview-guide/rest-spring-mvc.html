@@ -1,0 +1,1189 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>REST APIs and Spring MVC · Ayush Nigam</title>
+  
+  <link rel="preload" href="../../../../_/fonts/inter-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="../../../../_/css/site.css?v=21">
+</head>
+<body class="docs-page">
+  <a class="skip-link" href="#article-main">Skip to content</a>
+  <header class="docs-header">
+    <div class="docs-header-inner">
+      <a class="docs-logo" href="../../index.html"><span class="docs-logo-mark">AN</span><span>Ayush Nigam</span></a>
+          <nav class="header-adoc-nav docs-toplinks" aria-label="Header links" data-header-source-url="../../headers/header-links.html">
+            <div class="header-adoc-content"><div class="ulist header-menu-links">
+<ul>
+<li>
+<p><a href="contact.html" class="xref page">Contact</a></p>
+</li>
+<li>
+<p><a href="https://www.linkedin.com/in/the-ayush-nigam/">LinkedIn</a></p>
+</li>
+<li>
+<p><a href="https://github.com/gareeb-engineer">GitHub</a></p>
+</li>
+</ul>
+</div>
+</div>
+          </nav>
+      <a class="header-avatar" href="../../index.html" aria-hidden="true" tabindex="-1"><img src="../../../../_/img/profile-photo.png" alt="Ayush Nigam profile photo" width="36" height="36"></a>
+<button type="button" class="mobile-nav-toggle" aria-label="Toggle documentation navigation" aria-expanded="false" aria-controls="docs-sidebar">☰ Menu</button>
+      <span class="read-progress-label" aria-hidden="true" hidden>Reading <span class="read-progress-value">0%</span></span>
+    </div>
+    <div class="read-progress" role="progressbar" aria-label="Article reading progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" hidden><span class="read-progress-fill"></span></div>
+  </header>
+  <div class="docs-shell">
+    <aside class="docs-sidebar" id="docs-sidebar" aria-label="Documentation sidebar">
+      <div class="sidebar-inner">
+      <div class="sidebar-top"><span class="sidebar-eyebrow">ENGINEERING LIBRARY</span></div>
+      <input id="nav-filter" class="nav-filter" type="search" placeholder="Filter pages…" aria-label="Filter navigation" autocomplete="off">
+      <nav aria-label="Documentation pages"><ul class="nav-tree">
+  <li class="nav-item nav-parent">
+        <div class="nav-group">
+          <button type="button" class="nav-row nav-toggle" aria-expanded="true">
+            <span class="nav-label">Java</span>
+            <span class="nav-chevron" aria-hidden="true">▾</span>
+          </button>
+          <div class="nav-children">
+            <ul class="nav-tree">
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../index.html" title="Open Java overview">Overview</a>
+      </div>
+  </li>
+  <li class="nav-item nav-parent">
+        <div class="nav-group nav-linked-group">
+          <div class="nav-row nav-linked-row">
+            <a href="index.html">Java Interview Guide</a>
+            <button type="button" class="nav-toggle nav-linked-toggle" aria-expanded="true" aria-label="Toggle subtopics">
+              <span class="nav-chevron" aria-hidden="true">▾</span>
+            </button>
+          </div>
+          <div class="nav-children"><ul class="nav-tree">
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="core-java-oop.html">Core Java and OOP</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="collections-generics.html">Collections and Generics</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="java8-streams-functional.html">Java 8: Lambdas, Streams, Optional</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="modern-java.html">Modern Java (11 to 25)</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="concurrency.html">Concurrency and Multithreading</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="jvm-memory-gc.html">JVM, Memory and GC</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="spring-core.html">Spring Core: IoC, DI, AOP</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="spring-boot.html">Spring Boot</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="rest-spring-mvc.html" class="is-current" aria-current="page">REST APIs and Spring MVC</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="jpa-hibernate-transactions.html">JPA, Hibernate, Transactions</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="spring-security.html">Spring Security, JWT, OAuth2</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="microservices.html">Microservices</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="coding-round.html">Coding Round in Java</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="testing.html">Testing</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="senior-scenarios.html">Production Scenarios and Behavioural</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="spring-ai.html">Spring AI and GenAI</a>
+      </div>
+  </li>
+</ul>
+</div>
+        </div>
+  </li>
+</ul>
+          </div>
+        </div>
+  </li>
+  <li class="nav-item nav-parent">
+        <div class="nav-group is-collapsed">
+          <button type="button" class="nav-row nav-toggle" aria-expanded="false">
+            <span class="nav-label">Architecture Diagram&#8217;s</span>
+            <span class="nav-chevron" aria-hidden="true">▸</span>
+          </button>
+          <div class="nav-children">
+            <ul class="nav-tree">
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Arcitecture-diagram/index.html" title="Open Architecture Diagram’s overview">Overview</a>
+      </div>
+  </li>
+</ul>
+          </div>
+        </div>
+  </li>
+  <li class="nav-item nav-parent">
+        <div class="nav-group is-collapsed">
+          <button type="button" class="nav-row nav-toggle" aria-expanded="false">
+            <span class="nav-label">References</span>
+            <span class="nav-chevron" aria-hidden="true">▸</span>
+          </button>
+          <div class="nav-children">
+            <ul class="nav-tree">
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../DevOps-Refs/index.html" title="Open References overview">Overview</a>
+      </div>
+  </li>
+</ul>
+          </div>
+        </div>
+  </li>
+  <li class="nav-item nav-parent">
+        <div class="nav-group is-collapsed">
+          <button type="button" class="nav-row nav-toggle" aria-expanded="false">
+            <span class="nav-label">Data Structure</span>
+            <span class="nav-chevron" aria-hidden="true">▸</span>
+          </button>
+          <div class="nav-children">
+            <ul class="nav-tree">
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Data-Structure/index.html" title="Open Data Structure overview">Overview</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Data-Structure/arrays/index.html">Arrays</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Data-Structure/linked-list/index.html">Linked Lists</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Data-Structure/stacks-n-queue/index.html">Stacks</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Data-Structure/trees/index.html">Trees</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Data-Structure/hash-map/index.html">Hash Map</a>
+      </div>
+  </li>
+  <li class="nav-item nav-parent">
+        <div class="nav-group nav-linked-group is-collapsed">
+          <div class="nav-row nav-linked-row">
+            <a href="../../Data-Structure/dynamic-programming/index.html">Dynamic Programming</a>
+            <button type="button" class="nav-toggle nav-linked-toggle" aria-expanded="false" aria-label="Toggle subtopics">
+              <span class="nav-chevron" aria-hidden="true">▸</span>
+            </button>
+          </div>
+          <div class="nav-children"><ul class="nav-tree">
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Data-Structure/dynamic-programming/fibonacci-series.html">Fibonacci Series</a>
+      </div>
+  </li>
+</ul>
+</div>
+        </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Data-Structure/graphs/index.html">Graphs</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Data-Structure/backtracking/index.html">Backtracking</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Data-Structure/pattern-printing/index.html">Pattern Printing</a>
+      </div>
+  </li>
+  <li class="nav-item nav-parent">
+        <div class="nav-group nav-linked-group is-collapsed">
+          <div class="nav-row nav-linked-row">
+            <a href="../../Data-Structure/recursion/index.html">Recursion</a>
+            <button type="button" class="nav-toggle nav-linked-toggle" aria-expanded="false" aria-label="Toggle subtopics">
+              <span class="nav-chevron" aria-hidden="true">▸</span>
+            </button>
+          </div>
+          <div class="nav-children"><ul class="nav-tree">
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Data-Structure/recursion/sum-of-all-element.html">Sum of all elements</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Data-Structure/recursion/all-indices-of-array.html">All indices of array</a>
+      </div>
+  </li>
+</ul>
+</div>
+        </div>
+  </li>
+</ul>
+          </div>
+        </div>
+  </li>
+  <li class="nav-item nav-parent">
+        <div class="nav-group is-collapsed">
+          <button type="button" class="nav-row nav-toggle" aria-expanded="false">
+            <span class="nav-label">Low Level Design</span>
+            <span class="nav-chevron" aria-hidden="true">▸</span>
+          </button>
+          <div class="nav-children">
+            <ul class="nav-tree">
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Low-Level-Design/index.html" title="Open Low Level Design overview">Overview</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Low-Level-Design/design-principles.html">Design Principles</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Low-Level-Design/solid-principles.html">SOLID Principles</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Low-Level-Design/design-patterns.html">Gang of Four Design Patterns</a>
+      </div>
+  </li>
+</ul>
+          </div>
+        </div>
+  </li>
+</ul>
+</nav>
+      </div>
+    </aside>
+    <main id="article-main" class="docs-article">
+      <nav class="breadcrumbs" aria-label="Breadcrumb"><a href="../../index.html">Home</a><span aria-hidden="true">/</span><a href="index.html">Java Interview Guide</a><span aria-hidden="true">/</span><a href="rest-spring-mvc.html">REST APIs and Spring MVC</a></nav>
+      <article class="article-body" data-reading-progress>
+        <header class="article-header">
+          <h1>REST APIs and Spring MVC</h1>
+          
+          <p class="article-subtitle">HTTP methods, status codes and idempotency, REST design choices, the Spring MVC request flow, validation, global error handling with ProblemDetail, filters versus interceptors, and calling other services.</p>
+          <ul class="article-chips">
+            <li class="chip chip-difficulty chip-medium">Medium</li><li class="chip chip-tag">Spring</li><li class="chip chip-tag">Spring Boot</li><li class="chip chip-tag">Interview Preparation</li><li class="chip chip-tag">REST</li><li class="chip chip-tag">HTTP</li>
+          </ul>
+          <div class="article-meta">
+            <span class="article-meta-item" title="Estimated at 220 words per minute">
+              <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+              ~6 min read
+            </span>
+            <span class="article-meta-item">
+              <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="4" y="5" width="16" height="16" rx="2"/><path d="M16 3v4M8 3v4M4 10h16"/></svg>
+              Updated <time datetime="2026-11-11">Nov 11, 2026</time>
+            </span>
+            <button type="button" class="ra-open" aria-controls="reading-assistant" aria-expanded="false" hidden>
+              <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/></svg>
+              Listen
+            </button>
+          </div>
+        </header>
+        <div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>Almost every Java backend role builds HTTP APIs, so interviewers check two layers: whether you understand HTTP itself (methods, status codes, idempotency) and whether you know how Spring MVC turns a request into a method call and back.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_at_a_glance"><a class="anchor" href="#_at_a_glance"></a>At a glance</h2>
+<div class="sectionbody">
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 75%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Weightage</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>8 / 10</strong></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Who gets asked</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">All levels.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Preparation time</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">3 to 4 hours</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Handbook questions</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Q71-Q72, Q85 (security in Q73-Q75 is on the <a href="spring-security.html" class="xref page">Security</a> page)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Builds on</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="spring-boot.html" class="xref page">Spring Boot</a></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_http_methods"><a class="anchor" href="#_http_methods"></a>HTTP methods</h2>
+<div class="sectionbody">
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 16.6666%;">
+<col style="width: 50%;">
+<col style="width: 16.6666%;">
+<col style="width: 16.6668%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Method</th>
+<th class="tableblock halign-left valign-top">Use</th>
+<th class="tableblock halign-left valign-top">Safe</th>
+<th class="tableblock halign-left valign-top">Idempotent</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>GET</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Read a resource. No body changes on the server.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Yes</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Yes</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>POST</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Create a resource in a collection, or trigger a processing action.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">No</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>No</strong></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>PUT</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Replace the resource at a known URI with the full representation sent.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">No</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Yes</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>PATCH</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Partially update a resource.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">No</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Not necessarily</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>DELETE</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Remove a resource.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">No</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Yes</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>HEAD</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Like <code>GET</code> without the body.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Yes</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Yes</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>OPTIONS</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Ask which methods are allowed (used by CORS preflight).</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Yes</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Yes</p></td>
+</tr>
+</tbody>
+</table>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Safe</strong> means the request does not change server state.</p>
+</li>
+<li>
+<p><strong>Idempotent</strong> means sending the same request many times has the same effect on the server&#8217;s state as sending it once. The response may differ: the first <code>DELETE</code> returns <code>204</code>, the second may return <code>404</code>, but the resource is gone either way.</p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_idempotency_keys_for_post"><a class="anchor" href="#_idempotency_keys_for_post"></a>Idempotency keys for POST</h3>
+<div class="paragraph">
+<p>Clients and gateways retry on timeouts.
+A retried <code>POST /payments</code> could charge a customer twice.
+The fix is an <strong>idempotency key</strong>: the client sends a unique <code>Idempotency-Key</code> header; the server stores the key with the result, and on a repeat returns the stored result instead of processing again.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@PostMapping("/payments")
+ResponseEntity&lt;PaymentResponse&gt; pay(@RequestHeader("Idempotency-Key") String key,
+                                    @Valid @RequestBody PaymentRequest request) {
+    return idempotencyStore.find(key)
+            .map(ResponseEntity::ok)                               // already processed: same answer
+            .orElseGet(() -&gt; {
+                PaymentResponse result = paymentService.charge(request);
+                idempotencyStore.save(key, result);                // unique constraint on key in the DB
+                return ResponseEntity.status(HttpStatus.CREATED).body(result);
+            });
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>In production, insert the key first with a unique constraint (so two concurrent retries cannot both pass the check), and give stored keys an expiry.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_status_codes"><a class="anchor" href="#_status_codes"></a>Status codes</h2>
+<div class="sectionbody">
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 75%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Code</th>
+<th class="tableblock halign-left valign-top">When</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>200 OK</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Successful <code>GET</code>, or an update that returns a body.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>201 Created</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Resource created. Include a <code>Location</code> header with its URI.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>202 Accepted</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Request accepted for asynchronous processing.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>204 No Content</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Success with no body (often <code>DELETE</code>).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>301</code> / <code>308</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Permanent redirect (<code>308</code> keeps the method).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>304 Not Modified</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Conditional <code>GET</code> and the cached version is still valid (<code>ETag</code>).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>400 Bad Request</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Malformed request or validation failure.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>401 Unauthorized</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Not authenticated: missing or invalid credentials.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>403 Forbidden</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Authenticated, but not allowed.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>404 Not Found</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Resource does not exist (also used to hide resources the caller may not see).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>405 Method Not Allowed</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Method not supported on this URI.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>409 Conflict</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">State conflict: duplicate, version mismatch (optimistic locking).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>412 Precondition Failed</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>If-Match</code> ETag did not match.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>415 Unsupported Media Type</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Wrong <code>Content-Type</code>.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>422 Unprocessable Content</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Syntactically valid but violates business rules (some teams use 400 for this).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>429 Too Many Requests</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Rate limit hit. Include <code>Retry-After</code>.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>500 Internal Server Error</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Unexpected server failure.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>502 Bad Gateway</code> / <code>503 Service Unavailable</code> / <code>504 Gateway Timeout</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Upstream failure, overload or maintenance, upstream timeout.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_rest_design_choices"><a class="anchor" href="#_rest_design_choices"></a>REST design choices</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Resources are nouns, methods are verbs</strong>: <code>GET /orders/42</code>, not <code>GET /getOrder?id=42</code>. Use plural collection names and nesting only for true ownership (<code>/customers/7/orders</code>).</p>
+</li>
+<li>
+<p><strong>Pagination</strong>: offset (<code>?page=2&amp;size=20</code>) is simple but slow on deep pages and unstable when data changes; cursor or keyset pagination (<code>?after=lastId</code>) is stable and fast for large data sets.</p>
+</li>
+<li>
+<p><strong>Filtering and sorting</strong>: query parameters (<code>?status=PAID&amp;sort=createdAt,desc</code>). Validate sort fields against an allowlist.</p>
+</li>
+<li>
+<p><strong>Versioning</strong>: URI (<code>/v2/orders</code>), header (<code>API-Version: 2</code>) or media type. URI versioning is the most common and easiest to route; Spring Framework 7 has built-in support for all three styles.</p>
+</li>
+<li>
+<p><strong>Statelessness</strong>: each request carries everything needed (token, parameters); the server keeps no client session, which makes horizontal scaling simple.</p>
+</li>
+<li>
+<p><strong>Caching</strong>: <code>ETag</code> and <code>Cache-Control</code> headers for <code>GET</code>; <code>If-None-Match</code> returns <code>304</code>.</p>
+</li>
+<li>
+<p><strong>Optimistic concurrency</strong>: return an <code>ETag</code> (the entity version) and require <code>If-Match</code> on updates; return <code>412</code> on mismatch.</p>
+</li>
+<li>
+<p><strong>HATEOAS</strong>: responses include links to related actions. Rarely required in interviews; know what the term means.</p>
+</li>
+<li>
+<p><strong>Long-running work</strong>: return <code>202 Accepted</code> with a status URL to poll, or notify through a webhook.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_the_spring_mvc_request_flow"><a class="anchor" href="#_the_spring_mvc_request_flow"></a>The Spring MVC request flow</h2>
+<div class="sectionbody">
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-text hljs" data-lang="text">Client
+  │ HTTP request
+  ▼
+Servlet container (Tomcat)
+  │ Servlet Filters (security, CORS, logging, tracing)
+  ▼
+DispatcherServlet ── the front controller
+  │ 1. HandlerMapping finds the controller method for the URL and method
+  │ 2. HandlerInterceptor.preHandle (can stop the request)
+  │ 3. HandlerAdapter invokes the method:
+  │      argument resolvers build parameters (@PathVariable, @RequestParam, @RequestBody via
+  │      HttpMessageConverter / Jackson), validation runs
+  │ 4. Controller method returns a value
+  │ 5. Return value handler: @ResponseBody → HttpMessageConverter writes JSON
+  │                          (or a ViewResolver renders a template for @Controller)
+  │ 6. HandlerInterceptor.postHandle, then afterCompletion
+  │ Exceptions → HandlerExceptionResolver → @ExceptionHandler / @ControllerAdvice
+  ▼
+HTTP response</code></pre>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_filter_versus_interceptor"><a class="anchor" href="#_filter_versus_interceptor"></a>Filter versus interceptor</h3>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 40%;">
+<col style="width: 40%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top"></th>
+<th class="tableblock halign-left valign-top">Servlet <code>Filter</code></th>
+<th class="tableblock halign-left valign-top">Spring <code>HandlerInterceptor</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Part of</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Servlet specification</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Spring MVC</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Runs</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Before <code>DispatcherServlet</code>, for every request (including static resources and errors)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Inside <code>DispatcherServlet</code>, around controller methods</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Knows the handler method?</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">No</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Yes (<code>HandlerMethod</code>)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Typical use</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Security (Spring Security is a filter chain), CORS, compression, request logging, tracing</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Auditing per endpoint, locale, timing per handler</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_a_complete_controller"><a class="anchor" href="#_a_complete_controller"></a>A complete controller</h2>
+<div class="sectionbody">
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@RestController
+@RequestMapping("/api/v1/orders")
+class OrderController {
+
+    private final OrderService orders;
+
+    OrderController(OrderService orders) { this.orders = orders; }
+
+    @GetMapping("/{id}")
+    OrderResponse get(@PathVariable long id) {
+        return orders.find(id);                       // throws OrderNotFoundException if absent
+    }
+
+    @GetMapping
+    Page&lt;OrderResponse&gt; search(@RequestParam(required = false) OrderStatus status,
+                               @PageableDefault(size = 20, sort = "createdAt") Pageable pageable) {
+        return orders.search(status, pageable);
+    }
+
+    @PostMapping
+    ResponseEntity&lt;OrderResponse&gt; create(@Valid @RequestBody CreateOrderRequest request,
+                                         UriComponentsBuilder uri) {
+        OrderResponse created = orders.create(request);
+        URI location = uri.path("/api/v1/orders/{id}").buildAndExpand(created.id()).toUri();
+        return ResponseEntity.created(location).body(created);         // 201 + Location
+    }
+
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    void delete(@PathVariable long id) {
+        orders.delete(id);
+    }
+}
+
+record CreateOrderRequest(
+        @NotBlank String customerId,
+        @NotEmpty List&lt;@Valid OrderLine&gt; lines,
+        @Size(max = 500) String note) { }
+
+record OrderLine(@NotBlank String sku, @Positive int quantity) { }</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Keep controllers thin: map HTTP to a service call and back.
+Use separate request and response DTOs (records work well) rather than exposing JPA entities, which leak internal fields, cause lazy-loading exceptions during serialisation and couple the API to the database schema.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_validation"><a class="anchor" href="#_validation"></a>Validation</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p>Add <code>spring-boot-starter-validation</code>.</p>
+</li>
+<li>
+<p><code>@Valid</code> on a <code>@RequestBody</code> triggers Bean Validation; failures throw <code>MethodArgumentNotValidException</code> (400).</p>
+</li>
+<li>
+<p><code>@Validated</code> on a class enables validation of method parameters such as <code>@PathVariable @Min(1) long id</code>. In Spring Framework 6.1+, built-in method validation for controllers reports these as <code>HandlerMethodValidationException</code>.</p>
+</li>
+<li>
+<p>Validation <strong>groups</strong> allow different rules for create and update.</p>
+</li>
+<li>
+<p>Custom constraints: an annotation with <code>@Constraint(validatedBy = ...)</code> plus a <code>ConstraintValidator</code>.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Validate <strong>syntax</strong> at the API boundary (required fields, formats, ranges) and <strong>business rules</strong> in the service or domain (stock available, credit limit).
+Never trust client-side validation alone.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="error-handling"><a class="anchor" href="#error-handling"></a>Global error handling</h2>
+<div class="sectionbody">
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@RestControllerAdvice
+class ApiExceptionHandler {
+
+    @ExceptionHandler(OrderNotFoundException.class)
+    ProblemDetail notFound(OrderNotFoundException ex) {
+        ProblemDetail pd = ProblemDetail.forStatusAndDetail(HttpStatus.NOT_FOUND, ex.getMessage());
+        pd.setTitle("Order not found");
+        pd.setType(URI.create("https://api.shop.example/errors/order-not-found"));
+        pd.setProperty("code", "ORDER_NOT_FOUND");
+        return pd;
+    }
+
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    ProblemDetail invalid(MethodArgumentNotValidException ex) {
+        ProblemDetail pd = ProblemDetail.forStatus(HttpStatus.BAD_REQUEST);
+        pd.setTitle("Validation failed");
+        pd.setProperty("errors", ex.getBindingResult().getFieldErrors().stream()
+                .map(e -&gt; Map.of("field", e.getField(), "message", e.getDefaultMessage()))
+                .toList());
+        return pd;
+    }
+
+    @ExceptionHandler(Exception.class)
+    ProblemDetail unexpected(Exception ex) {
+        log.error("Unhandled error", ex);                          // full detail in logs only
+        return ProblemDetail.forStatusAndDetail(HttpStatus.INTERNAL_SERVER_ERROR,
+                "Unexpected error. Reference: " + MDC.get("traceId"));
+    }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><code>ProblemDetail</code> implements RFC 9457 (formerly RFC 7807), a standard JSON error format with <code>type</code>, <code>title</code>, <code>status</code>, <code>detail</code> and <code>instance</code>.
+Set <code>spring.mvc.problemdetails.enabled=true</code> to make Spring&#8217;s own exceptions use it, or extend <code>ResponseEntityExceptionHandler</code>.</p>
+</div>
+<div class="paragraph">
+<p>Good error responses have a stable machine-readable code, a human message, field errors for validation, and a correlation or trace ID.
+They never include stack traces, SQL or internal class names.</p>
+</div>
+<div class="paragraph">
+<p>Other options: <code>@ResponseStatus</code> on an exception class, or throwing <code>ResponseStatusException</code> for one-off cases.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_calling_other_services"><a class="anchor" href="#_calling_other_services"></a>Calling other services</h2>
+<div class="sectionbody">
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 75%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Client</th>
+<th class="tableblock halign-left valign-top">Status</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>RestTemplate</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Synchronous, template-style. In maintenance mode; no new features.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>WebClient</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Reactive, non-blocking (Spring WebFlux). Use in reactive apps or when you need streaming.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>RestClient</code> (Spring 6.1+)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Synchronous with a fluent API like <code>WebClient</code>. The default choice for blocking code, and works well with virtual threads.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">HTTP interface clients (<code>@HttpExchange</code>)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Declare an interface; Spring generates the client on top of <code>RestClient</code> or <code>WebClient</code>. Spring Boot 4 can register them in groups with <code>@ImportHttpServices</code>.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">OpenFeign (Spring Cloud)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Declarative clients, popular in older microservice code bases. HTTP interfaces now cover most of the same needs.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Bean
+RestClient inventoryClient(RestClient.Builder builder) {
+    HttpClient http = HttpClient.newBuilder()
+            .connectTimeout(Duration.ofSeconds(1))          // time to open the connection
+            .build();
+    JdkClientHttpRequestFactory factory = new JdkClientHttpRequestFactory(http);
+    factory.setReadTimeout(Duration.ofSeconds(2));          // time to wait for the response
+
+    return builder
+            .baseUrl("https://inventory.internal")
+            .requestFactory(factory)
+            .build();
+}
+
+Stock stock = inventoryClient.get()
+        .uri("/stock/{sku}", sku)
+        .retrieve()
+        .onStatus(HttpStatusCode::is4xxClientError, (req, res) -&gt; { throw new SkuNotFoundException(sku); })
+        .body(Stock.class);
+
+// Declarative HTTP interface
+@HttpExchange("/stock")
+interface InventoryApi {
+    @GetExchange("/{sku}")
+    Stock get(@PathVariable String sku);
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><strong>Always set connect and read timeouts.</strong>
+Without them, one slow dependency can tie up every request thread.
+Pair calls with retries and circuit breakers from <a href="microservices.html" class="xref page">Microservices</a>.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_spring_mvc_versus_spring_webflux"><a class="anchor" href="#_spring_mvc_versus_spring_webflux"></a>Spring MVC versus Spring WebFlux</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Spring MVC</strong>: one thread per request, blocking I/O, simple to write and debug. With virtual threads it scales to high concurrency for I/O-bound services.</p>
+</li>
+<li>
+<p><strong>Spring WebFlux</strong>: non-blocking, event-loop model (Netty), <code>Mono</code> and <code>Flux</code> types, backpressure. Suits streaming and very high concurrency with non-blocking drivers end to end. Mixing blocking calls (JDBC) into WebFlux blocks the event loop.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>For most CRUD services, Spring MVC (now with virtual threads) is the simpler choice.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_practice_questions"><a class="anchor" href="#_practice_questions"></a>Practice questions</h2>
+<div class="sectionbody">
+<details>
+<summary class="title">Q1. POST versus PUT versus PATCH?</summary>
+<div class="content">
+<div class="paragraph">
+<p><code>POST</code> creates a resource or triggers an action and is not idempotent.
+<code>PUT</code> replaces the whole resource at a known URI and is idempotent.
+<code>PATCH</code> changes part of a resource; it may or may not be idempotent (setting a field is; "increment by 1" is not).</p>
+</div>
+</div>
+</details>
+<details>
+<summary class="title">Q2. What makes an API idempotent, and how do you make a POST idempotent?</summary>
+<div class="content">
+<div class="paragraph">
+<p>Repeating the request leaves the server in the same state as doing it once.
+For <code>POST</code>, use an idempotency key stored with a unique constraint and the original result; repeats return the stored result.
+Consumers of messages need the same idea with event IDs.</p>
+</div>
+</div>
+</details>
+<details>
+<summary class="title">Q3. 401 versus 403?</summary>
+<div class="content">
+<div class="paragraph">
+<p>401: the caller is not authenticated (no or invalid credentials); the response should include <code>WWW-Authenticate</code>.
+403: the caller is authenticated but lacks permission.</p>
+</div>
+</div>
+</details>
+<details>
+<summary class="title">Q4. Explain the Spring MVC request flow.</summary>
+<div class="content">
+<div class="paragraph">
+<p>Filters, then <code>DispatcherServlet</code>, which asks <code>HandlerMapping</code> for the handler, runs interceptors' <code>preHandle</code>, calls the method through a <code>HandlerAdapter</code> (argument resolvers and message converters build parameters, validation runs), writes the return value with an <code>HttpMessageConverter</code>, runs <code>postHandle</code>/<code>afterCompletion</code>, and routes exceptions to <code>@ExceptionHandler</code> methods.</p>
+</div>
+</div>
+</details>
+<details>
+<summary class="title">Q5. <code>@Controller</code> versus <code>@RestController</code>?</summary>
+<div class="content">
+<div class="paragraph">
+<p><code>@RestController</code> = <code>@Controller</code> + <code>@ResponseBody</code>.
+Return values are serialised into the response body rather than resolved as view names.</p>
+</div>
+</div>
+</details>
+<details>
+<summary class="title">Q6. <code>@PathVariable</code> versus <code>@RequestParam</code>?</summary>
+<div class="content">
+<div class="paragraph">
+<p><code>@PathVariable</code> reads a segment of the URI template (<code>/orders/{id}</code>) and identifies a resource.
+<code>@RequestParam</code> reads a query parameter (<code>?status=PAID</code>) and usually filters, sorts or paginates.</p>
+</div>
+</div>
+</details>
+<details>
+<summary class="title">Q7. How do you handle exceptions globally?</summary>
+<div class="content">
+<div class="paragraph">
+<p><code>@RestControllerAdvice</code> with <code>@ExceptionHandler</code> methods per exception type, returning <code>ProblemDetail</code> with a consistent structure: status, stable error code, message, field errors and trace ID.
+Log full details server-side; never return stack traces.</p>
+</div>
+</div>
+</details>
+<details>
+<summary class="title">Q8. How do you design validation errors?</summary>
+<div class="content">
+<div class="paragraph">
+<p>Validate syntax at the boundary with Bean Validation, business invariants in the service.
+Return 400 (or 422 for business rule failures, if the team uses it) with a machine-readable code and a list of field errors.</p>
+</div>
+</div>
+</details>
+<details>
+<summary class="title">Q9. Filter versus interceptor?</summary>
+<div class="content">
+<div class="paragraph">
+<p>Filters are Servlet-level, run before Spring MVC for every request and do not know the handler; Spring Security is a filter chain.
+Interceptors run inside <code>DispatcherServlet</code>, know the handler method, and suit per-endpoint concerns.</p>
+</div>
+</div>
+</details>
+<details>
+<summary class="title">Q10. RestTemplate versus WebClient versus RestClient?</summary>
+<div class="content">
+<div class="paragraph">
+<p><code>RestTemplate</code> is in maintenance mode.
+<code>WebClient</code> is reactive and non-blocking.
+<code>RestClient</code> is the modern synchronous client with a fluent API and is the default for blocking code.
+HTTP interface clients generate implementations from annotated interfaces.</p>
+</div>
+</div>
+</details>
+<details>
+<summary class="title">Q11. Why should controllers not return JPA entities?</summary>
+<div class="content">
+<div class="paragraph">
+<p>Entities expose internal fields, can trigger lazy-loading exceptions or N+1 queries during serialisation, may recurse through bidirectional relations, and tie the API contract to the database schema.
+Map to response DTOs.</p>
+</div>
+</div>
+</details>
+<details>
+<summary class="title">Q12. Offset versus cursor pagination?</summary>
+<div class="content">
+<div class="paragraph">
+<p>Offset (<code>page</code>, <code>size</code>) is simple and allows jumping to a page, but the database still scans skipped rows and results shift when data changes.
+Cursor/keyset pagination (<code>WHERE id &gt; :lastId ORDER BY id LIMIT :size</code>) is fast at any depth and stable, but cannot jump to arbitrary pages.</p>
+</div>
+</div>
+</details>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_common_traps"><a class="anchor" href="#_common_traps"></a>Common traps</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p>Returning <code>200</code> with <code>{"error": ...}</code> in the body.</p>
+</li>
+<li>
+<p>Using <code>POST</code> for everything.</p>
+</li>
+<li>
+<p>No timeouts on outbound HTTP calls.</p>
+</li>
+<li>
+<p>Exposing entities or stack traces.</p>
+</li>
+<li>
+<p>Calling blocking JDBC inside WebFlux.</p>
+</li>
+<li>
+<p>Confusing 401 and 403.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_follow_ups_to_expect"><a class="anchor" href="#_follow_ups_to_expect"></a>Follow-ups to expect</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p>"Design the API for a shopping cart." (Resources, methods, status codes, idempotency, versioning.)</p>
+</li>
+<li>
+<p>"How would you add rate limiting to this API?"</p>
+</li>
+<li>
+<p>"How would you return different JSON for API version 2 without breaking version 1 clients?"</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_quick_revision"><a class="anchor" href="#_quick_revision"></a>Quick revision</h2>
+<div class="sectionbody">
+<div class="ulist checklist">
+<ul class="checklist">
+<li>
+<p><i class="fa fa-square-o"></i> Methods table: safe and idempotent columns</p>
+</li>
+<li>
+<p><i class="fa fa-square-o"></i> Status codes, especially 201, 204, 400, 401, 403, 404, 409, 422, 429, 503</p>
+</li>
+<li>
+<p><i class="fa fa-square-o"></i> Idempotency keys</p>
+</li>
+<li>
+<p><i class="fa fa-square-o"></i> DispatcherServlet flow; filter versus interceptor</p>
+</li>
+<li>
+<p><i class="fa fa-square-o"></i> Validation layers; <code>ProblemDetail</code> handler</p>
+</li>
+<li>
+<p><i class="fa fa-square-o"></i> <code>RestClient</code> with timeouts; HTTP interface clients</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Next: <a href="jpa-hibernate-transactions.html" class="xref page">Spring Data JPA, Hibernate and Transactions</a>.</p>
+</div>
+</div>
+</div>
+      </article>
+      <div class="article-pagination">
+        <a class="prev" href="spring-boot.html"><span>← Previous</span><strong>Spring Boot</strong></a>
+        <a class="next" href="jpa-hibernate-transactions.html"><span>Next →</span><strong>JPA, Hibernate, Transactions</strong></a>
+      </div>
+    </main>
+    <aside class="docs-toc reading-assistant" id="reading-assistant" aria-label="Reading assistant">
+  <div class="toc-inner ra-inner">
+    <div class="ra-head">
+      <h2 class="ra-title">Reading Assistant</h2>
+      <button type="button" class="ra-close" aria-label="Close reading assistant">
+        <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+    </div>
+
+    <section class="ra-card ra-listen" aria-labelledby="reading-assistant-listen" hidden>
+      <div class="ra-card-head">
+        <svg class="ra-card-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/></svg>
+        <div>
+          <h3 class="ra-card-title" id="reading-assistant-listen">Listen to Article</h3>
+          <p class="ra-card-desc">Listen to the explanation of this article. Code blocks are skipped.</p>
+        </div>
+      </div>
+
+      <div class="ra-ready">
+        <div class="ra-player">
+          <button type="button" class="ra-play" aria-label="Play article">
+            <svg class="ra-icon-play" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M8 5.5v13l11-6.5z"/></svg>
+            <svg class="ra-icon-pause" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M7 5h3.5v14H7zM13.5 5H17v14h-3.5z"/></svg>
+          </button>
+          <div class="ra-track">
+            <div class="ra-meter" role="progressbar" aria-label="Listening progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><span class="ra-meter-fill"></span></div>
+            <span class="ra-time" title="Estimated. Browser speech does not report an exact duration."></span>
+          </div>
+          <button type="button" class="ra-stop" aria-label="Stop listening" disabled>
+            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="6.5" y="6.5" width="11" height="11" rx="1.5"/></svg>
+          </button>
+        </div>
+
+        <div class="ra-controls">
+          <label class="ra-field ra-field-rate">
+            <span class="ra-field-label">Speed</span>
+            <select class="ra-rate">
+              <option value="0.75">0.75×</option>
+              <option value="1" selected>1×</option>
+              <option value="1.25">1.25×</option>
+              <option value="1.5">1.5×</option>
+              <option value="2">2×</option>
+            </select>
+          </label>
+        </div>
+
+        <label class="ra-check"><input type="checkbox" class="ra-follow" checked> Highlight and follow along</label>
+        <p class="ra-status" role="status" aria-live="polite">Ready</p>
+
+        <p class="ra-tip">
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M9 18h6M10 21h4"/><path d="M12 3a6 6 0 0 0-3.5 10.9V16h7v-2.1A6 6 0 0 0 12 3z"/></svg>
+          <span><strong>Tip:</strong> Headings and explanations are read aloud; code is skipped. Read in Google UK English Male on Chrome; other browsers use their closest British English voice.</span>
+        </p>
+      </div>
+
+      <p class="ra-unsupported" hidden>Listening isn&#8217;t available in this browser. The article itself works as usual.</p>
+    </section>
+
+    <section class="ra-card ra-jump" aria-labelledby="reading-assistant-sections" hidden>
+      <h3 class="ra-card-title" id="reading-assistant-sections">Jump to Section</h3>
+      <ol class="ra-sections"></ol>
+    </section>
+
+    <section class="ra-card ra-info" aria-labelledby="reading-assistant-info">
+      <h3 class="ra-card-title" id="reading-assistant-info">Page Info</h3>
+      <ul class="ra-info-list">
+        <li>
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+          <span title="Estimated at 220 words per minute">~6 min read</span>
+        </li>
+        <li>
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h6"/></svg>
+          <span title="Prose only; code is not counted">~1,226 words</span>
+        </li>
+        <li>
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="4" y="5" width="16" height="16" rx="2"/><path d="M16 3v4M8 3v4M4 10h16"/></svg>
+          <span>Last updated <time datetime="2026-11-11">Nov 11, 2026</time></span>
+        </li>
+      </ul>
+    </section>
+  </div>
+</aside>
+  </div>
+  <footer class="docs-footer">© 2026 Ayush Nigam · <a href="../../index.html">Home</a></footer>
+  <script src="../../../../_/js/reading-assistant.js?v=2" defer></script>
+  <script src="../../../../_/js/site.js?v=15" defer></script>
+</body>
+</html>

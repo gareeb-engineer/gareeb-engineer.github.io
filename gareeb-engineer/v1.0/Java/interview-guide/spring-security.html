@@ -1,0 +1,1083 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>Spring Security, JWT and OAuth2 · Ayush Nigam</title>
+  
+  <link rel="preload" href="../../../../_/fonts/inter-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="../../../../_/css/site.css?v=21">
+</head>
+<body class="docs-page">
+  <a class="skip-link" href="#article-main">Skip to content</a>
+  <header class="docs-header">
+    <div class="docs-header-inner">
+      <a class="docs-logo" href="../../index.html"><span class="docs-logo-mark">AN</span><span>Ayush Nigam</span></a>
+          <nav class="header-adoc-nav docs-toplinks" aria-label="Header links" data-header-source-url="../../headers/header-links.html">
+            <div class="header-adoc-content"><div class="ulist header-menu-links">
+<ul>
+<li>
+<p><a href="contact.html" class="xref page">Contact</a></p>
+</li>
+<li>
+<p><a href="https://www.linkedin.com/in/the-ayush-nigam/">LinkedIn</a></p>
+</li>
+<li>
+<p><a href="https://github.com/gareeb-engineer">GitHub</a></p>
+</li>
+</ul>
+</div>
+</div>
+          </nav>
+      <a class="header-avatar" href="../../index.html" aria-hidden="true" tabindex="-1"><img src="../../../../_/img/profile-photo.png" alt="Ayush Nigam profile photo" width="36" height="36"></a>
+<button type="button" class="mobile-nav-toggle" aria-label="Toggle documentation navigation" aria-expanded="false" aria-controls="docs-sidebar">☰ Menu</button>
+      <span class="read-progress-label" aria-hidden="true" hidden>Reading <span class="read-progress-value">0%</span></span>
+    </div>
+    <div class="read-progress" role="progressbar" aria-label="Article reading progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" hidden><span class="read-progress-fill"></span></div>
+  </header>
+  <div class="docs-shell">
+    <aside class="docs-sidebar" id="docs-sidebar" aria-label="Documentation sidebar">
+      <div class="sidebar-inner">
+      <div class="sidebar-top"><span class="sidebar-eyebrow">ENGINEERING LIBRARY</span></div>
+      <input id="nav-filter" class="nav-filter" type="search" placeholder="Filter pages…" aria-label="Filter navigation" autocomplete="off">
+      <nav aria-label="Documentation pages"><ul class="nav-tree">
+  <li class="nav-item nav-parent">
+        <div class="nav-group">
+          <button type="button" class="nav-row nav-toggle" aria-expanded="true">
+            <span class="nav-label">Java</span>
+            <span class="nav-chevron" aria-hidden="true">▾</span>
+          </button>
+          <div class="nav-children">
+            <ul class="nav-tree">
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../index.html" title="Open Java overview">Overview</a>
+      </div>
+  </li>
+  <li class="nav-item nav-parent">
+        <div class="nav-group nav-linked-group">
+          <div class="nav-row nav-linked-row">
+            <a href="index.html">Java Interview Guide</a>
+            <button type="button" class="nav-toggle nav-linked-toggle" aria-expanded="true" aria-label="Toggle subtopics">
+              <span class="nav-chevron" aria-hidden="true">▾</span>
+            </button>
+          </div>
+          <div class="nav-children"><ul class="nav-tree">
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="core-java-oop.html">Core Java and OOP</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="collections-generics.html">Collections and Generics</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="java8-streams-functional.html">Java 8: Lambdas, Streams, Optional</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="modern-java.html">Modern Java (11 to 25)</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="concurrency.html">Concurrency and Multithreading</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="jvm-memory-gc.html">JVM, Memory and GC</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="spring-core.html">Spring Core: IoC, DI, AOP</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="spring-boot.html">Spring Boot</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="rest-spring-mvc.html">REST APIs and Spring MVC</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="jpa-hibernate-transactions.html">JPA, Hibernate, Transactions</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="spring-security.html" class="is-current" aria-current="page">Spring Security, JWT, OAuth2</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="microservices.html">Microservices</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="coding-round.html">Coding Round in Java</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="testing.html">Testing</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="senior-scenarios.html">Production Scenarios and Behavioural</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="spring-ai.html">Spring AI and GenAI</a>
+      </div>
+  </li>
+</ul>
+</div>
+        </div>
+  </li>
+</ul>
+          </div>
+        </div>
+  </li>
+  <li class="nav-item nav-parent">
+        <div class="nav-group is-collapsed">
+          <button type="button" class="nav-row nav-toggle" aria-expanded="false">
+            <span class="nav-label">Architecture Diagram&#8217;s</span>
+            <span class="nav-chevron" aria-hidden="true">▸</span>
+          </button>
+          <div class="nav-children">
+            <ul class="nav-tree">
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Arcitecture-diagram/index.html" title="Open Architecture Diagram’s overview">Overview</a>
+      </div>
+  </li>
+</ul>
+          </div>
+        </div>
+  </li>
+  <li class="nav-item nav-parent">
+        <div class="nav-group is-collapsed">
+          <button type="button" class="nav-row nav-toggle" aria-expanded="false">
+            <span class="nav-label">References</span>
+            <span class="nav-chevron" aria-hidden="true">▸</span>
+          </button>
+          <div class="nav-children">
+            <ul class="nav-tree">
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../DevOps-Refs/index.html" title="Open References overview">Overview</a>
+      </div>
+  </li>
+</ul>
+          </div>
+        </div>
+  </li>
+  <li class="nav-item nav-parent">
+        <div class="nav-group is-collapsed">
+          <button type="button" class="nav-row nav-toggle" aria-expanded="false">
+            <span class="nav-label">Data Structure</span>
+            <span class="nav-chevron" aria-hidden="true">▸</span>
+          </button>
+          <div class="nav-children">
+            <ul class="nav-tree">
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Data-Structure/index.html" title="Open Data Structure overview">Overview</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Data-Structure/arrays/index.html">Arrays</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Data-Structure/linked-list/index.html">Linked Lists</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Data-Structure/stacks-n-queue/index.html">Stacks</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Data-Structure/trees/index.html">Trees</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Data-Structure/hash-map/index.html">Hash Map</a>
+      </div>
+  </li>
+  <li class="nav-item nav-parent">
+        <div class="nav-group nav-linked-group is-collapsed">
+          <div class="nav-row nav-linked-row">
+            <a href="../../Data-Structure/dynamic-programming/index.html">Dynamic Programming</a>
+            <button type="button" class="nav-toggle nav-linked-toggle" aria-expanded="false" aria-label="Toggle subtopics">
+              <span class="nav-chevron" aria-hidden="true">▸</span>
+            </button>
+          </div>
+          <div class="nav-children"><ul class="nav-tree">
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Data-Structure/dynamic-programming/fibonacci-series.html">Fibonacci Series</a>
+      </div>
+  </li>
+</ul>
+</div>
+        </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Data-Structure/graphs/index.html">Graphs</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Data-Structure/backtracking/index.html">Backtracking</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Data-Structure/pattern-printing/index.html">Pattern Printing</a>
+      </div>
+  </li>
+  <li class="nav-item nav-parent">
+        <div class="nav-group nav-linked-group is-collapsed">
+          <div class="nav-row nav-linked-row">
+            <a href="../../Data-Structure/recursion/index.html">Recursion</a>
+            <button type="button" class="nav-toggle nav-linked-toggle" aria-expanded="false" aria-label="Toggle subtopics">
+              <span class="nav-chevron" aria-hidden="true">▸</span>
+            </button>
+          </div>
+          <div class="nav-children"><ul class="nav-tree">
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Data-Structure/recursion/sum-of-all-element.html">Sum of all elements</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Data-Structure/recursion/all-indices-of-array.html">All indices of array</a>
+      </div>
+  </li>
+</ul>
+</div>
+        </div>
+  </li>
+</ul>
+          </div>
+        </div>
+  </li>
+  <li class="nav-item nav-parent">
+        <div class="nav-group is-collapsed">
+          <button type="button" class="nav-row nav-toggle" aria-expanded="false">
+            <span class="nav-label">Low Level Design</span>
+            <span class="nav-chevron" aria-hidden="true">▸</span>
+          </button>
+          <div class="nav-children">
+            <ul class="nav-tree">
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Low-Level-Design/index.html" title="Open Low Level Design overview">Overview</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Low-Level-Design/design-principles.html">Design Principles</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Low-Level-Design/solid-principles.html">SOLID Principles</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Low-Level-Design/design-patterns.html">Gang of Four Design Patterns</a>
+      </div>
+  </li>
+</ul>
+          </div>
+        </div>
+  </li>
+</ul>
+</nav>
+      </div>
+    </aside>
+    <main id="article-main" class="docs-article">
+      <nav class="breadcrumbs" aria-label="Breadcrumb"><a href="../../index.html">Home</a><span aria-hidden="true">/</span><a href="index.html">Java Interview Guide</a><span aria-hidden="true">/</span><a href="spring-security.html">Spring Security, JWT, OAuth2</a></nav>
+      <article class="article-body" data-reading-progress>
+        <header class="article-header">
+          <h1>Spring Security, JWT and OAuth2</h1>
+          
+          <p class="article-subtitle">Authentication versus authorisation, the security filter chain, how a login is processed, password storage, JWT validation, OAuth2 and OpenID Connect roles, CSRF, CORS and method security.</p>
+          <ul class="article-chips">
+            <li class="chip chip-difficulty chip-hard">Hard</li><li class="chip chip-tag">Spring Security</li><li class="chip chip-tag">Interview Preparation</li><li class="chip chip-tag">JWT</li><li class="chip chip-tag">OAuth2</li><li class="chip chip-tag">Security</li>
+          </ul>
+          <div class="article-meta">
+            <span class="article-meta-item" title="Estimated at 220 words per minute">
+              <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+              ~6 min read
+            </span>
+            <span class="article-meta-item">
+              <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="4" y="5" width="16" height="16" rx="2"/><path d="M16 3v4M8 3v4M4 10h16"/></svg>
+              Updated <time datetime="2026-11-11">Nov 11, 2026</time>
+            </span>
+            <button type="button" class="ra-open" aria-controls="reading-assistant" aria-expanded="false" hidden>
+              <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/></svg>
+              Listen
+            </button>
+          </div>
+        </header>
+        <div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>Security questions check whether you can protect an API correctly, not whether you remember class names.
+The best answers explain the request path through the filter chain and name what must be validated.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_at_a_glance"><a class="anchor" href="#_at_a_glance"></a>At a glance</h2>
+<div class="sectionbody">
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 75%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Weightage</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>7 / 10</strong></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Who gets asked</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Mid and senior; mandatory for roles in banking, payments and identity.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Preparation time</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">3 to 4 hours</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Handbook questions</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Q73-Q75, Q105, Q119</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Builds on</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="rest-spring-mvc.html" class="xref page">REST and Spring MVC</a> (filters)</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_authentication_versus_authorisation"><a class="anchor" href="#_authentication_versus_authorisation"></a>Authentication versus authorisation</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Authentication</strong> answers "who are you?": password, token, certificate.</p>
+</li>
+<li>
+<p><strong>Authorisation</strong> answers "what may you do?": roles, permissions, ownership of the resource.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Both must be enforced on the server.
+Hiding a button in the UI is not authorisation.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_the_filter_chain"><a class="anchor" href="#_the_filter_chain"></a>The filter chain</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Spring Security is a chain of Servlet filters in front of <code>DispatcherServlet</code>.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-text hljs" data-lang="text">Request
+  │
+  ▼
+DelegatingFilterProxy           (Servlet filter registered with the container)
+  │ delegates to the Spring bean
+  ▼
+FilterChainProxy                (picks the first SecurityFilterChain whose matcher fits the request)
+  │
+  ▼
+SecurityFilterChain             (ordered list of security filters), for example:
+  ├─ SecurityContextHolderFilter       load the SecurityContext (session, or empty for stateless)
+  ├─ CorsFilter
+  ├─ CsrfFilter
+  ├─ LogoutFilter
+  ├─ UsernamePasswordAuthenticationFilter / BearerTokenAuthenticationFilter   authenticate
+  ├─ ExceptionTranslationFilter        turns security exceptions into 401 / 403
+  └─ AuthorizationFilter               check access rules for the URL
+  │
+  ▼
+DispatcherServlet → controller</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_how_authentication_works"><a class="anchor" href="#_how_authentication_works"></a>How authentication works</h2>
+<div class="sectionbody">
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>A filter extracts credentials and builds an unauthenticated <code>Authentication</code> object (for example <code>UsernamePasswordAuthenticationToken</code>).</p>
+</li>
+<li>
+<p>It calls the <code>AuthenticationManager</code>, usually a <code>ProviderManager</code>.</p>
+</li>
+<li>
+<p>The <code>ProviderManager</code> asks each <code>AuthenticationProvider</code> that supports the token type.</p>
+</li>
+<li>
+<p><code>DaoAuthenticationProvider</code> loads the user through a <code>UserDetailsService</code> and checks the password with a <code>PasswordEncoder</code>.</p>
+</li>
+<li>
+<p>On success, an authenticated <code>Authentication</code> (principal plus authorities) is stored in the <code>SecurityContext</code>, held by <code>SecurityContextHolder</code>, which uses a <code>ThreadLocal</code> by default.</p>
+</li>
+<li>
+<p>On failure, an <code>AuthenticationException</code> leads to <code>401</code>. An <code>AccessDeniedException</code> for an authenticated user leads to <code>403</code>.</p>
+</li>
+</ol>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">// Anywhere in the request thread
+Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+String username = auth.getName();
+
+// In a controller
+@GetMapping("/me")
+UserView me(@AuthenticationPrincipal Jwt jwt) { return users.find(jwt.getSubject()); }</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_configuration_spring_security_6_and_7"><a class="anchor" href="#_configuration_spring_security_6_and_7"></a>Configuration (Spring Security 6 and 7)</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><code>WebSecurityConfigurerAdapter</code> was removed in Spring Security 6.
+Configuration is a <code>SecurityFilterChain</code> bean with the lambda DSL.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Configuration
+@EnableMethodSecurity                                    // enables @PreAuthorize
+class SecurityConfig {
+
+    @Bean
+    SecurityFilterChain api(HttpSecurity http) throws Exception {
+        http
+            .csrf(csrf -&gt; csrf.disable())                // stateless API with bearer tokens only
+            .sessionManagement(s -&gt; s.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+            .authorizeHttpRequests(auth -&gt; auth
+                .requestMatchers("/actuator/health/**").permitAll()
+                .requestMatchers(HttpMethod.GET, "/api/products/**").permitAll()
+                .requestMatchers("/api/admin/**").hasRole("ADMIN")
+                .anyRequest().authenticated())           // deny-by-default for everything else
+            .oauth2ResourceServer(oauth -&gt; oauth.jwt(Customizer.withDefaults()));
+        return http.build();
+    }
+
+    @Bean
+    PasswordEncoder passwordEncoder() {
+        return PasswordEncoderFactories.createDelegatingPasswordEncoder();   // bcrypt by default
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">spring:
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: https://login.example.com/realms/shop   # keys are fetched from the issuer's JWKS
+          audiences: shop-api</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Rules are checked in order, so put specific matchers before general ones and end with <code>anyRequest()</code>.
+<code>hasRole("ADMIN")</code> checks for the authority <code>ROLE_ADMIN</code>; <code>hasAuthority("orders:write")</code> checks the exact string.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_method_security"><a class="anchor" href="#_method_security"></a>Method security</h2>
+<div class="sectionbody">
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Service
+class OrderService {
+
+    @PreAuthorize("hasRole('ADMIN') or #customerId == authentication.name")
+    public List&lt;Order&gt; ordersFor(String customerId) { ... }
+
+    @PostAuthorize("returnObject.ownerId == authentication.name")
+    public Document load(long id) { ... }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>URL rules protect endpoints; method security protects business operations, including ones reached by other paths (messages, scheduled jobs).
+It is proxy-based, so self-invocation is not checked.
+Object-level checks ("is this <strong>your</strong> order?") are the most commonly missed authorisation bug (OWASP&#8217;s broken object level authorisation).</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_password_storage"><a class="anchor" href="#_password_storage"></a>Password storage</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p>Never store plain text or fast hashes (MD5, SHA-256).</p>
+</li>
+<li>
+<p>Use an adaptive, salted hash: <strong>bcrypt</strong>, <strong>scrypt</strong>, <strong>Argon2</strong> or <strong>PBKDF2</strong>. They are deliberately slow and include a random salt per password.</p>
+</li>
+<li>
+<p><code>DelegatingPasswordEncoder</code> stores an algorithm prefix (<code>{bcrypt}$2a$10$...</code>), so you can upgrade algorithms gradually.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_sessions_versus_tokens"><a class="anchor" href="#_sessions_versus_tokens"></a>Sessions versus tokens</h2>
+<div class="sectionbody">
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 40%;">
+<col style="width: 40%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top"></th>
+<th class="tableblock halign-left valign-top">Server session (cookie <code>JSESSIONID</code>)</th>
+<th class="tableblock halign-left valign-top">Token (JWT bearer)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">State</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Stored on the server (or a shared store such as Redis)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Self-contained in the token</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Scaling</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Needs sticky sessions or a shared session store</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Any instance can validate it</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Revocation</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Easy: delete the session</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Hard: valid until expiry unless you keep a deny list</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Sent by</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Browser automatically (cookie)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Client explicitly (<code>Authorization: Bearer ...</code>)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Main threats</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">CSRF, session fixation</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Token theft (XSS if stored in <code>localStorage</code>), long expiry</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_jwt"><a class="anchor" href="#_jwt"></a>JWT</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>A JSON Web Token has three Base64URL parts: <code>header.payload.signature</code>.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Header</strong>: algorithm (<code>RS256</code>, <code>ES256</code>, <code>HS256</code>) and key ID (<code>kid</code>).</p>
+</li>
+<li>
+<p><strong>Payload</strong>: claims such as <code>sub</code> (subject), <code>iss</code> (issuer), <code>aud</code> (audience), <code>exp</code> (expiry), <code>nbf</code> (not before), <code>iat</code> (issued at), plus custom claims like <code>scope</code> or <code>roles</code>.</p>
+</li>
+<li>
+<p><strong>Signature</strong>: proves the token was issued by the holder of the key and has not been changed.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>A signed JWT (JWS) is <strong>encoded, not encrypted</strong>: anyone can read the payload.
+Never put secrets or sensitive personal data in it.</p>
+</div>
+<div class="paragraph">
+<p><strong>What to validate on every request</strong>:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>The signature, with a trusted key (from the issuer&#8217;s JWKS endpoint), and only with the algorithms you allow. Reject <code>alg: none</code>.</p>
+</li>
+<li>
+<p><code>iss</code> matches the expected issuer.</p>
+</li>
+<li>
+<p><code>aud</code> contains this API.</p>
+</li>
+<li>
+<p><code>exp</code> is in the future and <code>nbf</code> is in the past, allowing small clock skew.</p>
+</li>
+<li>
+<p>Required claims are present; scopes or roles grant the needed permission.</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>Spring&#8217;s resource server does steps 1 to 4 when configured with <code>issuer-uri</code> and <code>audiences</code>.</p>
+</div>
+<div class="paragraph">
+<p><strong>Token lifecycle</strong>: keep access tokens short-lived (minutes); use refresh tokens (stored securely, rotated on use) to get new ones; rotate signing keys with <code>kid</code>; for logout or compromise, revoke refresh tokens and, if needed, keep a short deny list of access token IDs (<code>jti</code>).</p>
+</div>
+<div class="paragraph">
+<p><strong>Symmetric versus asymmetric</strong>: <code>HS256</code> uses one shared secret for signing and verifying, so every verifier could also mint tokens.
+<code>RS256</code>/<code>ES256</code> sign with a private key and verify with a public key, which is the right choice when many services verify tokens.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_oauth2_and_openid_connect"><a class="anchor" href="#_oauth2_and_openid_connect"></a>OAuth2 and OpenID Connect</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>OAuth2 is a framework for <strong>delegated authorisation</strong>: a client gets an access token to call an API on behalf of a user or itself.
+OpenID Connect (OIDC) adds <strong>authentication</strong> on top: an ID token describing who the user is.</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 75%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Role</th>
+<th class="tableblock halign-left valign-top">Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Resource owner</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The user.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Client</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The web or mobile app that wants access.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Authorisation server</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Keycloak, Okta, Auth0, Entra ID, Cognito, or Spring Authorization Server. Issues tokens.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Resource server</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Your Spring Boot API that validates tokens and serves data.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>Grant types to know:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Authorization Code with PKCE</strong>: for web, mobile and single-page apps acting for a user. The browser receives a short-lived code; the client exchanges it for tokens. PKCE protects the code from interception.</p>
+</li>
+<li>
+<p><strong>Client Credentials</strong>: service-to-service calls with no user.</p>
+</li>
+<li>
+<p><strong>Refresh Token</strong>: get a new access token without logging in again.</p>
+</li>
+<li>
+<p><strong>Implicit</strong> and <strong>Resource Owner Password</strong> grants are deprecated; do not propose them.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_csrf"><a class="anchor" href="#_csrf"></a>CSRF</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Cross-site request forgery tricks a logged-in user&#8217;s browser into sending a request to your site; the browser attaches the session cookie automatically.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>It matters when authentication relies on <strong>cookies</strong>. Spring Security enables CSRF protection by default, requiring a token on state-changing requests.</p>
+</li>
+<li>
+<p>A stateless API that accepts only <code>Authorization: Bearer</code> headers is not vulnerable in the same way, because the browser does not attach that header automatically. That is why such APIs often disable CSRF.</p>
+</li>
+<li>
+<p><code>SameSite=Lax</code> or <code>Strict</code> cookies reduce the risk but are not a complete defence on their own.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_cors"><a class="anchor" href="#_cors"></a>CORS</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Browsers block JavaScript from reading responses from another origin unless the server allows it with CORS headers (<code>Access-Control-Allow-Origin</code> and others).
+The browser sends a preflight <code>OPTIONS</code> request for non-simple requests.
+CORS is a browser rule, not a server-side security control: it does not stop <code>curl</code> or other servers.
+Configure an explicit list of allowed origins; avoid <code>*</code> together with credentials (browsers reject it anyway).</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">http.cors(cors -&gt; cors.configurationSource(request -&gt; {
+    CorsConfiguration config = new CorsConfiguration();
+    config.setAllowedOrigins(List.of("https://shop.example.com"));
+    config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE"));
+    config.setAllowedHeaders(List.of("Authorization", "Content-Type"));
+    return config;
+}));</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_other_security_topics_that_come_up"><a class="anchor" href="#_other_security_topics_that_come_up"></a>Other security topics that come up</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><strong>SQL injection</strong>: always use bind parameters (<code>JdbcTemplate</code> with <code>?</code>, JPA parameters, Spring Data). Never concatenate input into SQL. Validate dynamic sort and filter fields against an allowlist. Use least-privilege database accounts.</p>
+</li>
+<li>
+<p><strong>Secrets</strong>: keep them out of source code and images; inject from a secret manager or Kubernetes secrets; rotate them; never log them. A leaked credential is an incident: revoke it, rotate it, then investigate.</p>
+</li>
+<li>
+<p><strong>Security headers</strong>: Spring Security adds <code>X-Content-Type-Options</code>, <code>X-Frame-Options</code>, <code>Cache-Control</code> and HSTS (on HTTPS) by default.</p>
+</li>
+<li>
+<p><strong>Rate limiting and brute force</strong>: limit login attempts per account and per IP; lock or slow down after failures.</p>
+</li>
+<li>
+<p><strong>Mass assignment</strong>: bind requests to DTOs with only the allowed fields, never directly to entities (a request could set <code>role=ADMIN</code>).</p>
+</li>
+<li>
+<p><strong>Dependency vulnerabilities</strong>: scan with OWASP Dependency-Check, Snyk or GitHub Dependabot.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_practice_questions"><a class="anchor" href="#_practice_questions"></a>Practice questions</h2>
+<div class="sectionbody">
+<details>
+<summary class="title">Q1. Authentication versus authorisation?</summary>
+<div class="content">
+<div class="paragraph">
+<p>Authentication establishes identity; authorisation decides what that identity may do.
+Both are enforced server-side, at the endpoint and at the business method or object level.</p>
+</div>
+</div>
+</details>
+<details>
+<summary class="title">Q2. Walk through what happens when a request with a JWT reaches a Spring Boot API.</summary>
+<div class="content">
+<div class="paragraph">
+<p><code>DelegatingFilterProxy</code> hands it to <code>FilterChainProxy</code>, which selects the matching <code>SecurityFilterChain</code>.
+<code>BearerTokenAuthenticationFilter</code> extracts the token, <code>JwtAuthenticationProvider</code> decodes it with the issuer&#8217;s public key and validates signature, issuer, audience and time claims, then converts scopes or roles into authorities.
+The authenticated <code>Authentication</code> is placed in the <code>SecurityContextHolder</code>.
+<code>AuthorizationFilter</code> checks URL rules; method security checks <code>@PreAuthorize</code>.
+Failures produce 401 or 403 through <code>ExceptionTranslationFilter</code>.</p>
+</div>
+</div>
+</details>
+<details>
+<summary class="title">Q3. What must you validate in a JWT?</summary>
+<div class="content">
+<div class="paragraph">
+<p>Signature with a trusted key and an allowed algorithm, issuer, audience, expiry, not-before (with small clock skew), and required claims and scopes.
+Also remember the payload is readable by anyone.</p>
+</div>
+</div>
+</details>
+<details>
+<summary class="title">Q4. How do you log out or revoke a JWT?</summary>
+<div class="content">
+<div class="paragraph">
+<p>A JWT stays valid until it expires, so keep access tokens short-lived.
+Revoke the refresh token at the authorisation server, and if immediate revocation is required, keep a deny list of token IDs (<code>jti</code>) in a fast store until their expiry, or use opaque tokens with introspection.</p>
+</div>
+</div>
+</details>
+<details>
+<summary class="title">Q5. When does CSRF matter, and why do many REST APIs disable it?</summary>
+<div class="content">
+<div class="paragraph">
+<p>When the browser sends credentials automatically, as with session cookies.
+APIs that authenticate only with bearer tokens in the <code>Authorization</code> header are not exposed in the same way, so CSRF protection is often disabled for them.
+If you store the token in a cookie, CSRF matters again.</p>
+</div>
+</div>
+</details>
+<details>
+<summary class="title">Q6. How should passwords be stored?</summary>
+<div class="content">
+<div class="paragraph">
+<p>With a slow, salted, adaptive hash such as bcrypt, scrypt, Argon2 or PBKDF2, through <code>DelegatingPasswordEncoder</code> so the algorithm can be upgraded later.
+Never with encryption, plain text or fast hashes.</p>
+</div>
+</div>
+</details>
+<details>
+<summary class="title">Q7. Which OAuth2 grant would you use for a single-page app, and for a batch job calling an API?</summary>
+<div class="content">
+<div class="paragraph">
+<p>Single-page or mobile app: Authorization Code with PKCE.
+Batch job or service-to-service: Client Credentials.
+Never Implicit or Password grants in new designs.</p>
+</div>
+</div>
+</details>
+<details>
+<summary class="title">Q8. <code>hasRole</code> versus <code>hasAuthority</code>?</summary>
+<div class="content">
+<div class="paragraph">
+<p><code>hasRole("ADMIN")</code> checks for the authority <code>ROLE_ADMIN</code> (it adds the prefix).
+<code>hasAuthority("ADMIN")</code> checks the exact string.
+JWT scopes become authorities like <code>SCOPE_orders.read</code> by default.</p>
+</div>
+</div>
+</details>
+<details>
+<summary class="title">Q9. How do you prevent SQL injection?</summary>
+<div class="content">
+<div class="paragraph">
+<p>Parameterised queries everywhere (JDBC bind parameters, JPA named parameters, Spring Data methods), allowlists for dynamic column or sort names, least-privilege database users, and input validation as a second line.</p>
+</div>
+</div>
+</details>
+<details>
+<summary class="title">Q10. How should a service handle secrets?</summary>
+<div class="content">
+<div class="paragraph">
+<p>Store them in a secret manager or platform-managed secrets, inject at runtime, restrict access by workload identity, rotate regularly, keep them out of logs, code and images, and treat a leak as an incident: revoke, rotate, investigate.</p>
+</div>
+</div>
+</details>
+<details>
+<summary class="title">Q11. What is CORS, and does it protect your API?</summary>
+<div class="content">
+<div class="paragraph">
+<p>A browser mechanism that lets a server declare which other origins' scripts may read its responses.
+It does not protect the API from non-browser clients; authentication and authorisation do that.</p>
+</div>
+</div>
+</details>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_common_traps"><a class="anchor" href="#_common_traps"></a>Common traps</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p>Thinking a JWT is encrypted.</p>
+</li>
+<li>
+<p>Using <code>HS256</code> shared secrets across many services.</p>
+</li>
+<li>
+<p>Long-lived access tokens with no revocation plan.</p>
+</li>
+<li>
+<p>Disabling CSRF on a cookie-based application.</p>
+</li>
+<li>
+<p>URL rules without object-level checks.</p>
+</li>
+<li>
+<p>Exposing Actuator endpoints without security.</p>
+</li>
+<li>
+<p><code>permitAll()</code> rules placed after <code>anyRequest()</code>.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_follow_ups_to_expect"><a class="anchor" href="#_follow_ups_to_expect"></a>Follow-ups to expect</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p>"How would you secure service-to-service calls inside the cluster?" (Client credentials tokens, mTLS through a service mesh, network policies.)</p>
+</li>
+<li>
+<p>"Where would you store tokens in a browser app?" (Prefer a backend-for-frontend with HttpOnly, Secure, SameSite cookies; avoid <code>localStorage</code>.)</p>
+</li>
+<li>
+<p>"How do you implement multi-tenancy safely?" (Tenant from the token, enforced in queries server-side.)</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_quick_revision"><a class="anchor" href="#_quick_revision"></a>Quick revision</h2>
+<div class="sectionbody">
+<div class="ulist checklist">
+<ul class="checklist">
+<li>
+<p><i class="fa fa-square-o"></i> Filter chain path: DelegatingFilterProxy, FilterChainProxy, SecurityFilterChain</p>
+</li>
+<li>
+<p><i class="fa fa-square-o"></i> AuthenticationManager, ProviderManager, AuthenticationProvider, UserDetailsService, PasswordEncoder</p>
+</li>
+<li>
+<p><i class="fa fa-square-o"></i> <code>SecurityFilterChain</code> bean with lambda DSL, resource server JWT</p>
+</li>
+<li>
+<p><i class="fa fa-square-o"></i> JWT structure and the five validations</p>
+</li>
+<li>
+<p><i class="fa fa-square-o"></i> OAuth2 roles and grants; OIDC</p>
+</li>
+<li>
+<p><i class="fa fa-square-o"></i> CSRF versus CORS</p>
+</li>
+<li>
+<p><i class="fa fa-square-o"></i> SQL injection and secrets handling</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Next: <a href="microservices.html" class="xref page">Microservices and Distributed Systems</a>.</p>
+</div>
+</div>
+</div>
+      </article>
+      <div class="article-pagination">
+        <a class="prev" href="jpa-hibernate-transactions.html"><span>← Previous</span><strong>JPA, Hibernate, Transactions</strong></a>
+        <a class="next" href="microservices.html"><span>Next →</span><strong>Microservices</strong></a>
+      </div>
+    </main>
+    <aside class="docs-toc reading-assistant" id="reading-assistant" aria-label="Reading assistant">
+  <div class="toc-inner ra-inner">
+    <div class="ra-head">
+      <h2 class="ra-title">Reading Assistant</h2>
+      <button type="button" class="ra-close" aria-label="Close reading assistant">
+        <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+    </div>
+
+    <section class="ra-card ra-listen" aria-labelledby="reading-assistant-listen" hidden>
+      <div class="ra-card-head">
+        <svg class="ra-card-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/></svg>
+        <div>
+          <h3 class="ra-card-title" id="reading-assistant-listen">Listen to Article</h3>
+          <p class="ra-card-desc">Listen to the explanation of this article. Code blocks are skipped.</p>
+        </div>
+      </div>
+
+      <div class="ra-ready">
+        <div class="ra-player">
+          <button type="button" class="ra-play" aria-label="Play article">
+            <svg class="ra-icon-play" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M8 5.5v13l11-6.5z"/></svg>
+            <svg class="ra-icon-pause" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M7 5h3.5v14H7zM13.5 5H17v14h-3.5z"/></svg>
+          </button>
+          <div class="ra-track">
+            <div class="ra-meter" role="progressbar" aria-label="Listening progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><span class="ra-meter-fill"></span></div>
+            <span class="ra-time" title="Estimated. Browser speech does not report an exact duration."></span>
+          </div>
+          <button type="button" class="ra-stop" aria-label="Stop listening" disabled>
+            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="6.5" y="6.5" width="11" height="11" rx="1.5"/></svg>
+          </button>
+        </div>
+
+        <div class="ra-controls">
+          <label class="ra-field ra-field-rate">
+            <span class="ra-field-label">Speed</span>
+            <select class="ra-rate">
+              <option value="0.75">0.75×</option>
+              <option value="1" selected>1×</option>
+              <option value="1.25">1.25×</option>
+              <option value="1.5">1.5×</option>
+              <option value="2">2×</option>
+            </select>
+          </label>
+        </div>
+
+        <label class="ra-check"><input type="checkbox" class="ra-follow" checked> Highlight and follow along</label>
+        <p class="ra-status" role="status" aria-live="polite">Ready</p>
+
+        <p class="ra-tip">
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M9 18h6M10 21h4"/><path d="M12 3a6 6 0 0 0-3.5 10.9V16h7v-2.1A6 6 0 0 0 12 3z"/></svg>
+          <span><strong>Tip:</strong> Headings and explanations are read aloud; code is skipped. Read in Google UK English Male on Chrome; other browsers use their closest British English voice.</span>
+        </p>
+      </div>
+
+      <p class="ra-unsupported" hidden>Listening isn&#8217;t available in this browser. The article itself works as usual.</p>
+    </section>
+
+    <section class="ra-card ra-jump" aria-labelledby="reading-assistant-sections" hidden>
+      <h3 class="ra-card-title" id="reading-assistant-sections">Jump to Section</h3>
+      <ol class="ra-sections"></ol>
+    </section>
+
+    <section class="ra-card ra-info" aria-labelledby="reading-assistant-info">
+      <h3 class="ra-card-title" id="reading-assistant-info">Page Info</h3>
+      <ul class="ra-info-list">
+        <li>
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+          <span title="Estimated at 220 words per minute">~6 min read</span>
+        </li>
+        <li>
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h6"/></svg>
+          <span title="Prose only; code is not counted">~1,255 words</span>
+        </li>
+        <li>
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="4" y="5" width="16" height="16" rx="2"/><path d="M16 3v4M8 3v4M4 10h16"/></svg>
+          <span>Last updated <time datetime="2026-11-11">Nov 11, 2026</time></span>
+        </li>
+      </ul>
+    </section>
+  </div>
+</aside>
+  </div>
+  <footer class="docs-footer">© 2026 Ayush Nigam · <a href="../../index.html">Home</a></footer>
+  <script src="../../../../_/js/reading-assistant.js?v=2" defer></script>
+  <script src="../../../../_/js/site.js?v=15" defer></script>
+</body>
+</html>

@@ -1,0 +1,1067 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>Modern Java (11 to 25) · Ayush Nigam</title>
+  
+  <link rel="preload" href="../../../../_/fonts/inter-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="../../../../_/css/site.css?v=21">
+</head>
+<body class="docs-page">
+  <a class="skip-link" href="#article-main">Skip to content</a>
+  <header class="docs-header">
+    <div class="docs-header-inner">
+      <a class="docs-logo" href="../../index.html"><span class="docs-logo-mark">AN</span><span>Ayush Nigam</span></a>
+          <nav class="header-adoc-nav docs-toplinks" aria-label="Header links" data-header-source-url="../../headers/header-links.html">
+            <div class="header-adoc-content"><div class="ulist header-menu-links">
+<ul>
+<li>
+<p><a href="contact.html" class="xref page">Contact</a></p>
+</li>
+<li>
+<p><a href="https://www.linkedin.com/in/the-ayush-nigam/">LinkedIn</a></p>
+</li>
+<li>
+<p><a href="https://github.com/gareeb-engineer">GitHub</a></p>
+</li>
+</ul>
+</div>
+</div>
+          </nav>
+      <a class="header-avatar" href="../../index.html" aria-hidden="true" tabindex="-1"><img src="../../../../_/img/profile-photo.png" alt="Ayush Nigam profile photo" width="36" height="36"></a>
+<button type="button" class="mobile-nav-toggle" aria-label="Toggle documentation navigation" aria-expanded="false" aria-controls="docs-sidebar">☰ Menu</button>
+      <span class="read-progress-label" aria-hidden="true" hidden>Reading <span class="read-progress-value">0%</span></span>
+    </div>
+    <div class="read-progress" role="progressbar" aria-label="Article reading progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" hidden><span class="read-progress-fill"></span></div>
+  </header>
+  <div class="docs-shell">
+    <aside class="docs-sidebar" id="docs-sidebar" aria-label="Documentation sidebar">
+      <div class="sidebar-inner">
+      <div class="sidebar-top"><span class="sidebar-eyebrow">ENGINEERING LIBRARY</span></div>
+      <input id="nav-filter" class="nav-filter" type="search" placeholder="Filter pages…" aria-label="Filter navigation" autocomplete="off">
+      <nav aria-label="Documentation pages"><ul class="nav-tree">
+  <li class="nav-item nav-parent">
+        <div class="nav-group">
+          <button type="button" class="nav-row nav-toggle" aria-expanded="true">
+            <span class="nav-label">Java</span>
+            <span class="nav-chevron" aria-hidden="true">▾</span>
+          </button>
+          <div class="nav-children">
+            <ul class="nav-tree">
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../index.html" title="Open Java overview">Overview</a>
+      </div>
+  </li>
+  <li class="nav-item nav-parent">
+        <div class="nav-group nav-linked-group">
+          <div class="nav-row nav-linked-row">
+            <a href="index.html">Java Interview Guide</a>
+            <button type="button" class="nav-toggle nav-linked-toggle" aria-expanded="true" aria-label="Toggle subtopics">
+              <span class="nav-chevron" aria-hidden="true">▾</span>
+            </button>
+          </div>
+          <div class="nav-children"><ul class="nav-tree">
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="core-java-oop.html">Core Java and OOP</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="collections-generics.html">Collections and Generics</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="java8-streams-functional.html">Java 8: Lambdas, Streams, Optional</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="modern-java.html" class="is-current" aria-current="page">Modern Java (11 to 25)</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="concurrency.html">Concurrency and Multithreading</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="jvm-memory-gc.html">JVM, Memory and GC</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="spring-core.html">Spring Core: IoC, DI, AOP</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="spring-boot.html">Spring Boot</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="rest-spring-mvc.html">REST APIs and Spring MVC</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="jpa-hibernate-transactions.html">JPA, Hibernate, Transactions</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="spring-security.html">Spring Security, JWT, OAuth2</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="microservices.html">Microservices</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="coding-round.html">Coding Round in Java</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="testing.html">Testing</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="senior-scenarios.html">Production Scenarios and Behavioural</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="spring-ai.html">Spring AI and GenAI</a>
+      </div>
+  </li>
+</ul>
+</div>
+        </div>
+  </li>
+</ul>
+          </div>
+        </div>
+  </li>
+  <li class="nav-item nav-parent">
+        <div class="nav-group is-collapsed">
+          <button type="button" class="nav-row nav-toggle" aria-expanded="false">
+            <span class="nav-label">Architecture Diagram&#8217;s</span>
+            <span class="nav-chevron" aria-hidden="true">▸</span>
+          </button>
+          <div class="nav-children">
+            <ul class="nav-tree">
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Arcitecture-diagram/index.html" title="Open Architecture Diagram’s overview">Overview</a>
+      </div>
+  </li>
+</ul>
+          </div>
+        </div>
+  </li>
+  <li class="nav-item nav-parent">
+        <div class="nav-group is-collapsed">
+          <button type="button" class="nav-row nav-toggle" aria-expanded="false">
+            <span class="nav-label">References</span>
+            <span class="nav-chevron" aria-hidden="true">▸</span>
+          </button>
+          <div class="nav-children">
+            <ul class="nav-tree">
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../DevOps-Refs/index.html" title="Open References overview">Overview</a>
+      </div>
+  </li>
+</ul>
+          </div>
+        </div>
+  </li>
+  <li class="nav-item nav-parent">
+        <div class="nav-group is-collapsed">
+          <button type="button" class="nav-row nav-toggle" aria-expanded="false">
+            <span class="nav-label">Data Structure</span>
+            <span class="nav-chevron" aria-hidden="true">▸</span>
+          </button>
+          <div class="nav-children">
+            <ul class="nav-tree">
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Data-Structure/index.html" title="Open Data Structure overview">Overview</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Data-Structure/arrays/index.html">Arrays</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Data-Structure/linked-list/index.html">Linked Lists</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Data-Structure/stacks-n-queue/index.html">Stacks</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Data-Structure/trees/index.html">Trees</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Data-Structure/hash-map/index.html">Hash Map</a>
+      </div>
+  </li>
+  <li class="nav-item nav-parent">
+        <div class="nav-group nav-linked-group is-collapsed">
+          <div class="nav-row nav-linked-row">
+            <a href="../../Data-Structure/dynamic-programming/index.html">Dynamic Programming</a>
+            <button type="button" class="nav-toggle nav-linked-toggle" aria-expanded="false" aria-label="Toggle subtopics">
+              <span class="nav-chevron" aria-hidden="true">▸</span>
+            </button>
+          </div>
+          <div class="nav-children"><ul class="nav-tree">
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Data-Structure/dynamic-programming/fibonacci-series.html">Fibonacci Series</a>
+      </div>
+  </li>
+</ul>
+</div>
+        </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Data-Structure/graphs/index.html">Graphs</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Data-Structure/backtracking/index.html">Backtracking</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Data-Structure/pattern-printing/index.html">Pattern Printing</a>
+      </div>
+  </li>
+  <li class="nav-item nav-parent">
+        <div class="nav-group nav-linked-group is-collapsed">
+          <div class="nav-row nav-linked-row">
+            <a href="../../Data-Structure/recursion/index.html">Recursion</a>
+            <button type="button" class="nav-toggle nav-linked-toggle" aria-expanded="false" aria-label="Toggle subtopics">
+              <span class="nav-chevron" aria-hidden="true">▸</span>
+            </button>
+          </div>
+          <div class="nav-children"><ul class="nav-tree">
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Data-Structure/recursion/sum-of-all-element.html">Sum of all elements</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Data-Structure/recursion/all-indices-of-array.html">All indices of array</a>
+      </div>
+  </li>
+</ul>
+</div>
+        </div>
+  </li>
+</ul>
+          </div>
+        </div>
+  </li>
+  <li class="nav-item nav-parent">
+        <div class="nav-group is-collapsed">
+          <button type="button" class="nav-row nav-toggle" aria-expanded="false">
+            <span class="nav-label">Low Level Design</span>
+            <span class="nav-chevron" aria-hidden="true">▸</span>
+          </button>
+          <div class="nav-children">
+            <ul class="nav-tree">
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Low-Level-Design/index.html" title="Open Low Level Design overview">Overview</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Low-Level-Design/design-principles.html">Design Principles</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Low-Level-Design/solid-principles.html">SOLID Principles</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Low-Level-Design/design-patterns.html">Gang of Four Design Patterns</a>
+      </div>
+  </li>
+</ul>
+          </div>
+        </div>
+  </li>
+</ul>
+</nav>
+      </div>
+    </aside>
+    <main id="article-main" class="docs-article">
+      <nav class="breadcrumbs" aria-label="Breadcrumb"><a href="../../index.html">Home</a><span aria-hidden="true">/</span><a href="index.html">Java Interview Guide</a><span aria-hidden="true">/</span><a href="modern-java.html">Modern Java (11 to 25)</a></nav>
+      <article class="article-body" data-reading-progress>
+        <header class="article-header">
+          <h1>Modern Java (11 to 25)</h1>
+          
+          <p class="article-subtitle">What changed after Java 8 and what interviewers now ask about it: var, records, sealed types, pattern matching, virtual threads, scoped values and the Java 21 and 25 LTS releases.</p>
+          <ul class="article-chips">
+            <li class="chip chip-difficulty chip-medium">Medium</li><li class="chip chip-tag">Java</li><li class="chip chip-tag">Interview Preparation</li><li class="chip chip-tag">Java 21</li><li class="chip chip-tag">Java 25</li><li class="chip chip-tag">Records</li><li class="chip chip-tag">Virtual Threads</li>
+          </ul>
+          <div class="article-meta">
+            <span class="article-meta-item" title="Estimated at 220 words per minute">
+              <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+              ~6 min read
+            </span>
+            <span class="article-meta-item">
+              <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="4" y="5" width="16" height="16" rx="2"/><path d="M16 3v4M8 3v4M4 10h16"/></svg>
+              Updated <time datetime="2026-11-11">Nov 11, 2026</time>
+            </span>
+            <button type="button" class="ra-open" aria-controls="reading-assistant" aria-expanded="false" hidden>
+              <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/></svg>
+              Listen
+            </button>
+          </div>
+        </header>
+        <div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>Many question lists stop at Java 8, but interviews no longer do.
+Java 17, 21 and 25 are long-term support (LTS) releases, and most new Spring Boot projects run on 21 or 25.
+Interviewers use this topic to see whether you keep up and whether you can use new features for the right reasons.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_at_a_glance"><a class="anchor" href="#_at_a_glance"></a>At a glance</h2>
+<div class="sectionbody">
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 75%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Weightage</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>7 / 10</strong></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Who gets asked</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Mid and senior. Freshers get "what is a record?" at most.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Preparation time</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">3 hours</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Handbook questions</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Q31-Q34</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Builds on</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="core-java-oop.html" class="xref page">Core Java</a>, <a href="concurrency.html" class="xref page">Concurrency</a> for virtual threads</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_release_model"><a class="anchor" href="#_release_model"></a>Release model</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Since Java 10, a new feature release ships every six months (March and September).
+Every two years one of them is an LTS release that vendors support for years: <strong>Java 11 (2018), 17 (2021), 21 (2023) and 25 (September 2025)</strong>.
+Features often appear first as <strong>preview</strong> (disabled unless you pass <code>--enable-preview</code>) or <strong>incubator</strong> modules, then become final.</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+Know the Java version of your current project and one feature from it that you used.
+"We moved from 17 to 21 to use virtual threads in our I/O-heavy service" is a much stronger answer than a feature list.
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_features_by_lts_release"><a class="anchor" href="#_features_by_lts_release"></a>Features by LTS release</h2>
+<div class="sectionbody">
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 80%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Release</th>
+<th class="tableblock halign-left valign-top">Features worth knowing</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Java 9 to 11</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Module system (JPMS), <code>jshell</code>, <code>List.of</code>/<code>Set.of</code>/<code>Map.of</code>, private interface methods, <code>var</code> for local variables (10), the standard <code>HttpClient</code> (11), new <code>String</code> methods <code>isBlank</code>, <code>strip</code>, <code>lines</code>, <code>repeat</code> (11), <code>Files.readString</code> (11), running a single source file with <code>java Hello.java</code> (11).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Java 12 to 17</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Switch expressions (14), helpful <code>NullPointerException</code> messages that name the null variable (14), text blocks (15), records (16), pattern matching for <code>instanceof</code> (16), <code>Stream.toList()</code> (16), sealed classes (17), strong encapsulation of JDK internals (17).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Java 18 to 21</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">UTF-8 as the default charset (18), <code>finalize</code> deprecated for removal (18), <strong>virtual threads</strong> (21), sequenced collections (21), record patterns (21), pattern matching for <code>switch</code> (21), generational ZGC (21).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Java 22 to 25</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Unnamed variables and patterns <code>_</code> (22), Foreign Function and Memory API (22), Markdown in Javadoc (23), stream gatherers (24), virtual threads no longer pinned by <code>synchronized</code> (24), scoped values (25), module import declarations (25), compact source files and instance <code>main</code> methods (25), flexible constructor bodies (25), compact object headers as a product option (25).</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_var"><a class="anchor" href="#_var"></a>var</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><code>var</code> lets the compiler infer the type of a <strong>local</strong> variable from its initializer.
+The variable is still statically typed.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">var orders = new ArrayList&lt;Order&gt;();             // ArrayList&lt;Order&gt;
+for (var entry : map.entrySet()) { ... }         // Map.Entry&lt;K, V&gt;
+try (var in = Files.newInputStream(path)) { ... }</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>It cannot be used for fields, method parameters or return types, or without an initializer, and <code>var x = null;</code> does not compile.
+Use it when the type is obvious from the right-hand side; avoid it when it hides the type (<code>var result = service.process();</code>).</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_switch_expressions"><a class="anchor" href="#_switch_expressions"></a>Switch expressions</h2>
+<div class="sectionbody">
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">int days = switch (month) {
+    case FEBRUARY -&gt; 28;
+    case APRIL, JUNE, SEPTEMBER, NOVEMBER -&gt; 30;
+    default -&gt; 31;
+};
+
+String label = switch (status) {
+    case ACTIVE -&gt; "Active";
+    case SUSPENDED -&gt; {
+        log.info("Suspended account");
+        yield "Suspended";           // yield returns a value from a block
+    }
+    case CLOSED -&gt; "Closed";
+};</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Arrow cases do not fall through, and a switch <strong>expression</strong> over an enum must cover every constant (or have <code>default</code>), so the compiler catches a missed case.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_text_blocks"><a class="anchor" href="#_text_blocks"></a>Text blocks</h2>
+<div class="sectionbody">
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">String json = """
+        {
+          "id": %d,
+          "name": "%s"
+        }
+        """.formatted(id, name);</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Indentation common to all lines is removed, based on the position of the closing <code>"""</code>.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_records"><a class="anchor" href="#_records"></a>Records</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>A record is a concise, transparent carrier for immutable data.
+The compiler generates a canonical constructor, accessor methods (<code>name()</code>, not <code>getName()</code>), <code>equals</code>, <code>hashCode</code> and <code>toString</code>.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">public record Money(BigDecimal amount, String currency) {
+
+    public Money {                                  // compact constructor: validation only
+        Objects.requireNonNull(amount);
+        if (amount.signum() &lt; 0) throw new IllegalArgumentException("negative amount");
+        currency = currency.toUpperCase();          // can normalise parameters
+    }
+
+    public Money add(Money other) {                 // ordinary methods are allowed
+        return new Money(amount.add(other.amount), currency);
+    }
+
+    public static Money zero(String currency) {     // static factories too
+        return new Money(BigDecimal.ZERO, currency);
+    }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Rules:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Records are implicitly <code>final</code> and extend <code>java.lang.Record</code>, so they cannot extend another class. They can implement interfaces.</p>
+</li>
+<li>
+<p>All component fields are <code>private final</code>. You cannot add other instance fields; static fields are fine.</p>
+</li>
+<li>
+<p>Immutability is <strong>shallow</strong>: a <code>List</code> component can still be modified unless you copy it with <code>List.copyOf</code> in the compact constructor.</p>
+</li>
+<li>
+<p>Good uses: DTOs, API requests and responses, events, map keys, multiple return values, value objects.</p>
+</li>
+<li>
+<p>Bad fit: JPA entities, because JPA needs a no-argument constructor, mutable state and proxies. Records work well as JPA <strong>projections</strong>.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_sealed_classes_and_interfaces"><a class="anchor" href="#_sealed_classes_and_interfaces"></a>Sealed classes and interfaces</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>A sealed type lists exactly which classes may extend or implement it.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">public sealed interface PaymentResult permits Approved, Declined, Pending {}
+
+public record Approved(String transactionId) implements PaymentResult {}
+public record Declined(String reason) implements PaymentResult {}
+public record Pending(Instant retryAt) implements PaymentResult {}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Each permitted subclass must be <code>final</code>, <code>sealed</code> or <code>non-sealed</code>, and must be in the same module (or the same package if there is no module).
+Records are implicitly final, so they fit naturally.</p>
+</div>
+<div class="paragraph">
+<p>Why it matters: the compiler knows every possible subtype, so a <code>switch</code> over the sealed type can be checked for exhaustiveness.
+This is called <strong>algebraic data types</strong> or <strong>data-oriented programming</strong>.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_pattern_matching"><a class="anchor" href="#_pattern_matching"></a>Pattern matching</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_instanceof"><a class="anchor" href="#_instanceof"></a>instanceof</h3>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">// Before
+if (shape instanceof Circle) {
+    Circle c = (Circle) shape;
+    return Math.PI * c.radius() * c.radius();
+}
+
+// Java 16+
+if (shape instanceof Circle c &amp;&amp; c.radius() &gt; 0) {
+    return Math.PI * c.radius() * c.radius();
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_switch_with_type_patterns_record_patterns_and_guards_java_21"><a class="anchor" href="#_switch_with_type_patterns_record_patterns_and_guards_java_21"></a>switch with type patterns, record patterns and guards (Java 21)</h3>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">String describe(PaymentResult result) {
+    return switch (result) {
+        case Approved(String txId)                  -&gt; "Approved: " + txId;   // record pattern
+        case Declined(String reason) when reason.isBlank() -&gt; "Declined";     // guard
+        case Declined(String reason)                -&gt; "Declined: " + reason;
+        case Pending p                              -&gt; "Retry at " + p.retryAt();
+    };   // no default needed: the compiler knows the sealed hierarchy is fully covered
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>If someone adds a fourth permitted type, every such <code>switch</code> without a <code>default</code> stops compiling, which shows exactly what code must change.
+A switch over objects can also handle <code>case null</code>.</p>
+</div>
+<div class="paragraph">
+<p>Since Java 22, an unnamed pattern <code>_</code> ignores parts you do not need: <code>case Approved(_) -&gt; "Approved"</code>.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_virtual_threads_java_21"><a class="anchor" href="#_virtual_threads_java_21"></a>Virtual threads (Java 21)</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>A <strong>platform thread</strong> is a thin wrapper around an operating-system thread.
+OS threads are expensive (around a megabyte of stack reserved, costly context switches), so servers use pools of a few hundred.
+In a thread-per-request server, a request blocked on a database call holds its thread the whole time, so the pool size caps concurrency.</p>
+</div>
+<div class="paragraph">
+<p>A <strong>virtual thread</strong> is managed by the JVM.
+It runs on a small pool of platform threads called <strong>carrier threads</strong> (a <code>ForkJoinPool</code> sized to the number of cores).
+When a virtual thread blocks on I/O, <code>sleep</code>, a lock or a <code>BlockingQueue</code>, the JVM <strong>unmounts</strong> it from the carrier, which then runs another virtual thread.
+You can have millions of virtual threads.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">// One virtual thread per task. Do not pool virtual threads.
+try (ExecutorService executor = Executors.newVirtualThreadPerTaskExecutor()) {
+    List&lt;Future&lt;Quote&gt;&gt; quotes = suppliers.stream()
+            .map(s -&gt; executor.submit(() -&gt; s.fetchQuote(productId)))   // blocking HTTP call
+            .toList();
+    // ... collect results
+}   // close() waits for all tasks
+
+Thread.ofVirtual().name("worker").start(() -&gt; process(order));</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>In Spring Boot 3.2+, <code>spring.threads.virtual.enabled=true</code> makes Tomcat, <code>@Async</code> and scheduled tasks use virtual threads.</p>
+</div>
+<div class="paragraph">
+<p>What virtual threads do <strong>not</strong> do:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>They do not make CPU-bound code faster. They help when threads mostly <strong>wait</strong>.</p>
+</li>
+<li>
+<p>They do not remove downstream limits. If the database pool has 20 connections, 10,000 virtual threads still queue for 20 connections. Use a <code>Semaphore</code> to limit concurrency to a scarce resource, not a thread pool.</p>
+</li>
+<li>
+<p>They should not be pooled; creating one is cheap.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p><strong>Pinning.</strong>
+A virtual thread is <strong>pinned</strong> when it cannot unmount while blocked, so it holds its carrier.
+In Java 21, blocking inside a <code>synchronized</code> block or method pinned the thread, which could starve the small carrier pool; the advice was to use <code>ReentrantLock</code>.
+Java 24 (JEP 491) removed that limitation for <code>synchronized</code>.
+Blocking inside native code or certain class-initialisation paths can still pin.
+Always say which JDK version you mean when you answer.</p>
+</div>
+<div class="paragraph">
+<p><strong>ThreadLocal.</strong>
+Virtual threads support <code>ThreadLocal</code>, but with millions of threads, per-thread caches (for example a <code>ThreadLocal&lt;SimpleDateFormat&gt;</code>) can waste a lot of memory.
+Scoped values are the newer alternative.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_scoped_values_java_25"><a class="anchor" href="#_scoped_values_java_25"></a>Scoped values (Java 25)</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>A <code>ScopedValue</code> passes data down a call chain without method parameters, like a <code>ThreadLocal</code>, but the value is immutable and only exists for the duration of a bounded call.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">private static final ScopedValue&lt;String&gt; REQUEST_ID = ScopedValue.newInstance();
+
+void handle(Request request) {
+    ScopedValue.where(REQUEST_ID, request.id())
+               .run(() -&gt; service.process(request));   // value bound only inside run()
+}
+
+void logSomething() {
+    log.info("request {}", REQUEST_ID.get());          // readable anywhere below handle()
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Compared with <code>ThreadLocal</code>: no <code>remove()</code> to forget, no accidental mutation, and cheap inheritance by child threads in structured concurrency.</p>
+</div>
+<div class="paragraph">
+<p><strong>Structured concurrency</strong> (<code>StructuredTaskScope</code>) treats a group of subtasks as one unit: if one fails, the others are cancelled, and the parent waits for all of them.
+It is still a preview API in Java 25, so mention it as "coming" rather than as production-ready.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_other_java_25_features"><a class="anchor" href="#_other_java_25_features"></a>Other Java 25 features</h2>
+<div class="sectionbody">
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">// Compact source file (JEP 512): no class declaration for small programs.
+void main() {
+    IO.println("Hello, Java 25");
+}</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">// Flexible constructor bodies (JEP 513): validate before calling super().
+class Employee extends Person {
+    Employee(String name, int age) {
+        if (age &lt; 18) throw new IllegalArgumentException("too young");  // before super(): allowed now
+        super(name, age);
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">// Module import declaration (JEP 511): import every package a module exports.
+import module java.base;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><strong>Compact object headers</strong> (JEP 519) shrink the object header from 12 to 8 bytes on 64-bit JVMs, which reduces heap usage for applications with many small objects.
+It is opt-in with <code>-XX:+UseCompactObjectHeaders</code>.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_stream_gatherers_java_24"><a class="anchor" href="#_stream_gatherers_java_24"></a>Stream gatherers (Java 24)</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><code>Stream.gather(...)</code> adds custom intermediate operations, the way <code>collect</code> allows custom terminal ones.
+Built-in examples: <code>Gatherers.windowFixed(3)</code>, <code>Gatherers.windowSliding(3)</code>, <code>Gatherers.fold(...)</code>, <code>Gatherers.mapConcurrent(...)</code>.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">List&lt;List&lt;Integer&gt;&gt; batches = Stream.of(1, 2, 3, 4, 5, 6, 7)
+        .gather(Gatherers.windowFixed(3))
+        .toList();    // [[1, 2, 3], [4, 5, 6], [7]]</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_httpclient_java_11"><a class="anchor" href="#_httpclient_java_11"></a>HttpClient (Java 11)</h2>
+<div class="sectionbody">
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">HttpClient client = HttpClient.newBuilder()
+        .connectTimeout(Duration.ofSeconds(2))
+        .build();
+
+HttpRequest request = HttpRequest.newBuilder(URI.create("https://api.example.com/orders/42"))
+        .timeout(Duration.ofSeconds(5))
+        .GET()
+        .build();
+
+HttpResponse&lt;String&gt; response = client.send(request, HttpResponse.BodyHandlers.ofString());
+CompletableFuture&lt;HttpResponse&lt;String&gt;&gt; async =
+        client.sendAsync(request, HttpResponse.BodyHandlers.ofString());</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>It supports HTTP/2 and async calls, and replaced the old <code>HttpURLConnection</code>.
+In Spring applications, <code>RestClient</code> or HTTP interface clients are usually preferred (see <a href="rest-spring-mvc.html" class="xref page">REST and Spring MVC</a>).</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_practice_questions"><a class="anchor" href="#_practice_questions"></a>Practice questions</h2>
+<div class="sectionbody">
+<details>
+<summary class="title">Q1. What are records, and when would you not use one?</summary>
+<div class="content">
+<div class="paragraph">
+<p>Records are final, shallowly immutable data carriers with generated constructor, accessors, <code>equals</code>, <code>hashCode</code> and <code>toString</code>.
+Use them for DTOs, events, value objects and map keys.
+Avoid them for JPA entities (need mutability, a no-arg constructor and proxying), for classes that need inheritance, and for data that must stay deeply immutable unless you copy mutable components.</p>
+</div>
+</div>
+</details>
+<details>
+<summary class="title">Q2. What problem do sealed classes solve?</summary>
+<div class="content">
+<div class="paragraph">
+<p>They make a type hierarchy closed and explicit.
+Readers and the compiler know every subtype, so <code>switch</code> can be checked for exhaustiveness without a <code>default</code>.
+It replaces "visitor pattern" boilerplate and stops unknown subclasses from appearing in other modules.</p>
+</div>
+</div>
+</details>
+<details>
+<summary class="title">Q3. How does pattern matching for switch improve code?</summary>
+<div class="content">
+<div class="paragraph">
+<p>It replaces <code>if-instanceof-cast</code> chains with one expression that deconstructs records, supports guards with <code>when</code> and <code>case null</code>, and is checked for exhaustiveness over sealed types.
+Adding a new subtype turns missed cases into compile errors rather than runtime bugs.</p>
+</div>
+</div>
+</details>
+<details>
+<summary class="title">Q4. What are virtual threads, and when do they help?</summary>
+<div class="content">
+<div class="paragraph">
+<p>JVM-managed threads that unmount from a carrier OS thread while blocked.
+They help thread-per-request code that spends most of its time waiting on I/O: many more concurrent requests with the same simple blocking code.
+They do not help CPU-bound work and do not remove limits such as connection pools.</p>
+</div>
+</div>
+</details>
+<details>
+<summary class="title">Q5. Should you pool virtual threads? How do you limit concurrency?</summary>
+<div class="content">
+<div class="paragraph">
+<p>No.
+They are cheap to create; pooling adds nothing and hides the per-task model.
+To protect a scarce resource, limit concurrency with a <code>Semaphore</code> (or the resource&#8217;s own pool), not with a fixed number of threads.</p>
+</div>
+</div>
+</details>
+<details>
+<summary class="title">Q6. What is pinning, and is it still a problem?</summary>
+<div class="content">
+<div class="paragraph">
+<p>A pinned virtual thread cannot unmount while it blocks, so it occupies a carrier thread.
+On Java 21, blocking inside <code>synchronized</code> caused pinning; the usual fix was <code>ReentrantLock</code>.
+Java 24 (JEP 491) lets virtual threads unmount inside <code>synchronized</code>, so that advice is no longer needed on 24+.
+Native frames can still pin.
+Diagnose with JFR&#8217;s <code>jdk.VirtualThreadPinned</code> event.</p>
+</div>
+</div>
+</details>
+<details>
+<summary class="title">Q7. ThreadLocal versus ScopedValue?</summary>
+<div class="content">
+<div class="paragraph">
+<p><code>ThreadLocal</code> is mutable, lives as long as the thread unless <code>remove()</code> is called, and leaks in thread pools when forgotten.
+<code>ScopedValue</code> (final in Java 25) is immutable, bound for a bounded call with <code>where(...).run(...)</code>, and automatically gone afterwards.
+Prefer scoped values for request context in new code.</p>
+</div>
+</div>
+</details>
+<details>
+<summary class="title">Q8. What does <code>var</code> do, and what are its limits?</summary>
+<div class="content">
+<div class="paragraph">
+<p>Local type inference at compile time; the type is still static.
+Only for local variables with initializers, loop variables and try-with-resources.
+Not for fields, parameters or return types, and not with <code>null</code> initializers.</p>
+</div>
+</div>
+</details>
+<details>
+<summary class="title">Q9. Which Java version does your project use, and what would you gain by upgrading?</summary>
+<div class="content">
+<div class="paragraph">
+<p>Answer with facts from your project.
+Typical gains from 17 to 21 or 25: virtual threads, pattern matching for switch, sequenced collections, generational ZGC, better G1 performance, and scoped values plus compact object headers on 25.
+Mention the risk side too: library compatibility, removed APIs, and the need for performance testing.</p>
+</div>
+</div>
+</details>
+<details>
+<summary class="title">Q10. What are helpful NullPointerExceptions?</summary>
+<div class="content">
+<div class="paragraph">
+<p>Since Java 14 (on by default since 15), the NPE message names what was null, for example <code>Cannot invoke "String.length()" because "user.name" is null</code>.
+This makes production stack traces much easier to debug.</p>
+</div>
+</div>
+</details>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_common_traps"><a class="anchor" href="#_common_traps"></a>Common traps</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p>Saying virtual threads make code "faster".</p>
+</li>
+<li>
+<p>Recommending <code>ReentrantLock</code> over <code>synchronized</code> for virtual threads without mentioning the JDK version.</p>
+</li>
+<li>
+<p>Calling records "fully immutable".</p>
+</li>
+<li>
+<p>Using records as JPA entities.</p>
+</li>
+<li>
+<p>Presenting preview features (structured concurrency) as production-ready.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_follow_ups_to_expect"><a class="anchor" href="#_follow_ups_to_expect"></a>Follow-ups to expect</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p>"How would you migrate a Spring Boot service to virtual threads? What would you measure?"</p>
+</li>
+<li>
+<p>"Model a payment result with sealed types and handle it in a switch."</p>
+</li>
+<li>
+<p>"What is the difference between a preview and an incubator feature?"</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_quick_revision"><a class="anchor" href="#_quick_revision"></a>Quick revision</h2>
+<div class="sectionbody">
+<div class="ulist checklist">
+<ul class="checklist">
+<li>
+<p><i class="fa fa-square-o"></i> LTS releases: 11, 17, 21, 25</p>
+</li>
+<li>
+<p><i class="fa fa-square-o"></i> Records rules and shallow immutability</p>
+</li>
+<li>
+<p><i class="fa fa-square-o"></i> Sealed types plus exhaustive switch with record patterns</p>
+</li>
+<li>
+<p><i class="fa fa-square-o"></i> Virtual threads: unmounting, no pooling, Semaphore, pinning before and after JDK 24</p>
+</li>
+<li>
+<p><i class="fa fa-square-o"></i> Scoped values versus ThreadLocal</p>
+</li>
+<li>
+<p><i class="fa fa-square-o"></i> Java 25: compact source files, flexible constructor bodies, module imports, compact object headers</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Next: <a href="concurrency.html" class="xref page">Concurrency and Multithreading</a>.</p>
+</div>
+</div>
+</div>
+      </article>
+      <div class="article-pagination">
+        <a class="prev" href="java8-streams-functional.html"><span>← Previous</span><strong>Java 8: Lambdas, Streams, Optional</strong></a>
+        <a class="next" href="concurrency.html"><span>Next →</span><strong>Concurrency and Multithreading</strong></a>
+      </div>
+    </main>
+    <aside class="docs-toc reading-assistant" id="reading-assistant" aria-label="Reading assistant">
+  <div class="toc-inner ra-inner">
+    <div class="ra-head">
+      <h2 class="ra-title">Reading Assistant</h2>
+      <button type="button" class="ra-close" aria-label="Close reading assistant">
+        <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+    </div>
+
+    <section class="ra-card ra-listen" aria-labelledby="reading-assistant-listen" hidden>
+      <div class="ra-card-head">
+        <svg class="ra-card-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/></svg>
+        <div>
+          <h3 class="ra-card-title" id="reading-assistant-listen">Listen to Article</h3>
+          <p class="ra-card-desc">Listen to the explanation of this article. Code blocks are skipped.</p>
+        </div>
+      </div>
+
+      <div class="ra-ready">
+        <div class="ra-player">
+          <button type="button" class="ra-play" aria-label="Play article">
+            <svg class="ra-icon-play" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M8 5.5v13l11-6.5z"/></svg>
+            <svg class="ra-icon-pause" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M7 5h3.5v14H7zM13.5 5H17v14h-3.5z"/></svg>
+          </button>
+          <div class="ra-track">
+            <div class="ra-meter" role="progressbar" aria-label="Listening progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><span class="ra-meter-fill"></span></div>
+            <span class="ra-time" title="Estimated. Browser speech does not report an exact duration."></span>
+          </div>
+          <button type="button" class="ra-stop" aria-label="Stop listening" disabled>
+            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="6.5" y="6.5" width="11" height="11" rx="1.5"/></svg>
+          </button>
+        </div>
+
+        <div class="ra-controls">
+          <label class="ra-field ra-field-rate">
+            <span class="ra-field-label">Speed</span>
+            <select class="ra-rate">
+              <option value="0.75">0.75×</option>
+              <option value="1" selected>1×</option>
+              <option value="1.25">1.25×</option>
+              <option value="1.5">1.5×</option>
+              <option value="2">2×</option>
+            </select>
+          </label>
+        </div>
+
+        <label class="ra-check"><input type="checkbox" class="ra-follow" checked> Highlight and follow along</label>
+        <p class="ra-status" role="status" aria-live="polite">Ready</p>
+
+        <p class="ra-tip">
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M9 18h6M10 21h4"/><path d="M12 3a6 6 0 0 0-3.5 10.9V16h7v-2.1A6 6 0 0 0 12 3z"/></svg>
+          <span><strong>Tip:</strong> Headings and explanations are read aloud; code is skipped. Read in Google UK English Male on Chrome; other browsers use their closest British English voice.</span>
+        </p>
+      </div>
+
+      <p class="ra-unsupported" hidden>Listening isn&#8217;t available in this browser. The article itself works as usual.</p>
+    </section>
+
+    <section class="ra-card ra-jump" aria-labelledby="reading-assistant-sections" hidden>
+      <h3 class="ra-card-title" id="reading-assistant-sections">Jump to Section</h3>
+      <ol class="ra-sections"></ol>
+    </section>
+
+    <section class="ra-card ra-info" aria-labelledby="reading-assistant-info">
+      <h3 class="ra-card-title" id="reading-assistant-info">Page Info</h3>
+      <ul class="ra-info-list">
+        <li>
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+          <span title="Estimated at 220 words per minute">~6 min read</span>
+        </li>
+        <li>
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h6"/></svg>
+          <span title="Prose only; code is not counted">~1,342 words</span>
+        </li>
+        <li>
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="4" y="5" width="16" height="16" rx="2"/><path d="M16 3v4M8 3v4M4 10h16"/></svg>
+          <span>Last updated <time datetime="2026-11-11">Nov 11, 2026</time></span>
+        </li>
+      </ul>
+    </section>
+  </div>
+</aside>
+  </div>
+  <footer class="docs-footer">© 2026 Ayush Nigam · <a href="../../index.html">Home</a></footer>
+  <script src="../../../../_/js/reading-assistant.js?v=2" defer></script>
+  <script src="../../../../_/js/site.js?v=15" defer></script>
+</body>
+</html>

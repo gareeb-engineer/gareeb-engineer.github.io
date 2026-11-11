@@ -1,0 +1,997 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>Production Scenarios, Design and Behavioural · Ayush Nigam</title>
+  
+  <link rel="preload" href="../../../../_/fonts/inter-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="../../../../_/css/site.css?v=21">
+</head>
+<body class="docs-page">
+  <a class="skip-link" href="#article-main">Skip to content</a>
+  <header class="docs-header">
+    <div class="docs-header-inner">
+      <a class="docs-logo" href="../../index.html"><span class="docs-logo-mark">AN</span><span>Ayush Nigam</span></a>
+          <nav class="header-adoc-nav docs-toplinks" aria-label="Header links" data-header-source-url="../../headers/header-links.html">
+            <div class="header-adoc-content"><div class="ulist header-menu-links">
+<ul>
+<li>
+<p><a href="contact.html" class="xref page">Contact</a></p>
+</li>
+<li>
+<p><a href="https://www.linkedin.com/in/the-ayush-nigam/">LinkedIn</a></p>
+</li>
+<li>
+<p><a href="https://github.com/gareeb-engineer">GitHub</a></p>
+</li>
+</ul>
+</div>
+</div>
+          </nav>
+      <a class="header-avatar" href="../../index.html" aria-hidden="true" tabindex="-1"><img src="../../../../_/img/profile-photo.png" alt="Ayush Nigam profile photo" width="36" height="36"></a>
+<button type="button" class="mobile-nav-toggle" aria-label="Toggle documentation navigation" aria-expanded="false" aria-controls="docs-sidebar">☰ Menu</button>
+      <span class="read-progress-label" aria-hidden="true" hidden>Reading <span class="read-progress-value">0%</span></span>
+    </div>
+    <div class="read-progress" role="progressbar" aria-label="Article reading progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" hidden><span class="read-progress-fill"></span></div>
+  </header>
+  <div class="docs-shell">
+    <aside class="docs-sidebar" id="docs-sidebar" aria-label="Documentation sidebar">
+      <div class="sidebar-inner">
+      <div class="sidebar-top"><span class="sidebar-eyebrow">ENGINEERING LIBRARY</span></div>
+      <input id="nav-filter" class="nav-filter" type="search" placeholder="Filter pages…" aria-label="Filter navigation" autocomplete="off">
+      <nav aria-label="Documentation pages"><ul class="nav-tree">
+  <li class="nav-item nav-parent">
+        <div class="nav-group">
+          <button type="button" class="nav-row nav-toggle" aria-expanded="true">
+            <span class="nav-label">Java</span>
+            <span class="nav-chevron" aria-hidden="true">▾</span>
+          </button>
+          <div class="nav-children">
+            <ul class="nav-tree">
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../index.html" title="Open Java overview">Overview</a>
+      </div>
+  </li>
+  <li class="nav-item nav-parent">
+        <div class="nav-group nav-linked-group">
+          <div class="nav-row nav-linked-row">
+            <a href="index.html">Java Interview Guide</a>
+            <button type="button" class="nav-toggle nav-linked-toggle" aria-expanded="true" aria-label="Toggle subtopics">
+              <span class="nav-chevron" aria-hidden="true">▾</span>
+            </button>
+          </div>
+          <div class="nav-children"><ul class="nav-tree">
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="core-java-oop.html">Core Java and OOP</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="collections-generics.html">Collections and Generics</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="java8-streams-functional.html">Java 8: Lambdas, Streams, Optional</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="modern-java.html">Modern Java (11 to 25)</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="concurrency.html">Concurrency and Multithreading</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="jvm-memory-gc.html">JVM, Memory and GC</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="spring-core.html">Spring Core: IoC, DI, AOP</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="spring-boot.html">Spring Boot</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="rest-spring-mvc.html">REST APIs and Spring MVC</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="jpa-hibernate-transactions.html">JPA, Hibernate, Transactions</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="spring-security.html">Spring Security, JWT, OAuth2</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="microservices.html">Microservices</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="coding-round.html">Coding Round in Java</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="testing.html">Testing</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="senior-scenarios.html" class="is-current" aria-current="page">Production Scenarios and Behavioural</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="spring-ai.html">Spring AI and GenAI</a>
+      </div>
+  </li>
+</ul>
+</div>
+        </div>
+  </li>
+</ul>
+          </div>
+        </div>
+  </li>
+  <li class="nav-item nav-parent">
+        <div class="nav-group is-collapsed">
+          <button type="button" class="nav-row nav-toggle" aria-expanded="false">
+            <span class="nav-label">Architecture Diagram&#8217;s</span>
+            <span class="nav-chevron" aria-hidden="true">▸</span>
+          </button>
+          <div class="nav-children">
+            <ul class="nav-tree">
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Arcitecture-diagram/index.html" title="Open Architecture Diagram’s overview">Overview</a>
+      </div>
+  </li>
+</ul>
+          </div>
+        </div>
+  </li>
+  <li class="nav-item nav-parent">
+        <div class="nav-group is-collapsed">
+          <button type="button" class="nav-row nav-toggle" aria-expanded="false">
+            <span class="nav-label">References</span>
+            <span class="nav-chevron" aria-hidden="true">▸</span>
+          </button>
+          <div class="nav-children">
+            <ul class="nav-tree">
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../DevOps-Refs/index.html" title="Open References overview">Overview</a>
+      </div>
+  </li>
+</ul>
+          </div>
+        </div>
+  </li>
+  <li class="nav-item nav-parent">
+        <div class="nav-group is-collapsed">
+          <button type="button" class="nav-row nav-toggle" aria-expanded="false">
+            <span class="nav-label">Data Structure</span>
+            <span class="nav-chevron" aria-hidden="true">▸</span>
+          </button>
+          <div class="nav-children">
+            <ul class="nav-tree">
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Data-Structure/index.html" title="Open Data Structure overview">Overview</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Data-Structure/arrays/index.html">Arrays</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Data-Structure/linked-list/index.html">Linked Lists</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Data-Structure/stacks-n-queue/index.html">Stacks</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Data-Structure/trees/index.html">Trees</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Data-Structure/hash-map/index.html">Hash Map</a>
+      </div>
+  </li>
+  <li class="nav-item nav-parent">
+        <div class="nav-group nav-linked-group is-collapsed">
+          <div class="nav-row nav-linked-row">
+            <a href="../../Data-Structure/dynamic-programming/index.html">Dynamic Programming</a>
+            <button type="button" class="nav-toggle nav-linked-toggle" aria-expanded="false" aria-label="Toggle subtopics">
+              <span class="nav-chevron" aria-hidden="true">▸</span>
+            </button>
+          </div>
+          <div class="nav-children"><ul class="nav-tree">
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Data-Structure/dynamic-programming/fibonacci-series.html">Fibonacci Series</a>
+      </div>
+  </li>
+</ul>
+</div>
+        </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Data-Structure/graphs/index.html">Graphs</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Data-Structure/backtracking/index.html">Backtracking</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Data-Structure/pattern-printing/index.html">Pattern Printing</a>
+      </div>
+  </li>
+  <li class="nav-item nav-parent">
+        <div class="nav-group nav-linked-group is-collapsed">
+          <div class="nav-row nav-linked-row">
+            <a href="../../Data-Structure/recursion/index.html">Recursion</a>
+            <button type="button" class="nav-toggle nav-linked-toggle" aria-expanded="false" aria-label="Toggle subtopics">
+              <span class="nav-chevron" aria-hidden="true">▸</span>
+            </button>
+          </div>
+          <div class="nav-children"><ul class="nav-tree">
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Data-Structure/recursion/sum-of-all-element.html">Sum of all elements</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Data-Structure/recursion/all-indices-of-array.html">All indices of array</a>
+      </div>
+  </li>
+</ul>
+</div>
+        </div>
+  </li>
+</ul>
+          </div>
+        </div>
+  </li>
+  <li class="nav-item nav-parent">
+        <div class="nav-group is-collapsed">
+          <button type="button" class="nav-row nav-toggle" aria-expanded="false">
+            <span class="nav-label">Low Level Design</span>
+            <span class="nav-chevron" aria-hidden="true">▸</span>
+          </button>
+          <div class="nav-children">
+            <ul class="nav-tree">
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Low-Level-Design/index.html" title="Open Low Level Design overview">Overview</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Low-Level-Design/design-principles.html">Design Principles</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Low-Level-Design/solid-principles.html">SOLID Principles</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Low-Level-Design/design-patterns.html">Gang of Four Design Patterns</a>
+      </div>
+  </li>
+</ul>
+          </div>
+        </div>
+  </li>
+</ul>
+</nav>
+      </div>
+    </aside>
+    <main id="article-main" class="docs-article">
+      <nav class="breadcrumbs" aria-label="Breadcrumb"><a href="../../index.html">Home</a><span aria-hidden="true">/</span><a href="index.html">Java Interview Guide</a><span aria-hidden="true">/</span><a href="senior-scenarios.html">Production Scenarios and Behavioural</a></nav>
+      <article class="article-body" data-reading-progress>
+        <header class="article-header">
+          <h1>Production Scenarios, Design and Behavioural</h1>
+          
+          <p class="article-subtitle">Debugging playbooks for slow APIs, memory leaks, high CPU and stuck threads, a framework for trade-off and system design questions, and how to prepare incident and project stories.</p>
+          <ul class="article-chips">
+            <li class="chip chip-difficulty chip-hard">Hard</li><li class="chip chip-tag">Java</li><li class="chip chip-tag">Interview Preparation</li><li class="chip chip-tag">System Design</li><li class="chip chip-tag">Production</li><li class="chip chip-tag">Behavioural</li>
+          </ul>
+          <div class="article-meta">
+            <span class="article-meta-item" title="Estimated at 220 words per minute">
+              <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+              ~7 min read
+            </span>
+            <span class="article-meta-item">
+              <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="4" y="5" width="16" height="16" rx="2"/><path d="M16 3v4M8 3v4M4 10h16"/></svg>
+              Updated <time datetime="2026-11-11">Nov 11, 2026</time>
+            </span>
+            <button type="button" class="ra-open" aria-controls="reading-assistant" aria-expanded="false" hidden>
+              <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/></svg>
+              Listen
+            </button>
+          </div>
+        </header>
+        <div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>Senior interviews replace definitions with situations: "this endpoint got slow last night; what do you do?", "would you use Kafka or REST here?", "tell me about an incident you handled".
+There is no single right answer, so interviewers judge the <strong>process</strong>: measure first, form a hypothesis, check it, fix it, and prevent it from happening again.
+This page gives you repeatable structures for those answers.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_at_a_glance"><a class="anchor" href="#_at_a_glance"></a>At a glance</h2>
+<div class="sectionbody">
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 75%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Weightage</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>7 / 10</strong> (9 / 10 for senior, lead and architect roles)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Who gets asked</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Senior and above; mid-level gets lighter versions.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Preparation time</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">4 hours, plus time to write your own stories</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Handbook questions</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Q99, Q115-Q120</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Builds on</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Every earlier topic, especially <a href="jvm-memory-gc.html" class="xref page">JVM</a> and <a href="microservices.html" class="xref page">Microservices</a></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_debugging_playbooks"><a class="anchor" href="#_debugging_playbooks"></a>Debugging playbooks</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Use the same five steps for every scenario and say them out loud:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><strong>Scope the impact</strong>: which endpoints, users, regions; since when; what changed (deployment, traffic, data, dependency).</p>
+</li>
+<li>
+<p><strong>Look at the signals</strong>: metrics, traces, logs, in that order.</p>
+</li>
+<li>
+<p><strong>Form a hypothesis</strong> and check it with one more piece of evidence.</p>
+</li>
+<li>
+<p><strong>Mitigate first</strong>: roll back, scale out, disable a feature flag, shed load. Restoring service comes before finding the root cause.</p>
+</li>
+<li>
+<p><strong>Fix and prevent</strong>: root cause fix, a test, an alert or dashboard, and a short post-incident review.</p>
+</li>
+</ol>
+</div>
+<div class="sect2">
+<h3 id="_the_api_is_slow"><a class="anchor" href="#_the_api_is_slow"></a>"The API is slow"</h3>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 75%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Check</th>
+<th class="tableblock halign-left valign-top">What it tells you</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">p50, p95, p99 latency, error rate, throughput</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Is everyone slow or only the tail? Did traffic grow?</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Distributed trace of a slow request</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Which span takes the time: our code, the database, a downstream call?</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Database: slow query log, <code>EXPLAIN ANALYZE</code>, missing index, lock waits</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Query plans change as data grows.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SQL count per request</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">N+1 queries after a new feature.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Connection pool metrics (active, pending, wait time)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Requests queueing for a connection.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Thread pool metrics and thread dumps</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Request threads blocked on locks or slow I/O.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">GC logs and pause times</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Long pauses or GC thrashing from memory pressure.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Downstream latency and retry counts</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A slow dependency plus retries multiplying load.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">CPU throttling in the container</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">CPU limits too low for the JIT and GC.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>Common fixes: add an index or rewrite a query, fetch joins or projections, caching stable data, parallelising independent downstream calls, timeouts and circuit breakers, smaller payloads, pool tuning.
+Validate with a load test and compare percentiles against the baseline.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_memory_keeps_growing_until_outofmemoryerror"><a class="anchor" href="#_memory_keeps_growing_until_outofmemoryerror"></a>"Memory keeps growing until OutOfMemoryError"</h3>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Confirm with heap-after-GC graphs: a rising floor means a leak; a sawtooth with a stable floor is normal.</p>
+</li>
+<li>
+<p>Get a heap dump (<code>-XX:+HeapDumpOnOutOfMemoryError</code>, or <code>jcmd &lt;pid&gt; GC.heap_dump</code> on one instance taken out of the load balancer).</p>
+</li>
+<li>
+<p>Open it in Eclipse MAT: dominator tree, leak suspects, path to GC roots for the largest retained objects.</p>
+</li>
+<li>
+<p>Usual suspects: unbounded caches or static maps, <code>ThreadLocal</code> not removed, listeners not unregistered, huge result sets loaded into memory, session data growth.</p>
+</li>
+<li>
+<p>If the heap is fine but the process is big: native memory tracking (<code>-XX:NativeMemoryTracking=summary</code>, <code>jcmd VM.native_memory</code>), thread count, direct buffers, metaspace.</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_cpu_is_at_100"><a class="anchor" href="#_cpu_is_at_100"></a>"CPU is at 100%"</h3>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Find the hot threads: <code>top -H -p &lt;pid&gt;</code>, convert the thread ID to hex, match it in <code>jcmd &lt;pid&gt; Thread.print</code>.</p>
+</li>
+<li>
+<p>Take three thread dumps a few seconds apart; look for the same stacks.</p>
+</li>
+<li>
+<p>Check GC first: if GC threads are hot, it is a memory problem.</p>
+</li>
+<li>
+<p>Profile with JFR or async-profiler for a flame graph.</p>
+</li>
+<li>
+<p>Usual suspects: infinite or busy loops, catastrophic regex backtracking, heavy JSON serialisation or logging, tight retry loops, inefficient algorithms on data that grew.</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_requests_hang_the_service_stops_responding"><a class="anchor" href="#_requests_hang_the_service_stops_responding"></a>"Requests hang; the service stops responding"</h3>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Thread dump: are all request threads <code>BLOCKED</code> on the same lock, <code>WAITING</code> for pool connections, or stuck in socket reads without timeouts?</p>
+</li>
+<li>
+<p>A Java-level deadlock appears at the bottom of the dump.</p>
+</li>
+<li>
+<p>Check connection pool exhaustion and downstream calls missing timeouts.</p>
+</li>
+<li>
+<p>Fix: timeouts everywhere, bounded pools with rejection, lock ordering, moving slow work out of locks and transactions.</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_kafka_consumer_lag_keeps_rising"><a class="anchor" href="#_kafka_consumer_lag_keeps_rising"></a>"Kafka consumer lag keeps rising"</h3>
+<div class="paragraph">
+<p>Processing time per record versus arrival rate; number of partitions versus consumers; frequent rebalances (processing exceeding <code>max.poll.interval.ms</code>); a poison message retried forever; slow downstream calls inside the consumer.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_answering_trade_off_questions"><a class="anchor" href="#_answering_trade_off_questions"></a>Answering trade-off questions</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Use this structure for "X or Y?" questions such as REST versus Kafka, SQL versus NoSQL, cache or not, monolith or microservices:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><strong>Requirements and constraints</strong>: consistency needs, latency, throughput, data size, team skills, cost, deadline.</p>
+</li>
+<li>
+<p><strong>Two or three viable options</strong>, not ten.</p>
+</li>
+<li>
+<p><strong>Compare</strong> them on the criteria that matter here: consistency, latency, failure behaviour, operational burden, cost, complexity, reversibility.</p>
+</li>
+<li>
+<p><strong>Decide</strong>, and say why.</p>
+</li>
+<li>
+<p><strong>Name the risk</strong> and what evidence would make you revisit the decision.</p>
+</li>
+</ol>
+</div>
+<div class="exampleblock">
+<div class="content">
+<div class="paragraph">
+<p>"Should order events go over REST callbacks or Kafka?"</p>
+</div>
+<div class="paragraph">
+<p>Requirements: five downstream consumers, must not lose events, consumers can lag a few seconds, order service must stay up when consumers are down.
+REST callbacks couple the order service to every consumer&#8217;s availability and need our own retry storage.
+Kafka decouples them, retains events for replay, and lets new consumers join without changing the order service, at the cost of running Kafka and handling duplicates.
+Decision: Kafka with an outbox and idempotent consumers.
+Revisit if there were only one consumer that needed a synchronous answer.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_system_design_prompts_for_java_engineers"><a class="anchor" href="#_system_design_prompts_for_java_engineers"></a>System design prompts for Java engineers</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Practise these with the steps: requirements (functional and non-functional), rough capacity estimates, API, data model, high-level components, deep dive into one or two hard parts, failure handling, scaling, observability.</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 75%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Prompt</th>
+<th class="tableblock halign-left valign-top">Hard parts to discuss</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">URL shortener</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Key generation (base62 counter versus hash, collisions), read-heavy caching, redirects (301 versus 302), analytics asynchronously.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Rate limiter</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Algorithm choice, distributed counters in Redis, atomicity (Lua scripts), per-tenant limits, failure mode if Redis is down.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Notification service</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Channels, preferences, provider rate limits, retries, deduplication, delivery status.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Order and payment flow</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Idempotency keys, saga with compensation, outbox, payment provider callbacks, reconciliation.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Distributed cache</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Eviction, consistency with the database, stampede protection, hot keys, sharding.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Job scheduler</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Exactly-one execution across instances (locks, leases), retries, time zones, missed runs.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Chat or live feed</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">WebSockets, fan-out on write versus read, presence, ordering per conversation.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">File upload service</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Pre-signed URLs to object storage, chunked uploads, virus scanning, metadata store.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>For low-level design and machine-coding rounds, use the <a href="../../Low-Level-Design/index.html" class="xref page">Low Level Design</a> section.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_code_review_questions"><a class="anchor" href="#_code_review_questions"></a>Code review questions</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>"How do you review a pull request?" Check, in order:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><strong>Correctness</strong> against the requirement, including failure paths and edge cases.</p>
+</li>
+<li>
+<p><strong>Security</strong>: input validation, authorisation, secrets, injection.</p>
+</li>
+<li>
+<p><strong>Data and transactions</strong>: consistency, migrations that are backward compatible, locking.</p>
+</li>
+<li>
+<p><strong>Performance</strong>: queries in loops, unbounded collections, missing pagination or timeouts.</p>
+</li>
+<li>
+<p><strong>Observability</strong>: logs with context, metrics, no sensitive data in logs.</p>
+</li>
+<li>
+<p><strong>Tests</strong>: do they prove the behaviour, including failures?</p>
+</li>
+<li>
+<p><strong>Maintainability</strong>: naming, size, duplication; is it easy to change or delete later?</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>Separate blocking defects from style preferences, and explain the reason behind each comment.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_deployment_knowledge_for_senior_java_developers"><a class="anchor" href="#_deployment_knowledge_for_senior_java_developers"></a>Deployment knowledge for senior Java developers</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p>Packaging: executable JAR, layered JARs and container images (Buildpacks, Jib), GraalVM native images when startup matters.</p>
+</li>
+<li>
+<p>Configuration per environment, secrets from a vault, feature flags.</p>
+</li>
+<li>
+<p>Health probes (liveness, readiness, startup), graceful shutdown, resource requests and limits, JVM memory settings for containers.</p>
+</li>
+<li>
+<p>Release strategies: rolling, blue-green, canary; automated rollback on SLO breach.</p>
+</li>
+<li>
+<p>Database migrations with Flyway or Liquibase, using <strong>expand and contract</strong>: add new columns first, deploy code that writes both, backfill, switch reads, then remove the old column in a later release. Each step must work with the previous code version during a rolling deploy.</p>
+</li>
+<li>
+<p>Observability: logs, metrics, traces, dashboards, alerts tied to SLOs, on-call runbooks.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_behavioural_questions"><a class="anchor" href="#_behavioural_questions"></a>Behavioural questions</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Prepare your stories in advance with the <strong>STAR</strong> structure: Situation, Task, Action, Result.
+Spend most of the time on <strong>Action</strong>, use "I" for what you did, and give numbers for the result.</p>
+</div>
+<div class="paragraph">
+<p>Stories to have ready:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Two production incidents</strong>: context, symptoms, impact, how it was detected, immediate mitigation, root cause, permanent fix, tests and monitoring added, lesson learned. Do not blame individuals; describe the system conditions that allowed it.</p>
+</li>
+<li>
+<p><strong>One architecture or design decision</strong>: the options, the trade-off, the result, and what you would do differently.</p>
+</li>
+<li>
+<p><strong>A disagreement</strong> with a colleague or manager, and how it was resolved with data.</p>
+</li>
+<li>
+<p><strong>A time you improved performance or reliability</strong>, with before and after numbers.</p>
+</li>
+<li>
+<p><strong>A mistake you made</strong> and what changed afterwards.</p>
+</li>
+<li>
+<p><strong>Mentoring or leading</strong>: helping someone grow, or driving a change across teams.</p>
+</li>
+<li>
+<p><strong>Working with ambiguous requirements</strong>.</p>
+</li>
+</ul>
+</div>
+<div class="exampleblock">
+<div class="content">
+<div class="paragraph">
+<p><strong>Incident story outline</strong></p>
+</div>
+<div class="paragraph">
+<p>Situation: checkout p99 latency rose from 300 ms to 8 s on a Friday evening; 15% of orders timed out.
+Task: I was on call and owned the checkout service.
+Action: traces showed time spent waiting for a database connection.
+Thread dumps showed request threads waiting in HikariCP.
+A new feature called the loyalty service <strong>inside</strong> a transaction, and that service had slowed down, so every request held a connection for seconds.
+I disabled the feature flag (latency recovered in 2 minutes), then moved the loyalty call outside the transaction, added a 500 ms timeout and a circuit breaker.
+Result: no recurrence; we added an alert on pool pending connections and a review checklist item for remote calls inside transactions.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_practice_questions"><a class="anchor" href="#_practice_questions"></a>Practice questions</h2>
+<div class="sectionbody">
+<details>
+<summary class="title">Q1. How would you investigate a slow API in production?</summary>
+<div class="content">
+<div class="paragraph">
+<p>Scope it with p50/p95/p99, errors and throughput, and check recent changes.
+Use traces to find which span is slow.
+Then check database queries and plans, query counts, connection and thread pools, GC pauses, locks and downstream latency and retries.
+Mitigate (rollback, scale, feature flag) before the deep fix, then validate the fix with a load test against the baseline.</p>
+</div>
+</div>
+</details>
+<details>
+<summary class="title">Q2. How do you reduce API latency?</summary>
+<div class="content">
+<div class="paragraph">
+<p>Measure first.
+Remove unnecessary calls, run independent I/O in parallel, fix queries and indexes, avoid N+1, cache stable data, reduce payload size, tune pools, add timeouts, and remove retry or serialisation overhead.
+Confirm with percentiles, not averages.</p>
+</div>
+</div>
+</details>
+<details>
+<summary class="title">Q3. Describe a production incident you handled.</summary>
+<div class="content">
+<div class="paragraph">
+<p>Use the incident outline: context, symptoms, impact, detection, mitigation, root cause, permanent fix, monitoring and tests added, lesson.
+Keep it blameless and specific with numbers.</p>
+</div>
+</div>
+</details>
+<details>
+<summary class="title">Q4. How do you answer an architecture trade-off question?</summary>
+<div class="content">
+<div class="paragraph">
+<p>Start with requirements and constraints, compare two or three options on consistency, latency, cost, complexity, failure behaviour, team skills and operational load, state the decision, and say what would make you revisit it.</p>
+</div>
+</div>
+</details>
+<details>
+<summary class="title">Q5. How do you review a pull request?</summary>
+<div class="content">
+<div class="paragraph">
+<p>Correctness and failure paths, security, data and transactions, performance, observability, tests, maintainability and operational impact.
+Separate blocking issues from preferences and explain the reasons.</p>
+</div>
+</div>
+</details>
+<details>
+<summary class="title">Q6. What should a senior Java developer know about deployment?</summary>
+<div class="content">
+<div class="paragraph">
+<p>Packaging and images, configuration and secrets, health probes and graceful shutdown, container resource limits and JVM memory flags, GC behaviour, logging, metrics, tracing, release and rollback strategies, backward-compatible schema migrations, and incident response.</p>
+</div>
+</div>
+</details>
+<details>
+<summary class="title">Q7. How do you make a database schema change with zero downtime?</summary>
+<div class="content">
+<div class="paragraph">
+<p>Expand and contract: add new structures in a backward-compatible way, deploy code that works with both, migrate data in batches, switch reads, and remove old structures in a later release.
+Avoid long locks: create indexes concurrently where the database supports it, and batch large updates.</p>
+</div>
+</div>
+</details>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_common_traps"><a class="anchor" href="#_common_traps"></a>Common traps</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p>Jumping to a fix before measuring.</p>
+</li>
+<li>
+<p>Describing the root cause before mitigating customer impact.</p>
+</li>
+<li>
+<p>Stories that use "we" for everything.</p>
+</li>
+<li>
+<p>No numbers in results.</p>
+</li>
+<li>
+<p>Blaming a person.</p>
+</li>
+<li>
+<p>Proposing a complex design without stating requirements.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_follow_ups_to_expect"><a class="anchor" href="#_follow_ups_to_expect"></a>Follow-ups to expect</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p>"What would you do differently next time?"</p>
+</li>
+<li>
+<p>"How did you know the fix worked?"</p>
+</li>
+<li>
+<p>"What alert would have caught this earlier?"</p>
+</li>
+<li>
+<p>"What happens to your design at ten times the traffic?"</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_quick_revision"><a class="anchor" href="#_quick_revision"></a>Quick revision</h2>
+<div class="sectionbody">
+<div class="ulist checklist">
+<ul class="checklist">
+<li>
+<p><i class="fa fa-square-o"></i> Five-step debugging process</p>
+</li>
+<li>
+<p><i class="fa fa-square-o"></i> Playbooks: slow API, memory, CPU, hangs, consumer lag</p>
+</li>
+<li>
+<p><i class="fa fa-square-o"></i> Trade-off answer structure</p>
+</li>
+<li>
+<p><i class="fa fa-square-o"></i> Two incident stories and one design story written in STAR form</p>
+</li>
+<li>
+<p><i class="fa fa-square-o"></i> Expand-and-contract migrations</p>
+</li>
+<li>
+<p><i class="fa fa-square-o"></i> PR review checklist</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Next: <a href="spring-ai.html" class="xref page">Spring AI and GenAI Integration</a>, or back to the <a href="index.html" class="xref page">guide index</a>.</p>
+</div>
+</div>
+</div>
+      </article>
+      <div class="article-pagination">
+        <a class="prev" href="testing.html"><span>← Previous</span><strong>Testing</strong></a>
+        <a class="next" href="spring-ai.html"><span>Next →</span><strong>Spring AI and GenAI</strong></a>
+      </div>
+    </main>
+    <aside class="docs-toc reading-assistant" id="reading-assistant" aria-label="Reading assistant">
+  <div class="toc-inner ra-inner">
+    <div class="ra-head">
+      <h2 class="ra-title">Reading Assistant</h2>
+      <button type="button" class="ra-close" aria-label="Close reading assistant">
+        <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+    </div>
+
+    <section class="ra-card ra-listen" aria-labelledby="reading-assistant-listen" hidden>
+      <div class="ra-card-head">
+        <svg class="ra-card-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/></svg>
+        <div>
+          <h3 class="ra-card-title" id="reading-assistant-listen">Listen to Article</h3>
+          <p class="ra-card-desc">Listen to the explanation of this article. Code blocks are skipped.</p>
+        </div>
+      </div>
+
+      <div class="ra-ready">
+        <div class="ra-player">
+          <button type="button" class="ra-play" aria-label="Play article">
+            <svg class="ra-icon-play" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M8 5.5v13l11-6.5z"/></svg>
+            <svg class="ra-icon-pause" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M7 5h3.5v14H7zM13.5 5H17v14h-3.5z"/></svg>
+          </button>
+          <div class="ra-track">
+            <div class="ra-meter" role="progressbar" aria-label="Listening progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><span class="ra-meter-fill"></span></div>
+            <span class="ra-time" title="Estimated. Browser speech does not report an exact duration."></span>
+          </div>
+          <button type="button" class="ra-stop" aria-label="Stop listening" disabled>
+            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="6.5" y="6.5" width="11" height="11" rx="1.5"/></svg>
+          </button>
+        </div>
+
+        <div class="ra-controls">
+          <label class="ra-field ra-field-rate">
+            <span class="ra-field-label">Speed</span>
+            <select class="ra-rate">
+              <option value="0.75">0.75×</option>
+              <option value="1" selected>1×</option>
+              <option value="1.25">1.25×</option>
+              <option value="1.5">1.5×</option>
+              <option value="2">2×</option>
+            </select>
+          </label>
+        </div>
+
+        <label class="ra-check"><input type="checkbox" class="ra-follow" checked> Highlight and follow along</label>
+        <p class="ra-status" role="status" aria-live="polite">Ready</p>
+
+        <p class="ra-tip">
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M9 18h6M10 21h4"/><path d="M12 3a6 6 0 0 0-3.5 10.9V16h7v-2.1A6 6 0 0 0 12 3z"/></svg>
+          <span><strong>Tip:</strong> Headings and explanations are read aloud; code is skipped. Read in Google UK English Male on Chrome; other browsers use their closest British English voice.</span>
+        </p>
+      </div>
+
+      <p class="ra-unsupported" hidden>Listening isn&#8217;t available in this browser. The article itself works as usual.</p>
+    </section>
+
+    <section class="ra-card ra-jump" aria-labelledby="reading-assistant-sections" hidden>
+      <h3 class="ra-card-title" id="reading-assistant-sections">Jump to Section</h3>
+      <ol class="ra-sections"></ol>
+    </section>
+
+    <section class="ra-card ra-info" aria-labelledby="reading-assistant-info">
+      <h3 class="ra-card-title" id="reading-assistant-info">Page Info</h3>
+      <ul class="ra-info-list">
+        <li>
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+          <span title="Estimated at 220 words per minute">~7 min read</span>
+        </li>
+        <li>
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h6"/></svg>
+          <span title="Prose only; code is not counted">~1,576 words</span>
+        </li>
+        <li>
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="4" y="5" width="16" height="16" rx="2"/><path d="M16 3v4M8 3v4M4 10h16"/></svg>
+          <span>Last updated <time datetime="2026-11-11">Nov 11, 2026</time></span>
+        </li>
+      </ul>
+    </section>
+  </div>
+</aside>
+  </div>
+  <footer class="docs-footer">© 2026 Ayush Nigam · <a href="../../index.html">Home</a></footer>
+  <script src="../../../../_/js/reading-assistant.js?v=2" defer></script>
+  <script src="../../../../_/js/site.js?v=15" defer></script>
+</body>
+</html>

@@ -1,0 +1,897 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>Java Software Engineer Interview Guide · Ayush Nigam</title>
+  
+  <link rel="preload" href="../../../../_/fonts/inter-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="../../../../_/css/site.css?v=21">
+</head>
+<body class="docs-page">
+  <a class="skip-link" href="#article-main">Skip to content</a>
+  <header class="docs-header">
+    <div class="docs-header-inner">
+      <a class="docs-logo" href="../../index.html"><span class="docs-logo-mark">AN</span><span>Ayush Nigam</span></a>
+          <nav class="header-adoc-nav docs-toplinks" aria-label="Header links" data-header-source-url="../../headers/header-links.html">
+            <div class="header-adoc-content"><div class="ulist header-menu-links">
+<ul>
+<li>
+<p><a href="contact.html" class="xref page">Contact</a></p>
+</li>
+<li>
+<p><a href="https://www.linkedin.com/in/the-ayush-nigam/">LinkedIn</a></p>
+</li>
+<li>
+<p><a href="https://github.com/gareeb-engineer">GitHub</a></p>
+</li>
+</ul>
+</div>
+</div>
+          </nav>
+      <a class="header-avatar" href="../../index.html" aria-hidden="true" tabindex="-1"><img src="../../../../_/img/profile-photo.png" alt="Ayush Nigam profile photo" width="36" height="36"></a>
+<button type="button" class="mobile-nav-toggle" aria-label="Toggle documentation navigation" aria-expanded="false" aria-controls="docs-sidebar">☰ Menu</button>
+      <span class="read-progress-label" aria-hidden="true" hidden>Reading <span class="read-progress-value">0%</span></span>
+    </div>
+    <div class="read-progress" role="progressbar" aria-label="Article reading progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" hidden><span class="read-progress-fill"></span></div>
+  </header>
+  <div class="docs-shell">
+    <aside class="docs-sidebar" id="docs-sidebar" aria-label="Documentation sidebar">
+      <div class="sidebar-inner">
+      <div class="sidebar-top"><span class="sidebar-eyebrow">ENGINEERING LIBRARY</span></div>
+      <input id="nav-filter" class="nav-filter" type="search" placeholder="Filter pages…" aria-label="Filter navigation" autocomplete="off">
+      <nav aria-label="Documentation pages"><ul class="nav-tree">
+  <li class="nav-item nav-parent">
+        <div class="nav-group">
+          <button type="button" class="nav-row nav-toggle" aria-expanded="true">
+            <span class="nav-label">Java</span>
+            <span class="nav-chevron" aria-hidden="true">▾</span>
+          </button>
+          <div class="nav-children">
+            <ul class="nav-tree">
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../index.html" title="Open Java overview">Overview</a>
+      </div>
+  </li>
+  <li class="nav-item nav-parent">
+        <div class="nav-group nav-linked-group">
+          <div class="nav-row nav-linked-row">
+            <a href="index.html" class="is-current" aria-current="page">Java Interview Guide</a>
+            <button type="button" class="nav-toggle nav-linked-toggle" aria-expanded="true" aria-label="Toggle subtopics">
+              <span class="nav-chevron" aria-hidden="true">▾</span>
+            </button>
+          </div>
+          <div class="nav-children"><ul class="nav-tree">
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="core-java-oop.html">Core Java and OOP</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="collections-generics.html">Collections and Generics</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="java8-streams-functional.html">Java 8: Lambdas, Streams, Optional</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="modern-java.html">Modern Java (11 to 25)</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="concurrency.html">Concurrency and Multithreading</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="jvm-memory-gc.html">JVM, Memory and GC</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="spring-core.html">Spring Core: IoC, DI, AOP</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="spring-boot.html">Spring Boot</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="rest-spring-mvc.html">REST APIs and Spring MVC</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="jpa-hibernate-transactions.html">JPA, Hibernate, Transactions</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="spring-security.html">Spring Security, JWT, OAuth2</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="microservices.html">Microservices</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="coding-round.html">Coding Round in Java</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="testing.html">Testing</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="senior-scenarios.html">Production Scenarios and Behavioural</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="spring-ai.html">Spring AI and GenAI</a>
+      </div>
+  </li>
+</ul>
+</div>
+        </div>
+  </li>
+</ul>
+          </div>
+        </div>
+  </li>
+  <li class="nav-item nav-parent">
+        <div class="nav-group is-collapsed">
+          <button type="button" class="nav-row nav-toggle" aria-expanded="false">
+            <span class="nav-label">Architecture Diagram&#8217;s</span>
+            <span class="nav-chevron" aria-hidden="true">▸</span>
+          </button>
+          <div class="nav-children">
+            <ul class="nav-tree">
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Arcitecture-diagram/index.html" title="Open Architecture Diagram’s overview">Overview</a>
+      </div>
+  </li>
+</ul>
+          </div>
+        </div>
+  </li>
+  <li class="nav-item nav-parent">
+        <div class="nav-group is-collapsed">
+          <button type="button" class="nav-row nav-toggle" aria-expanded="false">
+            <span class="nav-label">References</span>
+            <span class="nav-chevron" aria-hidden="true">▸</span>
+          </button>
+          <div class="nav-children">
+            <ul class="nav-tree">
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../DevOps-Refs/index.html" title="Open References overview">Overview</a>
+      </div>
+  </li>
+</ul>
+          </div>
+        </div>
+  </li>
+  <li class="nav-item nav-parent">
+        <div class="nav-group is-collapsed">
+          <button type="button" class="nav-row nav-toggle" aria-expanded="false">
+            <span class="nav-label">Data Structure</span>
+            <span class="nav-chevron" aria-hidden="true">▸</span>
+          </button>
+          <div class="nav-children">
+            <ul class="nav-tree">
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Data-Structure/index.html" title="Open Data Structure overview">Overview</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Data-Structure/arrays/index.html">Arrays</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Data-Structure/linked-list/index.html">Linked Lists</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Data-Structure/stacks-n-queue/index.html">Stacks</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Data-Structure/trees/index.html">Trees</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Data-Structure/hash-map/index.html">Hash Map</a>
+      </div>
+  </li>
+  <li class="nav-item nav-parent">
+        <div class="nav-group nav-linked-group is-collapsed">
+          <div class="nav-row nav-linked-row">
+            <a href="../../Data-Structure/dynamic-programming/index.html">Dynamic Programming</a>
+            <button type="button" class="nav-toggle nav-linked-toggle" aria-expanded="false" aria-label="Toggle subtopics">
+              <span class="nav-chevron" aria-hidden="true">▸</span>
+            </button>
+          </div>
+          <div class="nav-children"><ul class="nav-tree">
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Data-Structure/dynamic-programming/fibonacci-series.html">Fibonacci Series</a>
+      </div>
+  </li>
+</ul>
+</div>
+        </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Data-Structure/graphs/index.html">Graphs</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Data-Structure/backtracking/index.html">Backtracking</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Data-Structure/pattern-printing/index.html">Pattern Printing</a>
+      </div>
+  </li>
+  <li class="nav-item nav-parent">
+        <div class="nav-group nav-linked-group is-collapsed">
+          <div class="nav-row nav-linked-row">
+            <a href="../../Data-Structure/recursion/index.html">Recursion</a>
+            <button type="button" class="nav-toggle nav-linked-toggle" aria-expanded="false" aria-label="Toggle subtopics">
+              <span class="nav-chevron" aria-hidden="true">▸</span>
+            </button>
+          </div>
+          <div class="nav-children"><ul class="nav-tree">
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Data-Structure/recursion/sum-of-all-element.html">Sum of all elements</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Data-Structure/recursion/all-indices-of-array.html">All indices of array</a>
+      </div>
+  </li>
+</ul>
+</div>
+        </div>
+  </li>
+</ul>
+          </div>
+        </div>
+  </li>
+  <li class="nav-item nav-parent">
+        <div class="nav-group is-collapsed">
+          <button type="button" class="nav-row nav-toggle" aria-expanded="false">
+            <span class="nav-label">Low Level Design</span>
+            <span class="nav-chevron" aria-hidden="true">▸</span>
+          </button>
+          <div class="nav-children">
+            <ul class="nav-tree">
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Low-Level-Design/index.html" title="Open Low Level Design overview">Overview</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Low-Level-Design/design-principles.html">Design Principles</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Low-Level-Design/solid-principles.html">SOLID Principles</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Low-Level-Design/design-patterns.html">Gang of Four Design Patterns</a>
+      </div>
+  </li>
+</ul>
+          </div>
+        </div>
+  </li>
+</ul>
+</nav>
+      </div>
+    </aside>
+    <main id="article-main" class="docs-article">
+      <nav class="breadcrumbs" aria-label="Breadcrumb"><a href="../../index.html">Home</a><span aria-hidden="true">/</span><a href="index.html">Java Interview Guide</a></nav>
+      <article class="article-body" data-reading-progress>
+        <header class="article-header">
+          <h1>Java Software Engineer Interview Guide</h1>
+          
+          <p class="article-subtitle">Every topic a Java backend interview covers, with a weightage out of 10, a study order, and a detailed page per topic with explanations, code and practice questions.</p>
+          <ul class="article-chips">
+            <li class="chip chip-difficulty chip-medium">Medium</li><li class="chip chip-tag">Java</li><li class="chip chip-tag">Interview Preparation</li><li class="chip chip-tag">Spring</li><li class="chip chip-tag">Spring Boot</li>
+          </ul>
+          <div class="article-meta">
+            <span class="article-meta-item" title="Estimated at 220 words per minute">
+              <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+              ~6 min read
+            </span>
+            <span class="article-meta-item">
+              <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="4" y="5" width="16" height="16" rx="2"/><path d="M16 3v4M8 3v4M4 10h16"/></svg>
+              Updated <time datetime="2026-11-11">Nov 11, 2026</time>
+            </span>
+            <button type="button" class="ra-open" aria-controls="reading-assistant" aria-expanded="false" hidden>
+              <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/></svg>
+              Listen
+            </button>
+          </div>
+        </header>
+        <div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>This guide prepares you for a software engineer interview where Java is the main language.
+It covers core Java, the JVM, concurrency, Spring and Spring Boot, persistence, security, microservices, testing, the coding round and the senior scenario round.
+Each topic has its own page, and every page uses the same layout so you always know where to look.</p>
+</div>
+<div class="paragraph">
+<p>The guide targets backend roles with roughly 0 to 8 years of experience.
+Where expectations differ by level, the page says so.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_how_to_use_this_guide"><a class="anchor" href="#_how_to_use_this_guide"></a>How to use this guide</h2>
+<div class="sectionbody">
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Read the <a href="#topic-index">topic index</a> and note the weightage of each topic.</p>
+</li>
+<li>
+<p>Study the topics in the order of the table. Earlier topics are prerequisites for later ones.</p>
+</li>
+<li>
+<p>On each page, read the concepts first, then answer the practice questions <strong>aloud</strong> before opening the answer.</p>
+</li>
+<li>
+<p>Mark the questions you could not answer in two minutes and revisit them two days later.</p>
+</li>
+<li>
+<p>Finish with the <a href="#final-checklist">final checklist</a> on the day before the interview.</p>
+</li>
+</ol>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+Interviewers rarely stop at a definition.
+After your first answer, expect "why?", "what happens under load?", "how would you test it?" and "how would you monitor it?".
+Every page has a <strong>Follow-ups to expect</strong> section for this reason.
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="topic-index"><a class="anchor" href="#topic-index"></a>Topic index and weightage</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The weightage is a score out of 10 that combines two things: how often the topic comes up in Java backend interviews, and how much a weak answer hurts the overall result.
+A 10 means you will almost certainly be asked about it and a poor answer can end the interview.
+A 4 means it depends on the role.</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 6.6666%;">
+<col style="width: 40%;">
+<col style="width: 13.3333%;">
+<col style="width: 26.6666%;">
+<col style="width: 13.3335%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-center valign-top">#</th>
+<th class="tableblock halign-left valign-top">Topic</th>
+<th class="tableblock halign-center valign-top">Weightage</th>
+<th class="tableblock halign-left valign-top">Level focus</th>
+<th class="tableblock halign-center valign-top">Handbook Qs</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="core-java-oop.html" class="xref page">Core Java and OOP</a><br>
+OOP pillars, <code>equals</code>/<code>hashCode</code>, String, immutability, exceptions, keywords</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><strong>9 / 10</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">All levels, first screen</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">1-15</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">2</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="collections-generics.html" class="xref page">Collections and Generics</a><br>
+HashMap internals, ConcurrentHashMap, List/Set/Map choice, generics, PECS</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><strong>10 / 10</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">All levels, deep at mid and senior</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">16-25</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">3</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="java8-streams-functional.html" class="xref page">Java 8: Lambdas, Streams and Optional</a><br>
+Functional interfaces, stream pipeline, collectors, stream coding drills</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><strong>9 / 10</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">All levels, very common in live coding</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">26-30, 35-38</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">4</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="modern-java.html" class="xref page">Modern Java (11 to 25)</a><br>
+Records, sealed types, pattern matching, virtual threads, Java 21 and 25 features</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><strong>7 / 10</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Mid and senior</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">31-34</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">5</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="concurrency.html" class="xref page">Concurrency and Multithreading</a><br>
+Thread lifecycle, JMM, <code>synchronized</code>, <code>volatile</code>, executors, CompletableFuture</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><strong>9 / 10</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Mid and senior</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">39-49, 53-54</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">6</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="jvm-memory-gc.html" class="xref page">JVM, Memory and Garbage Collection</a><br>
+Class loading, heap/stack/metaspace, GC algorithms, leaks, diagnosis tools</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><strong>7 / 10</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Mid and senior</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">50-52, 55</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">7</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="spring-core.html" class="xref page">Spring Core: IoC, DI, Beans and AOP</a><br>
+Container, bean lifecycle, scopes, injection types, proxies</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><strong>9 / 10</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">All levels with Spring on the CV</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">56-62</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">8</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="spring-boot.html" class="xref page">Spring Boot</a><br>
+Auto-configuration, starters, configuration, profiles, Actuator, Boot 4</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><strong>9 / 10</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">All levels with Spring on the CV</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">63-70</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">9</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="rest-spring-mvc.html" class="xref page">REST APIs and Spring MVC</a><br>
+HTTP semantics, request flow, validation, error handling, HTTP clients</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><strong>8 / 10</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">All levels</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">71-72, 85</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">10</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="jpa-hibernate-transactions.html" class="xref page">Spring Data JPA, Hibernate and Transactions</a><br>
+Entity states, N+1, fetching, <code>@Transactional</code>, isolation, locking, SQL basics</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><strong>8 / 10</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Mid and senior</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">76-84</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">11</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="spring-security.html" class="xref page">Spring Security, JWT and OAuth2</a><br>
+Filter chain, authentication flow, JWT validation, CSRF, method security</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><strong>7 / 10</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Mid and senior</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">73-75, 105, 119</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">12</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="microservices.html" class="xref page">Microservices and Distributed Systems</a><br>
+Resilience, messaging, Kafka, saga, outbox, caching, rate limiting</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><strong>8 / 10</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Mid and senior</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">86-105</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">13</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="../../Low-Level-Design/index.html" class="xref page">Design Patterns, SOLID and LLD</a><br>
+Existing pages on this site: principles, SOLID, Gang of Four patterns</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><strong>7 / 10</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">All levels, machine-coding rounds</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">114</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">14</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="coding-round.html" class="xref page">Coding Round in Java</a><br>
+Java idioms for DSA, complexity, problem patterns, classic programs</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><strong>9 / 10</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">All levels</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">111-113</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">15</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="testing.html" class="xref page">Testing: JUnit, Mockito and Spring Tests</a><br>
+Unit vs integration vs contract, mocking, slice tests, Testcontainers</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><strong>6 / 10</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Mid and senior</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">106-110</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">16</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="senior-scenarios.html" class="xref page">Production Scenarios, Design and Behavioural</a><br>
+Debugging playbooks, trade-off answers, incident stories, system design prompts</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><strong>7 / 10</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Senior, also lead and architect</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">99, 115-120</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">17</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="spring-ai.html" class="xref page">Spring AI and GenAI Integration</a><br>
+ChatClient, prompts, embeddings, RAG, advisors, tool calling, MCP</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><strong>4 / 10</strong> (8 if the role mentions GenAI)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Role-specific</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">151-180</p></td>
+</tr>
+</tbody>
+</table>
+<div class="sect2">
+<h3 id="_how_the_weightage_was_set"><a class="anchor" href="#_how_the_weightage_was_set"></a>How the weightage was set</h3>
+<div class="paragraph">
+<p>The scores are an editorial judgement, not measured data.
+They come from comparing the topic lists and question banks of the sources in <a href="#sources">Sources</a> and from the attached handbook.
+A few patterns were consistent across those sources:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Java interview questions cluster around core Java and OOP, collections internals, concurrency, the JVM and Spring Boot.</p>
+</li>
+<li>
+<p>HashMap and ConcurrentHashMap internals are named as the most predictable topic for experienced candidates, which is why collections is the only 10.</p>
+</li>
+<li>
+<p>Modern Java features from Java 17 and 21 (records, sealed classes, pattern matching, virtual threads) now appear regularly, and many older question lists skip them.</p>
+</li>
+<li>
+<p>Spring Boot questions for experienced candidates focus on proxies, auto-configuration and transaction boundaries rather than annotation names.</p>
+</li>
+<li>
+<p>Senior interviews replace definitions with production scenarios: memory leaks, deadlocks and slow endpoints.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Adjust the scores for your target role.
+A bank or service company tends to ask more core Java and Java 8 stream programs.
+A product company tends to weigh the coding round and system design more.
+A role that mentions LLMs or RAG raises Spring AI to about 8.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_what_each_topic_page_contains"><a class="anchor" href="#_what_each_topic_page_contains"></a>What each topic page contains</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Every topic page follows the same layout:</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 75%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Section</th>
+<th class="tableblock halign-left valign-top">What it gives you</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">At a glance</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Weightage, who gets asked, preparation time, and the matching handbook questions.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Concept sections</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Explanations in plain language with short Java examples. Read these first.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Practice questions</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Interview questions as collapsible blocks. Say your answer aloud, then expand to compare.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Common traps</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Mistakes that interviewers deliberately probe for.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Follow-ups to expect</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The second and third questions that usually follow the first.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Quick revision</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A checklist to scan the night before.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_study_plans"><a class="anchor" href="#_study_plans"></a>Study plans</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Pick the plan that matches the time you have.
+Hours are estimates for someone who already writes Java at work.</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 80%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Time available</th>
+<th class="tableblock halign-left valign-top">Plan</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1 week (crash)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Days 1-2: topics 1, 2 and 3. Day 3: topics 5 and 7. Day 4: topics 8, 9 and 10. Day 5: topic 14, solve 10 problems. Day 6: topics 12 and 16. Day 7: practice questions only, then the final checklist.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2 weeks</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Week 1: topics 1 to 6, plus 2 coding problems a day. Week 2: topics 7 to 12 and 15, plus 2 coding problems a day. Last two days: topic 16, mock interview, final checklist.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">4 weeks</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Week 1: topics 1 to 4. Week 2: topics 5, 6 and 13. Week 3: topics 7 to 11. Week 4: topics 12, 15, 16 and 17 if relevant. Solve 3 coding problems a day throughout, and do one timed mock interview each weekend.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_the_attached_handbook"><a class="anchor" href="#_the_attached_handbook"></a>The attached handbook</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The file <code>9to5_Hustlers_Java_SpringBoot_Spring_AI_180_Interview_Questions_Designed.pdf</code> in the repository root is used here as an extension.
+Its questions are mapped to the topic pages in the <strong>Handbook Qs</strong> column above, and each topic page covers those questions in its own words with added detail and code.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+The handbook cover promises 180 questions, but the copy in this repository contains questions 1-120 (Java and Spring Boot) and 151-180 (Spring AI).
+Questions 121-150 are not in the file.
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="final-checklist"><a class="anchor" href="#final-checklist"></a>Final checklist</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Use this the day before the interview.</p>
+</div>
+<div class="ulist checklist">
+<ul class="checklist">
+<li>
+<p><i class="fa fa-square-o"></i> I can explain each major concept in my own words, without a memorised one-line definition.</p>
+</li>
+<li>
+<p><i class="fa fa-square-o"></i> For every "X versus Y" question, I can say when each one is the right choice.</p>
+</li>
+<li>
+<p><i class="fa fa-square-o"></i> I know the time complexity of the main collection operations and of my coding solutions.</p>
+</li>
+<li>
+<p><i class="fa fa-square-o"></i> I can state the thread-safety guarantees of the classes I mention.</p>
+</li>
+<li>
+<p><i class="fa fa-square-o"></i> I can explain where a transaction starts and ends in my last project, and what happens on failure.</p>
+</li>
+<li>
+<p><i class="fa fa-square-o"></i> I can write code without IDE auto-complete: a HashMap-based solution, a stream pipeline, a thread-safe class.</p>
+</li>
+<li>
+<p><i class="fa fa-square-o"></i> I have two production incident stories and one architecture decision story ready (see <a href="senior-scenarios.html" class="xref page">Production Scenarios</a>).</p>
+</li>
+<li>
+<p><i class="fa fa-square-o"></i> I can discuss observability, security, testing, deployment and rollback for a service I built.</p>
+</li>
+<li>
+<p><i class="fa fa-square-o"></i> I know which Java and Spring Boot versions my current project uses, and one feature from each that I have used.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="sources"><a class="anchor" href="#sources"></a>Sources</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The topic selection and weightage were checked against these pages.
+Content was rephrased for compliance with licensing restrictions; facts were cross-checked against official documentation where possible.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="https://techscreen.app/articles/java-interview-questions-2026">TechScreen: Java Interview Questions for Software Engineers (2026 Guide)</a></p>
+</li>
+<li>
+<p><a href="https://www.datacamp.com/blog/java-interview-questions">DataCamp: Top Java Interview Questions and Answers 2026</a></p>
+</li>
+<li>
+<p><a href="https://techoral.com/java/java-senior-interview-questions.html">Techoral: Java Senior Interview Questions 2026</a></p>
+</li>
+<li>
+<p><a href="https://go.intervue.io/blog/faang-java-mock-interview-questions">Intervue: Java mock interview questions</a></p>
+</li>
+<li>
+<p><a href="https://www.golinuxcloud.com/spring-boot-interview-questions-experienced/">GoLinuxCloud: Spring Boot Interview Questions for Experienced Developers</a></p>
+</li>
+<li>
+<p><a href="https://huru.ai/spring-boot-interview-questions/">Huru: Spring Boot Interview Questions and Answers (2026)</a></p>
+</li>
+<li>
+<p><a href="https://www.upgrad.com/blog/spring-boot-interview-questions-and-answers-beginners-experienced/">upGrad: Spring Boot Interview Questions</a></p>
+</li>
+<li>
+<p><a href="https://howtodoinjava.com/interview-questions/java-concurrency-interview-questions/">HowToDoInJava: Java Concurrency Interview Questions</a></p>
+</li>
+<li>
+<p><a href="https://prachub.com/resources/java-virtual-thread-interview-questions-pinning-resource-limits-and-version-differences">PracHub: Virtual Thread Interview Questions</a></p>
+</li>
+<li>
+<p><a href="https://howtodoinjava.com/java/java-25-features/">HowToDoInJava: Java 25 Features</a></p>
+</li>
+<li>
+<p><a href="https://docs.oracle.com/en/java/javase/25/language/java-language-changes-summary.html">Oracle: Java Language Changes Summary (JDK 25)</a></p>
+</li>
+<li>
+<p><a href="https://openjdk.org/jeps/439">OpenJDK: JEP 439 Generational ZGC</a></p>
+</li>
+<li>
+<p><a href="https://howtodoinjava.com/spring-boot/spring-boot-4/">HowToDoInJava: Spring Boot 4 What&#8217;s New</a></p>
+</li>
+<li>
+<p><a href="https://www.infoq.com/news/2025/11/spring-7-spring-boot-4/">InfoQ: Spring Framework 7 and Spring Boot 4</a></p>
+</li>
+<li>
+<p><a href="https://dev.to/anantghadi/spring-boot-transactional-7-interview-traps-that-catch-experienced-developers-5h7l">DEV: @Transactional interview traps</a></p>
+</li>
+<li>
+<p><a href="https://spring.io/blog/2026/08/21/spring-ai-2-0-1-available-now/">Spring blog: Spring AI 2.0.1</a></p>
+</li>
+<li>
+<p>9to5 Hustlers, <em>Java and Spring Boot + Spring AI Deep Technical Interview Handbook</em> (attached PDF)</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+      </article>
+      <div class="article-pagination">
+        <a class="prev" href="../index.html"><span>← Previous</span><strong>Java</strong></a>
+        <a class="next" href="core-java-oop.html"><span>Next →</span><strong>Core Java and OOP</strong></a>
+      </div>
+    </main>
+    <aside class="docs-toc reading-assistant" id="reading-assistant" aria-label="Reading assistant">
+  <div class="toc-inner ra-inner">
+    <div class="ra-head">
+      <h2 class="ra-title">Reading Assistant</h2>
+      <button type="button" class="ra-close" aria-label="Close reading assistant">
+        <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+    </div>
+
+    <section class="ra-card ra-listen" aria-labelledby="reading-assistant-listen" hidden>
+      <div class="ra-card-head">
+        <svg class="ra-card-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/></svg>
+        <div>
+          <h3 class="ra-card-title" id="reading-assistant-listen">Listen to Article</h3>
+          <p class="ra-card-desc">Listen to the explanation of this article. Code blocks are skipped.</p>
+        </div>
+      </div>
+
+      <div class="ra-ready">
+        <div class="ra-player">
+          <button type="button" class="ra-play" aria-label="Play article">
+            <svg class="ra-icon-play" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M8 5.5v13l11-6.5z"/></svg>
+            <svg class="ra-icon-pause" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M7 5h3.5v14H7zM13.5 5H17v14h-3.5z"/></svg>
+          </button>
+          <div class="ra-track">
+            <div class="ra-meter" role="progressbar" aria-label="Listening progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><span class="ra-meter-fill"></span></div>
+            <span class="ra-time" title="Estimated. Browser speech does not report an exact duration."></span>
+          </div>
+          <button type="button" class="ra-stop" aria-label="Stop listening" disabled>
+            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="6.5" y="6.5" width="11" height="11" rx="1.5"/></svg>
+          </button>
+        </div>
+
+        <div class="ra-controls">
+          <label class="ra-field ra-field-rate">
+            <span class="ra-field-label">Speed</span>
+            <select class="ra-rate">
+              <option value="0.75">0.75×</option>
+              <option value="1" selected>1×</option>
+              <option value="1.25">1.25×</option>
+              <option value="1.5">1.5×</option>
+              <option value="2">2×</option>
+            </select>
+          </label>
+        </div>
+
+        <label class="ra-check"><input type="checkbox" class="ra-follow" checked> Highlight and follow along</label>
+        <p class="ra-status" role="status" aria-live="polite">Ready</p>
+
+        <p class="ra-tip">
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M9 18h6M10 21h4"/><path d="M12 3a6 6 0 0 0-3.5 10.9V16h7v-2.1A6 6 0 0 0 12 3z"/></svg>
+          <span><strong>Tip:</strong> Headings and explanations are read aloud; code is skipped. Read in Google UK English Male on Chrome; other browsers use their closest British English voice.</span>
+        </p>
+      </div>
+
+      <p class="ra-unsupported" hidden>Listening isn&#8217;t available in this browser. The article itself works as usual.</p>
+    </section>
+
+    <section class="ra-card ra-jump" aria-labelledby="reading-assistant-sections" hidden>
+      <h3 class="ra-card-title" id="reading-assistant-sections">Jump to Section</h3>
+      <ol class="ra-sections"></ol>
+    </section>
+
+    <section class="ra-card ra-info" aria-labelledby="reading-assistant-info">
+      <h3 class="ra-card-title" id="reading-assistant-info">Page Info</h3>
+      <ul class="ra-info-list">
+        <li>
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+          <span title="Estimated at 220 words per minute">~6 min read</span>
+        </li>
+        <li>
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h6"/></svg>
+          <span title="Prose only; code is not counted">~1,428 words</span>
+        </li>
+        <li>
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="4" y="5" width="16" height="16" rx="2"/><path d="M16 3v4M8 3v4M4 10h16"/></svg>
+          <span>Last updated <time datetime="2026-11-11">Nov 11, 2026</time></span>
+        </li>
+      </ul>
+    </section>
+  </div>
+</aside>
+  </div>
+  <footer class="docs-footer">© 2026 Ayush Nigam · <a href="../../index.html">Home</a></footer>
+  <script src="../../../../_/js/reading-assistant.js?v=2" defer></script>
+  <script src="../../../../_/js/site.js?v=15" defer></script>
+</body>
+</html>

@@ -1,0 +1,1142 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>JVM, Memory and Garbage Collection · Ayush Nigam</title>
+  
+  <link rel="preload" href="../../../../_/fonts/inter-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="../../../../_/css/site.css?v=21">
+</head>
+<body class="docs-page">
+  <a class="skip-link" href="#article-main">Skip to content</a>
+  <header class="docs-header">
+    <div class="docs-header-inner">
+      <a class="docs-logo" href="../../index.html"><span class="docs-logo-mark">AN</span><span>Ayush Nigam</span></a>
+          <nav class="header-adoc-nav docs-toplinks" aria-label="Header links" data-header-source-url="../../headers/header-links.html">
+            <div class="header-adoc-content"><div class="ulist header-menu-links">
+<ul>
+<li>
+<p><a href="contact.html" class="xref page">Contact</a></p>
+</li>
+<li>
+<p><a href="https://www.linkedin.com/in/the-ayush-nigam/">LinkedIn</a></p>
+</li>
+<li>
+<p><a href="https://github.com/gareeb-engineer">GitHub</a></p>
+</li>
+</ul>
+</div>
+</div>
+          </nav>
+      <a class="header-avatar" href="../../index.html" aria-hidden="true" tabindex="-1"><img src="../../../../_/img/profile-photo.png" alt="Ayush Nigam profile photo" width="36" height="36"></a>
+<button type="button" class="mobile-nav-toggle" aria-label="Toggle documentation navigation" aria-expanded="false" aria-controls="docs-sidebar">☰ Menu</button>
+      <span class="read-progress-label" aria-hidden="true" hidden>Reading <span class="read-progress-value">0%</span></span>
+    </div>
+    <div class="read-progress" role="progressbar" aria-label="Article reading progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" hidden><span class="read-progress-fill"></span></div>
+  </header>
+  <div class="docs-shell">
+    <aside class="docs-sidebar" id="docs-sidebar" aria-label="Documentation sidebar">
+      <div class="sidebar-inner">
+      <div class="sidebar-top"><span class="sidebar-eyebrow">ENGINEERING LIBRARY</span></div>
+      <input id="nav-filter" class="nav-filter" type="search" placeholder="Filter pages…" aria-label="Filter navigation" autocomplete="off">
+      <nav aria-label="Documentation pages"><ul class="nav-tree">
+  <li class="nav-item nav-parent">
+        <div class="nav-group">
+          <button type="button" class="nav-row nav-toggle" aria-expanded="true">
+            <span class="nav-label">Java</span>
+            <span class="nav-chevron" aria-hidden="true">▾</span>
+          </button>
+          <div class="nav-children">
+            <ul class="nav-tree">
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../index.html" title="Open Java overview">Overview</a>
+      </div>
+  </li>
+  <li class="nav-item nav-parent">
+        <div class="nav-group nav-linked-group">
+          <div class="nav-row nav-linked-row">
+            <a href="index.html">Java Interview Guide</a>
+            <button type="button" class="nav-toggle nav-linked-toggle" aria-expanded="true" aria-label="Toggle subtopics">
+              <span class="nav-chevron" aria-hidden="true">▾</span>
+            </button>
+          </div>
+          <div class="nav-children"><ul class="nav-tree">
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="core-java-oop.html">Core Java and OOP</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="collections-generics.html">Collections and Generics</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="java8-streams-functional.html">Java 8: Lambdas, Streams, Optional</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="modern-java.html">Modern Java (11 to 25)</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="concurrency.html">Concurrency and Multithreading</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="jvm-memory-gc.html" class="is-current" aria-current="page">JVM, Memory and GC</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="spring-core.html">Spring Core: IoC, DI, AOP</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="spring-boot.html">Spring Boot</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="rest-spring-mvc.html">REST APIs and Spring MVC</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="jpa-hibernate-transactions.html">JPA, Hibernate, Transactions</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="spring-security.html">Spring Security, JWT, OAuth2</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="microservices.html">Microservices</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="coding-round.html">Coding Round in Java</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="testing.html">Testing</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="senior-scenarios.html">Production Scenarios and Behavioural</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="spring-ai.html">Spring AI and GenAI</a>
+      </div>
+  </li>
+</ul>
+</div>
+        </div>
+  </li>
+</ul>
+          </div>
+        </div>
+  </li>
+  <li class="nav-item nav-parent">
+        <div class="nav-group is-collapsed">
+          <button type="button" class="nav-row nav-toggle" aria-expanded="false">
+            <span class="nav-label">Architecture Diagram&#8217;s</span>
+            <span class="nav-chevron" aria-hidden="true">▸</span>
+          </button>
+          <div class="nav-children">
+            <ul class="nav-tree">
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Arcitecture-diagram/index.html" title="Open Architecture Diagram’s overview">Overview</a>
+      </div>
+  </li>
+</ul>
+          </div>
+        </div>
+  </li>
+  <li class="nav-item nav-parent">
+        <div class="nav-group is-collapsed">
+          <button type="button" class="nav-row nav-toggle" aria-expanded="false">
+            <span class="nav-label">References</span>
+            <span class="nav-chevron" aria-hidden="true">▸</span>
+          </button>
+          <div class="nav-children">
+            <ul class="nav-tree">
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../DevOps-Refs/index.html" title="Open References overview">Overview</a>
+      </div>
+  </li>
+</ul>
+          </div>
+        </div>
+  </li>
+  <li class="nav-item nav-parent">
+        <div class="nav-group is-collapsed">
+          <button type="button" class="nav-row nav-toggle" aria-expanded="false">
+            <span class="nav-label">Data Structure</span>
+            <span class="nav-chevron" aria-hidden="true">▸</span>
+          </button>
+          <div class="nav-children">
+            <ul class="nav-tree">
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Data-Structure/index.html" title="Open Data Structure overview">Overview</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Data-Structure/arrays/index.html">Arrays</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Data-Structure/linked-list/index.html">Linked Lists</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Data-Structure/stacks-n-queue/index.html">Stacks</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Data-Structure/trees/index.html">Trees</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Data-Structure/hash-map/index.html">Hash Map</a>
+      </div>
+  </li>
+  <li class="nav-item nav-parent">
+        <div class="nav-group nav-linked-group is-collapsed">
+          <div class="nav-row nav-linked-row">
+            <a href="../../Data-Structure/dynamic-programming/index.html">Dynamic Programming</a>
+            <button type="button" class="nav-toggle nav-linked-toggle" aria-expanded="false" aria-label="Toggle subtopics">
+              <span class="nav-chevron" aria-hidden="true">▸</span>
+            </button>
+          </div>
+          <div class="nav-children"><ul class="nav-tree">
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Data-Structure/dynamic-programming/fibonacci-series.html">Fibonacci Series</a>
+      </div>
+  </li>
+</ul>
+</div>
+        </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Data-Structure/graphs/index.html">Graphs</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Data-Structure/backtracking/index.html">Backtracking</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Data-Structure/pattern-printing/index.html">Pattern Printing</a>
+      </div>
+  </li>
+  <li class="nav-item nav-parent">
+        <div class="nav-group nav-linked-group is-collapsed">
+          <div class="nav-row nav-linked-row">
+            <a href="../../Data-Structure/recursion/index.html">Recursion</a>
+            <button type="button" class="nav-toggle nav-linked-toggle" aria-expanded="false" aria-label="Toggle subtopics">
+              <span class="nav-chevron" aria-hidden="true">▸</span>
+            </button>
+          </div>
+          <div class="nav-children"><ul class="nav-tree">
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Data-Structure/recursion/sum-of-all-element.html">Sum of all elements</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Data-Structure/recursion/all-indices-of-array.html">All indices of array</a>
+      </div>
+  </li>
+</ul>
+</div>
+        </div>
+  </li>
+</ul>
+          </div>
+        </div>
+  </li>
+  <li class="nav-item nav-parent">
+        <div class="nav-group is-collapsed">
+          <button type="button" class="nav-row nav-toggle" aria-expanded="false">
+            <span class="nav-label">Low Level Design</span>
+            <span class="nav-chevron" aria-hidden="true">▸</span>
+          </button>
+          <div class="nav-children">
+            <ul class="nav-tree">
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Low-Level-Design/index.html" title="Open Low Level Design overview">Overview</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Low-Level-Design/design-principles.html">Design Principles</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Low-Level-Design/solid-principles.html">SOLID Principles</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Low-Level-Design/design-patterns.html">Gang of Four Design Patterns</a>
+      </div>
+  </li>
+</ul>
+          </div>
+        </div>
+  </li>
+</ul>
+</nav>
+      </div>
+    </aside>
+    <main id="article-main" class="docs-article">
+      <nav class="breadcrumbs" aria-label="Breadcrumb"><a href="../../index.html">Home</a><span aria-hidden="true">/</span><a href="index.html">Java Interview Guide</a><span aria-hidden="true">/</span><a href="jvm-memory-gc.html">JVM, Memory and GC</a></nav>
+      <article class="article-body" data-reading-progress>
+        <header class="article-header">
+          <h1>JVM, Memory and Garbage Collection</h1>
+          
+          <p class="article-subtitle">How the JVM loads and runs code, where objects and variables live, how garbage collectors work and differ, and how to diagnose memory leaks, high CPU and OutOfMemoryError.</p>
+          <ul class="article-chips">
+            <li class="chip chip-difficulty chip-hard">Hard</li><li class="chip chip-tag">Java</li><li class="chip chip-tag">Interview Preparation</li><li class="chip chip-tag">JVM</li><li class="chip chip-tag">Garbage Collection</li><li class="chip chip-tag">Performance</li>
+          </ul>
+          <div class="article-meta">
+            <span class="article-meta-item" title="Estimated at 220 words per minute">
+              <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+              ~7 min read
+            </span>
+            <span class="article-meta-item">
+              <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="4" y="5" width="16" height="16" rx="2"/><path d="M16 3v4M8 3v4M4 10h16"/></svg>
+              Updated <time datetime="2026-11-11">Nov 11, 2026</time>
+            </span>
+            <button type="button" class="ra-open" aria-controls="reading-assistant" aria-expanded="false" hidden>
+              <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/></svg>
+              Listen
+            </button>
+          </div>
+        </header>
+        <div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>JVM questions test whether you can run Java in production, not just write it.
+Juniors are asked about heap versus stack.
+Seniors are asked how they would find a memory leak or why latency spikes every few minutes.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_at_a_glance"><a class="anchor" href="#_at_a_glance"></a>At a glance</h2>
+<div class="sectionbody">
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 75%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Weightage</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>7 / 10</strong></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Who gets asked</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Mid and senior. Expected in depth for performance-sensitive roles.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Preparation time</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">4 hours</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Handbook questions</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Q50-Q52, Q55</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Builds on</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="concurrency.html" class="xref page">Concurrency</a>; see also <a href="../index.html" class="xref page">Garbage Collection</a> on this site</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_from_source_to_running_code"><a class="anchor" href="#_from_source_to_running_code"></a>From source to running code</h2>
+<div class="sectionbody">
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><code>javac</code> compiles <code>.java</code> files to platform-neutral bytecode in <code>.class</code> files.</p>
+</li>
+<li>
+<p>The <strong>class loader subsystem</strong> loads classes when they are first needed.</p>
+</li>
+<li>
+<p>The <strong>execution engine</strong> interprets bytecode and JIT-compiles hot code to native machine code.</p>
+</li>
+<li>
+<p>The <strong>runtime data areas</strong> hold classes, objects and thread state.</p>
+</li>
+<li>
+<p>The <strong>garbage collector</strong> reclaims memory from objects that are no longer reachable.</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_class_loading"><a class="anchor" href="#_class_loading"></a>Class loading</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Loading happens in three phases:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><strong>Loading</strong>: find the bytes of the class and create a <code>Class</code> object.</p>
+</li>
+<li>
+<p><strong>Linking</strong>: <strong>verify</strong> the bytecode is safe, <strong>prepare</strong> static fields with default values, and <strong>resolve</strong> symbolic references (often lazily).</p>
+</li>
+<li>
+<p><strong>Initialisation</strong>: run static initialisers and assign static field values, the first time the class is actively used.</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>Built-in class loaders:</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 75%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Loader</th>
+<th class="tableblock halign-left valign-top">Loads</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Bootstrap</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Core classes from <code>java.base</code> (<code>java.lang.String</code> and so on). Implemented in native code; shows as <code>null</code>.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Platform</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Other Java SE and JDK modules. Called the <strong>extension</strong> class loader before Java 9.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Application (system)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Classes on your classpath or module path.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p><strong>Parent delegation</strong>: a loader first asks its parent to load a class, and loads it itself only if the parent cannot.
+This stops application code from replacing core classes such as <code>java.lang.String</code>.
+A class is identified by its name <strong>and</strong> its class loader, so the same class loaded by two loaders gives two different types, the cause of the puzzling <code>ClassCastException: Foo cannot be cast to Foo</code> in application servers.</p>
+</div>
+<div class="paragraph">
+<p><code>ClassNotFoundException</code> is thrown when code asks for a class by name (<code>Class.forName</code>) and it is not found.
+<code>NoClassDefFoundError</code> is thrown when a class that was present at compile time is missing at runtime, or its static initialisation failed earlier.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_runtime_data_areas"><a class="anchor" href="#_runtime_data_areas"></a>Runtime data areas</h2>
+<div class="sectionbody">
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 60%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Area</th>
+<th class="tableblock halign-left valign-top">Shared?</th>
+<th class="tableblock halign-left valign-top">Holds</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Heap</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">All threads</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Objects and arrays, including the string pool. Managed by GC.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Metaspace</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">All threads</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Class metadata, method bytecode, constant pools. Native memory. Replaced PermGen in Java 8.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Code cache</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">All threads</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">JIT-compiled native code.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">JVM stack</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Per thread</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">One <strong>frame</strong> per method call: local variables, operand stack, return address.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">PC register</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Per thread</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Address of the current bytecode instruction.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Native method stack</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Per thread</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Frames for native (JNI) methods.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">void placeOrder() {
+    int quantity = 3;                    // primitive local: in the stack frame
+    Order order = new Order("A-1");      // reference in the stack frame; the Order object on the heap
+    String name = "book";                // reference on the stack; the String in the pooled heap area
+}</code></pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Too-deep recursion overflows the stack: <code>StackOverflowError</code>.</p>
+</li>
+<li>
+<p>The JIT can avoid heap allocation entirely for objects that never escape a method (<strong>escape analysis</strong> with scalar replacement).</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_jit_compilation"><a class="anchor" href="#_jit_compilation"></a>JIT compilation</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The JVM starts by interpreting bytecode.
+It counts method calls and loop iterations, and compiles hot methods to native code:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>C1</strong> compiles quickly with light optimisation.</p>
+</li>
+<li>
+<p><strong>C2</strong> compiles slowly with aggressive optimisation (inlining, loop unrolling, escape analysis), based on the profile collected so far.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>This is <strong>tiered compilation</strong>, on by default.
+It explains why Java services are slower right after startup ("warm-up") and why benchmarks need warm-up iterations (use JMH).
+If an assumption behind an optimisation breaks (for example a second implementation of an interface gets loaded), the JVM <strong>deoptimises</strong> and recompiles.</p>
+</div>
+<div class="paragraph">
+<p>Startup-time alternatives: GraalVM native images (ahead-of-time compiled, fast start, lower memory, some reflection limits), Class Data Sharing, and the AOT cache work in Java 24 and 25 (Project Leyden).</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_garbage_collection_basics"><a class="anchor" href="#_garbage_collection_basics"></a>Garbage collection basics</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>An object is <strong>garbage</strong> when no chain of references leads to it from a <strong>GC root</strong>.
+GC roots include local variables and parameters on thread stacks, static fields of loaded classes, JNI references, and monitors held by threads.
+Reference counting is not used, so cycles of objects that point at each other are collected normally.</p>
+</div>
+<div class="sect2">
+<h3 id="_the_generational_hypothesis"><a class="anchor" href="#_the_generational_hypothesis"></a>The generational hypothesis</h3>
+<div class="paragraph">
+<p>Most objects die young (request-scoped strings, DTOs, iterators).
+So the heap is split:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-text hljs" data-lang="text">Young generation                       Old generation
+┌───────────┬──────────┬──────────┐   ┌─────────────────────────────┐
+│   Eden    │ Survivor │ Survivor │   │ Objects that survived many  │
+│ new objs  │   S0     │   S1     │   │ young collections           │
+└───────────┴──────────┴──────────┘   └─────────────────────────────┘</code></pre>
+</div>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>New objects are allocated in Eden (very fast: a pointer bump in a thread-local buffer, TLAB).</p>
+</li>
+<li>
+<p>When Eden fills, a <strong>minor GC</strong> copies live objects to a survivor space; everything else in Eden is reclaimed at once.</p>
+</li>
+<li>
+<p>Objects that survive several minor GCs (the tenuring threshold, up to 15) are <strong>promoted</strong> to the old generation.</p>
+</li>
+<li>
+<p>When the old generation fills, a <strong>major</strong> or <strong>mixed</strong> collection cleans it. A <strong>full GC</strong> collects everything and is usually the longest pause.</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>Collection phases: <strong>mark</strong> live objects, then <strong>sweep</strong> the dead ones, and often <strong>compact</strong> the survivors to remove fragmentation.
+<strong>Stop-the-world</strong> (STW) pauses stop all application threads; modern collectors do most work <strong>concurrently</strong>.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_collectors"><a class="anchor" href="#_collectors"></a>Collectors</h3>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 14.2857%;">
+<col style="width: 42.8571%;">
+<col style="width: 42.8572%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Collector</th>
+<th class="tableblock halign-left valign-top">How it works</th>
+<th class="tableblock halign-left valign-top">Best for</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Serial (<code>-XX:+UseSerialGC</code>)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">One thread, stop-the-world.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Small heaps, single-CPU containers, tools.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Parallel (<code>-XX:+UseParallelGC</code>)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Many threads, stop-the-world. Maximises throughput.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Batch jobs where pauses do not matter.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">G1 (<code>-XX:+UseG1GC</code>, default since Java 9)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Heap split into equal regions; collects the regions with the most garbage first; aims for a pause-time goal (<code>-XX:MaxGCPauseMillis</code>, default 200 ms). Concurrent marking, STW evacuation.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">General purpose. The right default for most services.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ZGC (<code>-XX:+UseZGC</code>)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Almost all work concurrent, including compaction, using coloured pointers and load barriers. Pauses well under a millisecond regardless of heap size. Generational since Java 21, generational by default since 23, and the non-generational mode was removed in 24.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Latency-sensitive services, very large heaps.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Shenandoah (<code>-XX:+UseShenandoahGC</code>)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Concurrent compaction, similar goals to ZGC. Generational mode became a product feature in Java 25.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Low latency; available in OpenJDK builds from most vendors.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>The trade-off has three corners: <strong>throughput</strong> (share of time doing useful work), <strong>latency</strong> (pause length) and <strong>footprint</strong> (extra memory and CPU the collector needs).
+No collector wins all three.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_reference_types"><a class="anchor" href="#_reference_types"></a>Reference types</h3>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 75%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Collected when</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Strong (normal)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Never, while reachable.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>SoftReference</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Only when memory is low. Was used for caches; a real cache library is better.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>WeakReference</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">At the next GC once no strong references remain. <code>WeakHashMap</code> uses weak keys.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>PhantomReference</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">After finalisation; used with a <code>ReferenceQueue</code> for cleanup (<code>Cleaner</code> builds on this).</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_memory_leaks_in_java"><a class="anchor" href="#_memory_leaks_in_java"></a>Memory leaks in Java</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>A Java memory leak is an object that is still <strong>reachable</strong> but no longer <strong>needed</strong>.
+Typical causes:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Static collections or caches that only grow (no size limit, no expiry).</p>
+</li>
+<li>
+<p><code>ThreadLocal</code> values never removed in pooled threads.</p>
+</li>
+<li>
+<p>Listeners and callbacks registered but never unregistered.</p>
+</li>
+<li>
+<p>Mutable keys in a <code>HashMap</code>, which make entries unreachable by lookup but still referenced.</p>
+</li>
+<li>
+<p>Non-static inner classes or lambdas that capture a large outer object and outlive it.</p>
+</li>
+<li>
+<p>Unclosed resources (streams, connections), which also leak native memory and file handles.</p>
+</li>
+<li>
+<p>Class loader leaks in application servers after redeployment (Metaspace grows).</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_outofmemoryerror_types"><a class="anchor" href="#_outofmemoryerror_types"></a>OutOfMemoryError types</h2>
+<div class="sectionbody">
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 40%;">
+<col style="width: 60%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Message</th>
+<th class="tableblock halign-left valign-top">Likely cause</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Java heap space</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Heap too small for the live data, or a leak.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>GC overhead limit exceeded</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">GC runs almost constantly and reclaims almost nothing; a leak is likely.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Metaspace</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Too many classes: class loader leaks, heavy dynamic proxy or bytecode generation.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>unable to create native thread</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Too many platform threads, or OS/container thread limits.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Direct buffer memory</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Off-heap NIO buffers (Netty, NIO) exceed <code>-XX:MaxDirectMemorySize</code>.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Requested array size exceeds VM limit</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Trying to allocate a huge array.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_jvm_flags_you_should_know"><a class="anchor" href="#_jvm_flags_you_should_know"></a>JVM flags you should know</h2>
+<div class="sectionbody">
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash"># -Xms/-Xmx: initial and max heap (equal values avoid resizing)
+# -Xlog:gc*: unified GC logging (Java 9+)
+# -Xss: thread stack size
+java -Xms2g -Xmx2g \
+     -XX:+UseG1GC -XX:MaxGCPauseMillis=200 \
+     -XX:+HeapDumpOnOutOfMemoryError \
+     -XX:HeapDumpPath=/var/dumps \
+     -Xlog:gc*:file=/var/log/gc.log:time,uptime \
+     -Xss1m \
+     -jar app.jar
+
+# In containers, size the heap relative to the container memory limit:
+java -XX:MaxRAMPercentage=75.0 -jar app.jar</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The JVM is container-aware since Java 10 (and 8u191): it reads cgroup CPU and memory limits.
+Leave room outside the heap for metaspace, thread stacks, code cache, direct buffers and the GC itself, or the container gets OOM-killed even though the heap looks fine.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_diagnosis_tools"><a class="anchor" href="#_diagnosis_tools"></a>Diagnosis tools</h2>
+<div class="sectionbody">
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 75%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Tool</th>
+<th class="tableblock halign-left valign-top">Use</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>jcmd &lt;pid&gt;</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Swiss-army knife: <code>Thread.print</code>, <code>GC.heap_info</code>, <code>GC.heap_dump</code>, <code>VM.flags</code>, <code>JFR.start</code>, <code>VM.native_memory</code>.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>jstack &lt;pid&gt;</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Thread dump: find deadlocks, blocked threads, hot loops.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>jmap -dump:live,format=b,file=heap.hprof &lt;pid&gt;</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Heap dump (pauses the JVM; careful in production).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>jstat -gcutil &lt;pid&gt; 1000</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">GC statistics every second.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Java Flight Recorder (JFR) + JDK Mission Control</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Low-overhead continuous profiling: allocation, locks, GC, I/O, hot methods. Safe for production.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Eclipse MAT, VisualVM</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Analyse heap dumps: dominator tree, leak suspects, paths to GC roots.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">async-profiler</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">CPU and allocation flame graphs.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_practice_questions"><a class="anchor" href="#_practice_questions"></a>Practice questions</h2>
+<div class="sectionbody">
+<details>
+<summary class="title">Q1. Explain heap, stack, metaspace and GC roots.</summary>
+<div class="content">
+<div class="paragraph">
+<p>Each thread has a stack of frames holding locals and partial results.
+The heap holds objects and is shared and garbage-collected.
+Metaspace holds class metadata in native memory.
+GC starts from roots (thread stacks, static fields, JNI references) and treats everything reachable from them as live.</p>
+</div>
+</div>
+</details>
+<details>
+<summary class="title">Q2. How does garbage collection decide what to collect?</summary>
+<div class="content">
+<div class="paragraph">
+<p>By reachability, not reference counts.
+It marks every object reachable from GC roots; everything else is garbage.
+Cycles of unreachable objects are collected too.</p>
+</div>
+</div>
+</details>
+<details>
+<summary class="title">Q3. Describe the young and old generations and a minor GC.</summary>
+<div class="content">
+<div class="paragraph">
+<p>New objects go to Eden.
+A minor GC copies live Eden and survivor objects into the other survivor space and frees the rest in one step, which is cheap because most objects are dead.
+Objects that survive enough minor GCs move to the old generation, which is collected less often.</p>
+</div>
+</div>
+</details>
+<details>
+<summary class="title">Q4. G1 versus ZGC: which would you choose?</summary>
+<div class="content">
+<div class="paragraph">
+<p>G1 is the default and a good balance of throughput and pause time for most services, with pauses in the tens to hundreds of milliseconds.
+ZGC keeps pauses below a millisecond even with very large heaps, at the cost of some throughput and more CPU and memory headroom.
+Choose ZGC when tail latency (p99, p99.9) matters more than raw throughput, and measure with production-like load.</p>
+</div>
+</div>
+</details>
+<details>
+<summary class="title">Q5. How can Java have memory leaks if it has a garbage collector?</summary>
+<div class="content">
+<div class="paragraph">
+<p>GC frees unreachable objects, not unneeded ones.
+Anything still referenced, for example from a static map, an unremoved <code>ThreadLocal</code> or an unregistered listener, stays forever.</p>
+</div>
+</div>
+</details>
+<details>
+<summary class="title">Q6. How do you investigate high memory usage or a suspected leak?</summary>
+<div class="content">
+<div class="paragraph">
+<p>Check heap usage after full GCs over time: if the floor keeps rising, it is a leak.
+Look at GC logs and allocation rate.
+Take a heap dump (or use <code>-XX:+HeapDumpOnOutOfMemoryError</code>), open it in Eclipse MAT, and follow the dominator tree and the paths to GC roots of the biggest retained sets.
+If the heap is fine but the process is large, check native memory (<code>jcmd VM.native_memory</code>), thread count and direct buffers.</p>
+</div>
+</div>
+</details>
+<details>
+<summary class="title">Q7. How do you investigate high CPU in a Java service?</summary>
+<div class="content">
+<div class="paragraph">
+<p>Find the process, then the hot threads (<code>top -H -p &lt;pid&gt;</code>), convert the thread id to hex and find it in a thread dump (<code>jcmd &lt;pid&gt; Thread.print</code>).
+Take several dumps a few seconds apart to see what stays hot.
+Check whether it is GC (GC logs, <code>jstat</code>) or application code.
+Profile with JFR or async-profiler.
+Common causes: busy loops, catastrophic regular expressions, excessive serialisation or logging, retry storms, GC thrashing.</p>
+</div>
+</div>
+</details>
+<details>
+<summary class="title">Q8. <code>ClassNotFoundException</code> versus <code>NoClassDefFoundError</code>?</summary>
+<div class="content">
+<div class="paragraph">
+<p><code>ClassNotFoundException</code> is a checked exception from explicit loading by name (<code>Class.forName</code>, <code>loadClass</code>) when the class is absent.
+<code>NoClassDefFoundError</code> is an error when a class present at compile time cannot be found at runtime, or its static initialiser previously failed.</p>
+</div>
+</div>
+</details>
+<details>
+<summary class="title">Q9. What is the parent delegation model, and why does it exist?</summary>
+<div class="content">
+<div class="paragraph">
+<p>A class loader asks its parent first and loads the class itself only if the parent cannot.
+It guarantees that core classes come from the bootstrap loader, so application code cannot replace <code>java.lang.Object</code> or <code>String</code>, and it avoids loading the same class twice.</p>
+</div>
+</div>
+</details>
+<details>
+<summary class="title">Q10. What is the JIT compiler, and what does warm-up mean?</summary>
+<div class="content">
+<div class="paragraph">
+<p>The JIT compiles frequently executed bytecode to optimised native code at runtime, using profiling data.
+Until hot paths are compiled, the service runs slower; this is warm-up.
+It matters for autoscaling and benchmarks (use JMH, which handles warm-up).</p>
+</div>
+</div>
+</details>
+<details>
+<summary class="title">Q11. Why are connection pools important, and how do you size them?</summary>
+<div class="content">
+<div class="paragraph">
+<p>Opening a database connection is expensive (TCP, TLS, authentication), and the database can only handle so many.
+A pool reuses connections and caps concurrency.
+Too large overloads the database; too small makes requests wait.
+Size from database capacity and transaction duration, then tune from pool metrics: active, idle, pending and wait time (HikariCP exposes these).</p>
+</div>
+</div>
+</details>
+<details>
+<summary class="title">Q12. Why does a Java container get OOM-killed when the heap is not full?</summary>
+<div class="content">
+<div class="paragraph">
+<p>The container limit covers the whole process: heap plus metaspace, thread stacks, code cache, direct buffers, GC structures and native libraries.
+Setting <code>-Xmx</code> equal to the container limit leaves no room for the rest.
+Use <code>-XX:MaxRAMPercentage</code> around 70-75% and check native memory tracking.</p>
+</div>
+</div>
+</details>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_common_traps"><a class="anchor" href="#_common_traps"></a>Common traps</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p>Saying the string pool is in PermGen (it moved to the heap in Java 7).</p>
+</li>
+<li>
+<p>Calling <code>System.gc()</code> as a fix. It is only a hint, and it can trigger an expensive full GC.</p>
+</li>
+<li>
+<p>Saying ZGC is "always better".</p>
+</li>
+<li>
+<p>Forgetting non-heap memory in containers.</p>
+</li>
+<li>
+<p>Taking a heap dump of a large production JVM without considering the pause.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_follow_ups_to_expect"><a class="anchor" href="#_follow_ups_to_expect"></a>Follow-ups to expect</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p>"Latency spikes every few minutes. How do you prove whether GC is the cause?" (GC logs with pause times correlated against latency metrics.)</p>
+</li>
+<li>
+<p>"What would you change after upgrading from Java 8 to 21?"</p>
+</li>
+<li>
+<p>"What is in a thread dump, and how do you read one?"</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_quick_revision"><a class="anchor" href="#_quick_revision"></a>Quick revision</h2>
+<div class="sectionbody">
+<div class="ulist checklist">
+<ul class="checklist">
+<li>
+<p><i class="fa fa-square-o"></i> Class loading phases and the three loaders</p>
+</li>
+<li>
+<p><i class="fa fa-square-o"></i> Runtime data areas table</p>
+</li>
+<li>
+<p><i class="fa fa-square-o"></i> Generational heap, minor/major/full GC, promotion</p>
+</li>
+<li>
+<p><i class="fa fa-square-o"></i> Serial, Parallel, G1, ZGC, Shenandoah: one line each</p>
+</li>
+<li>
+<p><i class="fa fa-square-o"></i> Leak causes and OOM types</p>
+</li>
+<li>
+<p><i class="fa fa-square-o"></i> <code>jcmd</code>, JFR, heap dump analysis</p>
+</li>
+<li>
+<p><i class="fa fa-square-o"></i> Container memory sizing</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Next: <a href="spring-core.html" class="xref page">Spring Core: IoC, DI, Beans and AOP</a>.</p>
+</div>
+</div>
+</div>
+      </article>
+      <div class="article-pagination">
+        <a class="prev" href="concurrency.html"><span>← Previous</span><strong>Concurrency and Multithreading</strong></a>
+        <a class="next" href="spring-core.html"><span>Next →</span><strong>Spring Core: IoC, DI, AOP</strong></a>
+      </div>
+    </main>
+    <aside class="docs-toc reading-assistant" id="reading-assistant" aria-label="Reading assistant">
+  <div class="toc-inner ra-inner">
+    <div class="ra-head">
+      <h2 class="ra-title">Reading Assistant</h2>
+      <button type="button" class="ra-close" aria-label="Close reading assistant">
+        <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+    </div>
+
+    <section class="ra-card ra-listen" aria-labelledby="reading-assistant-listen" hidden>
+      <div class="ra-card-head">
+        <svg class="ra-card-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/></svg>
+        <div>
+          <h3 class="ra-card-title" id="reading-assistant-listen">Listen to Article</h3>
+          <p class="ra-card-desc">Listen to the explanation of this article. Code blocks are skipped.</p>
+        </div>
+      </div>
+
+      <div class="ra-ready">
+        <div class="ra-player">
+          <button type="button" class="ra-play" aria-label="Play article">
+            <svg class="ra-icon-play" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M8 5.5v13l11-6.5z"/></svg>
+            <svg class="ra-icon-pause" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M7 5h3.5v14H7zM13.5 5H17v14h-3.5z"/></svg>
+          </button>
+          <div class="ra-track">
+            <div class="ra-meter" role="progressbar" aria-label="Listening progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><span class="ra-meter-fill"></span></div>
+            <span class="ra-time" title="Estimated. Browser speech does not report an exact duration."></span>
+          </div>
+          <button type="button" class="ra-stop" aria-label="Stop listening" disabled>
+            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="6.5" y="6.5" width="11" height="11" rx="1.5"/></svg>
+          </button>
+        </div>
+
+        <div class="ra-controls">
+          <label class="ra-field ra-field-rate">
+            <span class="ra-field-label">Speed</span>
+            <select class="ra-rate">
+              <option value="0.75">0.75×</option>
+              <option value="1" selected>1×</option>
+              <option value="1.25">1.25×</option>
+              <option value="1.5">1.5×</option>
+              <option value="2">2×</option>
+            </select>
+          </label>
+        </div>
+
+        <label class="ra-check"><input type="checkbox" class="ra-follow" checked> Highlight and follow along</label>
+        <p class="ra-status" role="status" aria-live="polite">Ready</p>
+
+        <p class="ra-tip">
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M9 18h6M10 21h4"/><path d="M12 3a6 6 0 0 0-3.5 10.9V16h7v-2.1A6 6 0 0 0 12 3z"/></svg>
+          <span><strong>Tip:</strong> Headings and explanations are read aloud; code is skipped. Read in Google UK English Male on Chrome; other browsers use their closest British English voice.</span>
+        </p>
+      </div>
+
+      <p class="ra-unsupported" hidden>Listening isn&#8217;t available in this browser. The article itself works as usual.</p>
+    </section>
+
+    <section class="ra-card ra-jump" aria-labelledby="reading-assistant-sections" hidden>
+      <h3 class="ra-card-title" id="reading-assistant-sections">Jump to Section</h3>
+      <ol class="ra-sections"></ol>
+    </section>
+
+    <section class="ra-card ra-info" aria-labelledby="reading-assistant-info">
+      <h3 class="ra-card-title" id="reading-assistant-info">Page Info</h3>
+      <ul class="ra-info-list">
+        <li>
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+          <span title="Estimated at 220 words per minute">~7 min read</span>
+        </li>
+        <li>
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h6"/></svg>
+          <span title="Prose only; code is not counted">~1,441 words</span>
+        </li>
+        <li>
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="4" y="5" width="16" height="16" rx="2"/><path d="M16 3v4M8 3v4M4 10h16"/></svg>
+          <span>Last updated <time datetime="2026-11-11">Nov 11, 2026</time></span>
+        </li>
+      </ul>
+    </section>
+  </div>
+</aside>
+  </div>
+  <footer class="docs-footer">© 2026 Ayush Nigam · <a href="../../index.html">Home</a></footer>
+  <script src="../../../../_/js/reading-assistant.js?v=2" defer></script>
+  <script src="../../../../_/js/site.js?v=15" defer></script>
+</body>
+</html>

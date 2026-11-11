@@ -1,0 +1,1458 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>Core Java and OOP · Ayush Nigam</title>
+  
+  <link rel="preload" href="../../../../_/fonts/inter-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="../../../../_/css/site.css?v=21">
+</head>
+<body class="docs-page">
+  <a class="skip-link" href="#article-main">Skip to content</a>
+  <header class="docs-header">
+    <div class="docs-header-inner">
+      <a class="docs-logo" href="../../index.html"><span class="docs-logo-mark">AN</span><span>Ayush Nigam</span></a>
+          <nav class="header-adoc-nav docs-toplinks" aria-label="Header links" data-header-source-url="../../headers/header-links.html">
+            <div class="header-adoc-content"><div class="ulist header-menu-links">
+<ul>
+<li>
+<p><a href="contact.html" class="xref page">Contact</a></p>
+</li>
+<li>
+<p><a href="https://www.linkedin.com/in/the-ayush-nigam/">LinkedIn</a></p>
+</li>
+<li>
+<p><a href="https://github.com/gareeb-engineer">GitHub</a></p>
+</li>
+</ul>
+</div>
+</div>
+          </nav>
+      <a class="header-avatar" href="../../index.html" aria-hidden="true" tabindex="-1"><img src="../../../../_/img/profile-photo.png" alt="Ayush Nigam profile photo" width="36" height="36"></a>
+<button type="button" class="mobile-nav-toggle" aria-label="Toggle documentation navigation" aria-expanded="false" aria-controls="docs-sidebar">☰ Menu</button>
+      <span class="read-progress-label" aria-hidden="true" hidden>Reading <span class="read-progress-value">0%</span></span>
+    </div>
+    <div class="read-progress" role="progressbar" aria-label="Article reading progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" hidden><span class="read-progress-fill"></span></div>
+  </header>
+  <div class="docs-shell">
+    <aside class="docs-sidebar" id="docs-sidebar" aria-label="Documentation sidebar">
+      <div class="sidebar-inner">
+      <div class="sidebar-top"><span class="sidebar-eyebrow">ENGINEERING LIBRARY</span></div>
+      <input id="nav-filter" class="nav-filter" type="search" placeholder="Filter pages…" aria-label="Filter navigation" autocomplete="off">
+      <nav aria-label="Documentation pages"><ul class="nav-tree">
+  <li class="nav-item nav-parent">
+        <div class="nav-group">
+          <button type="button" class="nav-row nav-toggle" aria-expanded="true">
+            <span class="nav-label">Java</span>
+            <span class="nav-chevron" aria-hidden="true">▾</span>
+          </button>
+          <div class="nav-children">
+            <ul class="nav-tree">
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../index.html" title="Open Java overview">Overview</a>
+      </div>
+  </li>
+  <li class="nav-item nav-parent">
+        <div class="nav-group nav-linked-group">
+          <div class="nav-row nav-linked-row">
+            <a href="index.html">Java Interview Guide</a>
+            <button type="button" class="nav-toggle nav-linked-toggle" aria-expanded="true" aria-label="Toggle subtopics">
+              <span class="nav-chevron" aria-hidden="true">▾</span>
+            </button>
+          </div>
+          <div class="nav-children"><ul class="nav-tree">
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="core-java-oop.html" class="is-current" aria-current="page">Core Java and OOP</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="collections-generics.html">Collections and Generics</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="java8-streams-functional.html">Java 8: Lambdas, Streams, Optional</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="modern-java.html">Modern Java (11 to 25)</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="concurrency.html">Concurrency and Multithreading</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="jvm-memory-gc.html">JVM, Memory and GC</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="spring-core.html">Spring Core: IoC, DI, AOP</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="spring-boot.html">Spring Boot</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="rest-spring-mvc.html">REST APIs and Spring MVC</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="jpa-hibernate-transactions.html">JPA, Hibernate, Transactions</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="spring-security.html">Spring Security, JWT, OAuth2</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="microservices.html">Microservices</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="coding-round.html">Coding Round in Java</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="testing.html">Testing</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="senior-scenarios.html">Production Scenarios and Behavioural</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="spring-ai.html">Spring AI and GenAI</a>
+      </div>
+  </li>
+</ul>
+</div>
+        </div>
+  </li>
+</ul>
+          </div>
+        </div>
+  </li>
+  <li class="nav-item nav-parent">
+        <div class="nav-group is-collapsed">
+          <button type="button" class="nav-row nav-toggle" aria-expanded="false">
+            <span class="nav-label">Architecture Diagram&#8217;s</span>
+            <span class="nav-chevron" aria-hidden="true">▸</span>
+          </button>
+          <div class="nav-children">
+            <ul class="nav-tree">
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Arcitecture-diagram/index.html" title="Open Architecture Diagram’s overview">Overview</a>
+      </div>
+  </li>
+</ul>
+          </div>
+        </div>
+  </li>
+  <li class="nav-item nav-parent">
+        <div class="nav-group is-collapsed">
+          <button type="button" class="nav-row nav-toggle" aria-expanded="false">
+            <span class="nav-label">References</span>
+            <span class="nav-chevron" aria-hidden="true">▸</span>
+          </button>
+          <div class="nav-children">
+            <ul class="nav-tree">
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../DevOps-Refs/index.html" title="Open References overview">Overview</a>
+      </div>
+  </li>
+</ul>
+          </div>
+        </div>
+  </li>
+  <li class="nav-item nav-parent">
+        <div class="nav-group is-collapsed">
+          <button type="button" class="nav-row nav-toggle" aria-expanded="false">
+            <span class="nav-label">Data Structure</span>
+            <span class="nav-chevron" aria-hidden="true">▸</span>
+          </button>
+          <div class="nav-children">
+            <ul class="nav-tree">
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Data-Structure/index.html" title="Open Data Structure overview">Overview</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Data-Structure/arrays/index.html">Arrays</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Data-Structure/linked-list/index.html">Linked Lists</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Data-Structure/stacks-n-queue/index.html">Stacks</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Data-Structure/trees/index.html">Trees</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Data-Structure/hash-map/index.html">Hash Map</a>
+      </div>
+  </li>
+  <li class="nav-item nav-parent">
+        <div class="nav-group nav-linked-group is-collapsed">
+          <div class="nav-row nav-linked-row">
+            <a href="../../Data-Structure/dynamic-programming/index.html">Dynamic Programming</a>
+            <button type="button" class="nav-toggle nav-linked-toggle" aria-expanded="false" aria-label="Toggle subtopics">
+              <span class="nav-chevron" aria-hidden="true">▸</span>
+            </button>
+          </div>
+          <div class="nav-children"><ul class="nav-tree">
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Data-Structure/dynamic-programming/fibonacci-series.html">Fibonacci Series</a>
+      </div>
+  </li>
+</ul>
+</div>
+        </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Data-Structure/graphs/index.html">Graphs</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Data-Structure/backtracking/index.html">Backtracking</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Data-Structure/pattern-printing/index.html">Pattern Printing</a>
+      </div>
+  </li>
+  <li class="nav-item nav-parent">
+        <div class="nav-group nav-linked-group is-collapsed">
+          <div class="nav-row nav-linked-row">
+            <a href="../../Data-Structure/recursion/index.html">Recursion</a>
+            <button type="button" class="nav-toggle nav-linked-toggle" aria-expanded="false" aria-label="Toggle subtopics">
+              <span class="nav-chevron" aria-hidden="true">▸</span>
+            </button>
+          </div>
+          <div class="nav-children"><ul class="nav-tree">
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Data-Structure/recursion/sum-of-all-element.html">Sum of all elements</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Data-Structure/recursion/all-indices-of-array.html">All indices of array</a>
+      </div>
+  </li>
+</ul>
+</div>
+        </div>
+  </li>
+</ul>
+          </div>
+        </div>
+  </li>
+  <li class="nav-item nav-parent">
+        <div class="nav-group is-collapsed">
+          <button type="button" class="nav-row nav-toggle" aria-expanded="false">
+            <span class="nav-label">Low Level Design</span>
+            <span class="nav-chevron" aria-hidden="true">▸</span>
+          </button>
+          <div class="nav-children">
+            <ul class="nav-tree">
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Low-Level-Design/index.html" title="Open Low Level Design overview">Overview</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Low-Level-Design/design-principles.html">Design Principles</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Low-Level-Design/solid-principles.html">SOLID Principles</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Low-Level-Design/design-patterns.html">Gang of Four Design Patterns</a>
+      </div>
+  </li>
+</ul>
+          </div>
+        </div>
+  </li>
+</ul>
+</nav>
+      </div>
+    </aside>
+    <main id="article-main" class="docs-article">
+      <nav class="breadcrumbs" aria-label="Breadcrumb"><a href="../../index.html">Home</a><span aria-hidden="true">/</span><a href="index.html">Java Interview Guide</a><span aria-hidden="true">/</span><a href="core-java-oop.html">Core Java and OOP</a></nav>
+      <article class="article-body" data-reading-progress>
+        <header class="article-header">
+          <h1>Core Java and OOP</h1>
+          
+          <p class="article-subtitle">The language contracts every Java interview starts with: OOP, equality, String, immutability, exceptions and the keywords that trip people up.</p>
+          <ul class="article-chips">
+            <li class="chip chip-difficulty chip-easy">Easy</li><li class="chip chip-tag">Java</li><li class="chip chip-tag">Interview Preparation</li><li class="chip chip-tag">OOP</li><li class="chip chip-tag">Core Java</li>
+          </ul>
+          <div class="article-meta">
+            <span class="article-meta-item" title="Estimated at 220 words per minute">
+              <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+              ~8 min read
+            </span>
+            <span class="article-meta-item">
+              <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="4" y="5" width="16" height="16" rx="2"/><path d="M16 3v4M8 3v4M4 10h16"/></svg>
+              Updated <time datetime="2026-11-11">Nov 11, 2026</time>
+            </span>
+            <button type="button" class="ra-open" aria-controls="reading-assistant" aria-expanded="false" hidden>
+              <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/></svg>
+              Listen
+            </button>
+          </div>
+        </header>
+        <div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>Core Java is the first screen in almost every Java interview.
+The interviewer checks whether you understand the contracts of the language, not whether you remember keywords.
+A shaky answer here makes the interviewer doubt everything that follows, so this is the topic to make airtight.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_at_a_glance"><a class="anchor" href="#_at_a_glance"></a>At a glance</h2>
+<div class="sectionbody">
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 75%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Weightage</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>9 / 10</strong></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Who gets asked</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Everyone. Freshers get definitions; experienced candidates get the "why" and the edge cases.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Preparation time</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">5 to 6 hours</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Handbook questions</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Q1-Q15</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Builds on</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Nothing. Start here.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_jdk_jre_and_jvm"><a class="anchor" href="#_jdk_jre_and_jvm"></a>JDK, JRE and JVM</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p>The <strong>JVM</strong> (Java Virtual Machine) runs bytecode. It loads classes, verifies them, interprets or JIT-compiles them, and manages memory.</p>
+</li>
+<li>
+<p>The <strong>JRE</strong> (Java Runtime Environment) is the JVM plus the standard class libraries. Since Java 11 there is no separate JRE download; <code>jlink</code> builds a trimmed runtime instead.</p>
+</li>
+<li>
+<p>The <strong>JDK</strong> (Java Development Kit) is the runtime plus development tools: <code>javac</code>, <code>jar</code>, <code>jshell</code>, <code>jcmd</code>, <code>jlink</code> and others.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Java is "write once, run anywhere" because <code>javac</code> produces platform-neutral bytecode (<code>.class</code> files), and each platform has its own JVM that runs it.
+The JVM itself is platform-specific.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_the_four_pillars_of_oop"><a class="anchor" href="#_the_four_pillars_of_oop"></a>The four pillars of OOP</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Explain each pillar with what it <strong>protects you from</strong>, and use one business example throughout.</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">Encapsulation</dt>
+<dd>
+<p>Keep state private and change it only through methods that enforce the rules (invariants).
+An <code>Account</code> exposes <code>withdraw(amount)</code> instead of a public <code>balance</code> field, so a negative balance is impossible.</p>
+</dd>
+<dt class="hdlist1">Abstraction</dt>
+<dd>
+<p>Expose a stable contract and hide how it works.
+<code>PaymentGateway.charge(order)</code> hides whether the payment goes through card, UPI or wallet.</p>
+</dd>
+<dt class="hdlist1">Inheritance</dt>
+<dd>
+<p>Reuse behaviour through an "is-a" relationship.
+It creates tight coupling to the parent, so use it only when the child can truly stand in for the parent (Liskov substitution).</p>
+</dd>
+<dt class="hdlist1">Polymorphism</dt>
+<dd>
+<p>One call, many behaviours.
+The caller works with the interface; the JVM picks the implementation at runtime (dynamic dispatch).</p>
+</dd>
+</dl>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">interface PaymentGateway {
+    PaymentResult charge(Order order);
+}
+
+class CardGateway implements PaymentGateway {
+    public PaymentResult charge(Order order) { /* call card network */ return PaymentResult.ok(); }
+}
+
+class UpiGateway implements PaymentGateway {
+    public PaymentResult charge(Order order) { /* call UPI switch */ return PaymentResult.ok(); }
+}
+
+class OrderService {
+    private final PaymentGateway gateway;          // abstraction
+
+    OrderService(PaymentGateway gateway) {         // composition: has-a gateway
+        this.gateway = gateway;
+    }
+
+    void checkout(Order order) {
+        PaymentResult result = gateway.charge(order); // polymorphism: runtime picks the class
+    }
+}</code></pre>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_overloading_versus_overriding"><a class="anchor" href="#_overloading_versus_overriding"></a>Overloading versus overriding</h3>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 14.2857%;">
+<col style="width: 42.8571%;">
+<col style="width: 42.8572%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top"></th>
+<th class="tableblock halign-left valign-top">Overloading</th>
+<th class="tableblock halign-left valign-top">Overriding</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">What</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Same name, different parameter list, in the same class or a subclass</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Same signature in a subclass, replacing the parent behaviour</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Resolved</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">At compile time (static binding), using the declared types of the arguments</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">At runtime (dynamic dispatch), using the actual type of the object</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Return type</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Can differ, but return type alone cannot distinguish two overloads</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Same type or a subtype (covariant return)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Access</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Any</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Cannot be more restrictive than the parent</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Exceptions</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Any</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Cannot throw new or broader <strong>checked</strong> exceptions</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>static</code> methods</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Can be overloaded</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Cannot be overridden. A static method with the same signature in a subclass <strong>hides</strong> the parent one.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect2">
+<h3 id="_abstract_class_versus_interface"><a class="anchor" href="#_abstract_class_versus_interface"></a>Abstract class versus interface</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>An <strong>abstract class</strong> can have instance fields, constructors, concrete methods and abstract methods. A class can extend only one.</p>
+</li>
+<li>
+<p>An <strong>interface</strong> defines a contract. Since Java 8 it can have <code>default</code> and <code>static</code> methods; since Java 9, <code>private</code> methods. Fields are implicitly <code>public static final</code>. A class can implement many.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Use an interface for a capability that unrelated classes share (<code>Comparable</code>, <code>PaymentGateway</code>).
+Use an abstract class when subclasses share state or a fixed algorithm with replaceable steps (the Template Method pattern).</p>
+</div>
+<div class="listingblock">
+<div class="title">Diamond problem with default methods</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">interface Walker { default String move() { return "walk"; } }
+interface Swimmer { default String move() { return "swim"; } }
+
+class Duck implements Walker, Swimmer {
+    @Override
+    public String move() {             // compile error unless the conflict is resolved here
+        return Walker.super.move();    // pick one explicitly
+    }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Rule order for default-method conflicts: a class method always wins; then the most specific interface wins; otherwise the class must override.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_composition_over_inheritance"><a class="anchor" href="#_composition_over_inheritance"></a>Composition over inheritance</h3>
+<div class="paragraph">
+<p>Composition means a class holds a reference to a collaborator and delegates to it ("has-a").
+It lets you swap behaviour at runtime and avoids fragile base-class problems, where a change in the parent silently breaks children.
+Prefer <code>OrderService</code> composed with <code>PaymentGateway</code> and <code>InventoryService</code> over a deep hierarchy like <code>BaseService -&gt; PaymentAwareService -&gt; OrderService</code>.</p>
+</div>
+<div class="paragraph">
+<p>See <a href="../../Low-Level-Design/design-principles.html" class="xref page">Design Principles</a> and <a href="../../Low-Level-Design/solid-principles.html" class="xref page">SOLID</a> for the full treatment.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_pass_by_value"><a class="anchor" href="#_pass_by_value"></a>Pass-by-value</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Java is <strong>always</strong> pass-by-value.
+For an object, the value that is copied is the <strong>reference</strong>.
+So a method can change the object the reference points to, but cannot make the caller&#8217;s variable point to a different object.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">static void rename(Person p) {
+    p.setName("Ravi");        // visible to the caller: same object
+    p = new Person("Amit");   // not visible: only the local copy of the reference changes
+}
+
+Person person = new Person("Ayush");
+rename(person);
+System.out.println(person.getName()); // Ravi</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_equals_and_hashcode"><a class="anchor" href="#_equals_and_hashcode"></a><code>==</code>, <code>equals()</code> and <code>hashCode()</code></h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><code>==</code> compares primitive values, or object <strong>identity</strong> (same memory reference) for objects.</p>
+</li>
+<li>
+<p><code>equals()</code> defines <strong>logical</strong> equality. The default in <code>Object</code> is identity.</p>
+</li>
+<li>
+<p><code>hashCode()</code> returns an <code>int</code> used by hash-based collections to pick a bucket.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>The contract:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>If <code>a.equals(b)</code> is true, then <code>a.hashCode() == b.hashCode()</code> must be true.</p>
+</li>
+<li>
+<p>Equal hash codes do <strong>not</strong> imply equality (collisions are allowed).</p>
+</li>
+<li>
+<p><code>equals</code> must be reflexive, symmetric, transitive, consistent, and <code>x.equals(null)</code> must be false.</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>If you override <code>equals</code> without <code>hashCode</code>, two "equal" objects land in different buckets and <code>HashMap.get</code> returns <code>null</code> for a key you just put.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">public final class EmployeeId {
+    private final String region;
+    private final int number;
+
+    public EmployeeId(String region, int number) {
+        this.region = Objects.requireNonNull(region);
+        this.number = number;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof EmployeeId other)) return false;   // pattern matching, Java 16+
+        return number == other.number &amp;&amp; region.equals(other.region);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(region, number);
+    }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>A record (<code>record EmployeeId(String region, int number) {}</code>) generates the same <code>equals</code> and <code>hashCode</code> for you.</p>
+</div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+Fields used in <code>equals</code>/<code>hashCode</code> should not change while the object is a key in a <code>HashMap</code> or element in a <code>HashSet</code>.
+If they change, the object sits in the wrong bucket and can no longer be found or removed.
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_string_stringbuilder_and_the_string_pool"><a class="anchor" href="#_string_stringbuilder_and_the_string_pool"></a>String, StringBuilder and the string pool</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><code>String</code> is immutable.
+Reasons interviewers expect:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>String pool</strong>: literals are interned and shared, which is safe only because no one can change them.</p>
+</li>
+<li>
+<p><strong>Cached hash code</strong>: computed once, which makes strings fast <code>HashMap</code> keys.</p>
+</li>
+<li>
+<p><strong>Thread safety</strong>: immutable objects can be shared without locks.</p>
+</li>
+<li>
+<p><strong>Security</strong>: a file path or class name cannot change after it has been validated.</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">String a = "java";                 // from the pool
+String b = "java";                 // same pooled object
+String c = new String("java");     // new object on the heap
+String d = c.intern();             // returns the pooled instance
+
+System.out.println(a == b);        // true
+System.out.println(a == c);        // false
+System.out.println(a == d);        // true
+System.out.println(a.equals(c));   // true: always compare strings with equals</code></pre>
+</div>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 40%;">
+<col style="width: 40%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Class</th>
+<th class="tableblock halign-left valign-top">Mutable?</th>
+<th class="tableblock halign-left valign-top">Use when</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">No</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The value does not change, or for map keys and constants.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>StringBuilder</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Yes, not synchronized</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Building a string in a loop on one thread. This is the default choice.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>StringBuffer</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Yes, synchronized</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Rarely. Only for legacy APIs that need it.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>Facts worth knowing:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>The string pool lives in the heap since Java 7 (it used to be in PermGen).</p>
+</li>
+<li>
+<p>Since Java 9, a <code>String</code> stores Latin-1 text in one byte per character ("compact strings").</p>
+</li>
+<li>
+<p><code>"a" + b + "c"</code> in a single expression is compiled efficiently (via <code>invokedynamic</code> since Java 9). Concatenation <strong>inside a loop</strong> still creates a new string each iteration, so use <code>StringBuilder</code> there.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_designing_an_immutable_class"><a class="anchor" href="#_designing_an_immutable_class"></a>Designing an immutable class</h2>
+<div class="sectionbody">
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Declare the class <code>final</code> so a subclass cannot add mutable state or override methods.</p>
+</li>
+<li>
+<p>Make all fields <code>private final</code>.</p>
+</li>
+<li>
+<p>Set them only in the constructor.</p>
+</li>
+<li>
+<p>Provide no setters.</p>
+</li>
+<li>
+<p>Defensively copy mutable inputs and mutable outputs.</p>
+</li>
+</ol>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">public final class Order {
+    private final String id;
+    private final List&lt;String&gt; items;
+    private final Instant createdAt;           // Instant is already immutable
+
+    public Order(String id, List&lt;String&gt; items, Instant createdAt) {
+        this.id = id;
+        this.items = List.copyOf(items);       // defensive, unmodifiable copy
+        this.createdAt = createdAt;
+    }
+
+    public List&lt;String&gt; items() {
+        return items;                          // safe: already unmodifiable
+    }
+
+    public Order withItem(String item) {       // "modification" returns a new object
+        List&lt;String&gt; next = new ArrayList&lt;&gt;(items);
+        next.add(item);
+        return new Order(id, next, createdAt);
+    }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Immutable objects are thread-safe, safe as map keys and easy to reason about.
+The cost is extra allocation when values change often.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_keywords_that_come_up"><a class="anchor" href="#_keywords_that_come_up"></a>Keywords that come up</h2>
+<div class="sectionbody">
+<div class="dlist">
+<dl>
+<dt class="hdlist1"><code>final</code>, <code>finally</code>, <code>finalize</code></dt>
+<dd>
+<div class="ulist">
+<ul>
+<li>
+<p><code>final</code> on a variable prevents reassignment, on a method prevents overriding, on a class prevents subclassing.</p>
+</li>
+<li>
+<p><code>finally</code> is a block that runs after <code>try</code>/<code>catch</code>, whether or not an exception was thrown. It does not run if the JVM exits (<code>System.exit</code>) or the thread is killed.</p>
+</li>
+<li>
+<p><code>finalize()</code> was a GC callback. It is deprecated for removal (Java 18, JEP 421) because it is unpredictable and slow. Use <code>try</code>-with-resources or <code>java.lang.ref.Cleaner</code>.</p>
+</li>
+</ul>
+</div>
+</dd>
+<dt class="hdlist1"><code>static</code></dt>
+<dd>
+<p>Belongs to the class, not an instance.
+A static method cannot use <code>this</code> and cannot be overridden.
+Static fields are initialised once, when the class is initialised.</p>
+</dd>
+<dt class="hdlist1"><code>this</code> and <code>super</code></dt>
+<dd>
+<p><code>this</code> refers to the current object; <code>this(...)</code> calls another constructor of the same class.
+<code>super</code> refers to the parent; <code>super(...)</code> must be the first statement of a constructor (Java 25 relaxes this, see <a href="modern-java.html" class="xref page">Modern Java</a>).</p>
+</dd>
+<dt class="hdlist1"><code>transient</code> and <code>volatile</code></dt>
+<dd>
+<p><code>transient</code> excludes a field from Java serialization.
+<code>volatile</code> is a concurrency keyword, covered in <a href="concurrency.html" class="xref page">Concurrency</a>.</p>
+</dd>
+</dl>
+</div>
+<div class="sect2">
+<h3 id="_initialisation_order"><a class="anchor" href="#_initialisation_order"></a>Initialisation order</h3>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">class Parent {
+    static { System.out.println("1. Parent static block"); }
+    { System.out.println("3. Parent instance block"); }
+    Parent() { System.out.println("4. Parent constructor"); }
+}
+
+class Child extends Parent {
+    static { System.out.println("2. Child static block"); }
+    { System.out.println("5. Child instance block"); }
+    Child() { System.out.println("6. Child constructor"); }
+}
+
+new Child(); // prints 1 to 6 in order. A second new Child() prints only 3 to 6.</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_primitives_wrappers_and_autoboxing"><a class="anchor" href="#_primitives_wrappers_and_autoboxing"></a>Primitives, wrappers and autoboxing</h2>
+<div class="sectionbody">
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Size</th>
+<th class="tableblock halign-left valign-top">Default (as a field)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>byte</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">8 bits</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>short</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">16 bits</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>int</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">32 bits</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>long</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">64 bits</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0L</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>float</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">32 bits</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0.0f</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>double</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">64 bits</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0.0d</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>char</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">16 bits (UTF-16 unit)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>'\u0000'</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>boolean</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">JVM-dependent</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>Autoboxing converts <code>int</code> to <code>Integer</code> automatically.
+Two traps follow from it:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">Integer a = 127, b = 127;
+Integer c = 128, d = 128;
+System.out.println(a == b);   // true: values -128..127 are cached
+System.out.println(c == d);   // false: two different Integer objects
+System.out.println(c.equals(d)); // true
+
+Integer missing = null;
+int value = missing;          // NullPointerException on unboxing</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Use <code>BigDecimal</code> (constructed from a <code>String</code>) for money, never <code>double</code>: <code>0.1 + 0.2</code> is <code>0.30000000000000004</code>.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_exceptions"><a class="anchor" href="#_exceptions"></a>Exceptions</h2>
+<div class="sectionbody">
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-text hljs" data-lang="text">Throwable
+├── Error                     (JVM problems: OutOfMemoryError, StackOverflowError; do not catch)
+└── Exception                 (checked: IOException, SQLException; must be caught or declared)
+    └── RuntimeException      (unchecked: NullPointerException, IllegalArgumentException,
+                               IllegalStateException, ArithmeticException, ...)</code></pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Checked</strong> exceptions are checked by the compiler. Use them when the caller can reasonably recover, for example a missing file the user can choose again.</p>
+</li>
+<li>
+<p><strong>Unchecked</strong> exceptions signal programming errors or failures the immediate caller cannot fix. Spring converts most checked exceptions into unchecked ones, because checked exceptions do not work well with lambdas and layered code.</p>
+</li>
+<li>
+<p>Never swallow an exception silently. Either handle it, or wrap it with context and rethrow (<code>throw new OrderFailedException("order " + id, e)</code>), keeping the cause.</p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_try_with_resources"><a class="anchor" href="#_try_with_resources"></a>try-with-resources</h3>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">try (var in = Files.newBufferedReader(path);
+     var out = Files.newBufferedWriter(target)) {
+    in.transferTo(out);
+} // out is closed first, then in (reverse order), even if an exception is thrown</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Any class that implements <code>AutoCloseable</code> works here.
+If both the body and <code>close()</code> throw, the body&#8217;s exception is thrown and the close exception is attached to it as a <strong>suppressed</strong> exception (<code>e.getSuppressed()</code>).</p>
+</div>
+<div class="listingblock">
+<div class="title">Classic trap: <code>return</code> in <code>finally</code></div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">static int value() {
+    try {
+        return 1;
+    } finally {
+        return 2;   // overrides the try's return and also swallows any exception
+    }
+}
+// value() returns 2. Never return from finally.</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_object_class_methods"><a class="anchor" href="#_object_class_methods"></a>Object class methods</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><code>equals</code>, <code>hashCode</code>, <code>toString</code>, <code>getClass</code>, <code>clone</code>, <code>wait</code>, <code>notify</code>, <code>notifyAll</code>, and the deprecated <code>finalize</code>.
+Being able to list them and say what each does is a common fresher question.</p>
+</div>
+<div class="sect2">
+<h3 id="_shallow_copy_versus_deep_copy"><a class="anchor" href="#_shallow_copy_versus_deep_copy"></a>Shallow copy versus deep copy</h3>
+<div class="paragraph">
+<p>A <strong>shallow copy</strong> copies the outer object but shares the objects it references.
+A <strong>deep copy</strong> also copies the referenced objects, recursively.
+<code>Object.clone()</code> is shallow by default, requires implementing <code>Cloneable</code>, and is widely considered a broken design.
+Prefer copy constructors or static factories (<code>new Order(other)</code>, <code>List.copyOf(list)</code>), or immutable objects that never need copying.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_serialization"><a class="anchor" href="#_serialization"></a>Serialization</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Java serialization turns an object graph into bytes (<code>ObjectOutputStream</code>) and back.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>A class must implement <code>Serializable</code>. <code>transient</code> and <code>static</code> fields are not written.</p>
+</li>
+<li>
+<p>Declare <code>private static final long serialVersionUID</code>. Without it, a recompiled class may get a different generated ID and old data fails with <code>InvalidClassException</code>.</p>
+</li>
+<li>
+<p>Native serialization is a known security risk: deserializing untrusted data can execute code through "gadget chains". Prefer JSON or Protocol Buffers for anything crossing a trust boundary, and use deserialization filters (<code>ObjectInputFilter</code>) if you must use it.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_annotations_and_reflection"><a class="anchor" href="#_annotations_and_reflection"></a>Annotations and reflection</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p>Annotations attach metadata. <code>@Retention</code> decides where it survives: <code>SOURCE</code> (discarded by the compiler, e.g. <code>@Override</code>), <code>CLASS</code> (in bytecode, not visible at runtime), <code>RUNTIME</code> (readable via reflection, e.g. <code>@Transactional</code>).</p>
+</li>
+<li>
+<p>Reflection inspects and invokes classes, fields and methods at runtime (<code>Class.forName</code>, <code>getDeclaredMethods</code>, <code>setAccessible</code>).</p>
+</li>
+<li>
+<p>Frameworks such as Spring, Hibernate and Jackson rely on both. The cost is weaker compile-time checking and some startup overhead.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_nested_classes_and_enums"><a class="anchor" href="#_nested_classes_and_enums"></a>Nested classes and enums</h2>
+<div class="sectionbody">
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 75%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Kind</th>
+<th class="tableblock halign-left valign-top">Key fact</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Static nested class</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">No reference to an outer instance. Default choice for a helper class (e.g. a <code>Builder</code>).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Inner (non-static) class</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Holds an implicit reference to the outer instance. Can cause memory leaks if it outlives the outer object.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Local class</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Declared inside a method; can capture effectively final local variables.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Anonymous class</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">One-off implementation, mostly replaced by lambdas for functional interfaces.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>Enums are full classes: they can have fields, constructors, methods and per-constant behaviour.
+An enum with a single constant is the simplest thread-safe singleton and is safe against reflection and serialization attacks.
+<code>EnumMap</code> and <code>EnumSet</code> are faster and more compact than their hash-based equivalents for enum keys.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_practice_questions"><a class="anchor" href="#_practice_questions"></a>Practice questions</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Answer each one aloud before expanding it.</p>
+</div>
+<details>
+<summary class="title">Q1. Explain the four pillars of OOP using an example from a real project.</summary>
+<div class="content">
+<div class="paragraph">
+<p>Pick one domain and use it for all four.
+Encapsulation: <code>Account</code> hides its balance and only allows <code>deposit</code>/<code>withdraw</code>, which enforce "balance never negative".
+Abstraction: services depend on a <code>PaymentGateway</code> interface, not on a card or UPI client.
+Inheritance: use only when the child truly satisfies the parent&#8217;s contract; a <code>SavingsAccount</code> that refuses withdrawals after a limit may break the contract of <code>Account</code>.
+Polymorphism: <code>gateway.charge(order)</code> runs a different implementation depending on the runtime type.
+Close by saying you prefer composition and interfaces over deep inheritance.</p>
+</div>
+</div>
+</details>
+<details>
+<summary class="title">Q2. Is Java pass-by-value or pass-by-reference?</summary>
+<div class="content">
+<div class="paragraph">
+<p>Always pass-by-value.
+For object parameters, the value copied is the reference.
+Mutating the object through it is visible to the caller; reassigning the parameter is not.
+Show the <code>rename(Person p)</code> example.</p>
+</div>
+</div>
+</details>
+<details>
+<summary class="title">Q3. What happens if you override <code>equals()</code> but not <code>hashCode()</code>?</summary>
+<div class="content">
+<div class="paragraph">
+<p>Two logically equal objects get different hash codes (identity-based by default), so they land in different buckets.
+<code>map.put(k1, v)</code> followed by <code>map.get(k2)</code> with an equal <code>k2</code> returns <code>null</code>, and a <code>HashSet</code> can contain "duplicates".
+The contract requires equal objects to have equal hash codes.</p>
+</div>
+</div>
+</details>
+<details>
+<summary class="title">Q4. Why is String immutable, and why is it final?</summary>
+<div class="content">
+<div class="paragraph">
+<p>Immutability allows the string pool, a cached hash code, safe sharing across threads, and security for values like paths and class names that are validated once.
+It is <code>final</code> so no subclass can override methods and break those guarantees.</p>
+</div>
+</div>
+</details>
+<details>
+<summary class="title">Q5. How many objects does <code>new String("hello")</code> create?</summary>
+<div class="content">
+<div class="paragraph">
+<p>Up to two.
+The literal <code>"hello"</code> is placed in the string pool when the class is loaded, if it is not already there.
+<code>new String(...)</code> then always creates a separate object on the heap.
+If the literal was already pooled, only one new object is created by this statement.</p>
+</div>
+</div>
+</details>
+<details>
+<summary class="title">Q6. Difference between <code>final</code>, <code>finally</code> and <code>finalize</code>?</summary>
+<div class="content">
+<div class="paragraph">
+<p><code>final</code> is a modifier that prevents reassignment, overriding or subclassing.
+<code>finally</code> is a block that runs after <code>try</code>/<code>catch</code> for cleanup.
+<code>finalize</code> was a GC hook on <code>Object</code>; it is deprecated for removal because timing is unpredictable and it slows GC.
+Use try-with-resources or <code>Cleaner</code> instead.</p>
+</div>
+</div>
+</details>
+<details>
+<summary class="title">Q7. Can you override a static method? A private method?</summary>
+<div class="content">
+<div class="paragraph">
+<p>No to both.
+A static method with the same signature in a subclass <strong>hides</strong> the parent method; which one runs depends on the declared type, not the object.
+A private method is not visible to the subclass, so a same-named method in the subclass is a new, unrelated method.</p>
+</div>
+</div>
+</details>
+<details>
+<summary class="title">Q8. Abstract class versus interface: when do you pick each?</summary>
+<div class="content">
+<div class="paragraph">
+<p>Interface for a capability or a replaceable contract, especially when unrelated classes share it or a class needs several.
+Abstract class when subclasses share state or a fixed algorithm (Template Method).
+Since Java 8, interfaces can carry <code>default</code> methods, so the remaining differences are state, constructors and single inheritance.</p>
+</div>
+</div>
+</details>
+<details>
+<summary class="title">Q9. How do you design an immutable class? Are records immutable?</summary>
+<div class="content">
+<div class="paragraph">
+<p><code>final</code> class, <code>private final</code> fields, set in the constructor, no setters, defensive copies of mutable inputs and outputs.
+A record is <strong>shallowly</strong> immutable: its fields are final, but if a component is a mutable <code>List</code>, the list can still change.
+Use <code>List.copyOf</code> in a compact constructor to make it fully immutable.</p>
+</div>
+</div>
+</details>
+<details>
+<summary class="title">Q10. Checked versus unchecked exceptions: which do you use for your own errors?</summary>
+<div class="content">
+<div class="paragraph">
+<p>Checked when the caller can and should recover, and the condition is part of the method&#8217;s contract.
+Unchecked for programming errors (bad arguments, illegal state) and for failures that the immediate caller cannot handle, which is most cases in service code.
+In Spring applications, custom business exceptions are usually unchecked and handled centrally by a <code>@RestControllerAdvice</code>.
+Note that Spring&#8217;s <code>@Transactional</code> rolls back on unchecked exceptions by default but not on checked ones.</p>
+</div>
+</div>
+</details>
+<details>
+<summary class="title">Q11. What does try-with-resources do that <code>finally</code> does not?</summary>
+<div class="content">
+<div class="paragraph">
+<p>It closes every <code>AutoCloseable</code> automatically, in reverse order of declaration, and keeps both exceptions: the body&#8217;s exception is thrown and the close exception is added as suppressed.
+A hand-written <code>finally</code> that throws from <code>close()</code> replaces the original exception and loses it.</p>
+</div>
+</div>
+</details>
+<details>
+<summary class="title">Q12. Shallow copy versus deep copy, and what is wrong with <code>clone()</code>?</summary>
+<div class="content">
+<div class="paragraph">
+<p>Shallow copies share referenced objects; deep copies duplicate them.
+<code>clone()</code> is shallow, bypasses constructors, needs the <code>Cloneable</code> marker interface, returns <code>Object</code>, and declares a checked exception.
+Copy constructors, static factories or immutable objects are clearer.</p>
+</div>
+</div>
+</details>
+<details>
+<summary class="title">Q13. <code>Comparable</code> versus <code>Comparator</code>?</summary>
+<div class="content">
+<div class="paragraph">
+<p><code>Comparable.compareTo</code> defines the <strong>natural</strong> order inside the class (one per class).
+<code>Comparator</code> defines an <strong>external</strong> order, and you can have many: <code>Comparator.comparing(Employee::dept).thenComparing(Employee::salary, Comparator.reverseOrder())</code>.
+Ordering should be consistent with <code>equals</code>, especially for <code>TreeSet</code>/<code>TreeMap</code>, which treat <code>compare == 0</code> as "same element".
+Do not compare with subtraction (<code>a - b</code>); it overflows. Use <code>Integer.compare(a, b)</code>.</p>
+</div>
+</div>
+</details>
+<details>
+<summary class="title">Q14. What are the risks of Java serialization?</summary>
+<div class="content">
+<div class="paragraph">
+<p>Security: deserializing untrusted bytes can trigger code execution through gadget chains in classes on the classpath.
+Compatibility: class changes break old data unless <code>serialVersionUID</code> is managed.
+Performance and size are poor compared with JSON or Protobuf.
+Use explicit formats for APIs and messages; apply <code>ObjectInputFilter</code> if native serialization is unavoidable.</p>
+</div>
+</div>
+</details>
+<details>
+<summary class="title">Q15. What is printed: <code>Integer a = 128, b = 128; System.out.println(a == b);</code>?</summary>
+<div class="content">
+<div class="paragraph">
+<p><code>false</code>.
+<code>Integer.valueOf</code> caches only -128 to 127, so 128 creates two objects and <code>==</code> compares references.
+Use <code>equals</code> or compare <code>int</code> values.</p>
+</div>
+</div>
+</details>
+<details>
+<summary class="title">Q16. Why is <code>main</code> <code>public static void</code>? Can you overload it?</summary>
+<div class="content">
+<div class="paragraph">
+<p><code>public</code> so the launcher can call it, <code>static</code> so no object is needed, <code>void</code> because the exit code is set with <code>System.exit</code>.
+You can overload <code>main</code>, but the JVM calls only the <code>String[]</code> version.
+Since Java 25, compact source files allow an instance <code>void main()</code> for simple programs (JEP 512).</p>
+</div>
+</div>
+</details>
+<details>
+<summary class="title">Q17. What are reflection and annotations used for, and what is the cost?</summary>
+<div class="content">
+<div class="paragraph">
+<p>Annotations are metadata; reflection reads metadata and members at runtime.
+Spring uses both for component scanning, dependency injection and proxies; Jackson uses them for JSON mapping.
+Costs: less compile-time safety, slower startup, and access checks that the module system may block.</p>
+</div>
+</div>
+</details>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_common_traps"><a class="anchor" href="#_common_traps"></a>Common traps</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p>Comparing strings with <code>==</code>.</p>
+</li>
+<li>
+<p>Using mutable fields in <code>hashCode</code>.</p>
+</li>
+<li>
+<p><code>return</code> inside <code>finally</code>.</p>
+</li>
+<li>
+<p><code>catch (Exception e) {}</code> with an empty body.</p>
+</li>
+<li>
+<p>Using <code>double</code> for money.</p>
+</li>
+<li>
+<p>Saying "Java passes objects by reference".</p>
+</li>
+<li>
+<p>Saying an interface "cannot have method bodies" (it can, since Java 8).</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_follow_ups_to_expect"><a class="anchor" href="#_follow_ups_to_expect"></a>Follow-ups to expect</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p>"Show me a bug caused by a broken <code>equals</code>/<code>hashCode</code>."</p>
+</li>
+<li>
+<p>"Your immutable class has a <code>Date</code> field. What do you change?" (Defensive copy, or switch to <code>Instant</code>.)</p>
+</li>
+<li>
+<p>"Why does Spring prefer unchecked exceptions?"</p>
+</li>
+<li>
+<p>"When is inheritance the right choice in your project?"</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_quick_revision"><a class="anchor" href="#_quick_revision"></a>Quick revision</h2>
+<div class="sectionbody">
+<div class="ulist checklist">
+<ul class="checklist">
+<li>
+<p><i class="fa fa-square-o"></i> Four pillars with one consistent example</p>
+</li>
+<li>
+<p><i class="fa fa-square-o"></i> Overloading versus overriding rules table</p>
+</li>
+<li>
+<p><i class="fa fa-square-o"></i> <code>equals</code>/<code>hashCode</code> contract and the mutable-key trap</p>
+</li>
+<li>
+<p><i class="fa fa-square-o"></i> String pool, <code>intern</code>, <code>StringBuilder</code> versus <code>StringBuffer</code></p>
+</li>
+<li>
+<p><i class="fa fa-square-o"></i> Immutable class recipe</p>
+</li>
+<li>
+<p><i class="fa fa-square-o"></i> Exception hierarchy, checked versus unchecked, try-with-resources, suppressed exceptions</p>
+</li>
+<li>
+<p><i class="fa fa-square-o"></i> Integer cache and unboxing NPE</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Next: <a href="collections-generics.html" class="xref page">Collections and Generics</a>.</p>
+</div>
+</div>
+</div>
+      </article>
+      <div class="article-pagination">
+        <a class="prev" href="index.html"><span>← Previous</span><strong>Java Interview Guide</strong></a>
+        <a class="next" href="collections-generics.html"><span>Next →</span><strong>Collections and Generics</strong></a>
+      </div>
+    </main>
+    <aside class="docs-toc reading-assistant" id="reading-assistant" aria-label="Reading assistant">
+  <div class="toc-inner ra-inner">
+    <div class="ra-head">
+      <h2 class="ra-title">Reading Assistant</h2>
+      <button type="button" class="ra-close" aria-label="Close reading assistant">
+        <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+    </div>
+
+    <section class="ra-card ra-listen" aria-labelledby="reading-assistant-listen" hidden>
+      <div class="ra-card-head">
+        <svg class="ra-card-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/></svg>
+        <div>
+          <h3 class="ra-card-title" id="reading-assistant-listen">Listen to Article</h3>
+          <p class="ra-card-desc">Listen to the explanation of this article. Code blocks are skipped.</p>
+        </div>
+      </div>
+
+      <div class="ra-ready">
+        <div class="ra-player">
+          <button type="button" class="ra-play" aria-label="Play article">
+            <svg class="ra-icon-play" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M8 5.5v13l11-6.5z"/></svg>
+            <svg class="ra-icon-pause" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M7 5h3.5v14H7zM13.5 5H17v14h-3.5z"/></svg>
+          </button>
+          <div class="ra-track">
+            <div class="ra-meter" role="progressbar" aria-label="Listening progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><span class="ra-meter-fill"></span></div>
+            <span class="ra-time" title="Estimated. Browser speech does not report an exact duration."></span>
+          </div>
+          <button type="button" class="ra-stop" aria-label="Stop listening" disabled>
+            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="6.5" y="6.5" width="11" height="11" rx="1.5"/></svg>
+          </button>
+        </div>
+
+        <div class="ra-controls">
+          <label class="ra-field ra-field-rate">
+            <span class="ra-field-label">Speed</span>
+            <select class="ra-rate">
+              <option value="0.75">0.75×</option>
+              <option value="1" selected>1×</option>
+              <option value="1.25">1.25×</option>
+              <option value="1.5">1.5×</option>
+              <option value="2">2×</option>
+            </select>
+          </label>
+        </div>
+
+        <label class="ra-check"><input type="checkbox" class="ra-follow" checked> Highlight and follow along</label>
+        <p class="ra-status" role="status" aria-live="polite">Ready</p>
+
+        <p class="ra-tip">
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M9 18h6M10 21h4"/><path d="M12 3a6 6 0 0 0-3.5 10.9V16h7v-2.1A6 6 0 0 0 12 3z"/></svg>
+          <span><strong>Tip:</strong> Headings and explanations are read aloud; code is skipped. Read in Google UK English Male on Chrome; other browsers use their closest British English voice.</span>
+        </p>
+      </div>
+
+      <p class="ra-unsupported" hidden>Listening isn&#8217;t available in this browser. The article itself works as usual.</p>
+    </section>
+
+    <section class="ra-card ra-jump" aria-labelledby="reading-assistant-sections" hidden>
+      <h3 class="ra-card-title" id="reading-assistant-sections">Jump to Section</h3>
+      <ol class="ra-sections"></ol>
+    </section>
+
+    <section class="ra-card ra-info" aria-labelledby="reading-assistant-info">
+      <h3 class="ra-card-title" id="reading-assistant-info">Page Info</h3>
+      <ul class="ra-info-list">
+        <li>
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+          <span title="Estimated at 220 words per minute">~8 min read</span>
+        </li>
+        <li>
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h6"/></svg>
+          <span title="Prose only; code is not counted">~1,850 words</span>
+        </li>
+        <li>
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="4" y="5" width="16" height="16" rx="2"/><path d="M16 3v4M8 3v4M4 10h16"/></svg>
+          <span>Last updated <time datetime="2026-11-11">Nov 11, 2026</time></span>
+        </li>
+      </ul>
+    </section>
+  </div>
+</aside>
+  </div>
+  <footer class="docs-footer">© 2026 Ayush Nigam · <a href="../../index.html">Home</a></footer>
+  <script src="../../../../_/js/reading-assistant.js?v=2" defer></script>
+  <script src="../../../../_/js/site.js?v=15" defer></script>
+</body>
+</html>

@@ -1,0 +1,1283 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>Spring Data JPA, Hibernate and Transactions · Ayush Nigam</title>
+  
+  <link rel="preload" href="../../../../_/fonts/inter-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="../../../../_/css/site.css?v=21">
+</head>
+<body class="docs-page">
+  <a class="skip-link" href="#article-main">Skip to content</a>
+  <header class="docs-header">
+    <div class="docs-header-inner">
+      <a class="docs-logo" href="../../index.html"><span class="docs-logo-mark">AN</span><span>Ayush Nigam</span></a>
+          <nav class="header-adoc-nav docs-toplinks" aria-label="Header links" data-header-source-url="../../headers/header-links.html">
+            <div class="header-adoc-content"><div class="ulist header-menu-links">
+<ul>
+<li>
+<p><a href="contact.html" class="xref page">Contact</a></p>
+</li>
+<li>
+<p><a href="https://www.linkedin.com/in/the-ayush-nigam/">LinkedIn</a></p>
+</li>
+<li>
+<p><a href="https://github.com/gareeb-engineer">GitHub</a></p>
+</li>
+</ul>
+</div>
+</div>
+          </nav>
+      <a class="header-avatar" href="../../index.html" aria-hidden="true" tabindex="-1"><img src="../../../../_/img/profile-photo.png" alt="Ayush Nigam profile photo" width="36" height="36"></a>
+<button type="button" class="mobile-nav-toggle" aria-label="Toggle documentation navigation" aria-expanded="false" aria-controls="docs-sidebar">☰ Menu</button>
+      <span class="read-progress-label" aria-hidden="true" hidden>Reading <span class="read-progress-value">0%</span></span>
+    </div>
+    <div class="read-progress" role="progressbar" aria-label="Article reading progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" hidden><span class="read-progress-fill"></span></div>
+  </header>
+  <div class="docs-shell">
+    <aside class="docs-sidebar" id="docs-sidebar" aria-label="Documentation sidebar">
+      <div class="sidebar-inner">
+      <div class="sidebar-top"><span class="sidebar-eyebrow">ENGINEERING LIBRARY</span></div>
+      <input id="nav-filter" class="nav-filter" type="search" placeholder="Filter pages…" aria-label="Filter navigation" autocomplete="off">
+      <nav aria-label="Documentation pages"><ul class="nav-tree">
+  <li class="nav-item nav-parent">
+        <div class="nav-group">
+          <button type="button" class="nav-row nav-toggle" aria-expanded="true">
+            <span class="nav-label">Java</span>
+            <span class="nav-chevron" aria-hidden="true">▾</span>
+          </button>
+          <div class="nav-children">
+            <ul class="nav-tree">
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../index.html" title="Open Java overview">Overview</a>
+      </div>
+  </li>
+  <li class="nav-item nav-parent">
+        <div class="nav-group nav-linked-group">
+          <div class="nav-row nav-linked-row">
+            <a href="index.html">Java Interview Guide</a>
+            <button type="button" class="nav-toggle nav-linked-toggle" aria-expanded="true" aria-label="Toggle subtopics">
+              <span class="nav-chevron" aria-hidden="true">▾</span>
+            </button>
+          </div>
+          <div class="nav-children"><ul class="nav-tree">
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="core-java-oop.html">Core Java and OOP</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="collections-generics.html">Collections and Generics</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="java8-streams-functional.html">Java 8: Lambdas, Streams, Optional</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="modern-java.html">Modern Java (11 to 25)</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="concurrency.html">Concurrency and Multithreading</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="jvm-memory-gc.html">JVM, Memory and GC</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="spring-core.html">Spring Core: IoC, DI, AOP</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="spring-boot.html">Spring Boot</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="rest-spring-mvc.html">REST APIs and Spring MVC</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="jpa-hibernate-transactions.html" class="is-current" aria-current="page">JPA, Hibernate, Transactions</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="spring-security.html">Spring Security, JWT, OAuth2</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="microservices.html">Microservices</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="coding-round.html">Coding Round in Java</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="testing.html">Testing</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="senior-scenarios.html">Production Scenarios and Behavioural</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="spring-ai.html">Spring AI and GenAI</a>
+      </div>
+  </li>
+</ul>
+</div>
+        </div>
+  </li>
+</ul>
+          </div>
+        </div>
+  </li>
+  <li class="nav-item nav-parent">
+        <div class="nav-group is-collapsed">
+          <button type="button" class="nav-row nav-toggle" aria-expanded="false">
+            <span class="nav-label">Architecture Diagram&#8217;s</span>
+            <span class="nav-chevron" aria-hidden="true">▸</span>
+          </button>
+          <div class="nav-children">
+            <ul class="nav-tree">
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Arcitecture-diagram/index.html" title="Open Architecture Diagram’s overview">Overview</a>
+      </div>
+  </li>
+</ul>
+          </div>
+        </div>
+  </li>
+  <li class="nav-item nav-parent">
+        <div class="nav-group is-collapsed">
+          <button type="button" class="nav-row nav-toggle" aria-expanded="false">
+            <span class="nav-label">References</span>
+            <span class="nav-chevron" aria-hidden="true">▸</span>
+          </button>
+          <div class="nav-children">
+            <ul class="nav-tree">
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../DevOps-Refs/index.html" title="Open References overview">Overview</a>
+      </div>
+  </li>
+</ul>
+          </div>
+        </div>
+  </li>
+  <li class="nav-item nav-parent">
+        <div class="nav-group is-collapsed">
+          <button type="button" class="nav-row nav-toggle" aria-expanded="false">
+            <span class="nav-label">Data Structure</span>
+            <span class="nav-chevron" aria-hidden="true">▸</span>
+          </button>
+          <div class="nav-children">
+            <ul class="nav-tree">
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Data-Structure/index.html" title="Open Data Structure overview">Overview</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Data-Structure/arrays/index.html">Arrays</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Data-Structure/linked-list/index.html">Linked Lists</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Data-Structure/stacks-n-queue/index.html">Stacks</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Data-Structure/trees/index.html">Trees</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Data-Structure/hash-map/index.html">Hash Map</a>
+      </div>
+  </li>
+  <li class="nav-item nav-parent">
+        <div class="nav-group nav-linked-group is-collapsed">
+          <div class="nav-row nav-linked-row">
+            <a href="../../Data-Structure/dynamic-programming/index.html">Dynamic Programming</a>
+            <button type="button" class="nav-toggle nav-linked-toggle" aria-expanded="false" aria-label="Toggle subtopics">
+              <span class="nav-chevron" aria-hidden="true">▸</span>
+            </button>
+          </div>
+          <div class="nav-children"><ul class="nav-tree">
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Data-Structure/dynamic-programming/fibonacci-series.html">Fibonacci Series</a>
+      </div>
+  </li>
+</ul>
+</div>
+        </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Data-Structure/graphs/index.html">Graphs</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Data-Structure/backtracking/index.html">Backtracking</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Data-Structure/pattern-printing/index.html">Pattern Printing</a>
+      </div>
+  </li>
+  <li class="nav-item nav-parent">
+        <div class="nav-group nav-linked-group is-collapsed">
+          <div class="nav-row nav-linked-row">
+            <a href="../../Data-Structure/recursion/index.html">Recursion</a>
+            <button type="button" class="nav-toggle nav-linked-toggle" aria-expanded="false" aria-label="Toggle subtopics">
+              <span class="nav-chevron" aria-hidden="true">▸</span>
+            </button>
+          </div>
+          <div class="nav-children"><ul class="nav-tree">
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Data-Structure/recursion/sum-of-all-element.html">Sum of all elements</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Data-Structure/recursion/all-indices-of-array.html">All indices of array</a>
+      </div>
+  </li>
+</ul>
+</div>
+        </div>
+  </li>
+</ul>
+          </div>
+        </div>
+  </li>
+  <li class="nav-item nav-parent">
+        <div class="nav-group is-collapsed">
+          <button type="button" class="nav-row nav-toggle" aria-expanded="false">
+            <span class="nav-label">Low Level Design</span>
+            <span class="nav-chevron" aria-hidden="true">▸</span>
+          </button>
+          <div class="nav-children">
+            <ul class="nav-tree">
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Low-Level-Design/index.html" title="Open Low Level Design overview">Overview</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Low-Level-Design/design-principles.html">Design Principles</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Low-Level-Design/solid-principles.html">SOLID Principles</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Low-Level-Design/design-patterns.html">Gang of Four Design Patterns</a>
+      </div>
+  </li>
+</ul>
+          </div>
+        </div>
+  </li>
+</ul>
+</nav>
+      </div>
+    </aside>
+    <main id="article-main" class="docs-article">
+      <nav class="breadcrumbs" aria-label="Breadcrumb"><a href="../../index.html">Home</a><span aria-hidden="true">/</span><a href="index.html">Java Interview Guide</a><span aria-hidden="true">/</span><a href="jpa-hibernate-transactions.html">JPA, Hibernate, Transactions</a></nav>
+      <article class="article-body" data-reading-progress>
+        <header class="article-header">
+          <h1>Spring Data JPA, Hibernate and Transactions</h1>
+          
+          <p class="article-subtitle">Entity states and the persistence context, fetching and the N+1 problem, Spring Data repositories, @Transactional propagation, rollback rules and pitfalls, isolation levels, locking, and the SQL questions that come with them.</p>
+          <ul class="article-chips">
+            <li class="chip chip-difficulty chip-hard">Hard</li><li class="chip chip-tag">Spring</li><li class="chip chip-tag">Interview Preparation</li><li class="chip chip-tag">JPA</li><li class="chip chip-tag">Hibernate</li><li class="chip chip-tag">Transactions</li><li class="chip chip-tag">SQL</li>
+          </ul>
+          <div class="article-meta">
+            <span class="article-meta-item" title="Estimated at 220 words per minute">
+              <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+              ~8 min read
+            </span>
+            <span class="article-meta-item">
+              <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="4" y="5" width="16" height="16" rx="2"/><path d="M16 3v4M8 3v4M4 10h16"/></svg>
+              Updated <time datetime="2026-11-11">Nov 11, 2026</time>
+            </span>
+            <button type="button" class="ra-open" aria-controls="reading-assistant" aria-expanded="false" hidden>
+              <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/></svg>
+              Listen
+            </button>
+          </div>
+        </header>
+        <div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>Persistence is where most production bugs in Spring services come from: slow pages caused by N+1 queries, data that silently did not roll back, and connection pools that run dry.
+Interviewers know this, so expect scenario questions such as "this method throws but the data is still saved; why?".</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_at_a_glance"><a class="anchor" href="#_at_a_glance"></a>At a glance</h2>
+<div class="sectionbody">
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 75%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Weightage</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>8 / 10</strong></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Who gets asked</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Mid and senior; juniors get repository basics and SQL.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Preparation time</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">5 hours</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Handbook questions</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Q76-Q84</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Builds on</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="spring-core.html" class="xref page">Spring Core</a> (proxies), <a href="spring-boot.html" class="xref page">Spring Boot</a></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_jpa_hibernate_and_spring_data_jpa"><a class="anchor" href="#_jpa_hibernate_and_spring_data_jpa"></a>JPA, Hibernate and Spring Data JPA</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><strong>JPA</strong> (Jakarta Persistence) is a specification: annotations such as <code>@Entity</code> and the <code>EntityManager</code> API.</p>
+</li>
+<li>
+<p><strong>Hibernate</strong> is the most used implementation of JPA (Spring Boot&#8217;s default).</p>
+</li>
+<li>
+<p><strong>Spring Data JPA</strong> sits on top and generates repository implementations from interfaces.</p>
+</li>
+<li>
+<p><strong>JDBC</strong> is the low-level API under all of them. <code>JdbcTemplate</code> and <code>JdbcClient</code> (Spring 6.1) are good choices when you want plain SQL without an ORM.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_entities_and_mapping"><a class="anchor" href="#_entities_and_mapping"></a>Entities and mapping</h2>
+<div class="sectionbody">
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Entity
+@Table(name = "orders")
+public class Order {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "order_seq")
+    @SequenceGenerator(name = "order_seq", sequenceName = "order_seq", allocationSize = 50)
+    private Long id;
+
+    @Version                                   // optimistic locking
+    private long version;
+
+    @Enumerated(EnumType.STRING)               // never ORDINAL: reordering the enum corrupts data
+    private OrderStatus status;
+
+    @ManyToOne(fetch = FetchType.LAZY)         // default is EAGER for @ManyToOne: change it
+    @JoinColumn(name = "customer_id")
+    private Customer customer;
+
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List&lt;OrderLine&gt; lines = new ArrayList&lt;&gt;();
+
+    protected Order() { }                      // JPA needs a no-arg constructor
+
+    public void addLine(OrderLine line) {      // keep both sides of the relation in sync
+        lines.add(line);
+        line.setOrder(this);
+    }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Points interviewers look for:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Default fetch types</strong>: <code>@ManyToOne</code> and <code>@OneToOne</code> are <code>EAGER</code>; <code>@OneToMany</code> and <code>@ManyToMany</code> are <code>LAZY</code>. Make everything <code>LAZY</code> and fetch what each use case needs.</p>
+</li>
+<li>
+<p><strong>Owning side</strong>: in a bidirectional relation, the side with the foreign key (<code>@ManyToOne</code>, <code>@JoinColumn</code>) owns it. <code>mappedBy</code> marks the inverse side, whose changes alone are not saved.</p>
+</li>
+<li>
+<p><strong>ID generation</strong>: <code>IDENTITY</code> (auto-increment) makes Hibernate insert immediately to learn the ID, which disables JDBC batch inserts. <code>SEQUENCE</code> with an <code>allocationSize</code> allows batching.</p>
+</li>
+<li>
+<p><strong>equals/hashCode on entities</strong>: do not use all fields (lazy relations, changing values). Use a natural business key, or the ID with care for new entities whose ID is still <code>null</code>.</p>
+</li>
+<li>
+<p><code>cascade</code> propagates operations (persist, remove) from parent to children; <code>orphanRemoval</code> deletes children removed from the collection.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_the_persistence_context_and_entity_states"><a class="anchor" href="#_the_persistence_context_and_entity_states"></a>The persistence context and entity states</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The <strong>persistence context</strong> is the set of entities an <code>EntityManager</code> currently manages.
+In Spring it normally lives as long as the transaction.
+It is also the <strong>first-level cache</strong>: loading the same ID twice in one transaction returns the same object without a second query.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-text hljs" data-lang="text">           new Order()
+               │
+         ┌─────▼─────┐   persist()    ┌──────────┐   remove()   ┌─────────┐
+         │ Transient ├───────────────►│ Managed  ├─────────────►│ Removed │
+         └───────────┘                └──┬────▲──┘              └─────────┘
+                                         │    │ merge() / find()
+                    transaction ends,    │    │
+                    clear(), detach()    ▼    │
+                                      ┌───────┴──┐
+                                      │ Detached │
+                                      └──────────┘</code></pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Transient</strong>: a plain new object, unknown to JPA.</p>
+</li>
+<li>
+<p><strong>Managed</strong>: tracked by the persistence context; changes are saved automatically at flush.</p>
+</li>
+<li>
+<p><strong>Detached</strong>: was managed, but the context closed. Changes are not tracked; <code>merge()</code> copies its state onto a managed instance.</p>
+</li>
+<li>
+<p><strong>Removed</strong>: scheduled for deletion at flush.</p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_dirty_checking_and_flush"><a class="anchor" href="#_dirty_checking_and_flush"></a>Dirty checking and flush</h3>
+<div class="paragraph">
+<p>At <strong>flush</strong> time (before commit, before a query that may need the changes, or on <code>flush()</code>), Hibernate compares each managed entity with the snapshot taken when it was loaded and issues <code>UPDATE</code> statements for the changed ones.
+That is why this works without calling <code>save</code>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Transactional
+public void markPaid(long orderId) {
+    Order order = orderRepository.findById(orderId).orElseThrow();
+    order.setStatus(OrderStatus.PAID);    // no save() needed: dirty checking issues the UPDATE
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Costs: large persistence contexts make flushes slow and use memory.
+For batch jobs, process in chunks and <code>clear()</code> the context periodically, or use <code>@Transactional(readOnly = true)</code> for reads, which lets Hibernate skip dirty checking.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_the_n1_query_problem"><a class="anchor" href="#_the_n1_query_problem"></a>The N+1 query problem</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>One query loads N parents, then accessing a lazy relation on each parent fires one more query per parent: N+1 queries in total.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">List&lt;Order&gt; orders = orderRepository.findByStatus(OrderStatus.NEW);   // 1 query
+for (Order o : orders) {
+    System.out.println(o.getCustomer().getName());                   // +1 query per order
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Detect it with SQL logging in development (<code>spring.jpa.show-sql</code>, or better, <code>logging.level.org.hibernate.SQL=debug</code>), Hibernate statistics, or a test that asserts the query count.</p>
+</div>
+<div class="paragraph">
+<p>Fixes:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">// 1. Fetch join in JPQL
+@Query("select o from Order o join fetch o.customer where o.status = :status")
+List&lt;Order&gt; findWithCustomer(OrderStatus status);
+
+// 2. Entity graph
+@EntityGraph(attributePaths = {"customer", "lines"})
+List&lt;Order&gt; findByStatus(OrderStatus status);
+
+// 3. DTO projection: select only what the screen needs
+@Query("select new com.shop.OrderSummary(o.id, c.name, o.total) from Order o join o.customer c")
+List&lt;OrderSummary&gt; summaries();</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>A fourth fix is <strong>batch fetching</strong>: <code>spring.jpa.properties.hibernate.default_batch_fetch_size=50</code> loads lazy relations for many parents in one <code>IN (...)</code> query.</p>
+</div>
+<div class="paragraph">
+<p>Do not "fix" it by making relations <code>EAGER</code>: that loads data everywhere, even when it is not needed, and can still cause N+1.
+Fetch-joining two collections at once produces a Cartesian product (Hibernate throws <code>MultipleBagFetchException</code> for two <code>List</code> collections); fetch one collection per query or use batch fetching.
+Fetch joins with pagination make Hibernate paginate in memory (it logs a warning); paginate IDs first, then fetch.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_lazyinitializationexception_and_open_session_in_view"><a class="anchor" href="#_lazyinitializationexception_and_open_session_in_view"></a>LazyInitializationException and Open Session in View</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Accessing a lazy relation after the persistence context has closed throws <code>LazyInitializationException</code> ("could not initialize proxy - no Session").
+Typical cause: the service method returns an entity and the controller or JSON serialiser touches a lazy field.</p>
+</div>
+<div class="paragraph">
+<p>Spring Boot enables <strong>Open Session in View</strong> (<code>spring.jpa.open-in-view=true</code>) by default and logs a warning about it.
+It keeps the persistence context open until the response is written, which hides the exception but runs extra queries during view rendering and holds a database connection for the whole request.
+Many teams set it to <code>false</code> and fetch what they need inside the transaction, returning DTOs.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_spring_data_repositories"><a class="anchor" href="#_spring_data_repositories"></a>Spring Data repositories</h2>
+<div class="sectionbody">
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">public interface OrderRepository extends JpaRepository&lt;Order, Long&gt;, JpaSpecificationExecutor&lt;Order&gt; {
+
+    // Derived query: Spring parses the method name
+    List&lt;Order&gt; findByStatusAndCreatedAtAfter(OrderStatus status, Instant after);
+
+    Optional&lt;Order&gt; findFirstByCustomerIdOrderByCreatedAtDesc(Long customerId);
+
+    boolean existsByExternalRef(String externalRef);
+
+    // Pagination
+    Page&lt;Order&gt; findByCustomerId(Long customerId, Pageable pageable);
+
+    // JPQL
+    @Query("select o from Order o where o.total &gt; :min")
+    List&lt;Order&gt; bigOrders(BigDecimal min);
+
+    // Native SQL
+    @Query(value = "select * from orders where created_at &gt; now() - interval '1 day'", nativeQuery = true)
+    List&lt;Order&gt; lastDay();
+
+    // Bulk update: bypasses the persistence context, so clear it afterwards
+    @Modifying(clearAutomatically = true)
+    @Query("update Order o set o.status = 'CANCELLED' where o.createdAt &lt; :cutoff and o.status = 'NEW'")
+    int cancelStale(Instant cutoff);
+
+    // Interface projection: only the selected columns
+    List&lt;OrderView&gt; findByStatus(OrderStatus status);
+}
+
+interface OrderView {
+    Long getId();
+    BigDecimal getTotal();
+}</code></pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>CrudRepository</code> gives basic CRUD; <code>PagingAndSortingRepository</code> adds paging; <code>JpaRepository</code> adds JPA-specific methods such as <code>flush</code>, <code>saveAndFlush</code> and batch deletes.</p>
+</li>
+<li>
+<p><code>save()</code> calls <code>persist</code> for a new entity and <code>merge</code> for an existing one. Inside a transaction you rarely need it for updates.</p>
+</li>
+<li>
+<p><code>findById</code> hits the database (or cache) and returns <code>Optional</code>. <code>getReferenceById</code> returns a lazy proxy without a query, useful for setting a foreign key; it throws <code>EntityNotFoundException</code> only when the proxy is accessed.</p>
+</li>
+<li>
+<p><code>Page</code> runs an extra <code>count</code> query; <code>Slice</code> does not, and only knows whether a next page exists.</p>
+</li>
+<li>
+<p>Specifications (<code>JpaSpecificationExecutor</code>) or Querydsl build dynamic filters without string concatenation.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_transactional"><a class="anchor" href="#_transactional"></a>@Transactional</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><code>@Transactional</code> is applied through a proxy (see <a href="spring-core.html#_how_spring_aop_proxies_work" class="xref page">how AOP proxies work</a>).
+The proxy gets a connection, starts the transaction, calls your method, then commits, or rolls back if the method throws.</p>
+</div>
+<div class="sect2">
+<h3 id="_rollback_rules"><a class="anchor" href="#_rollback_rules"></a>Rollback rules</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>By default, Spring rolls back on <strong>unchecked</strong> exceptions (<code>RuntimeException</code>) and <code>Error</code>.</p>
+</li>
+<li>
+<p>It <strong>commits</strong> on <strong>checked</strong> exceptions. Use <code>@Transactional(rollbackFor = Exception.class)</code> if a checked exception should roll back.</p>
+</li>
+<li>
+<p>If you <strong>catch</strong> the exception inside the method and do not rethrow, the proxy sees a normal return and commits.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_pitfalls_the_most_asked_part"><a class="anchor" href="#_pitfalls_the_most_asked_part"></a>Pitfalls (the most-asked part)</h3>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 40%;">
+<col style="width: 60%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Situation</th>
+<th class="tableblock halign-left valign-top">What happens</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Self-invocation: a method calls a <code>@Transactional</code> method in the same class</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">No proxy involved, so no new transaction and no transactional settings for the inner method.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>@Transactional</code> on a <code>private</code> method</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Ignored. (Since Spring 6, <code>protected</code> and package-private methods work with class-based proxies; <code>private</code> never does.)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Checked exception thrown</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Commit, unless <code>rollbackFor</code> is set.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Exception caught and logged inside the method</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Commit.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Inner <code>REQUIRED</code> method throws, outer method catches it and continues</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The shared transaction is marked rollback-only; at commit Spring throws <code>UnexpectedRollbackException</code>.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Calling a remote service or sending a message inside the transaction</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The connection is held while waiting; if the transaction later rolls back, the remote side effect has already happened.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>@Transactional</code> on a class not managed by Spring (<code>new MyService()</code>)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">No proxy, no transaction.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Work done on another thread (<code>@Async</code>, <code>CompletableFuture</code>)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Transactions are bound to the thread; the other thread does not join it.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect2">
+<h3 id="_propagation"><a class="anchor" href="#_propagation"></a>Propagation</h3>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 75%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Propagation</th>
+<th class="tableblock halign-left valign-top">Behaviour</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>REQUIRED</code> (default)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Join the current transaction, or start one if none exists.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>REQUIRES_NEW</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Suspend the current transaction and start an independent one. Commits or rolls back on its own. Uses a second connection.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>NESTED</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Run in a savepoint inside the current transaction; can roll back to the savepoint without affecting the outer work (JDBC savepoints; not supported with JPA by default).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>SUPPORTS</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Join if one exists, otherwise run without a transaction.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>NOT_SUPPORTED</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Suspend the current transaction and run without one.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>MANDATORY</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Must be called inside a transaction, otherwise throw.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>NEVER</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Must not be called inside a transaction, otherwise throw.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Service
+class AuditService {
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    public void record(String event) { /* saved even if the caller's transaction rolls back */ }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><code>REQUIRES_NEW</code> is useful for audit logs that must survive a failure, but it can create surprising partial commits and, under load, can exhaust the connection pool because each call holds two connections.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_readonly_and_timeouts"><a class="anchor" href="#_readonly_and_timeouts"></a>readOnly and timeouts</h3>
+<div class="paragraph">
+<p><code>@Transactional(readOnly = true)</code> tells Hibernate to skip dirty checking and flushing, and some drivers or routing data sources send the query to a read replica.
+<code>@Transactional(timeout = 5)</code> rolls back transactions that run longer than five seconds.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_programmatic_transactions"><a class="anchor" href="#_programmatic_transactions"></a>Programmatic transactions</h3>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">transactionTemplate.executeWithoutResult(status -&gt; {
+    repository.save(entity);
+    if (problem) status.setRollbackOnly();
+});</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Useful when the boundary must be inside a method, or to avoid self-invocation issues.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_isolation_levels"><a class="anchor" href="#_isolation_levels"></a>Isolation levels</h2>
+<div class="sectionbody">
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 40%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Level</th>
+<th class="tableblock halign-left valign-top">Dirty read</th>
+<th class="tableblock halign-left valign-top">Non-repeatable read</th>
+<th class="tableblock halign-left valign-top">Phantom read</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>READ_UNCOMMITTED</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Possible</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Possible</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Possible</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>READ_COMMITTED</code> (default in PostgreSQL, Oracle, SQL Server)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Prevented</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Possible</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Possible</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>REPEATABLE_READ</code> (default in MySQL InnoDB)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Prevented</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Prevented</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Possible in the standard (InnoDB prevents most cases)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>SERIALIZABLE</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Prevented</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Prevented</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Prevented</p></td>
+</tr>
+</tbody>
+</table>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Dirty read</strong>: reading another transaction&#8217;s uncommitted change.</p>
+</li>
+<li>
+<p><strong>Non-repeatable read</strong>: reading the same row twice and getting different values because another transaction committed in between.</p>
+</li>
+<li>
+<p><strong>Phantom read</strong>: running the same query twice and getting new rows.</p>
+</li>
+<li>
+<p><strong>Lost update</strong>: two transactions read, modify and write the same row; one overwrites the other. Prevent with optimistic or pessimistic locking, or an atomic <code>UPDATE ... SET qty = qty - 1</code>.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Most databases implement isolation with <strong>MVCC</strong> (multi-version concurrency control): readers see a snapshot and do not block writers.
+Actual behaviour depends on the database, so name it in your answer.
+Set the level with <code>@Transactional(isolation = Isolation.REPEATABLE_READ)</code> only when you know which anomaly you are preventing.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_optimistic_versus_pessimistic_locking"><a class="anchor" href="#_optimistic_versus_pessimistic_locking"></a>Optimistic versus pessimistic locking</h2>
+<div class="sectionbody">
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">// Optimistic: @Version field. Hibernate adds "where version = ?" to the UPDATE.
+@Version private long version;
+// If another transaction updated the row first, 0 rows match and Hibernate throws
+// ObjectOptimisticLockingFailureException (wrapping OptimisticLockException). Retry or return 409.
+
+// Pessimistic: lock the row while reading (SELECT ... FOR UPDATE).
+@Lock(LockModeType.PESSIMISTIC_WRITE)
+@Query("select a from Account a where a.id = :id")
+Optional&lt;Account&gt; findForUpdate(long id);</code></pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Optimistic</strong> fits low contention and user-facing edits that may take a while: no locks held, conflicts detected at write time.</p>
+</li>
+<li>
+<p><strong>Pessimistic</strong> fits short, highly contended critical sections such as decrementing stock in a flash sale. It blocks other writers and can deadlock; keep transactions short and lock rows in a consistent order.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_connection_pool_hikaricp"><a class="anchor" href="#_connection_pool_hikaricp"></a>Connection pool (HikariCP)</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Spring Boot uses HikariCP.
+Each transaction holds one connection from start to end.
+<strong>Pool exhaustion</strong> happens when requests hold connections too long (slow queries, remote calls inside transactions, Open Session in View) or when concurrency exceeds the pool size; requests then wait and time out after <code>connectionTimeout</code> (30 seconds by default) with <code>SQLTransientConnectionException</code>.
+Watch <code>hikaricp.connections.active</code>, <code>.pending</code> and <code>.timeout</code> metrics.
+A small pool (often 10 to 20 per instance) usually beats a large one because the database itself has limited cores.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_sql_questions_that_come_with_this_topic"><a class="anchor" href="#_sql_questions_that_come_with_this_topic"></a>SQL questions that come with this topic</h2>
+<div class="sectionbody">
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-sql hljs" data-lang="sql">-- Second highest salary
+SELECT MAX(salary) FROM employee WHERE salary &lt; (SELECT MAX(salary) FROM employee);
+
+-- Nth highest salary with a window function (handles ties)
+SELECT DISTINCT salary FROM (
+  SELECT salary, DENSE_RANK() OVER (ORDER BY salary DESC) AS rnk FROM employee
+) t WHERE rnk = 3;
+
+-- Highest paid employee per department
+SELECT * FROM (
+  SELECT e.*, ROW_NUMBER() OVER (PARTITION BY dept_id ORDER BY salary DESC) AS rn FROM employee e
+) t WHERE rn = 1;
+
+-- Duplicate emails
+SELECT email, COUNT(*) FROM users GROUP BY email HAVING COUNT(*) &gt; 1;
+
+-- Customers with no orders
+SELECT c.* FROM customer c LEFT JOIN orders o ON o.customer_id = c.id WHERE o.id IS NULL;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Concepts to be ready for:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>INNER</code>, <code>LEFT</code>, <code>RIGHT</code>, <code>FULL</code> and <code>CROSS</code> joins.</p>
+</li>
+<li>
+<p><code>WHERE</code> filters rows before grouping; <code>HAVING</code> filters groups after.</p>
+</li>
+<li>
+<p><code>DELETE</code> removes rows (logged, can roll back, fires triggers); <code>TRUNCATE</code> empties a table quickly; <code>DROP</code> removes the table.</p>
+</li>
+<li>
+<p><strong>Indexes</strong>: B-tree indexes speed up lookups, range scans and sorting at the cost of slower writes and storage. A composite index on <code>(a, b)</code> helps queries filtering on <code>a</code> or on <code>a</code> and <code>b</code>, not on <code>b</code> alone (leftmost-prefix rule). Functions on a column (<code>WHERE LOWER(email) = ?</code>) prevent index use unless there is a matching function index. Check with <code>EXPLAIN</code>/<code>EXPLAIN ANALYZE</code>.</p>
+</li>
+<li>
+<p><strong>ACID</strong>: atomicity, consistency, isolation, durability.</p>
+</li>
+<li>
+<p><strong>Normalisation</strong> (1NF, 2NF, 3NF) removes duplication; <strong>denormalisation</strong> trades it back for read speed.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_practice_questions"><a class="anchor" href="#_practice_questions"></a>Practice questions</h2>
+<div class="sectionbody">
+<details>
+<summary class="title">Q1. What is the N+1 problem, and how do you fix it?</summary>
+<div class="content">
+<div class="paragraph">
+<p>One query loads N rows, then a lazy relation is accessed on each, firing N more queries.
+Fix with a fetch join, an <code>@EntityGraph</code>, a DTO projection, or batch fetching.
+Detect it with SQL logging or query-count assertions in tests.
+Do not switch to <code>EAGER</code>.</p>
+</div>
+</div>
+</details>
+<details>
+<summary class="title">Q2. Lazy versus eager loading?</summary>
+<div class="content">
+<div class="paragraph">
+<p>Lazy loads the relation when it is first accessed, which saves work but risks <code>LazyInitializationException</code> and hidden queries.
+Eager loads it immediately, which can over-fetch and join large graphs.
+Make relations lazy and choose a fetch plan per use case.</p>
+</div>
+</div>
+</details>
+<details>
+<summary class="title">Q3. What are the JPA entity states?</summary>
+<div class="content">
+<div class="paragraph">
+<p>Transient (new, untracked), managed (tracked by the persistence context, changes flushed automatically), detached (context closed, changes untracked until <code>merge</code>), removed (deleted at flush).</p>
+</div>
+</div>
+</details>
+<details>
+<summary class="title">Q4. What is dirty checking?</summary>
+<div class="content">
+<div class="paragraph">
+<p>Hibernate snapshots managed entities when loaded; at flush it compares them and writes <code>UPDATE</code>s for changes.
+So modifying a managed entity in a transaction saves it without calling <code>save</code>.
+It costs memory and flush time for large contexts.</p>
+</div>
+</div>
+</details>
+<details>
+<summary class="title">Q5. My <code>@Transactional</code> method threw an exception, but the data was saved. Why?</summary>
+<div class="content">
+<div class="paragraph">
+<p>Likely causes: the exception was checked (no rollback by default), it was caught inside the method, the method was called from the same class (no proxy), the method is private, or the class is not a Spring bean.
+Check which one, then fix with <code>rollbackFor</code>, rethrowing, moving the method to another bean, or making it public.</p>
+</div>
+</div>
+</details>
+<details>
+<summary class="title">Q6. Explain REQUIRED versus REQUIRES_NEW.</summary>
+<div class="content">
+<div class="paragraph">
+<p><code>REQUIRED</code> joins the existing transaction, so everything commits or rolls back together.
+<code>REQUIRES_NEW</code> suspends it and runs a separate transaction on another connection that commits independently.
+Use <code>REQUIRES_NEW</code> for audit records that must survive; beware of partial commits and double connection use.</p>
+</div>
+</div>
+</details>
+<details>
+<summary class="title">Q7. What is <code>UnexpectedRollbackException</code>?</summary>
+<div class="content">
+<div class="paragraph">
+<p>An inner method in the same <code>REQUIRED</code> transaction threw a runtime exception, so the proxy marked the transaction rollback-only.
+The outer method caught the exception and tried to commit; Spring rolls back and throws <code>UnexpectedRollbackException</code> to say the commit did not happen.</p>
+</div>
+</div>
+</details>
+<details>
+<summary class="title">Q8. Explain the isolation levels and anomalies.</summary>
+<div class="content">
+<div class="paragraph">
+<p>Read uncommitted allows dirty reads; read committed prevents them but allows non-repeatable reads; repeatable read also prevents those but may allow phantoms; serializable prevents all.
+Higher levels reduce concurrency.
+Defaults differ: read committed in PostgreSQL and Oracle, repeatable read in MySQL.</p>
+</div>
+</div>
+</details>
+<details>
+<summary class="title">Q9. Optimistic versus pessimistic locking: which would you use for an inventory decrement during a sale?</summary>
+<div class="content">
+<div class="paragraph">
+<p>For heavy contention on the same rows, pessimistic (<code>SELECT ... FOR UPDATE</code>) or, better, a single atomic SQL statement such as <code>UPDATE stock SET qty = qty - 1 WHERE sku = ? AND qty &gt; 0</code> and checking the updated row count.
+Optimistic locking would cause many conflicts and retries.
+For normal edits with rare conflicts, optimistic with <code>@Version</code>.</p>
+</div>
+</div>
+</details>
+<details>
+<summary class="title">Q10. What is the outbox pattern and why is it needed?</summary>
+<div class="content">
+<div class="paragraph">
+<p>Writing to the database and publishing to a broker are two systems; if one succeeds and the other fails, they disagree (the dual-write problem).
+Instead, insert the event into an <code>outbox</code> table in the same database transaction as the business change.
+A separate relay (polling or change data capture such as Debezium) publishes outbox rows and marks them sent.
+Consumers must be idempotent because the relay may publish twice.</p>
+</div>
+</div>
+</details>
+<details>
+<summary class="title">Q11. What causes connection pool exhaustion, and how do you find it?</summary>
+<div class="content">
+<div class="paragraph">
+<p>Long transactions (slow queries, remote calls or file I/O inside them), Open Session in View, connection leaks in hand-written JDBC, pool too small for the concurrency, or <code>REQUIRES_NEW</code> doubling connection use.
+Look at HikariCP metrics for active and pending connections, thread dumps showing threads waiting in <code>getConnection</code>, and slow query logs.</p>
+</div>
+</div>
+</details>
+<details>
+<summary class="title">Q12. <code>findById</code> versus <code>getReferenceById</code>?</summary>
+<div class="content">
+<div class="paragraph">
+<p><code>findById</code> queries (or uses the first-level cache) and returns <code>Optional</code>.
+<code>getReferenceById</code> returns an uninitialised proxy with no query, which is efficient when you only need to set a foreign key; it fails with <code>EntityNotFoundException</code> only when you access a property of a row that does not exist.</p>
+</div>
+</div>
+</details>
+<details>
+<summary class="title">Q13. Why does <code>GenerationType.IDENTITY</code> hurt batch inserts?</summary>
+<div class="content">
+<div class="paragraph">
+<p>The ID is generated by the database on insert, so Hibernate must execute each <code>INSERT</code> immediately to know the ID and cannot group them into a JDBC batch.
+<code>SEQUENCE</code> with an allocation size fetches IDs in blocks and allows batching.</p>
+</div>
+</div>
+</details>
+<details>
+<summary class="title">Q14. What is Open Session in View, and should you keep it on?</summary>
+<div class="content">
+<div class="paragraph">
+<p>It keeps the persistence context open until the response is rendered, so lazy loading works in controllers and serialisers.
+It hides N+1 queries and holds a connection for the whole request.
+Many teams turn it off and return DTOs built inside the transaction.</p>
+</div>
+</div>
+</details>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_common_traps"><a class="anchor" href="#_common_traps"></a>Common traps</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><code>EnumType.ORDINAL</code>.</p>
+</li>
+<li>
+<p><code>EAGER</code> as the fix for lazy loading errors.</p>
+</li>
+<li>
+<p>Calling <code>save()</code> on managed entities and believing it is required.</p>
+</li>
+<li>
+<p><code>@Transactional</code> on private methods or controller classes that call internal methods.</p>
+</li>
+<li>
+<p>Remote calls inside transactions.</p>
+</li>
+<li>
+<p>Returning entities from controllers.</p>
+</li>
+<li>
+<p><code>@Modifying</code> queries without clearing the persistence context, leaving stale entities.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_follow_ups_to_expect"><a class="anchor" href="#_follow_ups_to_expect"></a>Follow-ups to expect</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p>"This endpoint is slow. The logs show 201 SQL statements. Walk me through the fix."</p>
+</li>
+<li>
+<p>"Where would you put <code>@Transactional</code>: controller, service or repository?" (Service layer, around one business operation.)</p>
+</li>
+<li>
+<p>"How do you keep a database update and a Kafka publish consistent?" (Outbox.)</p>
+</li>
+<li>
+<p>"Write a query for the top three salaries in each department."</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_quick_revision"><a class="anchor" href="#_quick_revision"></a>Quick revision</h2>
+<div class="sectionbody">
+<div class="ulist checklist">
+<ul class="checklist">
+<li>
+<p><i class="fa fa-square-o"></i> Default fetch types, owning side, ID generation and batching</p>
+</li>
+<li>
+<p><i class="fa fa-square-o"></i> Entity states, persistence context, dirty checking, flush</p>
+</li>
+<li>
+<p><i class="fa fa-square-o"></i> N+1: detection and four fixes; <code>MultipleBagFetchException</code>; pagination warning</p>
+</li>
+<li>
+<p><i class="fa fa-square-o"></i> <code>@Transactional</code> rollback rules and the pitfalls table</p>
+</li>
+<li>
+<p><i class="fa fa-square-o"></i> Propagation table; <code>UnexpectedRollbackException</code></p>
+</li>
+<li>
+<p><i class="fa fa-square-o"></i> Isolation levels and anomalies; MVCC</p>
+</li>
+<li>
+<p><i class="fa fa-square-o"></i> Optimistic versus pessimistic locking; atomic update</p>
+</li>
+<li>
+<p><i class="fa fa-square-o"></i> SQL: joins, <code>GROUP BY</code>/<code>HAVING</code>, window functions, indexes</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Next: <a href="spring-security.html" class="xref page">Spring Security, JWT and OAuth2</a>.</p>
+</div>
+</div>
+</div>
+      </article>
+      <div class="article-pagination">
+        <a class="prev" href="rest-spring-mvc.html"><span>← Previous</span><strong>REST APIs and Spring MVC</strong></a>
+        <a class="next" href="spring-security.html"><span>Next →</span><strong>Spring Security, JWT, OAuth2</strong></a>
+      </div>
+    </main>
+    <aside class="docs-toc reading-assistant" id="reading-assistant" aria-label="Reading assistant">
+  <div class="toc-inner ra-inner">
+    <div class="ra-head">
+      <h2 class="ra-title">Reading Assistant</h2>
+      <button type="button" class="ra-close" aria-label="Close reading assistant">
+        <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+    </div>
+
+    <section class="ra-card ra-listen" aria-labelledby="reading-assistant-listen" hidden>
+      <div class="ra-card-head">
+        <svg class="ra-card-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/></svg>
+        <div>
+          <h3 class="ra-card-title" id="reading-assistant-listen">Listen to Article</h3>
+          <p class="ra-card-desc">Listen to the explanation of this article. Code blocks are skipped.</p>
+        </div>
+      </div>
+
+      <div class="ra-ready">
+        <div class="ra-player">
+          <button type="button" class="ra-play" aria-label="Play article">
+            <svg class="ra-icon-play" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M8 5.5v13l11-6.5z"/></svg>
+            <svg class="ra-icon-pause" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M7 5h3.5v14H7zM13.5 5H17v14h-3.5z"/></svg>
+          </button>
+          <div class="ra-track">
+            <div class="ra-meter" role="progressbar" aria-label="Listening progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><span class="ra-meter-fill"></span></div>
+            <span class="ra-time" title="Estimated. Browser speech does not report an exact duration."></span>
+          </div>
+          <button type="button" class="ra-stop" aria-label="Stop listening" disabled>
+            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="6.5" y="6.5" width="11" height="11" rx="1.5"/></svg>
+          </button>
+        </div>
+
+        <div class="ra-controls">
+          <label class="ra-field ra-field-rate">
+            <span class="ra-field-label">Speed</span>
+            <select class="ra-rate">
+              <option value="0.75">0.75×</option>
+              <option value="1" selected>1×</option>
+              <option value="1.25">1.25×</option>
+              <option value="1.5">1.5×</option>
+              <option value="2">2×</option>
+            </select>
+          </label>
+        </div>
+
+        <label class="ra-check"><input type="checkbox" class="ra-follow" checked> Highlight and follow along</label>
+        <p class="ra-status" role="status" aria-live="polite">Ready</p>
+
+        <p class="ra-tip">
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M9 18h6M10 21h4"/><path d="M12 3a6 6 0 0 0-3.5 10.9V16h7v-2.1A6 6 0 0 0 12 3z"/></svg>
+          <span><strong>Tip:</strong> Headings and explanations are read aloud; code is skipped. Read in Google UK English Male on Chrome; other browsers use their closest British English voice.</span>
+        </p>
+      </div>
+
+      <p class="ra-unsupported" hidden>Listening isn&#8217;t available in this browser. The article itself works as usual.</p>
+    </section>
+
+    <section class="ra-card ra-jump" aria-labelledby="reading-assistant-sections" hidden>
+      <h3 class="ra-card-title" id="reading-assistant-sections">Jump to Section</h3>
+      <ol class="ra-sections"></ol>
+    </section>
+
+    <section class="ra-card ra-info" aria-labelledby="reading-assistant-info">
+      <h3 class="ra-card-title" id="reading-assistant-info">Page Info</h3>
+      <ul class="ra-info-list">
+        <li>
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+          <span title="Estimated at 220 words per minute">~8 min read</span>
+        </li>
+        <li>
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h6"/></svg>
+          <span title="Prose only; code is not counted">~1,798 words</span>
+        </li>
+        <li>
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="4" y="5" width="16" height="16" rx="2"/><path d="M16 3v4M8 3v4M4 10h16"/></svg>
+          <span>Last updated <time datetime="2026-11-11">Nov 11, 2026</time></span>
+        </li>
+      </ul>
+    </section>
+  </div>
+</aside>
+  </div>
+  <footer class="docs-footer">© 2026 Ayush Nigam · <a href="../../index.html">Home</a></footer>
+  <script src="../../../../_/js/reading-assistant.js?v=2" defer></script>
+  <script src="../../../../_/js/site.js?v=15" defer></script>
+</body>
+</html>

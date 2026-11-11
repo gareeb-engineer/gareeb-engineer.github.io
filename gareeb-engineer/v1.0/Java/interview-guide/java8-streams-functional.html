@@ -1,0 +1,1384 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>Java 8: Lambdas, Streams and Optional · Ayush Nigam</title>
+  
+  <link rel="preload" href="../../../../_/fonts/inter-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="../../../../_/css/site.css?v=21">
+</head>
+<body class="docs-page">
+  <a class="skip-link" href="#article-main">Skip to content</a>
+  <header class="docs-header">
+    <div class="docs-header-inner">
+      <a class="docs-logo" href="../../index.html"><span class="docs-logo-mark">AN</span><span>Ayush Nigam</span></a>
+          <nav class="header-adoc-nav docs-toplinks" aria-label="Header links" data-header-source-url="../../headers/header-links.html">
+            <div class="header-adoc-content"><div class="ulist header-menu-links">
+<ul>
+<li>
+<p><a href="contact.html" class="xref page">Contact</a></p>
+</li>
+<li>
+<p><a href="https://www.linkedin.com/in/the-ayush-nigam/">LinkedIn</a></p>
+</li>
+<li>
+<p><a href="https://github.com/gareeb-engineer">GitHub</a></p>
+</li>
+</ul>
+</div>
+</div>
+          </nav>
+      <a class="header-avatar" href="../../index.html" aria-hidden="true" tabindex="-1"><img src="../../../../_/img/profile-photo.png" alt="Ayush Nigam profile photo" width="36" height="36"></a>
+<button type="button" class="mobile-nav-toggle" aria-label="Toggle documentation navigation" aria-expanded="false" aria-controls="docs-sidebar">☰ Menu</button>
+      <span class="read-progress-label" aria-hidden="true" hidden>Reading <span class="read-progress-value">0%</span></span>
+    </div>
+    <div class="read-progress" role="progressbar" aria-label="Article reading progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" hidden><span class="read-progress-fill"></span></div>
+  </header>
+  <div class="docs-shell">
+    <aside class="docs-sidebar" id="docs-sidebar" aria-label="Documentation sidebar">
+      <div class="sidebar-inner">
+      <div class="sidebar-top"><span class="sidebar-eyebrow">ENGINEERING LIBRARY</span></div>
+      <input id="nav-filter" class="nav-filter" type="search" placeholder="Filter pages…" aria-label="Filter navigation" autocomplete="off">
+      <nav aria-label="Documentation pages"><ul class="nav-tree">
+  <li class="nav-item nav-parent">
+        <div class="nav-group">
+          <button type="button" class="nav-row nav-toggle" aria-expanded="true">
+            <span class="nav-label">Java</span>
+            <span class="nav-chevron" aria-hidden="true">▾</span>
+          </button>
+          <div class="nav-children">
+            <ul class="nav-tree">
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../index.html" title="Open Java overview">Overview</a>
+      </div>
+  </li>
+  <li class="nav-item nav-parent">
+        <div class="nav-group nav-linked-group">
+          <div class="nav-row nav-linked-row">
+            <a href="index.html">Java Interview Guide</a>
+            <button type="button" class="nav-toggle nav-linked-toggle" aria-expanded="true" aria-label="Toggle subtopics">
+              <span class="nav-chevron" aria-hidden="true">▾</span>
+            </button>
+          </div>
+          <div class="nav-children"><ul class="nav-tree">
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="core-java-oop.html">Core Java and OOP</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="collections-generics.html">Collections and Generics</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="java8-streams-functional.html" class="is-current" aria-current="page">Java 8: Lambdas, Streams, Optional</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="modern-java.html">Modern Java (11 to 25)</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="concurrency.html">Concurrency and Multithreading</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="jvm-memory-gc.html">JVM, Memory and GC</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="spring-core.html">Spring Core: IoC, DI, AOP</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="spring-boot.html">Spring Boot</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="rest-spring-mvc.html">REST APIs and Spring MVC</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="jpa-hibernate-transactions.html">JPA, Hibernate, Transactions</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="spring-security.html">Spring Security, JWT, OAuth2</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="microservices.html">Microservices</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="coding-round.html">Coding Round in Java</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="testing.html">Testing</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="senior-scenarios.html">Production Scenarios and Behavioural</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="spring-ai.html">Spring AI and GenAI</a>
+      </div>
+  </li>
+</ul>
+</div>
+        </div>
+  </li>
+</ul>
+          </div>
+        </div>
+  </li>
+  <li class="nav-item nav-parent">
+        <div class="nav-group is-collapsed">
+          <button type="button" class="nav-row nav-toggle" aria-expanded="false">
+            <span class="nav-label">Architecture Diagram&#8217;s</span>
+            <span class="nav-chevron" aria-hidden="true">▸</span>
+          </button>
+          <div class="nav-children">
+            <ul class="nav-tree">
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Arcitecture-diagram/index.html" title="Open Architecture Diagram’s overview">Overview</a>
+      </div>
+  </li>
+</ul>
+          </div>
+        </div>
+  </li>
+  <li class="nav-item nav-parent">
+        <div class="nav-group is-collapsed">
+          <button type="button" class="nav-row nav-toggle" aria-expanded="false">
+            <span class="nav-label">References</span>
+            <span class="nav-chevron" aria-hidden="true">▸</span>
+          </button>
+          <div class="nav-children">
+            <ul class="nav-tree">
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../DevOps-Refs/index.html" title="Open References overview">Overview</a>
+      </div>
+  </li>
+</ul>
+          </div>
+        </div>
+  </li>
+  <li class="nav-item nav-parent">
+        <div class="nav-group is-collapsed">
+          <button type="button" class="nav-row nav-toggle" aria-expanded="false">
+            <span class="nav-label">Data Structure</span>
+            <span class="nav-chevron" aria-hidden="true">▸</span>
+          </button>
+          <div class="nav-children">
+            <ul class="nav-tree">
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Data-Structure/index.html" title="Open Data Structure overview">Overview</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Data-Structure/arrays/index.html">Arrays</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Data-Structure/linked-list/index.html">Linked Lists</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Data-Structure/stacks-n-queue/index.html">Stacks</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Data-Structure/trees/index.html">Trees</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Data-Structure/hash-map/index.html">Hash Map</a>
+      </div>
+  </li>
+  <li class="nav-item nav-parent">
+        <div class="nav-group nav-linked-group is-collapsed">
+          <div class="nav-row nav-linked-row">
+            <a href="../../Data-Structure/dynamic-programming/index.html">Dynamic Programming</a>
+            <button type="button" class="nav-toggle nav-linked-toggle" aria-expanded="false" aria-label="Toggle subtopics">
+              <span class="nav-chevron" aria-hidden="true">▸</span>
+            </button>
+          </div>
+          <div class="nav-children"><ul class="nav-tree">
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Data-Structure/dynamic-programming/fibonacci-series.html">Fibonacci Series</a>
+      </div>
+  </li>
+</ul>
+</div>
+        </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Data-Structure/graphs/index.html">Graphs</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Data-Structure/backtracking/index.html">Backtracking</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Data-Structure/pattern-printing/index.html">Pattern Printing</a>
+      </div>
+  </li>
+  <li class="nav-item nav-parent">
+        <div class="nav-group nav-linked-group is-collapsed">
+          <div class="nav-row nav-linked-row">
+            <a href="../../Data-Structure/recursion/index.html">Recursion</a>
+            <button type="button" class="nav-toggle nav-linked-toggle" aria-expanded="false" aria-label="Toggle subtopics">
+              <span class="nav-chevron" aria-hidden="true">▸</span>
+            </button>
+          </div>
+          <div class="nav-children"><ul class="nav-tree">
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Data-Structure/recursion/sum-of-all-element.html">Sum of all elements</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Data-Structure/recursion/all-indices-of-array.html">All indices of array</a>
+      </div>
+  </li>
+</ul>
+</div>
+        </div>
+  </li>
+</ul>
+          </div>
+        </div>
+  </li>
+  <li class="nav-item nav-parent">
+        <div class="nav-group is-collapsed">
+          <button type="button" class="nav-row nav-toggle" aria-expanded="false">
+            <span class="nav-label">Low Level Design</span>
+            <span class="nav-chevron" aria-hidden="true">▸</span>
+          </button>
+          <div class="nav-children">
+            <ul class="nav-tree">
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Low-Level-Design/index.html" title="Open Low Level Design overview">Overview</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Low-Level-Design/design-principles.html">Design Principles</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Low-Level-Design/solid-principles.html">SOLID Principles</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Low-Level-Design/design-patterns.html">Gang of Four Design Patterns</a>
+      </div>
+  </li>
+</ul>
+          </div>
+        </div>
+  </li>
+</ul>
+</nav>
+      </div>
+    </aside>
+    <main id="article-main" class="docs-article">
+      <nav class="breadcrumbs" aria-label="Breadcrumb"><a href="../../index.html">Home</a><span aria-hidden="true">/</span><a href="index.html">Java Interview Guide</a><span aria-hidden="true">/</span><a href="java8-streams-functional.html">Java 8: Lambdas, Streams, Optional</a></nav>
+      <article class="article-body" data-reading-progress>
+        <header class="article-header">
+          <h1>Java 8: Lambdas, Streams and Optional</h1>
+          
+          <p class="article-subtitle">Functional interfaces, lambdas, method references, the stream pipeline, collectors, Optional, and twenty stream programs that interviewers ask you to write live.</p>
+          <ul class="article-chips">
+            <li class="chip chip-difficulty chip-medium">Medium</li><li class="chip chip-tag">Java</li><li class="chip chip-tag">Interview Preparation</li><li class="chip chip-tag">Streams</li><li class="chip chip-tag">Lambdas</li><li class="chip chip-tag">Functional Programming</li>
+          </ul>
+          <div class="article-meta">
+            <span class="article-meta-item" title="Estimated at 220 words per minute">
+              <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+              ~5 min read
+            </span>
+            <span class="article-meta-item">
+              <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="4" y="5" width="16" height="16" rx="2"/><path d="M16 3v4M8 3v4M4 10h16"/></svg>
+              Updated <time datetime="2026-11-11">Nov 11, 2026</time>
+            </span>
+            <button type="button" class="ra-open" aria-controls="reading-assistant" aria-expanded="false" hidden>
+              <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/></svg>
+              Listen
+            </button>
+          </div>
+        </header>
+        <div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>Java 8 changed how Java code is written, and interviews still reflect that.
+Expect theory questions (lazy evaluation, <code>map</code> versus <code>flatMap</code>) and, very often, a live task such as "group employees by department and find the highest salary in each" using streams.
+The second half of this page is a set of stream drills for that.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_at_a_glance"><a class="anchor" href="#_at_a_glance"></a>At a glance</h2>
+<div class="sectionbody">
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 75%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Weightage</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>9 / 10</strong></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Who gets asked</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Everyone. Service companies and banks ask stream programs in almost every round.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Preparation time</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">4 to 5 hours, most of it writing the drills by hand</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Handbook questions</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Q26-Q30, Q35-Q38</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Builds on</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="collections-generics.html" class="xref page">Collections and Generics</a></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_lambdas_and_functional_interfaces"><a class="anchor" href="#_lambdas_and_functional_interfaces"></a>Lambdas and functional interfaces</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>A <strong>functional interface</strong> has exactly one abstract method (it may also have <code>default</code> and <code>static</code> methods).
+<code>@FunctionalInterface</code> is optional; it makes the compiler reject a second abstract method.
+A <strong>lambda</strong> is a short way to implement that one method.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@FunctionalInterface
+interface Discount {
+    BigDecimal apply(BigDecimal amount);
+}
+
+Discount tenPercent = amount -&gt; amount.multiply(new BigDecimal("0.90"));</code></pre>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_the_built_in_interfaces_in_java_util_function"><a class="anchor" href="#_the_built_in_interfaces_in_java_util_function"></a>The built-in interfaces in <code>java.util.function</code></h3>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 28.5714%;">
+<col style="width: 28.5714%;">
+<col style="width: 42.8572%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Interface</th>
+<th class="tableblock halign-left valign-top">Method</th>
+<th class="tableblock halign-left valign-top">Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Predicate&lt;T&gt;</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>boolean test(T)</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>s -&gt; s.isEmpty()</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Function&lt;T,R&gt;</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>R apply(T)</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>s -&gt; s.length()</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Consumer&lt;T&gt;</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>void accept(T)</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>s -&gt; System.out.println(s)</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Supplier&lt;T&gt;</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>T get()</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>() -&gt; new ArrayList&lt;&gt;()</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>UnaryOperator&lt;T&gt;</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>T apply(T)</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>s -&gt; s.trim()</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>BinaryOperator&lt;T&gt;</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>T apply(T, T)</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>(a, b) -&gt; a + b</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>BiFunction&lt;T,U,R&gt;</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>R apply(T, U)</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>(name, age) -&gt; new Person(name, age)</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>IntPredicate</code>, <code>ToIntFunction&lt;T&gt;</code>, &#8230;&#8203;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">primitive versions</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">avoid boxing</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>Composition methods are worth mentioning: <code>predicate.and(other)</code>, <code>predicate.negate()</code>, <code>function.andThen(next)</code>, <code>function.compose(before)</code>, <code>Comparator.comparing(...).thenComparing(...)</code>.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_variable_capture"><a class="anchor" href="#_variable_capture"></a>Variable capture</h3>
+<div class="paragraph">
+<p>A lambda can use local variables from the enclosing method only if they are <strong>effectively final</strong> (never reassigned).
+The lambda captures the value, and allowing reassignment would create confusing behaviour and data races when the lambda runs on another thread.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">int limit = 10;
+list.removeIf(n -&gt; n &gt; limit);   // fine
+// limit = 20;                   // would make the line above fail to compile</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>A lambda has no <code>this</code> of its own: <code>this</code> inside a lambda means the enclosing instance.
+An anonymous class creates a new scope, so <code>this</code> refers to the anonymous object.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_method_references"><a class="anchor" href="#_method_references"></a>Method references</h3>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Kind</th>
+<th class="tableblock halign-left valign-top">Syntax</th>
+<th class="tableblock halign-left valign-top">Lambda equivalent</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Static method</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Integer::parseInt</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>s -&gt; Integer.parseInt(s)</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Instance method of a particular object</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>System.out::println</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>x -&gt; System.out.println(x)</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Instance method of an arbitrary object of a type</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String::toUpperCase</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>s -&gt; s.toUpperCase()</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Constructor</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>ArrayList::new</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>() -&gt; new ArrayList&lt;&gt;()</code></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_the_stream_pipeline"><a class="anchor" href="#_the_stream_pipeline"></a>The stream pipeline</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>A stream is a <strong>pipeline</strong> over a source, not a data structure.
+It has three parts:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>A <strong>source</strong>: <code>list.stream()</code>, <code>Arrays.stream(arr)</code>, <code>Stream.of(...)</code>, <code>IntStream.range(0, n)</code>, <code>Files.lines(path)</code>.</p>
+</li>
+<li>
+<p>Zero or more <strong>intermediate operations</strong>, which return a new stream and are <strong>lazy</strong>: <code>filter</code>, <code>map</code>, <code>flatMap</code>, <code>distinct</code>, <code>sorted</code>, <code>peek</code>, <code>limit</code>, <code>skip</code>, <code>takeWhile</code>, <code>dropWhile</code>.</p>
+</li>
+<li>
+<p>One <strong>terminal operation</strong>, which triggers execution: <code>collect</code>, <code>toList</code>, <code>forEach</code>, <code>reduce</code>, <code>count</code>, <code>min</code>, <code>max</code>, <code>anyMatch</code>, <code>allMatch</code>, <code>noneMatch</code>, <code>findFirst</code>, <code>findAny</code>.</p>
+</li>
+</ol>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">List&lt;String&gt; result = employees.stream()          // source
+        .filter(e -&gt; e.salary() &gt; 50_000)          // intermediate, lazy
+        .map(Employee::name)                       // intermediate, lazy
+        .sorted()                                  // intermediate, stateful
+        .limit(5)                                  // intermediate, short-circuiting
+        .toList();                                 // terminal: runs the pipeline</code></pre>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_lazy_evaluation"><a class="anchor" href="#_lazy_evaluation"></a>Lazy evaluation</h3>
+<div class="paragraph">
+<p>Nothing runs until the terminal operation.
+Then elements flow through the pipeline <strong>one at a time</strong> (vertical processing), not stage by stage.
+That is why short-circuiting works:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">Stream.of("a", "bb", "ccc", "dddd")
+      .filter(s -&gt; { System.out.println("filter " + s); return s.length() &gt; 1; })
+      .map(s -&gt; { System.out.println("map " + s); return s.toUpperCase(); })
+      .findFirst();
+
+// Output:
+// filter a
+// filter bb
+// map bb
+// "ccc" and "dddd" are never touched.</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_stateless_versus_stateful_operations"><a class="anchor" href="#_stateless_versus_stateful_operations"></a>Stateless versus stateful operations</h3>
+<div class="paragraph">
+<p><code>filter</code> and <code>map</code> look at one element at a time (<strong>stateless</strong>).
+<code>sorted</code> and <code>distinct</code> must see many or all elements before passing anything on (<strong>stateful</strong>), which costs memory and breaks the one-at-a-time flow.
+<code>sorted</code> on an infinite stream never finishes.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_rules"><a class="anchor" href="#_rules"></a>Rules</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>A stream can be consumed <strong>once</strong>. A second terminal operation throws <code>IllegalStateException</code>.</p>
+</li>
+<li>
+<p>Do not modify the source collection during the pipeline.</p>
+</li>
+<li>
+<p>Keep lambdas free of side effects. Use collectors to build results instead of adding to an external list from <code>forEach</code>.</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">// Avoid: side effect, not safe in parallel, harder to read
+List&lt;String&gt; names = new ArrayList&lt;&gt;();
+employees.stream().forEach(e -&gt; names.add(e.name()));
+
+// Prefer
+List&lt;String&gt; names2 = employees.stream().map(Employee::name).toList();</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_map_versus_flatmap"><a class="anchor" href="#_map_versus_flatmap"></a>map versus flatMap</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><code>map</code> turns each element into exactly one element.
+<code>flatMap</code> turns each element into a <strong>stream</strong> of zero or more elements and flattens them into one stream.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">List&lt;List&lt;String&gt;&gt; nested = List.of(List.of("a", "b"), List.of("c"));
+
+nested.stream().map(List::size).toList();               // [2, 1]
+nested.stream().flatMap(List::stream).toList();         // [a, b, c]
+
+// Every distinct word in a set of lines
+Set&lt;String&gt; words = lines.stream()
+        .flatMap(line -&gt; Arrays.stream(line.split("\\s+")))
+        .map(String::toLowerCase)
+        .collect(Collectors.toSet());</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_reduce"><a class="anchor" href="#_reduce"></a>reduce</h2>
+<div class="sectionbody">
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">int sum = numbers.stream().reduce(0, Integer::sum);           // identity + accumulator
+Optional&lt;Integer&gt; max = numbers.stream().reduce(Integer::max); // no identity: Optional
+int total = numbers.stream().mapToInt(Integer::intValue).sum(); // clearer and no boxing</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The identity must be neutral (<code>0</code> for sum, <code>1</code> for product).
+For parallel streams the accumulator must be associative.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_collectors"><a class="anchor" href="#_collectors"></a>Collectors</h2>
+<div class="sectionbody">
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">// toMap: throws IllegalStateException on duplicate keys unless you pass a merge function
+Map&lt;String, Integer&gt; byName = employees.stream()
+        .collect(Collectors.toMap(Employee::name, Employee::salary, (a, b) -&gt; a));
+
+// groupingBy: Map&lt;K, List&lt;T&gt;&gt; by default
+Map&lt;String, List&lt;Employee&gt;&gt; byDept = employees.stream()
+        .collect(Collectors.groupingBy(Employee::department));
+
+// groupingBy with a downstream collector
+Map&lt;String, Long&gt; countByDept = employees.stream()
+        .collect(Collectors.groupingBy(Employee::department, Collectors.counting()));
+
+Map&lt;String, Double&gt; avgSalary = employees.stream()
+        .collect(Collectors.groupingBy(Employee::department,
+                 Collectors.averagingInt(Employee::salary)));
+
+// partitioningBy: always a Map&lt;Boolean, ...&gt; with both true and false keys
+Map&lt;Boolean, List&lt;Employee&gt;&gt; highEarners = employees.stream()
+        .collect(Collectors.partitioningBy(e -&gt; e.salary() &gt; 100_000));
+
+// joining
+String csv = names.stream().collect(Collectors.joining(", ", "[", "]"));
+
+// sorted TreeMap instead of HashMap
+Map&lt;String, Long&gt; sorted = employees.stream()
+        .collect(Collectors.groupingBy(Employee::department, TreeMap::new, Collectors.counting()));</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><code>Stream.toList()</code> (Java 16) returns an unmodifiable list.
+<code>Collectors.toList()</code> returns a list with no guarantee of mutability (in practice an <code>ArrayList</code>).
+Say which one you are using if the caller needs to modify the result.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_primitive_streams"><a class="anchor" href="#_primitive_streams"></a>Primitive streams</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><code>IntStream</code>, <code>LongStream</code> and <code>DoubleStream</code> avoid boxing and add <code>sum()</code>, <code>average()</code>, <code>summaryStatistics()</code> and <code>range()</code>.
+Convert with <code>mapToInt</code>, <code>mapToObj</code> and <code>boxed()</code>.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_parallel_streams"><a class="anchor" href="#_parallel_streams"></a>Parallel streams</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><code>parallelStream()</code> splits the work across the common <code>ForkJoinPool</code> (size: number of CPU cores minus one by default).
+Avoid it when:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>the data set is small, because splitting and merging cost more than they save;</p>
+</li>
+<li>
+<p>the operations block on I/O, because they tie up the shared pool used by the whole JVM;</p>
+</li>
+<li>
+<p>the lambdas touch shared mutable state;</p>
+</li>
+<li>
+<p>order matters (<code>forEachOrdered</code> removes most of the gain);</p>
+</li>
+<li>
+<p>the source splits badly (<code>LinkedList</code>, <code>Stream.iterate</code>).</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Measure before using it.
+In a web application, a parallel stream inside a request handler competes with every other request for the same pool.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_optional"><a class="anchor" href="#_optional"></a>Optional</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><code>Optional&lt;T&gt;</code> is a container for a value that may be absent.
+It was designed as a <strong>return type</strong> that forces the caller to think about the empty case.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">Optional&lt;User&gt; user = repository.findById(id);
+
+String email = user.map(User::email)
+                   .filter(e -&gt; e.endsWith("@company.com"))
+                   .orElse("unknown");
+
+User u = user.orElseThrow(() -&gt; new UserNotFoundException(id));
+
+user.ifPresentOrElse(this::sendWelcome, () -&gt; log.warn("No user {}", id));</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Good practice:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Use it for return values, not for fields, method parameters or collection elements (return an empty collection instead).</p>
+</li>
+<li>
+<p>Never call <code>get()</code> without checking; prefer <code>orElseThrow()</code>, which says what happens.</p>
+</li>
+<li>
+<p><code>orElse(compute())</code> always evaluates <code>compute()</code>; <code>orElseGet(this::compute)</code> evaluates it only if empty. This matters for expensive calls.</p>
+</li>
+<li>
+<p><code>Optional.of(null)</code> throws; use <code>Optional.ofNullable</code>.</p>
+</li>
+<li>
+<p><code>map</code> wraps the result; <code>flatMap</code> is for functions that already return <code>Optional</code>, which avoids <code>Optional&lt;Optional&lt;T&gt;&gt;</code>.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_default_and_static_methods_in_interfaces"><a class="anchor" href="#_default_and_static_methods_in_interfaces"></a>Default and static methods in interfaces</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Java 8 added <code>default</code> methods so that interfaces such as <code>Collection</code> could gain <code>stream()</code> and <code>forEach</code> without breaking every existing implementation.
+Static interface methods hold helpers that belong to the interface (<code>Comparator.comparing</code>, <code>List.of</code>).</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_stream_coding_drills"><a class="anchor" href="#_stream_coding_drills"></a>Stream coding drills</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Write each one on paper first, then check.
+The examples use these types:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">record Employee(String name, String department, int salary, int age) {}
+
+List&lt;Employee&gt; employees = List.of(
+    new Employee("Asha", "Engineering", 120_000, 31),
+    new Employee("Ravi", "Engineering", 95_000, 26),
+    new Employee("Meera", "HR", 60_000, 41),
+    new Employee("John", "Sales", 70_000, 35),
+    new Employee("Sara", "Sales", 82_000, 29));
+
+List&lt;Integer&gt; numbers = List.of(5, 3, 8, 3, 1, 9, 8, 2);
+String text = "programming in java";
+List&lt;String&gt; words = List.of("java", "spring", "kafka", "kubernetes");
+String sentence = "The cat saw the other cat and the dog";</code></pre>
+</div>
+</div>
+<details>
+<summary class="title">D1. Find the even numbers and square them.</summary>
+<div class="content">
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">List&lt;Integer&gt; squares = numbers.stream().filter(n -&gt; n % 2 == 0).map(n -&gt; n * n).toList();</code></pre>
+</div>
+</div>
+</div>
+</details>
+<details>
+<summary class="title">D2. Find duplicate elements in a list.</summary>
+<div class="content">
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">Set&lt;Integer&gt; seen = new HashSet&lt;&gt;();
+Set&lt;Integer&gt; duplicates = numbers.stream()
+        .filter(n -&gt; !seen.add(n))          // add returns false if already present
+        .collect(Collectors.toSet());       // [3, 8]
+
+// Without a side effect:
+Set&lt;Integer&gt; duplicates2 = numbers.stream()
+        .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()))
+        .entrySet().stream()
+        .filter(e -&gt; e.getValue() &gt; 1)
+        .map(Map.Entry::getKey)
+        .collect(Collectors.toSet());</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The second version is safe in parallel; mention the trade-off.</p>
+</div>
+</div>
+</details>
+<details>
+<summary class="title">D3. Find the second highest number.</summary>
+<div class="content">
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">Optional&lt;Integer&gt; second = numbers.stream()
+        .distinct()
+        .sorted(Comparator.reverseOrder())
+        .skip(1)
+        .findFirst();                       // Optional[8]</code></pre>
+</div>
+</div>
+</div>
+</details>
+<details>
+<summary class="title">D4. Count the frequency of each character in a string.</summary>
+<div class="content">
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">Map&lt;Character, Long&gt; freq = text.chars()
+        .filter(c -&gt; c != ' ')
+        .mapToObj(c -&gt; (char) c)
+        .collect(Collectors.groupingBy(Function.identity(), LinkedHashMap::new, Collectors.counting()));</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><code>LinkedHashMap::new</code> keeps first-appearance order.</p>
+</div>
+</div>
+</details>
+<details>
+<summary class="title">D5. Find the first non-repeated character.</summary>
+<div class="content">
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">Optional&lt;Character&gt; first = text.chars()
+        .mapToObj(c -&gt; (char) c)
+        .collect(Collectors.groupingBy(Function.identity(), LinkedHashMap::new, Collectors.counting()))
+        .entrySet().stream()
+        .filter(e -&gt; e.getValue() == 1)
+        .map(Map.Entry::getKey)
+        .findFirst();                       // Optional[p]</code></pre>
+</div>
+</div>
+</div>
+</details>
+<details>
+<summary class="title">D6. Group employees by department.</summary>
+<div class="content">
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">Map&lt;String, List&lt;String&gt;&gt; namesByDept = employees.stream()
+        .collect(Collectors.groupingBy(Employee::department,
+                 Collectors.mapping(Employee::name, Collectors.toList())));</code></pre>
+</div>
+</div>
+</div>
+</details>
+<details>
+<summary class="title">D7. Highest paid employee in each department.</summary>
+<div class="content">
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">Map&lt;String, Optional&lt;Employee&gt;&gt; top = employees.stream()
+        .collect(Collectors.groupingBy(Employee::department,
+                 Collectors.maxBy(Comparator.comparingInt(Employee::salary))));
+
+// Without Optional values:
+Map&lt;String, Employee&gt; top2 = employees.stream()
+        .collect(Collectors.toMap(Employee::department, Function.identity(),
+                 BinaryOperator.maxBy(Comparator.comparingInt(Employee::salary))));</code></pre>
+</div>
+</div>
+</div>
+</details>
+<details>
+<summary class="title">D8. Average salary per department, sorted by department name.</summary>
+<div class="content">
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">Map&lt;String, Double&gt; avg = employees.stream()
+        .collect(Collectors.groupingBy(Employee::department, TreeMap::new,
+                 Collectors.averagingInt(Employee::salary)));</code></pre>
+</div>
+</div>
+</div>
+</details>
+<details>
+<summary class="title">D9. Nth highest salary (for example the 2nd).</summary>
+<div class="content">
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">int n = 2;
+Optional&lt;Integer&gt; nth = employees.stream()
+        .map(Employee::salary)
+        .distinct()
+        .sorted(Comparator.reverseOrder())
+        .skip(n - 1)
+        .findFirst();</code></pre>
+</div>
+</div>
+</div>
+</details>
+<details>
+<summary class="title">D10. Sort employees by department, then by salary descending.</summary>
+<div class="content">
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">List&lt;Employee&gt; sorted = employees.stream()
+        .sorted(Comparator.comparing(Employee::department)
+                .thenComparing(Employee::salary, Comparator.reverseOrder()))
+        .toList();</code></pre>
+</div>
+</div>
+</div>
+</details>
+<details>
+<summary class="title">D11. Partition numbers into even and odd.</summary>
+<div class="content">
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">Map&lt;Boolean, List&lt;Integer&gt;&gt; evenOdd = numbers.stream()
+        .collect(Collectors.partitioningBy(n -&gt; n % 2 == 0));</code></pre>
+</div>
+</div>
+</div>
+</details>
+<details>
+<summary class="title">D12. Reverse each word in a sentence.</summary>
+<div class="content">
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">String reversed = Arrays.stream(text.split(" "))
+        .map(w -&gt; new StringBuilder(w).reverse().toString())
+        .collect(Collectors.joining(" "));   // "gnimmargorp ni avaj"</code></pre>
+</div>
+</div>
+</div>
+</details>
+<details>
+<summary class="title">D13. Check whether two strings are anagrams.</summary>
+<div class="content">
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">static boolean anagram(String a, String b) {
+    return Arrays.equals(
+        a.toLowerCase().chars().sorted().toArray(),
+        b.toLowerCase().chars().sorted().toArray());
+}</code></pre>
+</div>
+</div>
+</div>
+</details>
+<details>
+<summary class="title">D14. Flatten a list of lists and remove duplicates.</summary>
+<div class="content">
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">List&lt;Integer&gt; flat = List.of(List.of(1, 2), List.of(2, 3)).stream()
+        .flatMap(List::stream)
+        .distinct()
+        .toList();                          // [1, 2, 3]</code></pre>
+</div>
+</div>
+</div>
+</details>
+<details>
+<summary class="title">D15. Sum, min, max and average in one pass.</summary>
+<div class="content">
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">IntSummaryStatistics stats = numbers.stream().mapToInt(Integer::intValue).summaryStatistics();
+stats.getSum(); stats.getMin(); stats.getMax(); stats.getAverage();</code></pre>
+</div>
+</div>
+</div>
+</details>
+<details>
+<summary class="title">D16. Find the longest string in a list.</summary>
+<div class="content">
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">Optional&lt;String&gt; longest = words.stream().max(Comparator.comparingInt(String::length));</code></pre>
+</div>
+</div>
+</div>
+</details>
+<details>
+<summary class="title">D17. Join names of employees older than 30, in upper case.</summary>
+<div class="content">
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">String names = employees.stream()
+        .filter(e -&gt; e.age() &gt; 30)
+        .map(e -&gt; e.name().toUpperCase())
+        .collect(Collectors.joining(", "));  // "ASHA, MEERA, JOHN"</code></pre>
+</div>
+</div>
+</div>
+</details>
+<details>
+<summary class="title">D18. Convert a list to a map of name to salary, keeping the higher salary on duplicates.</summary>
+<div class="content">
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">Map&lt;String, Integer&gt; map = employees.stream()
+        .collect(Collectors.toMap(Employee::name, Employee::salary, Math::max));</code></pre>
+</div>
+</div>
+</div>
+</details>
+<details>
+<summary class="title">D19. Generate the first 10 Fibonacci numbers with a stream.</summary>
+<div class="content">
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">List&lt;Long&gt; fib = Stream.iterate(new long[]{0, 1}, f -&gt; new long[]{f[1], f[0] + f[1]})
+        .limit(10)
+        .map(f -&gt; f[0])
+        .toList();                          // [0, 1, 1, 2, 3, 5, 8, 13, 21, 34]</code></pre>
+</div>
+</div>
+</div>
+</details>
+<details>
+<summary class="title">D20. Count words in a sentence and find the most frequent word.</summary>
+<div class="content">
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">Optional&lt;String&gt; mostFrequent = Arrays.stream(sentence.toLowerCase().split("\\W+"))
+        .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()))
+        .entrySet().stream()
+        .max(Map.Entry.comparingByValue())
+        .map(Map.Entry::getKey);</code></pre>
+</div>
+</div>
+</div>
+</details>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_practice_questions"><a class="anchor" href="#_practice_questions"></a>Practice questions</h2>
+<div class="sectionbody">
+<details>
+<summary class="title">Q1. What is a functional interface? Name four from the JDK.</summary>
+<div class="content">
+<div class="paragraph">
+<p>An interface with exactly one abstract method, which a lambda can implement.
+<code>Runnable</code>, <code>Callable</code>, <code>Comparator</code>, <code>Predicate</code>, <code>Function</code>, <code>Consumer</code>, <code>Supplier</code>.
+<code>Comparator</code> has two abstract-looking methods, but <code>equals</code> comes from <code>Object</code> and does not count.</p>
+</div>
+</div>
+</details>
+<details>
+<summary class="title">Q2. What does "streams are lazy" mean, and why does it matter?</summary>
+<div class="content">
+<div class="paragraph">
+<p>Intermediate operations only build the pipeline; the terminal operation runs it, pulling elements through one at a time.
+This enables short-circuiting (<code>findFirst</code>, <code>anyMatch</code>, <code>limit</code>), avoids work on elements that are never needed, and makes infinite streams usable with <code>limit</code>.</p>
+</div>
+</div>
+</details>
+<details>
+<summary class="title">Q3. Intermediate versus terminal operations?</summary>
+<div class="content">
+<div class="paragraph">
+<p>Intermediate operations return a stream and are lazy (<code>filter</code>, <code>map</code>, <code>sorted</code>).
+Terminal operations return a result or a side effect and trigger execution (<code>collect</code>, <code>count</code>, <code>forEach</code>).
+A stream can have only one terminal operation.</p>
+</div>
+</div>
+</details>
+<details>
+<summary class="title">Q4. <code>map</code> versus <code>flatMap</code>?</summary>
+<div class="content">
+<div class="paragraph">
+<p><code>map</code> is one-to-one.
+<code>flatMap</code> maps each element to a stream and concatenates them, which is how you flatten nested lists or split lines into words.
+On <code>Optional</code>, <code>flatMap</code> avoids <code>Optional&lt;Optional&lt;T&gt;&gt;</code>.</p>
+</div>
+</div>
+</details>
+<details>
+<summary class="title">Q5. <code>groupingBy</code> versus <code>partitioningBy</code>?</summary>
+<div class="content">
+<div class="paragraph">
+<p><code>groupingBy</code> creates a map keyed by any classifier value.
+<code>partitioningBy</code> always creates exactly two groups, <code>true</code> and <code>false</code>, even if one is empty.
+Both accept a downstream collector such as <code>counting()</code> or <code>mapping()</code>.</p>
+</div>
+</div>
+</details>
+<details>
+<summary class="title">Q6. <code>findFirst</code> versus <code>findAny</code>?</summary>
+<div class="content">
+<div class="paragraph">
+<p><code>findFirst</code> respects encounter order.
+<code>findAny</code> may return any element and is cheaper in parallel streams.
+On a sequential stream they usually return the same element, but only <code>findFirst</code> guarantees it.</p>
+</div>
+</div>
+</details>
+<details>
+<summary class="title">Q7. When would you avoid parallel streams?</summary>
+<div class="content">
+<div class="paragraph">
+<p>Small inputs, blocking I/O, shared mutable state, order-sensitive logic, sources that split poorly, and code running inside a server where the common ForkJoinPool is shared.
+Always measure first.</p>
+</div>
+</div>
+</details>
+<details>
+<summary class="title">Q8. What goes wrong with <code>Collectors.toMap</code> on duplicate keys?</summary>
+<div class="content">
+<div class="paragraph">
+<p>It throws <code>IllegalStateException: Duplicate key</code>.
+Pass a merge function as the third argument, for example <code>(a, b) -&gt; a</code> or <code>Math::max</code>.
+It also throws <code>NullPointerException</code> if a value is <code>null</code>.</p>
+</div>
+</div>
+</details>
+<details>
+<summary class="title">Q9. How should Optional be used and misused?</summary>
+<div class="content">
+<div class="paragraph">
+<p>Use it as a return type for "maybe absent" results, and consume it with <code>map</code>, <code>orElse</code>, <code>orElseGet</code>, <code>orElseThrow</code> or <code>ifPresent</code>.
+Do not use it for fields, parameters or collections, do not call <code>get()</code> unchecked, and do not use <code>orElse</code> with an expensive call.</p>
+</div>
+</div>
+</details>
+<details>
+<summary class="title">Q10. Why must captured local variables be effectively final?</summary>
+<div class="content">
+<div class="paragraph">
+<p>The lambda captures a copy of the value.
+If the variable could change, the lambda and the method would see different values, and on another thread it would be a data race.
+Fields are not captured this way, so they can change, but then you need proper synchronisation.</p>
+</div>
+</div>
+</details>
+<details>
+<summary class="title">Q11. What is the difference between <code>Stream.toList()</code> and <code>Collectors.toList()</code>?</summary>
+<div class="content">
+<div class="paragraph">
+<p><code>Stream.toList()</code> (Java 16) returns an unmodifiable list and allows <code>null</code> elements.
+<code>Collectors.toList()</code> makes no guarantee about mutability; current implementations return an <code>ArrayList</code>.
+Use <code>Collectors.toCollection(ArrayList::new)</code> if you need a guaranteed mutable list.</p>
+</div>
+</div>
+</details>
+<details>
+<summary class="title">Q12. Can you reuse a stream?</summary>
+<div class="content">
+<div class="paragraph">
+<p>No.
+After a terminal operation the stream is consumed and a second use throws <code>IllegalStateException</code>.
+Keep a <code>Supplier&lt;Stream&lt;T&gt;&gt;</code> if you need to build the same pipeline twice.</p>
+</div>
+</div>
+</details>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_common_traps"><a class="anchor" href="#_common_traps"></a>Common traps</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><code>forEach</code> that adds to an external list.</p>
+</li>
+<li>
+<p><code>peek</code> used for business logic: it is meant for debugging and may not run at all if the pipeline can skip it.</p>
+</li>
+<li>
+<p><code>sorted()</code> on objects that are not <code>Comparable</code> (<code>ClassCastException</code>).</p>
+</li>
+<li>
+<p><code>orElse(expensiveCall())</code> evaluating the call every time.</p>
+</li>
+<li>
+<p><code>Optional.get()</code> without a check.</p>
+</li>
+<li>
+<p>Boxing overhead from <code>Stream&lt;Integer&gt;</code> where <code>IntStream</code> would do.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_follow_ups_to_expect"><a class="anchor" href="#_follow_ups_to_expect"></a>Follow-ups to expect</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p>"Rewrite this loop with streams. Is it more readable?" (It is fine to say the loop is clearer.)</p>
+</li>
+<li>
+<p>"What does this pipeline print, and in which order?" (Tests lazy, vertical processing.)</p>
+</li>
+<li>
+<p>"How would you debug a stream pipeline?"</p>
+</li>
+<li>
+<p>"How does <code>Collectors.groupingBy</code> behave with a <code>null</code> key?" (It throws <code>NullPointerException</code>.)</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_quick_revision"><a class="anchor" href="#_quick_revision"></a>Quick revision</h2>
+<div class="sectionbody">
+<div class="ulist checklist">
+<ul class="checklist">
+<li>
+<p><i class="fa fa-square-o"></i> Built-in functional interfaces and their method names</p>
+</li>
+<li>
+<p><i class="fa fa-square-o"></i> Four kinds of method references</p>
+</li>
+<li>
+<p><i class="fa fa-square-o"></i> Lazy, vertical processing and short-circuiting</p>
+</li>
+<li>
+<p><i class="fa fa-square-o"></i> <code>map</code>/<code>flatMap</code>, <code>reduce</code>, <code>groupingBy</code>/<code>partitioningBy</code>/<code>toMap</code> with merge</p>
+</li>
+<li>
+<p><i class="fa fa-square-o"></i> Parallel stream pitfalls</p>
+</li>
+<li>
+<p><i class="fa fa-square-o"></i> Optional rules, <code>orElse</code> versus <code>orElseGet</code></p>
+</li>
+<li>
+<p><i class="fa fa-square-o"></i> All 20 drills written by hand at least once</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Next: <a href="modern-java.html" class="xref page">Modern Java (11 to 25)</a>.</p>
+</div>
+</div>
+</div>
+      </article>
+      <div class="article-pagination">
+        <a class="prev" href="collections-generics.html"><span>← Previous</span><strong>Collections and Generics</strong></a>
+        <a class="next" href="modern-java.html"><span>Next →</span><strong>Modern Java (11 to 25)</strong></a>
+      </div>
+    </main>
+    <aside class="docs-toc reading-assistant" id="reading-assistant" aria-label="Reading assistant">
+  <div class="toc-inner ra-inner">
+    <div class="ra-head">
+      <h2 class="ra-title">Reading Assistant</h2>
+      <button type="button" class="ra-close" aria-label="Close reading assistant">
+        <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+    </div>
+
+    <section class="ra-card ra-listen" aria-labelledby="reading-assistant-listen" hidden>
+      <div class="ra-card-head">
+        <svg class="ra-card-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/></svg>
+        <div>
+          <h3 class="ra-card-title" id="reading-assistant-listen">Listen to Article</h3>
+          <p class="ra-card-desc">Listen to the explanation of this article. Code blocks are skipped.</p>
+        </div>
+      </div>
+
+      <div class="ra-ready">
+        <div class="ra-player">
+          <button type="button" class="ra-play" aria-label="Play article">
+            <svg class="ra-icon-play" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M8 5.5v13l11-6.5z"/></svg>
+            <svg class="ra-icon-pause" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M7 5h3.5v14H7zM13.5 5H17v14h-3.5z"/></svg>
+          </button>
+          <div class="ra-track">
+            <div class="ra-meter" role="progressbar" aria-label="Listening progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><span class="ra-meter-fill"></span></div>
+            <span class="ra-time" title="Estimated. Browser speech does not report an exact duration."></span>
+          </div>
+          <button type="button" class="ra-stop" aria-label="Stop listening" disabled>
+            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="6.5" y="6.5" width="11" height="11" rx="1.5"/></svg>
+          </button>
+        </div>
+
+        <div class="ra-controls">
+          <label class="ra-field ra-field-rate">
+            <span class="ra-field-label">Speed</span>
+            <select class="ra-rate">
+              <option value="0.75">0.75×</option>
+              <option value="1" selected>1×</option>
+              <option value="1.25">1.25×</option>
+              <option value="1.5">1.5×</option>
+              <option value="2">2×</option>
+            </select>
+          </label>
+        </div>
+
+        <label class="ra-check"><input type="checkbox" class="ra-follow" checked> Highlight and follow along</label>
+        <p class="ra-status" role="status" aria-live="polite">Ready</p>
+
+        <p class="ra-tip">
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M9 18h6M10 21h4"/><path d="M12 3a6 6 0 0 0-3.5 10.9V16h7v-2.1A6 6 0 0 0 12 3z"/></svg>
+          <span><strong>Tip:</strong> Headings and explanations are read aloud; code is skipped. Read in Google UK English Male on Chrome; other browsers use their closest British English voice.</span>
+        </p>
+      </div>
+
+      <p class="ra-unsupported" hidden>Listening isn&#8217;t available in this browser. The article itself works as usual.</p>
+    </section>
+
+    <section class="ra-card ra-jump" aria-labelledby="reading-assistant-sections" hidden>
+      <h3 class="ra-card-title" id="reading-assistant-sections">Jump to Section</h3>
+      <ol class="ra-sections"></ol>
+    </section>
+
+    <section class="ra-card ra-info" aria-labelledby="reading-assistant-info">
+      <h3 class="ra-card-title" id="reading-assistant-info">Page Info</h3>
+      <ul class="ra-info-list">
+        <li>
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+          <span title="Estimated at 220 words per minute">~5 min read</span>
+        </li>
+        <li>
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h6"/></svg>
+          <span title="Prose only; code is not counted">~1,024 words</span>
+        </li>
+        <li>
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="4" y="5" width="16" height="16" rx="2"/><path d="M16 3v4M8 3v4M4 10h16"/></svg>
+          <span>Last updated <time datetime="2026-11-11">Nov 11, 2026</time></span>
+        </li>
+      </ul>
+    </section>
+  </div>
+</aside>
+  </div>
+  <footer class="docs-footer">© 2026 Ayush Nigam · <a href="../../index.html">Home</a></footer>
+  <script src="../../../../_/js/reading-assistant.js?v=2" defer></script>
+  <script src="../../../../_/js/site.js?v=15" defer></script>
+</body>
+</html>

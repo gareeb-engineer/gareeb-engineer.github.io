@@ -1,0 +1,1185 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>Spring Core: IoC, DI, Beans and AOP · Ayush Nigam</title>
+  
+  <link rel="preload" href="../../../../_/fonts/inter-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="../../../../_/css/site.css?v=21">
+</head>
+<body class="docs-page">
+  <a class="skip-link" href="#article-main">Skip to content</a>
+  <header class="docs-header">
+    <div class="docs-header-inner">
+      <a class="docs-logo" href="../../index.html"><span class="docs-logo-mark">AN</span><span>Ayush Nigam</span></a>
+          <nav class="header-adoc-nav docs-toplinks" aria-label="Header links" data-header-source-url="../../headers/header-links.html">
+            <div class="header-adoc-content"><div class="ulist header-menu-links">
+<ul>
+<li>
+<p><a href="contact.html" class="xref page">Contact</a></p>
+</li>
+<li>
+<p><a href="https://www.linkedin.com/in/the-ayush-nigam/">LinkedIn</a></p>
+</li>
+<li>
+<p><a href="https://github.com/gareeb-engineer">GitHub</a></p>
+</li>
+</ul>
+</div>
+</div>
+          </nav>
+      <a class="header-avatar" href="../../index.html" aria-hidden="true" tabindex="-1"><img src="../../../../_/img/profile-photo.png" alt="Ayush Nigam profile photo" width="36" height="36"></a>
+<button type="button" class="mobile-nav-toggle" aria-label="Toggle documentation navigation" aria-expanded="false" aria-controls="docs-sidebar">☰ Menu</button>
+      <span class="read-progress-label" aria-hidden="true" hidden>Reading <span class="read-progress-value">0%</span></span>
+    </div>
+    <div class="read-progress" role="progressbar" aria-label="Article reading progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" hidden><span class="read-progress-fill"></span></div>
+  </header>
+  <div class="docs-shell">
+    <aside class="docs-sidebar" id="docs-sidebar" aria-label="Documentation sidebar">
+      <div class="sidebar-inner">
+      <div class="sidebar-top"><span class="sidebar-eyebrow">ENGINEERING LIBRARY</span></div>
+      <input id="nav-filter" class="nav-filter" type="search" placeholder="Filter pages…" aria-label="Filter navigation" autocomplete="off">
+      <nav aria-label="Documentation pages"><ul class="nav-tree">
+  <li class="nav-item nav-parent">
+        <div class="nav-group">
+          <button type="button" class="nav-row nav-toggle" aria-expanded="true">
+            <span class="nav-label">Java</span>
+            <span class="nav-chevron" aria-hidden="true">▾</span>
+          </button>
+          <div class="nav-children">
+            <ul class="nav-tree">
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../index.html" title="Open Java overview">Overview</a>
+      </div>
+  </li>
+  <li class="nav-item nav-parent">
+        <div class="nav-group nav-linked-group">
+          <div class="nav-row nav-linked-row">
+            <a href="index.html">Java Interview Guide</a>
+            <button type="button" class="nav-toggle nav-linked-toggle" aria-expanded="true" aria-label="Toggle subtopics">
+              <span class="nav-chevron" aria-hidden="true">▾</span>
+            </button>
+          </div>
+          <div class="nav-children"><ul class="nav-tree">
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="core-java-oop.html">Core Java and OOP</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="collections-generics.html">Collections and Generics</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="java8-streams-functional.html">Java 8: Lambdas, Streams, Optional</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="modern-java.html">Modern Java (11 to 25)</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="concurrency.html">Concurrency and Multithreading</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="jvm-memory-gc.html">JVM, Memory and GC</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="spring-core.html" class="is-current" aria-current="page">Spring Core: IoC, DI, AOP</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="spring-boot.html">Spring Boot</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="rest-spring-mvc.html">REST APIs and Spring MVC</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="jpa-hibernate-transactions.html">JPA, Hibernate, Transactions</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="spring-security.html">Spring Security, JWT, OAuth2</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="microservices.html">Microservices</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="coding-round.html">Coding Round in Java</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="testing.html">Testing</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="senior-scenarios.html">Production Scenarios and Behavioural</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="spring-ai.html">Spring AI and GenAI</a>
+      </div>
+  </li>
+</ul>
+</div>
+        </div>
+  </li>
+</ul>
+          </div>
+        </div>
+  </li>
+  <li class="nav-item nav-parent">
+        <div class="nav-group is-collapsed">
+          <button type="button" class="nav-row nav-toggle" aria-expanded="false">
+            <span class="nav-label">Architecture Diagram&#8217;s</span>
+            <span class="nav-chevron" aria-hidden="true">▸</span>
+          </button>
+          <div class="nav-children">
+            <ul class="nav-tree">
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Arcitecture-diagram/index.html" title="Open Architecture Diagram’s overview">Overview</a>
+      </div>
+  </li>
+</ul>
+          </div>
+        </div>
+  </li>
+  <li class="nav-item nav-parent">
+        <div class="nav-group is-collapsed">
+          <button type="button" class="nav-row nav-toggle" aria-expanded="false">
+            <span class="nav-label">References</span>
+            <span class="nav-chevron" aria-hidden="true">▸</span>
+          </button>
+          <div class="nav-children">
+            <ul class="nav-tree">
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../DevOps-Refs/index.html" title="Open References overview">Overview</a>
+      </div>
+  </li>
+</ul>
+          </div>
+        </div>
+  </li>
+  <li class="nav-item nav-parent">
+        <div class="nav-group is-collapsed">
+          <button type="button" class="nav-row nav-toggle" aria-expanded="false">
+            <span class="nav-label">Data Structure</span>
+            <span class="nav-chevron" aria-hidden="true">▸</span>
+          </button>
+          <div class="nav-children">
+            <ul class="nav-tree">
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Data-Structure/index.html" title="Open Data Structure overview">Overview</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Data-Structure/arrays/index.html">Arrays</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Data-Structure/linked-list/index.html">Linked Lists</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Data-Structure/stacks-n-queue/index.html">Stacks</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Data-Structure/trees/index.html">Trees</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Data-Structure/hash-map/index.html">Hash Map</a>
+      </div>
+  </li>
+  <li class="nav-item nav-parent">
+        <div class="nav-group nav-linked-group is-collapsed">
+          <div class="nav-row nav-linked-row">
+            <a href="../../Data-Structure/dynamic-programming/index.html">Dynamic Programming</a>
+            <button type="button" class="nav-toggle nav-linked-toggle" aria-expanded="false" aria-label="Toggle subtopics">
+              <span class="nav-chevron" aria-hidden="true">▸</span>
+            </button>
+          </div>
+          <div class="nav-children"><ul class="nav-tree">
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Data-Structure/dynamic-programming/fibonacci-series.html">Fibonacci Series</a>
+      </div>
+  </li>
+</ul>
+</div>
+        </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Data-Structure/graphs/index.html">Graphs</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Data-Structure/backtracking/index.html">Backtracking</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Data-Structure/pattern-printing/index.html">Pattern Printing</a>
+      </div>
+  </li>
+  <li class="nav-item nav-parent">
+        <div class="nav-group nav-linked-group is-collapsed">
+          <div class="nav-row nav-linked-row">
+            <a href="../../Data-Structure/recursion/index.html">Recursion</a>
+            <button type="button" class="nav-toggle nav-linked-toggle" aria-expanded="false" aria-label="Toggle subtopics">
+              <span class="nav-chevron" aria-hidden="true">▸</span>
+            </button>
+          </div>
+          <div class="nav-children"><ul class="nav-tree">
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Data-Structure/recursion/sum-of-all-element.html">Sum of all elements</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Data-Structure/recursion/all-indices-of-array.html">All indices of array</a>
+      </div>
+  </li>
+</ul>
+</div>
+        </div>
+  </li>
+</ul>
+          </div>
+        </div>
+  </li>
+  <li class="nav-item nav-parent">
+        <div class="nav-group is-collapsed">
+          <button type="button" class="nav-row nav-toggle" aria-expanded="false">
+            <span class="nav-label">Low Level Design</span>
+            <span class="nav-chevron" aria-hidden="true">▸</span>
+          </button>
+          <div class="nav-children">
+            <ul class="nav-tree">
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Low-Level-Design/index.html" title="Open Low Level Design overview">Overview</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Low-Level-Design/design-principles.html">Design Principles</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Low-Level-Design/solid-principles.html">SOLID Principles</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Low-Level-Design/design-patterns.html">Gang of Four Design Patterns</a>
+      </div>
+  </li>
+</ul>
+          </div>
+        </div>
+  </li>
+</ul>
+</nav>
+      </div>
+    </aside>
+    <main id="article-main" class="docs-article">
+      <nav class="breadcrumbs" aria-label="Breadcrumb"><a href="../../index.html">Home</a><span aria-hidden="true">/</span><a href="index.html">Java Interview Guide</a><span aria-hidden="true">/</span><a href="spring-core.html">Spring Core: IoC, DI, AOP</a></nav>
+      <article class="article-body" data-reading-progress>
+        <header class="article-header">
+          <h1>Spring Core: IoC, DI, Beans and AOP</h1>
+          
+          <p class="article-subtitle">The Spring container, dependency injection styles, bean lifecycle and scopes, resolving ambiguous beans, circular dependencies, and how AOP proxies really work.</p>
+          <ul class="article-chips">
+            <li class="chip chip-difficulty chip-medium">Medium</li><li class="chip chip-tag">Spring</li><li class="chip chip-tag">Interview Preparation</li><li class="chip chip-tag">Dependency Injection</li><li class="chip chip-tag">AOP</li><li class="chip chip-tag">Java</li>
+          </ul>
+          <div class="article-meta">
+            <span class="article-meta-item" title="Estimated at 220 words per minute">
+              <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+              ~5 min read
+            </span>
+            <span class="article-meta-item">
+              <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="4" y="5" width="16" height="16" rx="2"/><path d="M16 3v4M8 3v4M4 10h16"/></svg>
+              Updated <time datetime="2026-11-11">Nov 11, 2026</time>
+            </span>
+            <button type="button" class="ra-open" aria-controls="reading-assistant" aria-expanded="false" hidden>
+              <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/></svg>
+              Listen
+            </button>
+          </div>
+        </header>
+        <div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>Spring Core is the foundation under Spring Boot, Spring Data and Spring Security.
+Many "Spring Boot" interview questions are really Spring Core questions: why <code>@Transactional</code> did not work, why a bean is <code>null</code>, why the application fails with a circular reference.
+All of them come back to the container and proxies explained on this page.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_at_a_glance"><a class="anchor" href="#_at_a_glance"></a>At a glance</h2>
+<div class="sectionbody">
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 75%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Weightage</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>9 / 10</strong></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Who gets asked</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Anyone with Spring on the CV, which is most Java backend candidates.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Preparation time</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">4 hours</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Handbook questions</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Q56-Q62</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Builds on</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="core-java-oop.html" class="xref page">Core Java</a> (interfaces, reflection, annotations)</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_inversion_of_control_and_dependency_injection"><a class="anchor" href="#_inversion_of_control_and_dependency_injection"></a>Inversion of Control and Dependency Injection</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><strong>Inversion of Control (IoC)</strong> means your code does not create and wire its own collaborators; a container does.
+<strong>Dependency Injection (DI)</strong> is the way Spring implements IoC: the container passes dependencies in through constructors, setters or fields.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">// Without DI: OrderService decides which classes to use and how to build them.
+class OrderService {
+    private final PaymentGateway gateway = new CardGateway(new HttpClient(), "secret-key");
+}
+
+// With DI: OrderService declares what it needs; the container supplies it.
+@Service
+class OrderService {
+    private final PaymentGateway gateway;
+
+    OrderService(PaymentGateway gateway) {   // single constructor: @Autowired is optional
+        this.gateway = gateway;
+    }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Benefits: loose coupling, easy testing with fakes, one place to configure infrastructure, and lifecycle management.</p>
+</div>
+<div class="sect2">
+<h3 id="_beanfactory_versus_applicationcontext"><a class="anchor" href="#_beanfactory_versus_applicationcontext"></a>BeanFactory versus ApplicationContext</h3>
+<div class="paragraph">
+<p><code>BeanFactory</code> is the basic container: it creates beans lazily and injects dependencies.
+<code>ApplicationContext</code> extends it and adds eager creation of singletons at startup, events, internationalisation (<code>MessageSource</code>), resource loading, environment and profiles, and automatic registration of <code>BeanPostProcessor</code>s.
+Applications always use an <code>ApplicationContext</code>; Spring Boot creates one for you.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_defining_beans"><a class="anchor" href="#_defining_beans"></a>Defining beans</h2>
+<div class="sectionbody">
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">// 1. Component scanning with stereotype annotations
+@Service
+class InvoiceService { }
+
+// 2. @Bean methods in a @Configuration class, typically for third-party classes
+@Configuration
+class ClientConfig {
+
+    @Bean
+    RestClient partnerClient(RestClient.Builder builder) {
+        return builder.baseUrl("https://partner.example.com").build();
+    }
+}</code></pre>
+</div>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 75%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Annotation</th>
+<th class="tableblock halign-left valign-top">Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>@Component</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Generic Spring-managed component.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>@Service</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Business logic. Same behaviour as <code>@Component</code>; documents intent.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>@Repository</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Data access. Adds translation of persistence exceptions into Spring&#8217;s <code>DataAccessException</code> hierarchy.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>@Controller</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Web controller returning views.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>@RestController</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>@Controller</code> + <code>@ResponseBody</code>: return values are written to the response body (JSON).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>@Configuration</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Holds <code>@Bean</code> methods. Proxied with CGLIB so that calling one <code>@Bean</code> method from another returns the same singleton.</p></td>
+</tr>
+</tbody>
+</table>
+<details>
+<summary class="title">Why does <code>@Configuration</code> need a proxy? What does <code>proxyBeanMethods = false</code> do?</summary>
+<div class="content">
+<div class="paragraph">
+<p>In a <code>@Configuration</code> class, <code>dataSource()</code> called from inside another <code>@Bean</code> method would normally create a new object.
+Spring subclasses the class with CGLIB and intercepts those calls to return the existing singleton.
+<code>@Configuration(proxyBeanMethods = false)</code> (the "lite" mode, also what <code>@Component</code> classes with <code>@Bean</code> methods get) skips the proxy: faster startup, but inter-bean method calls create new instances, so inject dependencies as method parameters instead.
+Spring Boot&#8217;s own auto-configurations use <code>proxyBeanMethods = false</code>.</p>
+</div>
+</div>
+</details>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_injection_types"><a class="anchor" href="#_injection_types"></a>Injection types</h2>
+<div class="sectionbody">
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 14.2857%;">
+<col style="width: 42.8571%;">
+<col style="width: 42.8572%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Pros</th>
+<th class="tableblock halign-left valign-top">Cons</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Constructor</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Dependencies are explicit and can be <code>final</code>; the object is never half-built; easy to test with <code>new</code>; circular dependencies fail fast.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Long constructors when a class has many dependencies (which is a design smell anyway).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Setter</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Good for optional dependencies or reconfiguration.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Object can be used before it is fully set up; fields cannot be <code>final</code>.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Field (<code>@Autowired</code> on a field)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Shortest code.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Hidden dependencies, needs reflection or Spring to test, cannot be <code>final</code>. Not recommended.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>Constructor injection is the recommended default, and Spring&#8217;s own documentation says so.
+With Lombok, <code>@RequiredArgsConstructor</code> on a class with <code>private final</code> fields generates the constructor.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_resolving_which_bean_to_inject"><a class="anchor" href="#_resolving_which_bean_to_inject"></a>Resolving which bean to inject</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><code>@Autowired</code> resolves <strong>by type</strong>.
+When more than one bean matches:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>A bean marked <code>@Primary</code> wins.</p>
+</li>
+<li>
+<p><code>@Qualifier("name")</code> at the injection point selects by qualifier or bean name.</p>
+</li>
+<li>
+<p>Otherwise, Spring falls back to matching the parameter or field <strong>name</strong> against bean names.</p>
+</li>
+<li>
+<p>If still ambiguous: <code>NoUniqueBeanDefinitionException</code>. If nothing matches: <code>NoSuchBeanDefinitionException</code>.</p>
+</li>
+</ol>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Component("card") class CardGateway implements PaymentGateway { }
+@Component("upi") @Primary class UpiGateway implements PaymentGateway { }
+
+@Service
+class CheckoutService {
+    CheckoutService(PaymentGateway defaultGateway,                    // UpiGateway (@Primary)
+                    @Qualifier("card") PaymentGateway cardGateway,    // CardGateway
+                    List&lt;PaymentGateway&gt; all,                         // both beans
+                    Map&lt;String, PaymentGateway&gt; byName) { }           // {"card"=..., "upi"=...}
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Injecting a <code>List</code> or <code>Map</code> of an interface is the Spring way to implement the Strategy pattern without a <code>switch</code>.
+Use <code>ObjectProvider&lt;T&gt;</code> or <code>Optional&lt;T&gt;</code> for optional or lazily resolved dependencies.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_bean_lifecycle"><a class="anchor" href="#_bean_lifecycle"></a>Bean lifecycle</h2>
+<div class="sectionbody">
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-text hljs" data-lang="text">1. Instantiate              constructor called (constructor injection happens here)
+2. Populate properties      setter and field injection
+3. Aware callbacks          BeanNameAware, BeanFactoryAware, ApplicationContextAware
+4. BeanPostProcessor        postProcessBeforeInitialization  (@PostConstruct runs here)
+5. Initialisation           InitializingBean.afterPropertiesSet(), then custom init-method
+6. BeanPostProcessor        postProcessAfterInitialization   (AOP proxies are created here)
+7. Ready                    bean is in use
+8. Destruction              @PreDestroy, DisposableBean.destroy(), custom destroy-method
+                            (on context close; singletons only)</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Component
+class CacheWarmer {
+
+    @PostConstruct
+    void warmUp() { /* dependencies are injected; safe to use them */ }
+
+    @PreDestroy
+    void flush() { /* release resources on shutdown */ }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>For work that needs the <strong>whole</strong> application to be ready (for example, start consuming messages), use an <code>ApplicationRunner</code>, <code>CommandLineRunner</code> or an <code>ApplicationReadyEvent</code> listener rather than <code>@PostConstruct</code>.</p>
+</div>
+<div class="paragraph">
+<p><code>BeanPostProcessor</code> is the extension point behind most Spring "magic": <code>@Autowired</code> processing, <code>@Async</code>, <code>@Transactional</code> and <code>@Validated</code> proxies are all created by post-processors.
+<code>BeanFactoryPostProcessor</code> runs earlier and changes bean <strong>definitions</strong> before any bean is created (for example, resolving <code>${...}</code> placeholders).</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_bean_scopes"><a class="anchor" href="#_bean_scopes"></a>Bean scopes</h2>
+<div class="sectionbody">
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 75%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Scope</th>
+<th class="tableblock halign-left valign-top">Instances</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>singleton</code> (default)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">One per application context. Must be stateless or thread-safe, because all requests share it.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>prototype</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A new instance each time it is requested. Spring does not call destruction callbacks for it.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>request</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">One per HTTP request (web applications).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>session</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">One per HTTP session.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>application</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">One per <code>ServletContext</code>.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>websocket</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">One per WebSocket session.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>A Spring singleton is "one per container", not the Gang of Four singleton "one per class loader".
+You can register two beans of the same class with different names.</p>
+</div>
+<div class="sect2">
+<h3 id="_prototype_inside_a_singleton"><a class="anchor" href="#_prototype_inside_a_singleton"></a>Prototype inside a singleton</h3>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Component @Scope("prototype")
+class ReportBuilder { }
+
+@Service
+class ReportService {
+    private final ReportBuilder builder;          // injected ONCE: always the same instance
+
+    private final ObjectProvider&lt;ReportBuilder&gt; builders;   // fix: ask for a new one each time
+
+    ReportService(ReportBuilder builder, ObjectProvider&lt;ReportBuilder&gt; builders) {
+        this.builder = builder;
+        this.builders = builders;
+    }
+
+    Report create() {
+        return builders.getObject().build();      // new ReportBuilder per call
+    }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Other fixes: a <code>@Lookup</code> method, or a scoped proxy (<code>@Scope(value = "prototype", proxyMode = ScopedProxyMode.TARGET_CLASS)</code>).
+Request- and session-scoped beans injected into singletons need a scoped proxy for the same reason; <code>@RequestScope</code> sets it up automatically.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_circular_dependencies"><a class="anchor" href="#_circular_dependencies"></a>Circular dependencies</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>A circular dependency is A needing B while B needs A.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>With <strong>constructor injection</strong>, Spring cannot create either one first, so startup fails with <code>BeanCurrentlyInCreationException</code>.</p>
+</li>
+<li>
+<p>With setter or field injection, Spring used to resolve it with early references to half-built beans. <strong>Since Spring Boot 2.6, circular references are prohibited by default</strong> (<code>spring.main.allow-circular-references=false</code>).</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Fix the design rather than the symptom:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Extract the shared logic into a third bean that both use.</p>
+</li>
+<li>
+<p>Invert one dependency with an interface or an application event (<code>ApplicationEventPublisher</code>).</p>
+</li>
+<li>
+<p>Re-check responsibilities: a cycle usually means two classes do each other&#8217;s jobs.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p><code>@Lazy</code> on one injection point breaks the cycle by injecting a proxy, but it hides the design problem.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_aspect_oriented_programming"><a class="anchor" href="#_aspect_oriented_programming"></a>Aspect-Oriented Programming</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>AOP moves <strong>cross-cutting concerns</strong> (transactions, security, logging, metrics, retries, caching) out of business code.</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 75%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Term</th>
+<th class="tableblock halign-left valign-top">Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Aspect</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A class that holds cross-cutting logic (<code>@Aspect</code>).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Join point</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A point in execution where an aspect can apply. In Spring AOP, always a method call.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Pointcut</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">An expression that selects join points: <code>execution(* com.shop.service..*(..))</code>, <code>@annotation(Audited)</code>.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Advice</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The code that runs: <code>@Before</code>, <code>@AfterReturning</code>, <code>@AfterThrowing</code>, <code>@After</code> (finally), <code>@Around</code>.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Weaving</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Linking aspects to targets. Spring AOP weaves at runtime with proxies; AspectJ can weave at compile or load time.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Target(ElementType.METHOD)
+@Retention(RetentionPolicy.RUNTIME)
+@interface Timed { }
+
+@Aspect
+@Component
+class TimingAspect {
+
+    @Around("@annotation(Timed)")
+    Object time(ProceedingJoinPoint pjp) throws Throwable {
+        long start = System.nanoTime();
+        try {
+            return pjp.proceed();                       // call the real method
+        } finally {
+            log.info("{} took {} ms", pjp.getSignature(),
+                     (System.nanoTime() - start) / 1_000_000);
+        }
+    }
+}</code></pre>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_how_spring_aop_proxies_work"><a class="anchor" href="#_how_spring_aop_proxies_work"></a>How Spring AOP proxies work</h3>
+<div class="paragraph">
+<p>When a bean needs advice, Spring wraps it in a <strong>proxy</strong> and injects the proxy instead of the real object.
+A caller invokes the proxy, the proxy runs the advice, then calls the target.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>JDK dynamic proxy</strong>: implements the bean&#8217;s interfaces. Works only through interfaces.</p>
+</li>
+<li>
+<p><strong>CGLIB proxy</strong>: generates a subclass of the bean class at runtime. Spring Boot uses CGLIB by default (<code>spring.aop.proxy-target-class=true</code>).</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Proxy limitations, which are the most-asked part:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Self-invocation bypasses the proxy.</strong> <code>this.otherMethod()</code> inside the bean calls the target directly, so advice on <code>otherMethod</code> (including <code>@Transactional</code>, <code>@Async</code>, <code>@Cacheable</code>) does not run.</p>
+</li>
+<li>
+<p><code>final</code> methods and <code>final</code> classes cannot be proxied by CGLIB.</p>
+</li>
+<li>
+<p><code>private</code> methods are never intercepted.</p>
+</li>
+<li>
+<p>Only Spring beans are proxied; objects you create with <code>new</code> are not.</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Service
+class ReportService {
+
+    public void generateAll() {
+        for (var id : ids()) {
+            generate(id);          // self-invocation: @Transactional below is IGNORED
+        }
+    }
+
+    @Transactional
+    public void generate(long id) { /* ... */ }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Fixes: move <code>generate</code> to another bean, inject the bean&#8217;s own proxy (<code>@Lazy</code> self-injection or <code>ObjectProvider&lt;ReportService&gt;</code>), or use <code>TransactionTemplate</code> for programmatic transactions.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_events"><a class="anchor" href="#_events"></a>Events</h2>
+<div class="sectionbody">
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">record OrderPlaced(long orderId) { }
+
+@Service
+class OrderService {
+    private final ApplicationEventPublisher events;
+    OrderService(ApplicationEventPublisher events) { this.events = events; }
+
+    @Transactional
+    public void place(Order order) {
+        // save order ...
+        events.publishEvent(new OrderPlaced(order.id()));
+    }
+}
+
+@Component
+class EmailListener {
+    @TransactionalEventListener(phase = TransactionPhase.AFTER_COMMIT)
+    void on(OrderPlaced event) { /* send email only if the order was committed */ }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Listeners run synchronously on the publishing thread by default.
+<code>@TransactionalEventListener</code> delays them until the transaction commits; add <code>@Async</code> to run them on another thread.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_practice_questions"><a class="anchor" href="#_practice_questions"></a>Practice questions</h2>
+<div class="sectionbody">
+<details>
+<summary class="title">Q1. What are IoC and DI, and why are they useful?</summary>
+<div class="content">
+<div class="paragraph">
+<p>IoC: the container, not your code, creates objects and manages their lifecycle.
+DI: the container supplies a class&#8217;s dependencies through its constructor or setters.
+Result: loose coupling, easy substitution of implementations and test doubles, and central configuration of infrastructure.</p>
+</div>
+</div>
+</details>
+<details>
+<summary class="title">Q2. Why is constructor injection preferred?</summary>
+<div class="content">
+<div class="paragraph">
+<p>Dependencies are explicit and <code>final</code>, objects are never partially initialised, classes are testable without Spring, and circular dependencies fail at startup rather than hiding.
+A constructor with too many parameters is a visible signal that the class does too much.</p>
+</div>
+</div>
+</details>
+<details>
+<summary class="title">Q3. Walk through the bean lifecycle.</summary>
+<div class="content">
+<div class="paragraph">
+<p>Instantiate, inject properties, Aware callbacks, <code>postProcessBeforeInitialization</code> (which runs <code>@PostConstruct</code>), <code>afterPropertiesSet</code> and init-method, <code>postProcessAfterInitialization</code> (where AOP proxies wrap the bean), use, then <code>@PreDestroy</code>/<code>destroy</code> on shutdown for singletons.</p>
+</div>
+</div>
+</details>
+<details>
+<summary class="title">Q4. Is a singleton bean thread-safe?</summary>
+<div class="content">
+<div class="paragraph">
+<p>No, not automatically.
+One instance serves all threads, so it must be stateless or protect its mutable state.
+Keep request data in method parameters and local variables, not in fields.</p>
+</div>
+</div>
+</details>
+<details>
+<summary class="title">Q5. What happens when you inject a prototype bean into a singleton?</summary>
+<div class="content">
+<div class="paragraph">
+<p>It is injected once, when the singleton is created, so the singleton always uses the same prototype instance.
+To get a new one per use, inject <code>ObjectProvider&lt;T&gt;</code> and call <code>getObject()</code>, use <code>@Lookup</code>, or use a scoped proxy.</p>
+</div>
+</div>
+</details>
+<details>
+<summary class="title">Q6. Two beans implement the same interface. How does Spring choose?</summary>
+<div class="content">
+<div class="paragraph">
+<p>By <code>@Primary</code> if present, by <code>@Qualifier</code> at the injection point, or by matching the parameter name to a bean name.
+Otherwise startup fails with <code>NoUniqueBeanDefinitionException</code>.
+You can also inject all of them as a <code>List</code> or a <code>Map&lt;String, T&gt;</code>.</p>
+</div>
+</div>
+</details>
+<details>
+<summary class="title">Q7. What is a circular dependency, and how do you fix it?</summary>
+<div class="content">
+<div class="paragraph">
+<p>A depends on B and B on A.
+Constructor injection fails at startup, and Spring Boot 2.6+ forbids cycles by default even with field injection.
+Fix by extracting a third component, using an event or interface to invert one direction, or redistributing responsibilities.
+<code>@Lazy</code> hides the cycle and is a last resort.</p>
+</div>
+</div>
+</details>
+<details>
+<summary class="title">Q8. <code>@Component</code> versus <code>@Bean</code>?</summary>
+<div class="content">
+<div class="paragraph">
+<p><code>@Component</code> goes on your own class and is discovered by component scanning.
+<code>@Bean</code> goes on a factory method in a configuration class; use it for third-party classes you cannot annotate, or when construction needs logic.</p>
+</div>
+</div>
+</details>
+<details>
+<summary class="title">Q9. What does <code>@Repository</code> add over <code>@Component</code>?</summary>
+<div class="content">
+<div class="paragraph">
+<p>Exception translation: a post-processor converts persistence-specific exceptions (JPA, JDBC, Hibernate) into Spring&#8217;s <code>DataAccessException</code> hierarchy, so service code does not depend on the persistence technology.</p>
+</div>
+</div>
+</details>
+<details>
+<summary class="title">Q10. JDK dynamic proxy versus CGLIB proxy?</summary>
+<div class="content">
+<div class="paragraph">
+<p>JDK proxies implement the target&#8217;s interfaces and can only intercept interface methods.
+CGLIB subclasses the target class, so it works without interfaces but cannot intercept <code>final</code> methods or proxy <code>final</code> classes.
+Spring Boot defaults to CGLIB.</p>
+</div>
+</div>
+</details>
+<details>
+<summary class="title">Q11. Why does <code>@Transactional</code> not work when a method calls another method in the same class?</summary>
+<div class="content">
+<div class="paragraph">
+<p>Advice lives in the proxy.
+<code>this.method()</code> calls the target object directly, skipping the proxy, so no transaction starts.
+Move the method to another bean, call it through the proxy, or use <code>TransactionTemplate</code>.
+The same applies to <code>@Async</code>, <code>@Cacheable</code> and <code>@Retryable</code>.</p>
+</div>
+</div>
+</details>
+<details>
+<summary class="title">Q12. What are the AOP advice types, and when do you use <code>@Around</code>?</summary>
+<div class="content">
+<div class="paragraph">
+<p><code>@Before</code>, <code>@AfterReturning</code>, <code>@AfterThrowing</code>, <code>@After</code> (always) and <code>@Around</code>.
+Use <code>@Around</code> when you need to control the call: measure time, retry, change arguments or the return value, or skip the call.
+It must call <code>proceed()</code> and return its result.</p>
+</div>
+</div>
+</details>
+<details>
+<summary class="title">Q13. What is the difference between <code>BeanPostProcessor</code> and <code>BeanFactoryPostProcessor</code>?</summary>
+<div class="content">
+<div class="paragraph">
+<p><code>BeanFactoryPostProcessor</code> changes bean <strong>definitions</strong> before beans exist, for example placeholder resolution.
+<code>BeanPostProcessor</code> works on bean <strong>instances</strong> during initialisation, for example wrapping them in proxies or processing annotations.</p>
+</div>
+</div>
+</details>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_common_traps"><a class="anchor" href="#_common_traps"></a>Common traps</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p>Mutable state in singleton beans.</p>
+</li>
+<li>
+<p>Expecting <code>@Transactional</code> or <code>@Async</code> to work on self-calls or private methods.</p>
+</li>
+<li>
+<p>Field injection everywhere.</p>
+</li>
+<li>
+<p><code>@PostConstruct</code> doing slow I/O that blocks startup.</p>
+</li>
+<li>
+<p>Using <code>@Lazy</code> to "fix" a cycle.</p>
+</li>
+<li>
+<p>Saying a Spring singleton is the same as the GoF singleton.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_follow_ups_to_expect"><a class="anchor" href="#_follow_ups_to_expect"></a>Follow-ups to expect</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p>"How would you write a custom annotation that logs method execution time?"</p>
+</li>
+<li>
+<p>"How does Spring know to create a proxy for a <code>@Transactional</code> bean?" (An auto-configured post-processor checks for the annotation and wraps the bean after initialisation.)</p>
+</li>
+<li>
+<p>"How would you switch a payment implementation per country at runtime?"</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_quick_revision"><a class="anchor" href="#_quick_revision"></a>Quick revision</h2>
+<div class="sectionbody">
+<div class="ulist checklist">
+<ul class="checklist">
+<li>
+<p><i class="fa fa-square-o"></i> IoC versus DI, BeanFactory versus ApplicationContext</p>
+</li>
+<li>
+<p><i class="fa fa-square-o"></i> Stereotype annotations and <code>@Configuration</code> proxying</p>
+</li>
+<li>
+<p><i class="fa fa-square-o"></i> Constructor injection and bean resolution order</p>
+</li>
+<li>
+<p><i class="fa fa-square-o"></i> Lifecycle steps and where proxies appear</p>
+</li>
+<li>
+<p><i class="fa fa-square-o"></i> Scopes and the prototype-in-singleton fix</p>
+</li>
+<li>
+<p><i class="fa fa-square-o"></i> Circular dependencies and Spring Boot 2.6+ behaviour</p>
+</li>
+<li>
+<p><i class="fa fa-square-o"></i> AOP terms, JDK versus CGLIB, self-invocation</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Next: <a href="spring-boot.html" class="xref page">Spring Boot</a>.</p>
+</div>
+</div>
+</div>
+      </article>
+      <div class="article-pagination">
+        <a class="prev" href="jvm-memory-gc.html"><span>← Previous</span><strong>JVM, Memory and GC</strong></a>
+        <a class="next" href="spring-boot.html"><span>Next →</span><strong>Spring Boot</strong></a>
+      </div>
+    </main>
+    <aside class="docs-toc reading-assistant" id="reading-assistant" aria-label="Reading assistant">
+  <div class="toc-inner ra-inner">
+    <div class="ra-head">
+      <h2 class="ra-title">Reading Assistant</h2>
+      <button type="button" class="ra-close" aria-label="Close reading assistant">
+        <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+    </div>
+
+    <section class="ra-card ra-listen" aria-labelledby="reading-assistant-listen" hidden>
+      <div class="ra-card-head">
+        <svg class="ra-card-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/></svg>
+        <div>
+          <h3 class="ra-card-title" id="reading-assistant-listen">Listen to Article</h3>
+          <p class="ra-card-desc">Listen to the explanation of this article. Code blocks are skipped.</p>
+        </div>
+      </div>
+
+      <div class="ra-ready">
+        <div class="ra-player">
+          <button type="button" class="ra-play" aria-label="Play article">
+            <svg class="ra-icon-play" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M8 5.5v13l11-6.5z"/></svg>
+            <svg class="ra-icon-pause" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M7 5h3.5v14H7zM13.5 5H17v14h-3.5z"/></svg>
+          </button>
+          <div class="ra-track">
+            <div class="ra-meter" role="progressbar" aria-label="Listening progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><span class="ra-meter-fill"></span></div>
+            <span class="ra-time" title="Estimated. Browser speech does not report an exact duration."></span>
+          </div>
+          <button type="button" class="ra-stop" aria-label="Stop listening" disabled>
+            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="6.5" y="6.5" width="11" height="11" rx="1.5"/></svg>
+          </button>
+        </div>
+
+        <div class="ra-controls">
+          <label class="ra-field ra-field-rate">
+            <span class="ra-field-label">Speed</span>
+            <select class="ra-rate">
+              <option value="0.75">0.75×</option>
+              <option value="1" selected>1×</option>
+              <option value="1.25">1.25×</option>
+              <option value="1.5">1.5×</option>
+              <option value="2">2×</option>
+            </select>
+          </label>
+        </div>
+
+        <label class="ra-check"><input type="checkbox" class="ra-follow" checked> Highlight and follow along</label>
+        <p class="ra-status" role="status" aria-live="polite">Ready</p>
+
+        <p class="ra-tip">
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M9 18h6M10 21h4"/><path d="M12 3a6 6 0 0 0-3.5 10.9V16h7v-2.1A6 6 0 0 0 12 3z"/></svg>
+          <span><strong>Tip:</strong> Headings and explanations are read aloud; code is skipped. Read in Google UK English Male on Chrome; other browsers use their closest British English voice.</span>
+        </p>
+      </div>
+
+      <p class="ra-unsupported" hidden>Listening isn&#8217;t available in this browser. The article itself works as usual.</p>
+    </section>
+
+    <section class="ra-card ra-jump" aria-labelledby="reading-assistant-sections" hidden>
+      <h3 class="ra-card-title" id="reading-assistant-sections">Jump to Section</h3>
+      <ol class="ra-sections"></ol>
+    </section>
+
+    <section class="ra-card ra-info" aria-labelledby="reading-assistant-info">
+      <h3 class="ra-card-title" id="reading-assistant-info">Page Info</h3>
+      <ul class="ra-info-list">
+        <li>
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+          <span title="Estimated at 220 words per minute">~5 min read</span>
+        </li>
+        <li>
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h6"/></svg>
+          <span title="Prose only; code is not counted">~1,159 words</span>
+        </li>
+        <li>
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="4" y="5" width="16" height="16" rx="2"/><path d="M16 3v4M8 3v4M4 10h16"/></svg>
+          <span>Last updated <time datetime="2026-11-11">Nov 11, 2026</time></span>
+        </li>
+      </ul>
+    </section>
+  </div>
+</aside>
+  </div>
+  <footer class="docs-footer">© 2026 Ayush Nigam · <a href="../../index.html">Home</a></footer>
+  <script src="../../../../_/js/reading-assistant.js?v=2" defer></script>
+  <script src="../../../../_/js/site.js?v=15" defer></script>
+</body>
+</html>

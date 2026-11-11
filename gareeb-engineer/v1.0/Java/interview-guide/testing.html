@@ -1,0 +1,1001 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>Testing: JUnit, Mockito and Spring Tests · Ayush Nigam</title>
+  
+  <link rel="preload" href="../../../../_/fonts/inter-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="../../../../_/css/site.css?v=21">
+</head>
+<body class="docs-page">
+  <a class="skip-link" href="#article-main">Skip to content</a>
+  <header class="docs-header">
+    <div class="docs-header-inner">
+      <a class="docs-logo" href="../../index.html"><span class="docs-logo-mark">AN</span><span>Ayush Nigam</span></a>
+          <nav class="header-adoc-nav docs-toplinks" aria-label="Header links" data-header-source-url="../../headers/header-links.html">
+            <div class="header-adoc-content"><div class="ulist header-menu-links">
+<ul>
+<li>
+<p><a href="contact.html" class="xref page">Contact</a></p>
+</li>
+<li>
+<p><a href="https://www.linkedin.com/in/the-ayush-nigam/">LinkedIn</a></p>
+</li>
+<li>
+<p><a href="https://github.com/gareeb-engineer">GitHub</a></p>
+</li>
+</ul>
+</div>
+</div>
+          </nav>
+      <a class="header-avatar" href="../../index.html" aria-hidden="true" tabindex="-1"><img src="../../../../_/img/profile-photo.png" alt="Ayush Nigam profile photo" width="36" height="36"></a>
+<button type="button" class="mobile-nav-toggle" aria-label="Toggle documentation navigation" aria-expanded="false" aria-controls="docs-sidebar">☰ Menu</button>
+      <span class="read-progress-label" aria-hidden="true" hidden>Reading <span class="read-progress-value">0%</span></span>
+    </div>
+    <div class="read-progress" role="progressbar" aria-label="Article reading progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" hidden><span class="read-progress-fill"></span></div>
+  </header>
+  <div class="docs-shell">
+    <aside class="docs-sidebar" id="docs-sidebar" aria-label="Documentation sidebar">
+      <div class="sidebar-inner">
+      <div class="sidebar-top"><span class="sidebar-eyebrow">ENGINEERING LIBRARY</span></div>
+      <input id="nav-filter" class="nav-filter" type="search" placeholder="Filter pages…" aria-label="Filter navigation" autocomplete="off">
+      <nav aria-label="Documentation pages"><ul class="nav-tree">
+  <li class="nav-item nav-parent">
+        <div class="nav-group">
+          <button type="button" class="nav-row nav-toggle" aria-expanded="true">
+            <span class="nav-label">Java</span>
+            <span class="nav-chevron" aria-hidden="true">▾</span>
+          </button>
+          <div class="nav-children">
+            <ul class="nav-tree">
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../index.html" title="Open Java overview">Overview</a>
+      </div>
+  </li>
+  <li class="nav-item nav-parent">
+        <div class="nav-group nav-linked-group">
+          <div class="nav-row nav-linked-row">
+            <a href="index.html">Java Interview Guide</a>
+            <button type="button" class="nav-toggle nav-linked-toggle" aria-expanded="true" aria-label="Toggle subtopics">
+              <span class="nav-chevron" aria-hidden="true">▾</span>
+            </button>
+          </div>
+          <div class="nav-children"><ul class="nav-tree">
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="core-java-oop.html">Core Java and OOP</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="collections-generics.html">Collections and Generics</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="java8-streams-functional.html">Java 8: Lambdas, Streams, Optional</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="modern-java.html">Modern Java (11 to 25)</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="concurrency.html">Concurrency and Multithreading</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="jvm-memory-gc.html">JVM, Memory and GC</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="spring-core.html">Spring Core: IoC, DI, AOP</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="spring-boot.html">Spring Boot</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="rest-spring-mvc.html">REST APIs and Spring MVC</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="jpa-hibernate-transactions.html">JPA, Hibernate, Transactions</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="spring-security.html">Spring Security, JWT, OAuth2</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="microservices.html">Microservices</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="coding-round.html">Coding Round in Java</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="testing.html" class="is-current" aria-current="page">Testing</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="senior-scenarios.html">Production Scenarios and Behavioural</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="spring-ai.html">Spring AI and GenAI</a>
+      </div>
+  </li>
+</ul>
+</div>
+        </div>
+  </li>
+</ul>
+          </div>
+        </div>
+  </li>
+  <li class="nav-item nav-parent">
+        <div class="nav-group is-collapsed">
+          <button type="button" class="nav-row nav-toggle" aria-expanded="false">
+            <span class="nav-label">Architecture Diagram&#8217;s</span>
+            <span class="nav-chevron" aria-hidden="true">▸</span>
+          </button>
+          <div class="nav-children">
+            <ul class="nav-tree">
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Arcitecture-diagram/index.html" title="Open Architecture Diagram’s overview">Overview</a>
+      </div>
+  </li>
+</ul>
+          </div>
+        </div>
+  </li>
+  <li class="nav-item nav-parent">
+        <div class="nav-group is-collapsed">
+          <button type="button" class="nav-row nav-toggle" aria-expanded="false">
+            <span class="nav-label">References</span>
+            <span class="nav-chevron" aria-hidden="true">▸</span>
+          </button>
+          <div class="nav-children">
+            <ul class="nav-tree">
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../DevOps-Refs/index.html" title="Open References overview">Overview</a>
+      </div>
+  </li>
+</ul>
+          </div>
+        </div>
+  </li>
+  <li class="nav-item nav-parent">
+        <div class="nav-group is-collapsed">
+          <button type="button" class="nav-row nav-toggle" aria-expanded="false">
+            <span class="nav-label">Data Structure</span>
+            <span class="nav-chevron" aria-hidden="true">▸</span>
+          </button>
+          <div class="nav-children">
+            <ul class="nav-tree">
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Data-Structure/index.html" title="Open Data Structure overview">Overview</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Data-Structure/arrays/index.html">Arrays</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Data-Structure/linked-list/index.html">Linked Lists</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Data-Structure/stacks-n-queue/index.html">Stacks</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Data-Structure/trees/index.html">Trees</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Data-Structure/hash-map/index.html">Hash Map</a>
+      </div>
+  </li>
+  <li class="nav-item nav-parent">
+        <div class="nav-group nav-linked-group is-collapsed">
+          <div class="nav-row nav-linked-row">
+            <a href="../../Data-Structure/dynamic-programming/index.html">Dynamic Programming</a>
+            <button type="button" class="nav-toggle nav-linked-toggle" aria-expanded="false" aria-label="Toggle subtopics">
+              <span class="nav-chevron" aria-hidden="true">▸</span>
+            </button>
+          </div>
+          <div class="nav-children"><ul class="nav-tree">
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Data-Structure/dynamic-programming/fibonacci-series.html">Fibonacci Series</a>
+      </div>
+  </li>
+</ul>
+</div>
+        </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Data-Structure/graphs/index.html">Graphs</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Data-Structure/backtracking/index.html">Backtracking</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Data-Structure/pattern-printing/index.html">Pattern Printing</a>
+      </div>
+  </li>
+  <li class="nav-item nav-parent">
+        <div class="nav-group nav-linked-group is-collapsed">
+          <div class="nav-row nav-linked-row">
+            <a href="../../Data-Structure/recursion/index.html">Recursion</a>
+            <button type="button" class="nav-toggle nav-linked-toggle" aria-expanded="false" aria-label="Toggle subtopics">
+              <span class="nav-chevron" aria-hidden="true">▸</span>
+            </button>
+          </div>
+          <div class="nav-children"><ul class="nav-tree">
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Data-Structure/recursion/sum-of-all-element.html">Sum of all elements</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Data-Structure/recursion/all-indices-of-array.html">All indices of array</a>
+      </div>
+  </li>
+</ul>
+</div>
+        </div>
+  </li>
+</ul>
+          </div>
+        </div>
+  </li>
+  <li class="nav-item nav-parent">
+        <div class="nav-group is-collapsed">
+          <button type="button" class="nav-row nav-toggle" aria-expanded="false">
+            <span class="nav-label">Low Level Design</span>
+            <span class="nav-chevron" aria-hidden="true">▸</span>
+          </button>
+          <div class="nav-children">
+            <ul class="nav-tree">
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Low-Level-Design/index.html" title="Open Low Level Design overview">Overview</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Low-Level-Design/design-principles.html">Design Principles</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Low-Level-Design/solid-principles.html">SOLID Principles</a>
+      </div>
+  </li>
+  <li class="nav-item">
+      <div class="nav-row">
+        <a href="../../Low-Level-Design/design-patterns.html">Gang of Four Design Patterns</a>
+      </div>
+  </li>
+</ul>
+          </div>
+        </div>
+  </li>
+</ul>
+</nav>
+      </div>
+    </aside>
+    <main id="article-main" class="docs-article">
+      <nav class="breadcrumbs" aria-label="Breadcrumb"><a href="../../index.html">Home</a><span aria-hidden="true">/</span><a href="index.html">Java Interview Guide</a><span aria-hidden="true">/</span><a href="testing.html">Testing</a></nav>
+      <article class="article-body" data-reading-progress>
+        <header class="article-header">
+          <h1>Testing: JUnit, Mockito and Spring Tests</h1>
+          
+          <p class="article-subtitle">The test pyramid, what a good unit test looks like, JUnit and Mockito essentials, when mocking hurts, Spring slice tests, Testcontainers, and testing transactions and asynchronous code.</p>
+          <ul class="article-chips">
+            <li class="chip chip-difficulty chip-medium">Medium</li><li class="chip chip-tag">Java</li><li class="chip chip-tag">Interview Preparation</li><li class="chip chip-tag">Testing</li><li class="chip chip-tag">JUnit</li><li class="chip chip-tag">Mockito</li><li class="chip chip-tag">Spring Boot</li>
+          </ul>
+          <div class="article-meta">
+            <span class="article-meta-item" title="Estimated at 220 words per minute">
+              <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+              ~4 min read
+            </span>
+            <span class="article-meta-item">
+              <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="4" y="5" width="16" height="16" rx="2"/><path d="M16 3v4M8 3v4M4 10h16"/></svg>
+              Updated <time datetime="2026-11-11">Nov 11, 2026</time>
+            </span>
+            <button type="button" class="ra-open" aria-controls="reading-assistant" aria-expanded="false" hidden>
+              <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/></svg>
+              Listen
+            </button>
+          </div>
+        </header>
+        <div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>Testing questions show whether you ship code you can trust.
+Interviewers rarely ask for annotation lists; they ask "how would you test this?" about code you just wrote, and they look for a sensible mix of fast unit tests and a few realistic integration tests.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_at_a_glance"><a class="anchor" href="#_at_a_glance"></a>At a glance</h2>
+<div class="sectionbody">
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 75%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Weightage</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>6 / 10</strong></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Who gets asked</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Mid and senior; also asked as "write a test" after a coding question.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Preparation time</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2 to 3 hours</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Handbook questions</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Q106-Q110</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Builds on</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="spring-boot.html" class="xref page">Spring Boot</a>, <a href="jpa-hibernate-transactions.html" class="xref page">Transactions</a></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_kinds_of_tests"><a class="anchor" href="#_kinds_of_tests"></a>Kinds of tests</h2>
+<div class="sectionbody">
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 16.6666%;">
+<col style="width: 50%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Kind</th>
+<th class="tableblock halign-left valign-top">What it proves</th>
+<th class="tableblock halign-left valign-top">Speed</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Unit</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">One class or function behaves correctly, with collaborators replaced or real value objects.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Milliseconds</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Integration</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Your code works with real infrastructure or framework behaviour: database, Kafka, HTTP serialisation, Spring wiring, transactions.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Seconds</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Contract</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A provider and a consumer agree on an API or event schema (Spring Cloud Contract, Pact).</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Seconds</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">End-to-end</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A full user journey across deployed services.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Minutes; keep few</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>The <strong>test pyramid</strong>: many unit tests, fewer integration tests, very few end-to-end tests.
+A suite made mostly of slow end-to-end tests is fragile and slow to give feedback.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_a_good_unit_test"><a class="anchor" href="#_a_good_unit_test"></a>A good unit test</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p>One behaviour per test, with a name that says what it checks: <code>rejectsWithdrawalAboveBalance</code>.</p>
+</li>
+<li>
+<p>Arrange, act, assert structure.</p>
+</li>
+<li>
+<p>Deterministic: no real clock, randomness, network or shared state. Inject a <code>Clock</code>.</p>
+</li>
+<li>
+<p>Meaningful assertions on outcomes, not on internal steps.</p>
+</li>
+<li>
+<p>Covers boundaries, invalid input, failure paths and state transitions, not only the happy path.</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">class AccountTest {
+
+    @Test
+    void rejectsWithdrawalAboveBalance() {
+        // arrange
+        Account account = new Account("A-1", new BigDecimal("100.00"));
+
+        // act + assert
+        assertThatThrownBy(() -&gt; account.withdraw(new BigDecimal("100.01")))
+                .isInstanceOf(InsufficientFundsException.class)
+                .hasMessageContaining("A-1");
+        assertThat(account.balance()).isEqualByComparingTo("100.00");   // state unchanged
+    }
+
+    @ParameterizedTest
+    @CsvSource({"0.00, false", "-1.00, false", "50.00, true"})
+    void validatesDepositAmount(BigDecimal amount, boolean accepted) {
+        Account account = new Account("A-1", BigDecimal.ZERO);
+        assertThat(account.canDeposit(amount)).isEqualTo(accepted);
+    }
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_junit_essentials"><a class="anchor" href="#_junit_essentials"></a>JUnit essentials</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><code>@Test</code>, <code>@ParameterizedTest</code> with <code>@ValueSource</code>, <code>@CsvSource</code>, <code>@MethodSource</code>, <code>@EnumSource</code>.</p>
+</li>
+<li>
+<p><code>@BeforeEach</code>/<code>@AfterEach</code> per test; <code>@BeforeAll</code>/<code>@AfterAll</code> once per class (static unless <code>@TestInstance(PER_CLASS)</code>).</p>
+</li>
+<li>
+<p><code>@Nested</code> groups related tests; <code>@DisplayName</code> for readable names; <code>@Disabled</code> to skip; <code>@Tag</code> to filter.</p>
+</li>
+<li>
+<p><code>assertThrows</code>, <code>assertAll</code>, <code>assertTimeout</code>; most teams use AssertJ (<code>assertThat</code>) for readable assertions.</p>
+</li>
+<li>
+<p>Extensions (<code>@ExtendWith</code>) plug in Mockito, Spring and others.</p>
+</li>
+<li>
+<p>JUnit 5 (Jupiter) replaced JUnit 4&#8217;s runners and rules with extensions. JUnit 6 (used by Spring Boot 4) keeps the Jupiter programming model and raises the baseline to Java 17.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_mockito"><a class="anchor" href="#_mockito"></a>Mockito</h2>
+<div class="sectionbody">
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@ExtendWith(MockitoExtension.class)
+class CheckoutServiceTest {
+
+    @Mock PaymentGateway gateway;
+    @Mock OrderRepository orders;
+    @InjectMocks CheckoutService checkout;
+
+    @Captor ArgumentCaptor&lt;Order&gt; savedOrder;
+
+    @Test
+    void savesPaidOrderWhenPaymentSucceeds() {
+        when(gateway.charge(any())).thenReturn(PaymentResult.approved("tx-1"));
+
+        checkout.checkout(cartWithOneItem());
+
+        verify(orders).save(savedOrder.capture());
+        assertThat(savedOrder.getValue().status()).isEqualTo(OrderStatus.PAID);
+    }
+
+    @Test
+    void doesNotSaveWhenPaymentFails() {
+        when(gateway.charge(any())).thenThrow(new PaymentDeclinedException("card expired"));
+
+        assertThatThrownBy(() -&gt; checkout.checkout(cartWithOneItem()))
+                .isInstanceOf(PaymentDeclinedException.class);
+        verifyNoInteractions(orders);
+    }
+}</code></pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>mock</code>: all methods return defaults unless stubbed. <code>spy</code>: wraps a real object; unstubbed methods run for real (stub spies with <code>doReturn(...).when(spy).method()</code>).</p>
+</li>
+<li>
+<p><code>when(...).thenReturn/thenThrow/thenAnswer</code> stubs; <code>verify(mock, times(1))</code>, <code>never()</code>, <code>verifyNoMoreInteractions</code> check calls.</p>
+</li>
+<li>
+<p>Argument matchers (<code>any()</code>, <code>eq()</code>, <code>argThat</code>): if one argument uses a matcher, all must.</p>
+</li>
+<li>
+<p>Mockito&#8217;s strict stubs (the default with <code>MockitoExtension</code>) fail tests with unused stubs, which keeps tests honest.</p>
+</li>
+<li>
+<p>Mockito can mock final classes and static methods (<code>mockStatic</code>) with its inline mock maker, the default since Mockito 5. Needing to mock statics is often a design hint to inject the dependency instead.</p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_when_mocking_hurts"><a class="anchor" href="#_when_mocking_hurts"></a>When mocking hurts</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>Tests that verify every call (<code>verify(a).x(); verify(b).y();</code>) test <strong>how</strong> the code works, not <strong>what</strong> it achieves. They break on harmless refactoring and pass while real behaviour is broken.</p>
+</li>
+<li>
+<p>Mocking value objects, collections or your own simple classes adds noise; use real ones.</p>
+</li>
+<li>
+<p>Mocking a repository cannot prove the query works, the transaction rolls back or the constraint fires.</p>
+</li>
+<li>
+<p>Rule of thumb: mock what you do not own <strong>at the boundary</strong> (wrap it in your own interface first), and use real objects inside.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_spring_boot_tests"><a class="anchor" href="#_spring_boot_tests"></a>Spring Boot tests</h2>
+<div class="sectionbody">
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 40%;">
+<col style="width: 60%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Annotation</th>
+<th class="tableblock halign-left valign-top">Loads</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>@SpringBootTest</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The full application context. Add <code>webEnvironment = RANDOM_PORT</code> for a real server. Slowest; use for a few end-to-end-in-process tests.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>@WebMvcTest(OrderController.class)</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">MVC layer only: controllers, advice, filters, converters, validation. Services are replaced with mocks.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>@DataJpaTest</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">JPA layer: entities, repositories, <code>EntityManager</code>. Each test runs in a transaction that rolls back.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>@JsonTest</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Jackson configuration and serialisation.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>@RestClientTest</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A <code>RestClient</code>/<code>RestTemplate</code> client against a mock server.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>ApplicationContextRunner</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Tiny contexts to test auto-configuration and conditions.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@WebMvcTest(OrderController.class)
+class OrderControllerTest {
+
+    @Autowired MockMvcTester mvc;                 // AssertJ-style MockMvc (Spring Framework 6.2+)
+    @MockitoBean OrderService orders;             // replaces @MockBean (deprecated in Boot 3.4, removed in Boot 4)
+
+    @Test
+    void returns404WhenOrderMissing() {
+        when(orders.find(42L)).thenThrow(new OrderNotFoundException(42L));
+
+        assertThat(mvc.get().uri("/api/v1/orders/42"))
+                .hasStatus(HttpStatus.NOT_FOUND)
+                .bodyJson().extractingPath("$.code").isEqualTo("ORDER_NOT_FOUND");
+    }
+
+    @Test
+    void rejectsInvalidRequest() {
+        assertThat(mvc.post().uri("/api/v1/orders")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content("{\"customerId\":\"\",\"lines\":[]}"))
+                .hasStatus(HttpStatus.BAD_REQUEST);
+    }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Spring caches application contexts between test classes with the same configuration.
+Every different set of <code>@MockitoBean</code>s or properties creates a new context, so keep test configurations consistent to keep the suite fast.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_testcontainers"><a class="anchor" href="#_testcontainers"></a>Testcontainers</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>In-memory databases such as H2 behave differently from PostgreSQL or MySQL (SQL dialect, locking, constraints, JSON types).
+Testcontainers starts the real database, broker or cache in Docker for the test run.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@SpringBootTest
+@Testcontainers
+class OrderRepositoryIT {
+
+    @Container
+    @ServiceConnection                                   // Spring Boot 3.1+: sets the datasource properties
+    static PostgreSQLContainer&lt;?&gt; postgres = new PostgreSQLContainer&lt;&gt;("postgres:17");
+
+    @Autowired OrderRepository orders;
+
+    @Test
+    void findsOrdersWithCustomerInOneQuery() {
+        // insert data, call the repository, assert results and the number of SQL statements
+    }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><code>@ServiceConnection</code> replaces manual <code>@DynamicPropertySource</code> wiring for supported containers (PostgreSQL, MySQL, Kafka, Redis, MongoDB and others).</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_testing_transactions"><a class="anchor" href="#_testing_transactions"></a>Testing transactions</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Mocks cannot prove transaction behaviour.
+Use an integration test with a real database and check:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Data is committed on success and rolled back on a runtime exception.</p>
+</li>
+<li>
+<p>A checked exception commits unless <code>rollbackFor</code> is set.</p>
+</li>
+<li>
+<p>Unique constraints and optimistic locking (<code>@Version</code>) raise the expected exceptions.</p>
+</li>
+<li>
+<p><code>REQUIRES_NEW</code> audit records survive an outer rollback.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Be careful with <code>@Transactional</code> on test classes: the test&#8217;s own transaction wraps the code under test and rolls back at the end, so you never see a real commit, <code>@TransactionalEventListener(AFTER_COMMIT)</code> never fires, and lazy loading works where production would fail.
+For commit behaviour, run without a test transaction and clean up explicitly.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_testing_asynchronous_code"><a class="anchor" href="#_testing_asynchronous_code"></a>Testing asynchronous code</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p>Never use <code>Thread.sleep</code> to wait. It is slow and flaky.</p>
+</li>
+<li>
+<p>Inject the <code>Executor</code> and use a synchronous one in unit tests.</p>
+</li>
+<li>
+<p>Wait for an outcome with a deadline using Awaitility.</p>
+</li>
+<li>
+<p>Use <code>CompletableFuture.get(timeout)</code> or <code>CountDownLatch.await(timeout)</code> in tests.</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Test
+void publishesEventAfterOrderPlaced() {
+    orderService.place(order);
+
+    await().atMost(Duration.ofSeconds(5))
+           .untilAsserted(() -&gt; assertThat(consumer.received()).contains(order.id()));
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_practice_questions"><a class="anchor" href="#_practice_questions"></a>Practice questions</h2>
+<div class="sectionbody">
+<details>
+<summary class="title">Q1. Unit versus integration versus contract test?</summary>
+<div class="content">
+<div class="paragraph">
+<p>Unit tests check one unit&#8217;s logic quickly in isolation.
+Integration tests check collaboration with real infrastructure or framework behaviour.
+Contract tests check that a provider and consumer agree on an API or event schema, so services can deploy independently.</p>
+</div>
+</div>
+</details>
+<details>
+<summary class="title">Q2. What makes a good unit test?</summary>
+<div class="content">
+<div class="paragraph">
+<p>One behaviour, clear name, arrange-act-assert, deterministic inputs (injected clock), assertions on outcomes, coverage of edge and failure cases, and minimal mocking.
+It should fail for one reason and survive refactoring that does not change behaviour.</p>
+</div>
+</div>
+</details>
+<details>
+<summary class="title">Q3. When is mocking harmful?</summary>
+<div class="content">
+<div class="paragraph">
+<p>When tests verify the sequence of calls instead of results, mock value objects or your own simple classes, or mock away the very thing that needs proving (queries, transactions, serialisation).
+Such tests pass while the system is broken and break when the code is merely refactored.</p>
+</div>
+</div>
+</details>
+<details>
+<summary class="title">Q4. <code>@SpringBootTest</code> versus <code>@WebMvcTest</code> versus <code>@DataJpaTest</code>?</summary>
+<div class="content">
+<div class="paragraph">
+<p><code>@SpringBootTest</code> loads everything, for a few broad integration tests.
+<code>@WebMvcTest</code> loads only the web layer with services mocked, for controller mapping, validation, error handling and JSON.
+<code>@DataJpaTest</code> loads only JPA, rolling back after each test, for repository queries.</p>
+</div>
+</div>
+</details>
+<details>
+<summary class="title">Q5. <code>@Mock</code> versus <code>@MockitoBean</code>?</summary>
+<div class="content">
+<div class="paragraph">
+<p><code>@Mock</code> creates a plain Mockito mock, used in unit tests without Spring.
+<code>@MockitoBean</code> (Spring Framework 6.2+) replaces a bean in the Spring test context with a mock; it replaces the older <code>@MockBean</code>.</p>
+</div>
+</div>
+</details>
+<details>
+<summary class="title">Q6. How do you test transactional behaviour?</summary>
+<div class="content">
+<div class="paragraph">
+<p>With integration tests against a real database (Testcontainers), checking commit, rollback, constraints, locking and propagation.
+Avoid wrapping the test itself in a transaction when you need to observe real commits.</p>
+</div>
+</div>
+</details>
+<details>
+<summary class="title">Q7. How do you test asynchronous code?</summary>
+<div class="content">
+<div class="paragraph">
+<p>Make the executor injectable and synchronous in unit tests; in integration tests, wait for the expected state with a bounded timeout (Awaitility, latches, futures).
+No arbitrary sleeps, and clean up threads and queues after each test.</p>
+</div>
+</div>
+</details>
+<details>
+<summary class="title">Q8. Why use Testcontainers instead of H2?</summary>
+<div class="content">
+<div class="paragraph">
+<p>H2 differs from the production database in SQL dialect, types, locking and constraint behaviour, so tests can pass on H2 and fail in production.
+Testcontainers runs the same database version as production.</p>
+</div>
+</div>
+</details>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_common_traps"><a class="anchor" href="#_common_traps"></a>Common traps</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p>Tests that only cover the happy path.</p>
+</li>
+<li>
+<p><code>Thread.sleep</code> in tests.</p>
+</li>
+<li>
+<p><code>@SpringBootTest</code> for every test.</p>
+</li>
+<li>
+<p>Verifying every interaction.</p>
+</li>
+<li>
+<p>H2 hiding database-specific bugs.</p>
+</li>
+<li>
+<p>Transactional tests hiding commit-time behaviour.</p>
+</li>
+<li>
+<p>Chasing a coverage percentage instead of meaningful cases.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_follow_ups_to_expect"><a class="anchor" href="#_follow_ups_to_expect"></a>Follow-ups to expect</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p>"Write tests for the function you just coded."</p>
+</li>
+<li>
+<p>"How would you test a Kafka consumer?" (Call the handler directly in a unit test; use an embedded or Testcontainers Kafka for one integration test; test idempotency by sending the same event twice.)</p>
+</li>
+<li>
+<p>"Your test suite takes 25 minutes. How do you speed it up?" (Fewer full contexts, context caching, parallel execution, moving logic tests down the pyramid.)</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_quick_revision"><a class="anchor" href="#_quick_revision"></a>Quick revision</h2>
+<div class="sectionbody">
+<div class="ulist checklist">
+<ul class="checklist">
+<li>
+<p><i class="fa fa-square-o"></i> Pyramid and the four kinds of tests</p>
+</li>
+<li>
+<p><i class="fa fa-square-o"></i> Unit test checklist and a parameterised test</p>
+</li>
+<li>
+<p><i class="fa fa-square-o"></i> Mockito: stub, verify, captor, spy, strict stubs; when not to mock</p>
+</li>
+<li>
+<p><i class="fa fa-square-o"></i> Spring slices and <code>@MockitoBean</code></p>
+</li>
+<li>
+<p><i class="fa fa-square-o"></i> Testcontainers with <code>@ServiceConnection</code></p>
+</li>
+<li>
+<p><i class="fa fa-square-o"></i> Transaction and async testing rules</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Next: <a href="senior-scenarios.html" class="xref page">Production Scenarios, Design and Behavioural</a>.</p>
+</div>
+</div>
+</div>
+      </article>
+      <div class="article-pagination">
+        <a class="prev" href="coding-round.html"><span>← Previous</span><strong>Coding Round in Java</strong></a>
+        <a class="next" href="senior-scenarios.html"><span>Next →</span><strong>Production Scenarios and Behavioural</strong></a>
+      </div>
+    </main>
+    <aside class="docs-toc reading-assistant" id="reading-assistant" aria-label="Reading assistant">
+  <div class="toc-inner ra-inner">
+    <div class="ra-head">
+      <h2 class="ra-title">Reading Assistant</h2>
+      <button type="button" class="ra-close" aria-label="Close reading assistant">
+        <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+    </div>
+
+    <section class="ra-card ra-listen" aria-labelledby="reading-assistant-listen" hidden>
+      <div class="ra-card-head">
+        <svg class="ra-card-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/></svg>
+        <div>
+          <h3 class="ra-card-title" id="reading-assistant-listen">Listen to Article</h3>
+          <p class="ra-card-desc">Listen to the explanation of this article. Code blocks are skipped.</p>
+        </div>
+      </div>
+
+      <div class="ra-ready">
+        <div class="ra-player">
+          <button type="button" class="ra-play" aria-label="Play article">
+            <svg class="ra-icon-play" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M8 5.5v13l11-6.5z"/></svg>
+            <svg class="ra-icon-pause" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M7 5h3.5v14H7zM13.5 5H17v14h-3.5z"/></svg>
+          </button>
+          <div class="ra-track">
+            <div class="ra-meter" role="progressbar" aria-label="Listening progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><span class="ra-meter-fill"></span></div>
+            <span class="ra-time" title="Estimated. Browser speech does not report an exact duration."></span>
+          </div>
+          <button type="button" class="ra-stop" aria-label="Stop listening" disabled>
+            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="6.5" y="6.5" width="11" height="11" rx="1.5"/></svg>
+          </button>
+        </div>
+
+        <div class="ra-controls">
+          <label class="ra-field ra-field-rate">
+            <span class="ra-field-label">Speed</span>
+            <select class="ra-rate">
+              <option value="0.75">0.75×</option>
+              <option value="1" selected>1×</option>
+              <option value="1.25">1.25×</option>
+              <option value="1.5">1.5×</option>
+              <option value="2">2×</option>
+            </select>
+          </label>
+        </div>
+
+        <label class="ra-check"><input type="checkbox" class="ra-follow" checked> Highlight and follow along</label>
+        <p class="ra-status" role="status" aria-live="polite">Ready</p>
+
+        <p class="ra-tip">
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M9 18h6M10 21h4"/><path d="M12 3a6 6 0 0 0-3.5 10.9V16h7v-2.1A6 6 0 0 0 12 3z"/></svg>
+          <span><strong>Tip:</strong> Headings and explanations are read aloud; code is skipped. Read in Google UK English Male on Chrome; other browsers use their closest British English voice.</span>
+        </p>
+      </div>
+
+      <p class="ra-unsupported" hidden>Listening isn&#8217;t available in this browser. The article itself works as usual.</p>
+    </section>
+
+    <section class="ra-card ra-jump" aria-labelledby="reading-assistant-sections" hidden>
+      <h3 class="ra-card-title" id="reading-assistant-sections">Jump to Section</h3>
+      <ol class="ra-sections"></ol>
+    </section>
+
+    <section class="ra-card ra-info" aria-labelledby="reading-assistant-info">
+      <h3 class="ra-card-title" id="reading-assistant-info">Page Info</h3>
+      <ul class="ra-info-list">
+        <li>
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+          <span title="Estimated at 220 words per minute">~4 min read</span>
+        </li>
+        <li>
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h6"/></svg>
+          <span title="Prose only; code is not counted">~947 words</span>
+        </li>
+        <li>
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="4" y="5" width="16" height="16" rx="2"/><path d="M16 3v4M8 3v4M4 10h16"/></svg>
+          <span>Last updated <time datetime="2026-11-11">Nov 11, 2026</time></span>
+        </li>
+      </ul>
+    </section>
+  </div>
+</aside>
+  </div>
+  <footer class="docs-footer">© 2026 Ayush Nigam · <a href="../../index.html">Home</a></footer>
+  <script src="../../../../_/js/reading-assistant.js?v=2" defer></script>
+  <script src="../../../../_/js/site.js?v=15" defer></script>
+</body>
+</html>
