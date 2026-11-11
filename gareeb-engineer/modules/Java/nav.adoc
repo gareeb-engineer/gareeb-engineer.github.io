@@ -1,4 +1,4 @@
-* xref:index.adoc[Garbage Collection]
+* xref:index.adoc[Java]
 * xref:interview-guide/index.adoc[Java Interview Guide]
 ** xref:interview-guide/core-java-oop.adoc[Core Java and OOP]
 ** xref:interview-guide/collections-generics.adoc[Collections and Generics]
